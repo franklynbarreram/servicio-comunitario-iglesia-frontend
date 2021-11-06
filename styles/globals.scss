@@ -1,0 +1,147 @@
+@import './variables.scss';
+
+*,
+html,
+body {
+	font-family: Montserrat;
+}
+.divider {
+	border: 0.5px solid #ffffff;
+	background-color: #ffffff;
+	width: 30%;
+	// $margin-top: (
+	// 	1920px: 28px,
+	// 	1440px: 18px,
+	// 	768px: 10px,
+	// 	375px: 10px,
+	// );
+	// @include poly-fluid-sizing('margin-top', $margin-top);
+}
+
+.divider-full {
+	border: 0.5px solid #707070;
+	background-color: #707070;
+	width: 100%;
+	// $margin-top: (
+	// 	1920px: 28px,
+	// 	1440px: 18px,
+	// 	768px: 10px,
+	// 	375px: 10px,
+	// );
+	// @include poly-fluid-sizing('margin-top', $margin-top);
+}
+
+.border-l-05 {
+	border-left: 0.5px solid white;
+}
+
+.container-auth {
+	min-height: 100vh;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	$padding-left: (
+		1920px: 406px,
+		1440px: 406px,
+		768px: 50px,
+		375px: 12px,
+	);
+	@include poly-fluid-sizing('padding-left', $padding-left);
+
+	$padding-right: (
+		1920px: 406px,
+		1440px: 406px,
+		768px: 50px,
+		375px: 12px,
+	);
+	@include poly-fluid-sizing('padding-right', $padding-right);
+
+	$padding-top: (
+		1920px: 90px,
+		768px: 80px,
+		375px: 30px,
+	);
+	@include poly-fluid-sizing('padding-top', $padding-top);
+
+	$padding-bottom: (
+		1920px: 90px,
+		768px: 80px,
+		375px: 30px,
+	);
+	@include poly-fluid-sizing('padding-bottom', $padding-bottom);
+
+	.box {
+		$padding-left: (
+			1920px: 183px,
+			1280px: 20px,
+			768px: 50px,
+			375px: 12px,
+		);
+		@include poly-fluid-sizing('padding-left', $padding-left);
+
+		$padding-right: (
+			1920px: 183px,
+			1280px: 20px,
+			768px: 50px,
+			375px: 12px,
+		);
+		@include poly-fluid-sizing('padding-right', $padding-right);
+
+		$padding-top: (
+			1920px: 38px,
+			768px: 30px,
+			375px: 30px,
+		);
+		@include poly-fluid-sizing('padding-top', $padding-top);
+
+		$padding-bottom: (
+			1920px: 38px,
+			768px: 30px,
+			375px: 30px,
+		);
+		@include poly-fluid-sizing('padding-bottom', $padding-bottom);
+	}
+}
+
+/* Works on Firefox */
+.scroll-custom {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.692) #f5f5f54b;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.scroll-custom::-webkit-scrollbar {
+	width: 7px;
+	background-color: #f5f5f54b;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: transparent;
+	background-image: -webkit-gradient(
+		linear,
+		40% 0%,
+		75% 84%,
+		from(rgba(0, 0, 0, 0.692)),
+		to(rgba(0, 0, 0, 0.692)),
+		color-stop(0.6, rgba(0, 0, 0, 0.692))
+	);
+}
+
+.box-balance {
+	background: #ffffff 0% 0% no-repeat padding-box;
+	box-shadow: 5px 5px 5px #0000000d;
+	border-radius: 20px;
+}
+
+.separator-right {
+	border: 1px solid #707070;
+	width: 100%;
+	height: 100%;
+}
+.box-amount-recharge {
+	background: #ffffff 0% 0% no-repeat padding-box;
+	box-shadow: 0px 10px 30px #00000029;
+	border-radius: 20px;
+}

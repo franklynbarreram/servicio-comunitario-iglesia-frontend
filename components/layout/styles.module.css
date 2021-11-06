@@ -1,0 +1,14 @@
+.active::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #b52423;
+  border-radius: 50px;
+}
+/*# sourceMappingURL=styles.module.css.map */

@@ -1,0 +1,99 @@
+@import './variables.scss';
+
+.f-72 {
+	$f-72: (
+		1920px: 72px,
+		992px: 50px,
+	);
+	@include poly-fluid-sizing('font-size', $f-72);
+}
+
+.f-64 {
+	$f-64: (
+		1920px: 64px,
+		992px: 40px,
+		375px: 30px,
+	);
+	@include poly-fluid-sizing('font-size', $f-64);
+}
+
+.f-50 {
+	$f-50: (
+		1920px: 50px,
+		992px: 30px,
+	);
+	@include poly-fluid-sizing('font-size', $f-50);
+}
+.f-48 {
+	$f-48: (
+		1920px: 48px,
+		992px: 28px,
+	);
+	@include poly-fluid-sizing('font-size', $f-48);
+}
+.f-40 {
+	$f-40: (
+		1920px: 40px,
+		992px: 20px,
+	);
+	@include poly-fluid-sizing('font-size', $f-40);
+}
+
+.f-36 {
+	$f-36: (
+		1920px: 36px,
+		992px: 26px,
+	);
+	@include poly-fluid-sizing('font-size', $f-36);
+}
+
+.f-24,
+.form-control.f-24 {
+	$f-24: (
+		1920px: 24px,
+		992px: 17px,
+	);
+	@include poly-fluid-sizing('font-size', $f-24);
+}
+.f-20 {
+	$f-20: (
+		1920px: 20px,
+		992px: 15px,
+	);
+	@include poly-fluid-sizing('font-size', $f-20);
+}
+.f-18 {
+	$f-18: (
+		1920px: 18px,
+		992px: 13px,
+	);
+	@include poly-fluid-sizing('font-size', $f-18);
+}
+.f-16 {
+	$f-16: (
+		1920px: 16px,
+		992px: 13px,
+	);
+	@include poly-fluid-sizing('font-size', $f-16);
+}
+.f-15 {
+	$f-15: (
+		1920px: 15px,
+		992px: 12px,
+	);
+	@include poly-fluid-sizing('font-size', $f-15);
+}
+.f-12 {
+	$f-12: (
+		1920px: 12px,
+		992px: 10px,
+	);
+	@include poly-fluid-sizing('font-size', $f-12);
+}
+.f-10 {
+	$f-10: (
+		1920px: 10px,
+		992px: 8px,
+	);
+	@include poly-fluid-sizing('font-size', $f-10);
+}

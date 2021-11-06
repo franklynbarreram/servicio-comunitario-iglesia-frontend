@@ -1,0 +1,11 @@
+@import '/styles/variables.scss';
+
+.marginNotification {
+	$margin-top: (
+		1920px: 76px,
+		1440px: 76px,
+		768px: 76px,
+		375px: 60px,
+	);
+	@include poly-fluid-sizing('margin-top', $margin-top);
+}
