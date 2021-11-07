@@ -29,7 +29,7 @@ const SignIn = () => {
 
 		signIn('credentials', {
 			redirect: false,
-			username: data.email,
+			email: data.email,
 			password: data.password,
 			callbackUrl: '/dashboard',
 		})
@@ -57,7 +57,7 @@ const SignIn = () => {
 
 	return (
 		<>
-			<div className="container-auth bg-primary">
+			<div className="container-auth bg-secondary">
 				<div className="rounded-2xl center flex flex-col items-center justify-center box w-full m-auto bg-white">
 					<Logo
 						className="mb-4"
