@@ -42,7 +42,8 @@
 		"react-toast-notifications": "^2.4.4",
 		"snakecase-keys": "^4.0.2",
 		"swr": "^0.3.11",
-		"tailwindcss": "^2.1.2"
+		"tailwindcss": "^2.1.2",
+		"vercel": "^23.1.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

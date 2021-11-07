@@ -57,7 +57,7 @@ const SignIn = () => {
 
 	return (
 		<>
-			<div className="container-auth bg-secondary">
+			<div className="container-auth bg-primary">
 				<div className="rounded-2xl center flex flex-col items-center justify-center box w-full m-auto bg-white">
 					<Logo
 						className="mb-4"
@@ -70,7 +70,9 @@ const SignIn = () => {
 					>
 						Ingresa tus datos
 					</Typography>
-
+					<p>NEXTAUTH_URL: {process.env.NEXTAUTH_URL}</p>
+					<p>NEXTAUTH_URL publuc: {process.env.NEXT_PUBLIC_AUTH_URL}</p>
+					<p>API: {process.env.NEXT_PUBLIC_API}</p>
 					<form
 						className="w-full text-left"
 						onSubmit={handleSubmit(handleSubmitData)}
