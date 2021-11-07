@@ -1,9 +1,9 @@
 import { useSession } from 'next-auth/client';
 import { UserType } from 'interfaces';
-import { GET_USER } from 'api';
-import { ProfilApiService } from 'api';
+import { GET_USER } from 'services';
+import { ProfilApiService } from 'services';
 import { useQuery } from 'react-query';
-import { ProfileResponse } from 'api/dto/Profile.dto';
+import { ProfileResponse } from 'services/dto/Profile.dto';
 
 export const useUser = () => {
 	const [session] = useSession();
