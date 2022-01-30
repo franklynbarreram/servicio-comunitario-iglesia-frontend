@@ -7,7 +7,7 @@ import { navigation as menu } from "consts/navigation";
 import { Icons } from "consts/icons";
 import { signOut } from "next-auth/client";
 import { Images } from "consts";
-import { appRouter } from "consts/router";
+// import { appRouter } from "consts/router";
 import { Icon } from "components/icon";
 
 interface LayoutDashboardProps {}
@@ -65,7 +65,7 @@ export const SidebarDesktop: React.FC<LayoutDashboardProps> = () => {
                         {item.label}
                       </p>
                       {item?.subNavigation?.map((subItem, positionSubMenu) => {
-                        const active = router.pathname === subItem.href;
+                        // const active = router.pathname === subItem.href;
                         return (
                           <Fragment key={subItem.name}>
                             {subItem.dropdown ? (
