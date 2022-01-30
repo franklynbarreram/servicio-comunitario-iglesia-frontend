@@ -95,9 +95,9 @@ export const Input: React.FC<
               { "bg-white border-primary": primary && !error },
               { "bg-white": !isFill },
               !!isFill && styles.inputDateWithValue,
-              "placeholder-gray-500 w-full text-gray-500 font-montserrat border f-24",
+              "placeholder-gray-500 w-full text-gray-500 font-montserrat border",
               {
-                "pb-4 pt-4 rounded-20": !otherStyles,
+                "pb-4 pt-4 rounded-full f-24": !otherStyles,
               },
               otherStyles,
               {

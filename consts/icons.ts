@@ -1,6 +1,7 @@
 export enum Icons {
   card = "/icons/card.svg",
   cardPay = "/icons/cardPay.svg",
+  close = "/icons/X.svg",
   payment = "/icons/payment.svg",
   faq = "/icons/faq.svg",
   support = "/icons/support.svg",
