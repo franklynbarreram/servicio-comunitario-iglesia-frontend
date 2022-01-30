@@ -1,5 +1,4 @@
 import { LayoutDashboard } from "components/layout";
-import { useUser } from "hooks/user";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
