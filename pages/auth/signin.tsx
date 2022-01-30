@@ -70,9 +70,9 @@ const SignIn = () => {
 					>
 						Ingresa tus datos
 					</Typography>
-					<p>NEXTAUTH_URL: {process.env.NEXTAUTH_URL}</p>
+					{/* <p>NEXTAUTH_URL: {process.env.NEXTAUTH_URL}</p>
 					<p>NEXTAUTH_URL publuc: {process.env.NEXT_PUBLIC_AUTH_URL}</p>
-					<p>API: {process.env.NEXT_PUBLIC_API}</p>
+					<p>API: {process.env.NEXT_PUBLIC_API}</p> */}
 					<form
 						className="w-full text-left"
 						onSubmit={handleSubmit(handleSubmitData)}

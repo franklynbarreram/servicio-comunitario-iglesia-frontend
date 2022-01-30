@@ -4,11 +4,9 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
 
-const Dashboard = () => {
-  const user = useUser();
-  console.log(user);
+const Iglesias = () => {
   return (
-    <LayoutDashboard title="Dashboard">
+    <LayoutDashboard title="Iglesias">
       <div className="py-4">
         <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
           <h1 className="f-50 font-bold text-center">Contenido</h1>
@@ -33,4 +31,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default Dashboard;
+export default Iglesias;
