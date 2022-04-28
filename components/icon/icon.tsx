@@ -14,6 +14,7 @@ interface IconProps {
   fillCircle?: boolean;
   fillRect?: boolean;
   fill?: string;
+  onClick?: any;
 }
 
 export const Icon: React.FC<IconProps> = ({
@@ -25,10 +26,12 @@ export const Icon: React.FC<IconProps> = ({
   fillRect = false,
   fillCircle = false,
   fill,
+  onClick,
 }) => {
   return (
     <SVG
       src={src}
+      onClick={onClick}
       // style={stylesProps}
       fill={fill}
       className={clsx(

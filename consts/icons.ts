@@ -28,4 +28,5 @@ export enum Icons {
   more = "/icons/more.svg",
   administrar = "/icons/administrar.svg",
   estadisticas = "/icons/estadisticas.svg",
+  noImgUser = "/icons/icon-user.png",
 }

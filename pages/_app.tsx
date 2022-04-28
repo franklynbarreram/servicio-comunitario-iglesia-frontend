@@ -8,7 +8,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import "styles/global-tailwind.scss";
 import "styles/globals.scss";
 import "styles/fonts.scss";
-// import 'styles/styles-ant.scss';
+import "styles/styles-ant.scss";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [theme, setTheme] = React.useState<ThemeType>("light");
@@ -21,7 +21,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider session={pageProps.session}>
       <QueryClientProvider client={queryClientRef.current}>
-        <ToastProvider autoDismiss placement="top-center">
+        <ToastProvider
+          autoDismissTimeout={4000}
+          autoDismiss
+          placement="top-center"
+        >
           <ThemeContext.Provider value={{ theme, setTheme }}>
             <div
               className={clsx(

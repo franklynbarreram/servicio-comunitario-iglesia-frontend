@@ -51,7 +51,7 @@ export const Typography: React.FC<TypographyProps> = ({
         className={clsx("text-xs", className)}
         onClick={() => onClick && onClick()}
       >
-        {children || text}
+        {children}
       </span>
     );
   if (type === "caption")

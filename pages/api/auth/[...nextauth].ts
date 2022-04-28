@@ -6,15 +6,15 @@ import { signOut } from "next-auth/client";
 const options: NextAuthOptions = {
   debug: true,
   providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      profile: (data) => ({
-        id: "",
-        provider: "google",
-        ...data,
-      }),
-    }),
+    // Providers.Google({
+    //   clientId: process.env.GOOGLE_CLIENT_ID,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //   profile: (data) => ({
+    //     id: "",
+    //     provider: "google",
+    //     ...data,
+    //   }),
+    // }),
 
     Providers.Credentials({
       name: "Credentials",
@@ -35,7 +35,13 @@ const options: NextAuthOptions = {
           if (res) {
             const responseData = await res.json();
             if (responseData?.access_token) {
-              return responseData;
+              return {
+                ...responseData,
+                user: {
+                  ...responseData?.user,
+                  foto: "",
+                },
+              };
             }
           }
           return Promise.resolve(null);
@@ -58,35 +64,37 @@ const options: NextAuthOptions = {
         session.tokenExpired = token.expires_at;
         // session.roles = token.user.roles;
       }
+
       return session;
     },
     jwt: async (token: any, response: any, account: any) => {
-      if (response) {
-        if (response.provider) {
-          // const sessionUserSocial = await UsersApiServices.createUserSocial(
-          // 	response
-          // );
-          // // console.log('social:', sessionUserSocial);
-          // if (sessionUserSocial.user && sessionUserSocial.access_token) {
-          // 	token.user = sessionUserSocial.user;
-          // 	token.access_token = sessionUserSocial.access_token;
-          // 	token.accessTokenExpires = sessionUserSocial.expiresIn;
-          // }
-        } else {
-          token = response;
-        }
-        // return token;
-      }
+      // if (response) {
+      //   if (response.provider) {
+      //     // const sessionUserSocial = await UsersApiServices.createUserSocial(
+      //     // 	response
+      //     // );
+      //     // // console.log('social:', sessionUserSocial);
+      //     // if (sessionUserSocial.user && sessionUserSocial.access_token) {
+      //     // 	token.user = sessionUserSocial.user;
+      //     // 	token.access_token = sessionUserSocial.access_token;
+      //     // 	token.accessTokenExpires = sessionUserSocial.expiresIn;
+      //     // }
+      //   } else {
+      //     token = response;
+      //   }
+      //   // return token;
+      // }
       // Initial sign in
       if (account && response) {
         token = {
           // accessTokenExpires: response.expirationTime,
           accessTokenExpires: response.expires_at,
-          ...token,
+          ...response,
         };
 
         return token;
       }
+
       const actuallyDay = new Date(Date.now());
       // console.log('expired antes:', token.accessTokenExpires);
       // console.log('token antes:', token);

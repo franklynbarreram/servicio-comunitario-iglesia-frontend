@@ -1,6 +1,5 @@
 export enum Images {
-	// logoWhite = '/logos/logo-white.svg',
-	// logoWithColor = '/logos/logo.svg',
-	logoWhite = '/logos/logo.png',
-	logoWithColor = '/logos/logo.png',
+  logoWhite = "/logos/logo.png",
+  logoWithColor = "/logos/logo.png",
+  noImg = "/img/no-img.jpg",
 }

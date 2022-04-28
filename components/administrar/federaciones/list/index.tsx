@@ -1,14 +1,15 @@
 import { Icon } from "components/icon";
 import { Icons } from "consts";
+import { ValidateImage, ValidateImageUser, ValidateString } from "lib/helper";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
 const TableFederacion = ({ data }: any) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-16">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow-md overflow-hidden border-b border-gray-200 rounded-10">
+          <div className="shadow-md overflow-hidden border-b border-gray-200 rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-yellow">
                 <tr>
@@ -54,20 +55,20 @@ const TableFederacion = ({ data }: any) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {data?.map((item: any, index: any) => (
+                {data?.data?.map((item: any, index: any) => (
                   <tr key={index}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           <img
-                            className="h-10 w-10 rounded-full"
-                            src={item.federacion.image}
+                            className="w-10 h-10 object-cover object-center rounded-full"
+                            src={ValidateImage(item.logo)}
                             alt=""
                           />
                         </div>
                         <div className="ml-5">
                           <div className="text-sm font-medium text-gray-900">
-                            {item.federacion.nombre}
+                            {item.abreviatura}
                           </div>
                         </div>
                       </div>
@@ -76,29 +77,29 @@ const TableFederacion = ({ data }: any) => {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
                           <img
-                            className="h-10 w-10 rounded-full"
-                            src={item.presidenteConsejo.image}
+                            className="w-10 rounded-full"
+                            src={ValidateImageUser(item.foto_presidente)}
                             alt=""
                           />
                         </div>
                         <div className="ml-5">
                           <div className="text-sm font-medium text-gray-900">
-                            {item.presidenteConsejo.nombre}
+                            {ValidateString(item.presidente)}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {item.nroIglesias}
+                      {item?.nro_iglesias}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.nroClubes}
+                      {item?.nro_clubes}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.nroConquis}
+                      {item?.nro_conquistadores}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.nroGM}
+                      {item?.nro_gm}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-primary">
                       <div className="flex items-center">
