@@ -16,6 +16,7 @@ import { Typography } from "components/common/typography";
 import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
+import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
 
 const EditFederacion = ({ data, hide, refetch }: any) => {
   const [selectValue, setSelectValue] = React.useState<{
@@ -149,10 +150,13 @@ const EditFederacion = ({ data, hide, refetch }: any) => {
 
   const promiseOptions = (inputValue: any, callback: any) => {
     if (!inputValue && !dataPresidentesConsejo) {
-      return PersonasServices.getAll({ paginate: false }).then((response) => {
+      return PresidentesConsejoRegional.getAll({
+        paginate: false,
+        idConsejo: data.id,
+      }).then((response) => {
         setDataPresidentesConsejo(response);
         const options = response?.data?.map((item: any) => {
-          return { value: item.cedula, label: item.nombre };
+          return { value: item.cedula, label: item.nombres };
         });
         return options;
       });

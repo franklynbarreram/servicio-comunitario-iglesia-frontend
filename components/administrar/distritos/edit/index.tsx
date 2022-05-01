@@ -17,25 +17,38 @@ import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
 import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
-const CreateFederacion = ({ hide, refetch }: any) => {
-  const [selectValue, setSelectValue] =
-    React.useState<{ value: Number; label: string }>();
+import { DistritosServices } from "services/Distritos";
+import { PastoresService } from "services/Pastores";
+
+const EditDistrito = ({ data, hide, refetch }: any) => {
+  const [selectValuePastores, setSelectValuePastores] = React.useState<{
+    value: Number;
+    label: string;
+  }>({ value: data.cedula_pastor, label: data.pastor });
+
+  const [selectValueConsejosRegionales, setSelectValueConsejosRegionales] =
+    React.useState<{ value: Number; label: string }>({
+      value: data.id_consejo_regional,
+      label: data.consejo_regional,
+    });
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState();
-  const [dataPresidentesConsejo, setDataPresidentesConsejo] =
+  const [dataPastores, setDataPastores] = React.useState<any>();
+  const [dataConsejosRegionales, setDataConsejosRegionales] =
     React.useState<any>();
   // const { data: presidentesConsejo, isLoading } = useQuery<any>(
   //   [UseQueryEnums.GET_PRESIDENTES_CONSEJO],
-  //   () => ConsejosRegionalesServices.getAllPresidentesConsejo()
+  //   () => ConsejosRegionalesServices.getAllPastores()
   // );
 
   // console.log("presiii", presidentesConsejo);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isDirty, isValid },
     watch,
   } = useForm({ mode: "onChange" });
@@ -43,24 +56,31 @@ const CreateFederacion = ({ hide, refetch }: any) => {
     name: {
       required: { value: true, message: "This is required" },
     },
-    abreviatura: {
-      required: { value: true, message: "This is required" },
-    },
   };
 
-  const handleSubmitData = (data: any) => {
+  React.useEffect(() => {
+    if (!isNil(data) && !isEmpty(data)) {
+      if (!isNil(data.nombre) && !isEmpty(data.nombre)) {
+        setValue("name", data.nombre, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
+    }
+  }, []);
+
+  const handleSubmitData = (form: any) => {
     const FinalData = {
-      nombre: data?.name,
-      abreviatura: data?.abreviatura,
-      logo: imageUrl,
-      cedula_presidente: selectValue?.value,
+      nombre: form?.name,
+      id_consejo: selectValueConsejosRegionales?.value,
+      id_pastor: selectValuePastores?.value,
     };
 
     console.log("FinalData", FinalData);
     setIsLoading(true);
-    ConsejosRegionalesServices.create(FinalData)
+    DistritosServices.edit(FinalData, data?.id)
       .then((response: any) => {
-        addToast("Consejo Regional creado exitosamente", {
+        addToast("Distrito editado exitosamente", {
           appearance: "success",
         });
         console.log("response create:", response);
@@ -74,12 +94,15 @@ const CreateFederacion = ({ hide, refetch }: any) => {
         setIsLoading(false);
       });
   };
-  const handleChangeSelect = (selected: any) => {
-    setSelectValue(selected);
+  const handleChangeSelectPastores = (selected: any) => {
+    setSelectValuePastores(selected);
+  };
+  const handleChangeSelectConsejosRegionales = (selected: any) => {
+    setSelectValueConsejosRegionales(selected);
   };
   React.useEffect(() => {
-    console.log("cambia", selectValue);
-  }, [selectValue]);
+    console.log("cambia", selectValuePastores);
+  }, [selectValuePastores]);
 
   const customStyles = {
     option: (defaultStyles: any, state: any) => ({
@@ -123,20 +146,43 @@ const CreateFederacion = ({ hide, refetch }: any) => {
     },
   };
 
-  const promiseOptions = (inputValue: any, callback: any) => {
-    if (!inputValue && !dataPresidentesConsejo) {
-      return PresidentesConsejoRegional.getAll({
+  const promiseOptionsPastores = (inputValue: any, callback: any) => {
+    if (!inputValue && !dataPastores) {
+      return PastoresService.getAll({
         paginate: false,
-        idConsejo: 0,
+        id_distrito: data.id,
       }).then((response) => {
-        setDataPresidentesConsejo(response);
+        setDataPastores(response);
         const options = response?.data?.map((item: any) => {
           return { value: item.cedula, label: item.nombres };
         });
         return options;
       });
     } else {
-      const filter = dataPresidentesConsejo?.data?.filter((item: any) =>
+      const filter = dataPastores?.data?.filter((item: any) =>
+        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+      );
+
+      const options = filter?.map((item: any) => {
+        return { value: item.cedula, label: item.nombres };
+      });
+      return callback(options);
+    }
+  };
+
+  const promiseOptionsConsejosRegionales = (inputValue: any, callback: any) => {
+    if (!inputValue && !dataConsejosRegionales) {
+      return ConsejosRegionalesServices.getAll({
+        limit: 10,
+      }).then((response) => {
+        setDataConsejosRegionales(response.data);
+        const options = response?.data?.data?.map((item: any) => {
+          return { value: item.id, label: item.nombre };
+        });
+        return options;
+      });
+    } else {
+      const filter = dataConsejosRegionales?.data?.filter((item: any) =>
         item.nombre.toLowerCase().includes(inputValue.toLowerCase())
       );
 
@@ -188,7 +234,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
 
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Crear Federacion</h2>
+      <h2 className="text-4xl font-bold">Editar Distrito</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
@@ -205,40 +251,33 @@ const CreateFederacion = ({ hide, refetch }: any) => {
               className="mb-3 md:mb-5"
               otherStyles="pt-3 pb-3 rounded-full text-sm"
             />
-            <div className="grid grid-cols-3 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="abreviatura"
-                  title="Abreviatura"
-                  labelVisible
-                  isFill={!!watch("abreviatura")}
-                  register={register}
-                  rules={rules.abreviatura}
-                  error={errors.abreviatura}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-              <div className="col-span-2">
-                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                  <p className={"ml-3 font-normal mb-2 block f-18"}>
-                    Presidente del consejo
-                  </p>
-                  {/* {!isLoading && ( */}
-                  <AsyncSelect
-                    // isLoading={isLoading && presidentesConsejo}
-                    cacheOptions
-                    defaultOptions
-                    loadOptions={promiseOptions}
-                    styles={customStyles}
-                    value={selectValue}
-                    className={"text-sm"}
-                    onChange={handleChangeSelect}
-                  />
-                </div>
-              </div>
+            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+              <p className={"ml-3 font-normal mb-2 block f-18"}>
+                Consejo Regional
+              </p>
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseOptionsConsejosRegionales}
+                styles={customStyles}
+                value={selectValueConsejosRegionales}
+                className={"text-sm"}
+                onChange={handleChangeSelectConsejosRegionales}
+              />
             </div>
-            <div className="flex-auto">
+            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+              <p className={"ml-3 font-normal mb-2 block f-18"}>Pastores</p>
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseOptionsPastores}
+                styles={customStyles}
+                value={selectValuePastores}
+                className={"text-sm"}
+                onChange={handleChangeSelectPastores}
+              />
+            </div>
+            {/* <div className="flex-auto">
               <Typography
                 type="label"
                 className={clsx("ml-3 font-normal mb-2 block f-18")}
@@ -260,7 +299,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
                   uploadButton
                 )}
               </Upload>
-            </div>
+            </div> */}
             <div className="flex gap-4 mt-10 px-20">
               <Button
                 labelProps="f-18 font-normal"
@@ -286,11 +325,14 @@ const CreateFederacion = ({ hide, refetch }: any) => {
                   !isDirty ||
                   !isValid ||
                   !!isLoading ||
-                  isEmpty(selectValue?.label) ||
-                  isNil(selectValue?.label) ||
-                  isNil(selectValue) ||
-                  isEmpty(imageUrl) ||
-                  isNil(imageUrl)
+                  isEmpty(selectValuePastores?.label) ||
+                  isNil(selectValuePastores?.label) ||
+                  isNil(selectValuePastores) ||
+                  isEmpty(selectValueConsejosRegionales?.label) ||
+                  isNil(selectValueConsejosRegionales?.label) ||
+                  isNil(selectValueConsejosRegionales)
+                  // isEmpty(imageUrl) ||
+                  // isNil(imageUrl)
                 }
               />
             </div>
@@ -301,4 +343,4 @@ const CreateFederacion = ({ hide, refetch }: any) => {
   );
 };
 
-export default CreateFederacion;
+export default EditDistrito;

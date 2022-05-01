@@ -17,14 +17,17 @@ import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
 import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
-const CreateFederacion = ({ hide, refetch }: any) => {
-  const [selectValue, setSelectValue] =
-    React.useState<{ value: Number; label: string }>();
+
+const EditDistrito = ({ data, hide, refetch }: any) => {
+  const [selectValue, setSelectValue] = React.useState<{
+    value: Number;
+    label: string;
+  }>({ value: data.cedula_presidente, label: data.presidente });
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState();
+  const [imageUrl, setImageUrl] = React.useState(data?.logo);
   const [dataPresidentesConsejo, setDataPresidentesConsejo] =
     React.useState<any>();
   // const { data: presidentesConsejo, isLoading } = useQuery<any>(
@@ -33,12 +36,16 @@ const CreateFederacion = ({ hide, refetch }: any) => {
   // );
 
   // console.log("presiii", presidentesConsejo);
+  console.log("a editar", data);
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     watch,
-  } = useForm({ mode: "onChange" });
+    setValue,
+  } = useForm({
+    mode: "onChange",
+  });
   const rules = {
     name: {
       required: { value: true, message: "This is required" },
@@ -48,22 +55,39 @@ const CreateFederacion = ({ hide, refetch }: any) => {
     },
   };
 
-  const handleSubmitData = (data: any) => {
+  React.useEffect(() => {
+    if (!isNil(data) && !isEmpty(data)) {
+      if (!isNil(data.nombre) && !isEmpty(data.nombre)) {
+        setValue("name", data.nombre, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
+      if (!isNil(data.abreviatura) && !isEmpty(data.abreviatura)) {
+        setValue("abreviatura", data.abreviatura, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
+    }
+  }, []);
+
+  const handleSubmitData = (form: any) => {
     const FinalData = {
-      nombre: data?.name,
-      abreviatura: data?.abreviatura,
+      nombre: form?.name,
+      abreviatura: form?.abreviatura,
       logo: imageUrl,
       cedula_presidente: selectValue?.value,
     };
 
     console.log("FinalData", FinalData);
     setIsLoading(true);
-    ConsejosRegionalesServices.create(FinalData)
+    ConsejosRegionalesServices.edit(FinalData, data?.id)
       .then((response: any) => {
-        addToast("Consejo Regional creado exitosamente", {
-          appearance: "success",
+        addToast("Consejo Regional editado exitosamente", {
+          appearance: "warning",
         });
-        console.log("response create:", response);
+        console.log("response edit:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -71,6 +95,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
       .catch((e: any) => {
         console.log("Error: ", e);
         GenerateErrorToast(e, addToast);
+
         setIsLoading(false);
       });
   };
@@ -127,7 +152,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
     if (!inputValue && !dataPresidentesConsejo) {
       return PresidentesConsejoRegional.getAll({
         paginate: false,
-        idConsejo: 0,
+        idConsejo: data.id,
       }).then((response) => {
         setDataPresidentesConsejo(response);
         const options = response?.data?.map((item: any) => {
@@ -188,7 +213,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
 
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Crear Federacion</h2>
+      <h2 className="text-4xl font-bold">Editar Federacion</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
@@ -275,7 +300,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
               />
               <Button
                 labelProps="f-18 font-normal"
-                label={"Crear"}
+                label={"Guardar"}
                 fill
                 // loading={isLoading}
                 boderRadius="rounded-full"
@@ -286,8 +311,8 @@ const CreateFederacion = ({ hide, refetch }: any) => {
                   !isDirty ||
                   !isValid ||
                   !!isLoading ||
-                  isEmpty(selectValue?.label) ||
-                  isNil(selectValue?.label) ||
+                  isEmpty(selectValue.label) ||
+                  isNil(selectValue.label) ||
                   isNil(selectValue) ||
                   isEmpty(imageUrl) ||
                   isNil(imageUrl)
@@ -301,4 +326,4 @@ const CreateFederacion = ({ hide, refetch }: any) => {
   );
 };
 
-export default CreateFederacion;
+export default EditDistrito;
