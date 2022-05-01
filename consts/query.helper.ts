@@ -15,7 +15,7 @@ export function useQueryParams<T = any>(
   const pathname = router.pathname;
 
   const queryParams = useMemo(() => {
-    return qs.parse(params, {
+    return qs.parse(params as any, {
       ignoreQueryPrefix: true,
     });
   }, [params, router, pathname]);
