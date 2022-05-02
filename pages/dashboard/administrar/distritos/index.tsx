@@ -76,7 +76,7 @@ const Distritos = () => {
     data: response,
     isLoading,
     refetch,
-  } = useQuery<any>([UseQueryEnums.GET_ALL_CONSEJOS_REGIONALES, params], () =>
+  } = useQuery<any>([UseQueryEnums.GET_ALL_DISTRITOS, params], () =>
     DistritosServices.getAll(params)
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
