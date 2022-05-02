@@ -10,7 +10,7 @@ class Service {
   async edit(data: any, id: any): Promise<any> {
     return this.client.put(`/consejos_regionales/${id}`, data);
   }
-  async getAll(params: any): Promise<any> {
+  async getAll(params?: any): Promise<any> {
     return this.client.get("/consejos_regionales", { params });
   }
 }

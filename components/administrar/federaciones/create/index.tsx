@@ -17,6 +17,8 @@ import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
 import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
+import { customStyles } from "consts/stylesReactSelect.helper";
+
 const CreateFederacion = ({ hide, refetch }: any) => {
   const [selectValue, setSelectValue] =
     React.useState<{ value: Number; label: string }>();
@@ -80,48 +82,6 @@ const CreateFederacion = ({ hide, refetch }: any) => {
   React.useEffect(() => {
     console.log("cambia", selectValue);
   }, [selectValue]);
-
-  const customStyles = {
-    option: (defaultStyles: any, state: any) => ({
-      ...defaultStyles,
-      borderBottom: "1px solid #fcc824",
-      color: state.isSelected ? "black" : "black",
-      fontWeight: state.isSelected ? "bold" : "400",
-      backgroundColor: state.isSelected ? "#fcc824" : "white",
-    }),
-    menu: (defaultStyles: any) => ({
-      ...defaultStyles,
-      position: "relative",
-    }),
-    control: (defaultStyles: any) => ({
-      ...defaultStyles,
-      borderRadius: "50px",
-      borderColor: "#707070",
-      width: "100%",
-    }),
-    input: (defaultStyles: any) => ({
-      ...defaultStyles,
-      // padding: 0,
-      margin: 0,
-      fontSize: "0.875rem",
-      paddingTop: "0.75rem",
-      paddingBottom: "0.75rem",
-    }),
-    valueContainer: (defaultStyles: any) => ({
-      ...defaultStyles,
-      paddingTop: 0,
-      paddingBottom: 0,
-      margin: 0,
-      paddingLeft: "1rem",
-      paddingRight: "1rem",
-    }),
-    singleValue: (defaultStyles: any, state: any) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = "opacity 300ms";
-
-      return { ...defaultStyles, opacity, transition };
-    },
-  };
 
   const promiseOptions = (inputValue: any, callback: any) => {
     if (!inputValue && !dataPresidentesConsejo) {

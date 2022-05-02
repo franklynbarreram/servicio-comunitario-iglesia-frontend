@@ -18,6 +18,8 @@ import { GenerateErrorToast } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
 import { PastoresService } from "services/Pastores";
 import { DistritosServices } from "services/Distritos";
+import { customStyles } from "consts/stylesReactSelect.helper";
+
 const CreateDistrito = ({ hide, refetch }: any) => {
   const [selectValuePastores, setSelectValuePastores] =
     React.useState<{ value: Number; label: string }>();
@@ -84,48 +86,6 @@ const CreateDistrito = ({ hide, refetch }: any) => {
     console.log("cambia", selectValuePastores);
   }, [selectValuePastores]);
 
-  const customStyles = {
-    option: (defaultStyles: any, state: any) => ({
-      ...defaultStyles,
-      borderBottom: "1px solid #fcc824",
-      color: state.isSelected ? "black" : "black",
-      fontWeight: state.isSelected ? "bold" : "400",
-      backgroundColor: state.isSelected ? "#fcc824" : "white",
-    }),
-    menu: (defaultStyles: any) => ({
-      ...defaultStyles,
-      position: "relative",
-    }),
-    control: (defaultStyles: any) => ({
-      ...defaultStyles,
-      borderRadius: "50px",
-      borderColor: "#707070",
-      width: "100%",
-    }),
-    input: (defaultStyles: any) => ({
-      ...defaultStyles,
-      // padding: 0,
-      margin: 0,
-      fontSize: "0.875rem",
-      paddingTop: "0.75rem",
-      paddingBottom: "0.75rem",
-    }),
-    valueContainer: (defaultStyles: any) => ({
-      ...defaultStyles,
-      paddingTop: 0,
-      paddingBottom: 0,
-      margin: 0,
-      paddingLeft: "1rem",
-      paddingRight: "1rem",
-    }),
-    singleValue: (defaultStyles: any, state: any) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = "opacity 300ms";
-
-      return { ...defaultStyles, opacity, transition };
-    },
-  };
-
   const promiseOptionsPastores = (inputValue: any, callback: any) => {
     if (!inputValue && !dataPastores) {
       return PastoresService.getAll({
@@ -134,17 +94,28 @@ const CreateDistrito = ({ hide, refetch }: any) => {
       }).then((response) => {
         setDataPastores(response);
         const options = response?.data?.map((item: any) => {
-          return { value: item.cedula, label: item.nombres };
+          return {
+            value: item.cedula,
+            label: `${item.nombres} ${item.apellidos}`,
+          };
         });
         return options;
       });
     } else {
-      const filter = dataPastores?.data?.filter((item: any) =>
+      let filter = dataPastores?.data?.filter((item: any) =>
         item.nombres.toLowerCase().includes(inputValue.toLowerCase())
       );
+      if (isEmpty(filter) || isNil(filter)) {
+        filter = dataPastores?.data?.filter((item: any) =>
+          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+        );
+      }
 
       const options = filter?.map((item: any) => {
-        return { value: item.cedula, label: item.nombres };
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
       });
       return callback(options);
     }
@@ -152,11 +123,9 @@ const CreateDistrito = ({ hide, refetch }: any) => {
 
   const promiseOptionsConsejosRegionales = (inputValue: any, callback: any) => {
     if (!inputValue && !dataConsejosRegionales) {
-      return ConsejosRegionalesServices.getAll({
-        limit: 10,
-      }).then((response) => {
-        setDataConsejosRegionales(response.data);
-        const options = response?.data?.data?.map((item: any) => {
+      return ConsejosRegionalesServices.getAll().then((response) => {
+        setDataConsejosRegionales(response);
+        const options = response?.data?.map((item: any) => {
           return { value: item.id, label: item.nombre };
         });
         return options;
