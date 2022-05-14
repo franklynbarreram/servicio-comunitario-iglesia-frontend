@@ -5,14 +5,14 @@ class Service {
   constructor(private client: AxiosInstance) {}
 
   async create(data: any): Promise<any> {
-    return this.client.post("/iglesias", data);
+    return this.client.post("/clubes", data);
   }
   async edit(data: any, id: any): Promise<any> {
-    return this.client.put(`/iglesias/${id}`, data);
+    return this.client.put(`/clubes/${id}`, data);
   }
-  async getAll(params?: any): Promise<any> {
-    return this.client.get("/iglesias", { params });
+  async getAll(params: any): Promise<any> {
+    return this.client.get("/clubes", { params });
   }
 }
 
-export const IglesiasServices = new Service(axiosClient);
+export const ClubesServices = new Service(axiosClient);
