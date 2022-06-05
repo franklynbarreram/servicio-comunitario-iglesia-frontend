@@ -20,6 +20,7 @@ export interface InputListProps {
   typeStyle?: "selectTransparent" | "transparentRightSeparator";
   widhtList?: "full" | "normal";
   right?: boolean;
+  customClassNamesOptions?: string;
 }
 
 export const InputListSearch: React.FC<
@@ -34,18 +35,20 @@ export const InputListSearch: React.FC<
   onChangeCustom,
   register,
   error,
+  customClassNamesOptions,
   ...props
 }) => {
   // const [selected, setSelected] = React.useState(
   //   myDefaultValue ? getDefaultValue(options, myDefaultValue) : options[0]
   // );
   const getValue = (options: OptionType[], value: any) => {
+    console.log("valor", value);
     const find =
       options.filter(
         (opt) => opt.value.toLowerCase() === value.value.toLowerCase()
       )[0] || options[0];
 
-    console.log("data search value select", find);
+    // console.log("data search value select", find);
     return find;
   };
 
@@ -128,7 +131,16 @@ export const InputListSearch: React.FC<
               leaveTo="opacity-0"
               afterLeave={() => setQuery("")}
             >
-              <Combobox.Options className="absolute z-10 border border-primary rounded-sm mt-1 max-h-60 w-full overflow-auto bg-white py-1 text-base ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Combobox.Options
+                className={clsx(
+                  customClassNamesOptions,
+                  "absolute z-10 border border-primary rounded-sm mt-1 ring-black ring-opacity-5 focus:outline-none",
+                  {
+                    "w-full overflow-auto bg-white py-1 text-base sm:text-sm max-h-60":
+                      !customClassNamesOptions,
+                  }
+                )}
+              >
                 {filteredOptions.length === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                     Nothing found.

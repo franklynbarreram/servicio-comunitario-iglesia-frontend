@@ -1,0 +1,14 @@
+{
+  "miembros": [
+    {
+      "cargoSelected": {
+        "text": "secretario",
+        "value": 3,
+        "disabled": false,
+        "placeholder": false
+      },
+      "label": "User7 string",
+      "value": 1007
+    }
+  ]
+}

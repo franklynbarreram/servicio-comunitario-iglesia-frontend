@@ -10,14 +10,21 @@ export const ValidateImageUser = (img: any) => {
 export const ValidateImage = (img: any, isUser = false) => {
   const image = isUser ? Icons.noImgUser : Images.noImg;
 
-  if (img === "" || img === " " || !img) return image;
+  if (
+    img === "" ||
+    img === " " ||
+    !img ||
+    isNil(img) ||
+    img.toLowerCase() === "string"
+  )
+    return image;
 
   return img;
 };
 
 export const ValidateString = (name: any) => {
-  if (name === "" || name === " " || !name || isNil(name) || isEmpty(name))
-    return "N/A";
+  console.log("llee", name);
+  if (name === "" || name === " " || !name || isNil(name)) return "N/A";
 
   return name;
 };

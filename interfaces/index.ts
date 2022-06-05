@@ -35,7 +35,7 @@ export interface AuthSession {
 }
 
 export type OptionType = {
-  id: number;
+  id?: number;
   text: string;
   value: string;
   disabled: boolean;

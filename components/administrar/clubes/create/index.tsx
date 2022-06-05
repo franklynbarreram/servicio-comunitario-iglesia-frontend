@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
 import AsyncSelect from "react-select/async";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Button } from "components/common/button/button";
 // import { useQuery } from "react-query";
 // import { UseQueryEnums } from "consts/useQueryEnums";
@@ -47,9 +47,11 @@ const CreateClub = ({ hide, refetch }: any) => {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isDirty, isValid },
     watch,
   } = useForm({ mode: "onChange" });
+
   const rules = {
     name: {
       required: { value: true, message: "This is required" },
