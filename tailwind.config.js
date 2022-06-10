@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -40,6 +42,10 @@ module.exports = {
           800: "var(--transparent-gray-800)",
         },
       },
+    },
+    screens: {
+      xs: "380px",
+      ...defaultTheme.screens,
     },
     extend: {},
   },

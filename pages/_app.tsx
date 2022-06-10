@@ -10,6 +10,7 @@ import "styles/globals.scss";
 import "styles/fonts.scss";
 import "styles/styles-ant.scss";
 import PermissionProvider from "context/PermissionProvider/PermissionProvider";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [theme, setTheme] = React.useState<ThemeType>("light");
@@ -21,29 +22,56 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   }
 
   return (
-    <Provider session={pageProps.session}>
-      <QueryClientProvider client={queryClientRef.current}>
-        <PermissionProvider client={permissionsRef}>
-          <ToastProvider
-            autoDismissTimeout={4000}
-            autoDismiss
-            placement="top-center"
-          >
-            <ThemeContext.Provider value={{ theme, setTheme }}>
-              <div
-                className={clsx(
-                  "font-montserrat min-h-screen text-gray-800",
-                  "transition-colors duration-1000",
-                  theme
-                )}
-              >
-                <Component {...pageProps} />
-              </div>
-            </ThemeContext.Provider>
-          </ToastProvider>
-        </PermissionProvider>
-      </QueryClientProvider>
-    </Provider>
+    <>
+      <Head>
+        <title>Ministerio Juvenil AVSOC</title>
+        <meta
+          itemProp="description"
+          name="description"
+          content="CMS Ministerio Juvenil AVSOC"
+        />
+        <meta name="msapplication-TileColor" content="#e68fa7" />
+        <meta name="theme-color" content="#e68fa7" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <meta property="og:title" content="CMS Ministerio Juvenil AVSOC" />
+        <meta property="og:site_name" content="CMS Ministerio Juvenil AVSOC" />
+        <meta
+          itemProp="description"
+          property="og:description"
+          content="CMS Ministerio Juvenil AVSOC"
+        />
+        {/* <meta
+          property="og:image"
+          itemProp="image"
+          content="https://raw.githubusercontent.com/Yeltsin196/preview/main/preview.png"
+        />
+        <meta property="og:image:width" content="300" />
+        <meta property="og:image:height" content="200" /> */}
+      </Head>
+      <Provider session={pageProps.session}>
+        <QueryClientProvider client={queryClientRef.current}>
+          <PermissionProvider client={permissionsRef}>
+            <ToastProvider
+              autoDismissTimeout={4000}
+              autoDismiss
+              placement="top-center"
+            >
+              <ThemeContext.Provider value={{ theme, setTheme }}>
+                <div
+                  className={clsx(
+                    "font-montserrat min-h-screen text-gray-800",
+                    "transition-colors duration-1000",
+                    theme
+                  )}
+                >
+                  <Component {...pageProps} />
+                </div>
+              </ThemeContext.Provider>
+            </ToastProvider>
+          </PermissionProvider>
+        </QueryClientProvider>
+      </Provider>
+    </>
   );
 }
 

@@ -49,7 +49,7 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
             type="span"
             className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
           >
-            {ValidateString(cedula)}
+            {cedula}
           </Typography>
         </div>
         <div className="item col-span-1">

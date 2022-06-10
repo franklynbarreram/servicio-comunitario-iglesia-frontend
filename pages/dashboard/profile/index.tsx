@@ -28,7 +28,7 @@ const Profile = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
-            <div className="mb-15 text-right justify-end flex">
+            {/* <div className="mb-15 text-right justify-end flex">
               <Button
                 labelProps="f-18 font-normal"
                 label={"Editar"}
@@ -39,7 +39,7 @@ const Profile = () => {
                 sizesButton="py-3 max-w-[150px]"
                 onClick={show}
               />
-            </div>
+            </div> */}
             <div className="item flex flex-col gap-2 text-center justify-center mt-8">
               <img
                 src={ValidateImage(user?.foto, true)}
@@ -55,7 +55,7 @@ const Profile = () => {
                 {`${user?.nombres} ${user?.apellidos}`}
               </Typography>
             </div>
-            <div className="container-form mt-16 gap-x-6 gap-y-10 grid grid-cols-5 text-left">
+            <div className="container-form mt-16 gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
               <div className="item col-span-1">
                 <Typography
                   type="label"
@@ -281,7 +281,7 @@ const Profile = () => {
                       {`Datos de Club`}
                     </Typography>
                   </div>
-                  <div className="container-form mt-16 gap-x-6 gap-y-10 grid grid-cols-5 text-left">
+                  <div className="container-form mt-16  gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  text-left">
                     <div className="item col-span-1">
                       <Typography
                         type="label"

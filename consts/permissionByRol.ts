@@ -151,7 +151,7 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.MIEMBROS,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [],
       },
     ],
   },

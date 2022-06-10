@@ -31,6 +31,7 @@ import { OptionType } from "interfaces";
 import { useQuery } from "react-query";
 import { UseQueryEnums } from "consts/useQueryEnums";
 import { CargosServices } from "services/Cargos";
+import { useRouter } from "next/router";
 
 interface TypeMiembros {
   value: Number;
@@ -45,6 +46,7 @@ const EditProfile = ({ data, hide, refetch }: any) => {
   // );
 
   const { addToast } = useToasts();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -95,6 +97,8 @@ const EditProfile = ({ data, hide, refetch }: any) => {
           });
           refetch();
           hide();
+          router.reload();
+
           setIsLoading(false);
         });
       })
