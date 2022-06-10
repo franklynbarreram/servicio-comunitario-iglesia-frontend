@@ -58,12 +58,12 @@ export const useModal = () => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <div className="bg-custom-gray-2 rounded-lg inline-block align-bottom text-left shadow-xl overflow-hidden transform transition-all sm:align-middle sm:my-8 sm:w-full sm:max-w-2xl">
-                  <div className="pb-5 pt-6 bg-gray-0 sm:pb-8 px-10">
+                <div className="bg-custom-gray-2 rounded-lg inline-block align-bottom text-left shadow-xl overflow-hidden transform transition-all sm:align-middle sm:my-8 w-full md:max-w-2xl">
+                  <div className="pb-5 pt-6 bg-gray-0 sm:pb-8 px-4">
                     <h1
                       onClick={hide}
                       className={clsx(
-                        "text-4xl text-gray-200 absolute right-1 top-0 cursor-pointer"
+                        "text-2xl md:text-4xl text-gray-200 absolute right-1 top-0 cursor-pointer"
                       )}
                     >
                       <img src={Icons.close} alt="close" />

@@ -19,7 +19,7 @@ const ViewFederacion = ({ data, hide, refetch }: any) => {
   } = data;
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Detalle de Federacion</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Detalle de Federacion</h2>
       <div className="item flex flex-col gap-2 text-center justify-center mt-8">
         <img
           src={ValidateImage(logo)}

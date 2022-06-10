@@ -38,6 +38,11 @@ import Pagination from "components/pagination/Pagination";
 import DeleteMiembro from "components/administrar/miembros/deleteMiembro";
 import ViewAllOnlyMiembros from "components/administrar/miembros/viewAllOnlyMiembros";
 import AgregarMiembros from "components/administrar/miembros/create";
+import { ProfilApiService } from "services";
+import { routeValidForUser } from "lib/helper";
+import { PermissionsEnums } from "consts/permissionsEnum";
+import { ModuleEnums } from "consts/modulesEmuns";
+import Restricted from "context/PermissionProvider/Restricted";
 
 // import Image from "next/image";
 type Params = {
@@ -92,7 +97,7 @@ const Miembros = () => {
     data: response,
     isLoading,
     refetch,
-  } = useQuery<any>([UseQueryEnums.GET_ALL_IGLESIAS, params], () =>
+  } = useQuery<any>([UseQueryEnums.GET_ALL_MIEMBROS, params], () =>
     MiembrosServices.getAll(params)
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
@@ -192,21 +197,31 @@ const Miembros = () => {
       render: (data: any) => (
         <div className="flex items-center">
           {data?.activo && (
-            <div className="flex-shrink-0 w-8">
-              <TrashIcon
-                className="text-blue-500 flex items-center cursor-pointer"
-                onClick={() => handleOnDelete(data)}
+            <Restricted
+              module={ModuleEnums.MIEMBROS}
+              typePermisse={PermissionsEnums.DAR_DE_BAJA_MIEMBRO}
+            >
+              <div className="flex-shrink-0 w-8">
+                <TrashIcon
+                  className="text-blue-500 flex items-center cursor-pointer"
+                  onClick={() => handleOnDelete(data)}
+                />
+              </div>
+            </Restricted>
+          )}
+          <Restricted
+            module={ModuleEnums.MIEMBROS}
+            typePermisse={PermissionsEnums.DETALLE_MIEMBRO}
+          >
+            <div className="flex-shrink-0 h-10 w-8 ml-5">
+              <Icon
+                src={Icons.more}
+                fill="var(--color-primary)"
+                className="max-w-[50px] w-8 cursor-pointer"
+                onClick={() => handleOnViewOnlyMember(data)}
               />
             </div>
-          )}
-          <div className="flex-shrink-0 h-10 w-8 ml-5">
-            <Icon
-              src={Icons.more}
-              fill="var(--color-primary)"
-              className="max-w-[50px] w-8 cursor-pointer"
-              onClick={() => handleOnViewOnlyMember(data)}
-            />
-          </div>
+          </Restricted>
         </div>
       ),
     },
@@ -241,7 +256,15 @@ const Miembros = () => {
         distinctUntilChanged(),
         // switch to new search observable each time the term changes
         map((term: string) => {
-          updateQuery("search", term);
+          if (isEmpty(term)) {
+            updateQuery("search", undefined);
+          } else {
+            if (isEmpty(term)) {
+              updateQuery("search", undefined);
+            } else {
+              updateQuery("search", term);
+            }
+          }
           updateQuery("page", undefined);
         })
       )
@@ -265,7 +288,7 @@ const Miembros = () => {
 
   return (
     <LayoutDashboard title="Miembros">
-      <div className="px-20 mt-12">
+      <div className="lg:lg:px-20 mt-12">
         {isLoading && !onSearch ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
@@ -287,13 +310,18 @@ const Miembros = () => {
                   leftImg={Icons.search}
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
-                <div className="px-2" onClick={show}>
-                  <Icon
-                    src={Icons.addUser}
-                    fill="var(--color-primary)"
-                    className="max-w-[50px] w-12 cursor-pointer"
-                  />
-                </div>
+                <Restricted
+                  module={ModuleEnums.MIEMBROS}
+                  typePermisse={PermissionsEnums.ADD}
+                >
+                  <div className="px-2" onClick={show}>
+                    <Icon
+                      src={Icons.addUser}
+                      fill="var(--color-primary)"
+                      className="max-w-[50px] w-12 cursor-pointer"
+                    />
+                  </div>
+                </Restricted>
               </div>
             </form>
             {isLoading ? (
@@ -305,7 +333,7 @@ const Miembros = () => {
                   dataSource={values}
                   pagination={false}
                   rowKey="id_club"
-                  className="table_club_miembros table_ant_custom shadow-md overflow-hidden border-b border-gray-200 rounded-lg"
+                  className="table_club_miembros table_ant_custom shadow-md overflow-x-auto border-b border-gray-200 rounded-lg"
                   expandable={{
                     expandedRowRender: expandedTableMiembros,
                   }}
@@ -367,9 +395,33 @@ const Miembros = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  if (session && session.accessToken) {
+  const token = session?.accessToken as string;
+
+  let profile: any = [];
+  try {
+    profile = await ProfilApiService.getUser(token);
+  } catch (e) {
+    console.log("error", e);
+  }
+
+  const isValid = routeValidForUser(
+    profile,
+    PermissionsEnums.VIEW,
+    ModuleEnums.MIEMBROS
+  );
+
+  if (session && session.accessToken && isValid) {
     return {
       props: {},
+    };
+  }
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: "/dashboard/permission-denied",
+        permanent: false,
+      },
     };
   }
   return {

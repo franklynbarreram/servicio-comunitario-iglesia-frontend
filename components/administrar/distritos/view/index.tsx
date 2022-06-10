@@ -18,7 +18,7 @@ const ViewDistrito = ({ data, hide, refetch }: any) => {
   } = data;
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Detalle de Distrito</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Detalle de Distrito</h2>
       <div className="item flex flex-col gap-2 text-center justify-center mt-8">
         <Typography
           type="label"

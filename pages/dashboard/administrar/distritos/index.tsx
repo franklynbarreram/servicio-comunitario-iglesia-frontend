@@ -22,6 +22,11 @@ import { DistritosServices } from "services/Distritos";
 import ViewDistrito from "components/administrar/distritos/view";
 import EditDistrito from "components/administrar/distritos/edit";
 import CreateDistrito from "components/administrar/distritos/create";
+import Restricted from "context/PermissionProvider/Restricted";
+import { ProfilApiService } from "services";
+import { PermissionsEnums } from "consts/permissionsEnum";
+import { ModuleEnums } from "consts/modulesEmuns";
+import { routeValidForUser } from "lib/helper";
 
 // import Image from "next/image";
 type Params = {
@@ -198,22 +203,32 @@ const Distritos = () => {
       tdClassName: DataClassName,
       selector: (value: any) => (
         <div className="flex items-center">
-          <div className="flex-shrink-0 h-10 w-8">
-            <Icon
-              src={Icons.edit}
-              fill="white"
-              className="max-w-[50px] w-8 text-primary cursor-pointer"
-              onClick={() => handleOnEdit(value)}
-            />
-          </div>
-          <div className="flex-shrink-0 h-10 w-8 ml-5">
-            <Icon
-              src={Icons.more}
-              fill="var(--color-primary)"
-              className="max-w-[50px] w-8 cursor-pointer"
-              onClick={() => handleOnView(value)}
-            />
-          </div>
+          <Restricted
+            module={ModuleEnums.DISTRITOS}
+            typePermisse={PermissionsEnums.EDIT}
+          >
+            <div className="flex-shrink-0 h-10 w-8">
+              <Icon
+                src={Icons.edit}
+                fill="white"
+                className="max-w-[50px] w-8 text-primary cursor-pointer"
+                onClick={() => handleOnEdit(value)}
+              />
+            </div>
+          </Restricted>
+          <Restricted
+            module={ModuleEnums.DISTRITOS}
+            typePermisse={PermissionsEnums.DETAIL}
+          >
+            <div className="flex-shrink-0 h-10 w-8 ml-5">
+              <Icon
+                src={Icons.more}
+                fill="var(--color-primary)"
+                className="max-w-[50px] w-8 cursor-pointer"
+                onClick={() => handleOnView(value)}
+              />
+            </div>
+          </Restricted>
         </div>
       ),
     },
@@ -237,7 +252,11 @@ const Distritos = () => {
         distinctUntilChanged(),
         // switch to new search observable each time the term changes
         map((term: string) => {
-          updateQuery("search", term);
+          if (isEmpty(term)) {
+            updateQuery("search", undefined);
+          } else {
+            updateQuery("search", term);
+          }
           updateQuery("page", undefined);
         })
       )
@@ -261,7 +280,7 @@ const Distritos = () => {
 
   return (
     <LayoutDashboard title="Distritos">
-      <div className="px-20 mt-12">
+      <div className="lg:px-20 mt-12">
         {isLoading && !onSearch ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
@@ -283,13 +302,18 @@ const Distritos = () => {
                   leftImg={Icons.search}
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
-                <div className="px-2" onClick={show}>
-                  <Icon
-                    src={Icons.addUser}
-                    fill="var(--color-primary)"
-                    className="max-w-[50px] w-12 cursor-pointer"
-                  />
-                </div>
+                <Restricted
+                  module={ModuleEnums.DISTRITOS}
+                  typePermisse={PermissionsEnums.ADD}
+                >
+                  <div className="px-2" onClick={show}>
+                    <Icon
+                      src={Icons.addUser}
+                      fill="var(--color-primary)"
+                      className="max-w-[50px] w-12 cursor-pointer"
+                    />
+                  </div>
+                </Restricted>
               </div>
             </form>
             {isLoading ? (
@@ -322,9 +346,33 @@ const Distritos = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  if (session && session.accessToken) {
+  const token = session?.accessToken as string;
+
+  let profile: any = [];
+  try {
+    profile = await ProfilApiService.getUser(token);
+  } catch (e) {
+    console.log("error", e);
+  }
+
+  const isValid = routeValidForUser(
+    profile,
+    PermissionsEnums.VIEW,
+    ModuleEnums.DISTRITOS
+  );
+
+  if (session && session.accessToken && isValid) {
     return {
       props: {},
+    };
+  }
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: "/dashboard/permission-denied",
+        permanent: false,
+      },
     };
   }
   return {

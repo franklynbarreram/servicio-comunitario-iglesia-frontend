@@ -197,7 +197,7 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
 
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Crear Iglesia</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Crear Iglesia</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
@@ -261,7 +261,7 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
                 )}
               </Upload>
             </div> */}
-            <div className="flex gap-4 mt-10 px-20">
+            <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
               <Button
                 labelProps="f-18 font-normal"
                 label={"Cancelar"}

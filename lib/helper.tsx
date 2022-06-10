@@ -1,8 +1,17 @@
 import { Icons, Images } from "consts";
-import { isNil, isEmpty } from "lodash";
+import { PermissionByRol } from "consts/permissionByRol";
+import { useUser } from "hooks/user";
+import { isNil, isEmpty, get } from "lodash";
 
 export const ValidateImageUser = (img: any) => {
-  if (img === "" || img === " " || !img) return Icons.noImgUser;
+  if (
+    img === "" ||
+    img === " " ||
+    !img ||
+    isNil(img) ||
+    img.toLowerCase() === "string"
+  )
+    return Icons.noImgUser;
 
   return img;
 };
@@ -23,8 +32,14 @@ export const ValidateImage = (img: any, isUser = false) => {
 };
 
 export const ValidateString = (name: any) => {
-  console.log("llee", name);
-  if (name === "" || name === " " || !name || isNil(name)) return "N/A";
+  if (
+    name === "" ||
+    name === " " ||
+    !name ||
+    isNil(name) ||
+    name.toLowerCase() === "string"
+  )
+    return "N/A";
 
   return name;
 };
@@ -74,4 +89,25 @@ export const GenerateErrorToast = (error: any, addToast: any) => {
       appearance: "error",
     });
   }
+};
+
+export const routeValidForUser = (
+  data: any,
+  permission: string,
+  module: string
+) => {
+  const rol = get(data, "scope_actual", undefined);
+  const findUserRole = PermissionByRol.find((item) => item.role === rol);
+
+  if (!isNil(findUserRole)) {
+    const findModule = findUserRole.modules.find(
+      (item) => item.name === module
+    );
+
+    if (!isNil(findModule)) {
+      return findModule.permissionsActions.includes(permission as any);
+    }
+  }
+
+  return false;
 };

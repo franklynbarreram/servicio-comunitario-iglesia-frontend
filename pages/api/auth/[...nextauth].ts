@@ -18,30 +18,45 @@ const options: NextAuthOptions = {
 
     Providers.Credentials({
       name: "Credentials",
-      authorize: async (credentials: { email?: string; password?: string }) => {
+      authorize: async (credentials: {
+        email?: string;
+        password?: string;
+        oldSession?: any;
+        newData?: any;
+      }) => {
         try {
-          console.log(credentials);
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/login`, {
-            method: "POST",
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-              remember_me: true,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          if (res) {
-            const responseData = await res.json();
-            if (responseData?.access_token) {
-              return {
-                ...responseData,
-                user: {
-                  ...responseData?.user,
-                  foto: "",
+          if (credentials?.newData) {
+            const newSession = JSON.parse(credentials?.newData);
+            return {
+              access_token: newSession.access_token,
+              expires_at: newSession.expires_at,
+            };
+          } else {
+            const res = await fetch(
+              `${process.env.NEXT_PUBLIC_API}/auth/login`,
+              {
+                method: "POST",
+                body: JSON.stringify({
+                  email: credentials.email,
+                  password: credentials.password,
+                  remember_me: true,
+                }),
+                headers: {
+                  "Content-Type": "application/json",
                 },
-              };
+              }
+            );
+            if (res) {
+              const responseData = await res.json();
+              if (responseData?.access_token) {
+                return {
+                  ...responseData,
+                  user: {
+                    ...responseData?.user,
+                    foto: "",
+                  },
+                };
+              }
             }
           }
           return Promise.resolve(null);

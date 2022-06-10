@@ -8,7 +8,7 @@ import { getSession } from "next-auth/client";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import CreateFederacion from "components/administrar/federaciones/create/";
-import { ConsejosRegionalesServices } from "services";
+import { ConsejosRegionalesServices, ProfilApiService } from "services";
 import { UseQueryEnums } from "consts/useQueryEnums";
 import { useQuery } from "react-query";
 import { Spinner } from "components/common/spinner/spinner";
@@ -22,6 +22,10 @@ import EditFederacion from "components/administrar/federaciones/edit";
 import ViewFederacion from "components/administrar/federaciones/view";
 import { Subject } from "rxjs";
 import { debounceTime, map, distinctUntilChanged } from "rxjs/operators";
+import Restricted from "context/PermissionProvider/Restricted";
+import { ModuleEnums } from "consts/modulesEmuns";
+import { PermissionsEnums } from "consts/permissionsEnum";
+import { routeValidForUser } from "lib/helper";
 
 // import Image from "next/image";
 type Params = {
@@ -76,7 +80,7 @@ const Federaciones = () => {
     data: response,
     isLoading,
     refetch,
-  } = useQuery<any>([UseQueryEnums.GET_ALL_CONSEJOS_REGIONALES, params], () =>
+  } = useQuery<any>([UseQueryEnums.GET_ALL_FEDERACIONES, params], () =>
     ConsejosRegionalesServices.getAll(params)
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
@@ -188,22 +192,32 @@ const Federaciones = () => {
       tdClassName: DataClassName,
       selector: (value: any) => (
         <div className="flex items-center">
-          <div className="flex-shrink-0 h-10 w-8">
-            <Icon
-              src={Icons.edit}
-              fill="white"
-              className="max-w-[50px] w-8 text-primary cursor-pointer"
-              onClick={() => handleOnEdit(value)}
-            />
-          </div>
-          <div className="flex-shrink-0 h-10 w-8 ml-5">
-            <Icon
-              src={Icons.more}
-              fill="var(--color-primary)"
-              className="max-w-[50px] w-8 cursor-pointer"
-              onClick={() => handleOnView(value)}
-            />
-          </div>
+          <Restricted
+            module={ModuleEnums.FEDERACIONES}
+            typePermisse={PermissionsEnums.EDIT}
+          >
+            <div className="flex-shrink-0 h-10 w-8">
+              <Icon
+                src={Icons.edit}
+                fill="white"
+                className="max-w-[50px] w-8 text-primary cursor-pointer"
+                onClick={() => handleOnEdit(value)}
+              />
+            </div>
+          </Restricted>
+          <Restricted
+            module={ModuleEnums.FEDERACIONES}
+            typePermisse={PermissionsEnums.DETAIL}
+          >
+            <div className="flex-shrink-0 h-10 w-8 ml-5">
+              <Icon
+                src={Icons.more}
+                fill="var(--color-primary)"
+                className="max-w-[50px] w-8 cursor-pointer"
+                onClick={() => handleOnView(value)}
+              />
+            </div>
+          </Restricted>
         </div>
       ),
     },
@@ -227,7 +241,11 @@ const Federaciones = () => {
         distinctUntilChanged(),
         // switch to new search observable each time the term changes
         map((term: string) => {
-          updateQuery("search", term);
+          if (isEmpty(term)) {
+            updateQuery("search", undefined);
+          } else {
+            updateQuery("search", term);
+          }
           updateQuery("page", undefined);
         })
       )
@@ -251,7 +269,7 @@ const Federaciones = () => {
 
   return (
     <LayoutDashboard title="Federaciones">
-      <div className="px-20 mt-12">
+      <div className="lg:px-20 mt-12">
         {isLoading && !onSearch ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
@@ -273,13 +291,18 @@ const Federaciones = () => {
                   leftImg={Icons.search}
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
-                <div className="px-2" onClick={show}>
-                  <Icon
-                    src={Icons.addUser}
-                    fill="var(--color-primary)"
-                    className="max-w-[50px] w-12 cursor-pointer"
-                  />
-                </div>
+                <Restricted
+                  module={ModuleEnums.FEDERACIONES}
+                  typePermisse={PermissionsEnums.ADD}
+                >
+                  <div className="px-2" onClick={show}>
+                    <Icon
+                      src={Icons.addUser}
+                      fill="var(--color-primary)"
+                      className="max-w-[50px] w-12 cursor-pointer"
+                    />
+                  </div>
+                </Restricted>
               </div>
             </form>
             {isLoading ? (
@@ -312,9 +335,33 @@ const Federaciones = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  if (session && session.accessToken) {
+  const token = session?.accessToken as string;
+
+  let profile: any = [];
+  try {
+    profile = await ProfilApiService.getUser(token);
+  } catch (e) {
+    console.log("error", e);
+  }
+
+  const isValid = routeValidForUser(
+    profile,
+    PermissionsEnums.VIEW,
+    ModuleEnums.FEDERACIONES
+  );
+
+  if (session && session.accessToken && isValid) {
     return {
       props: {},
+    };
+  }
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: "/dashboard/permission-denied",
+        permanent: false,
+      },
     };
   }
   return {

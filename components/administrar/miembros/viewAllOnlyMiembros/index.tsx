@@ -9,7 +9,7 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
   const { cedula, nombre, periodo, cargo, foto, activo } = data;
   return (
     <div className="text-center">
-      <h2 className="text-4xl font-bold">Detalle de Miembro</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Detalle de Miembro</h2>
       <div className="item flex flex-col gap-2 text-center justify-center mt-8">
         <img
           src={ValidateImage(foto)}

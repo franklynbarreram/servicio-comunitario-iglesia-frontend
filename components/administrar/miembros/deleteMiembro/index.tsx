@@ -44,7 +44,7 @@ const DeleteMiembro = ({ data, hide, refetch }: any) => {
             </h5>
           </div>
 
-          <div className="flex gap-4 mt-10 px-20">
+          <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
             <Button
               labelProps="f-18 font-normal"
               label={"Cancelar"}

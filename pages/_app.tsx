@@ -9,10 +9,12 @@ import "styles/global-tailwind.scss";
 import "styles/globals.scss";
 import "styles/fonts.scss";
 import "styles/styles-ant.scss";
+import PermissionProvider from "context/PermissionProvider/PermissionProvider";
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [theme, setTheme] = React.useState<ThemeType>("light");
   const queryClientRef = React.useRef<QueryClient | null>(null);
+  const permissionsRef = React.useRef<any>(null);
 
   if (!queryClientRef.current) {
     queryClientRef.current = new QueryClient();
@@ -21,23 +23,25 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider session={pageProps.session}>
       <QueryClientProvider client={queryClientRef.current}>
-        <ToastProvider
-          autoDismissTimeout={4000}
-          autoDismiss
-          placement="top-center"
-        >
-          <ThemeContext.Provider value={{ theme, setTheme }}>
-            <div
-              className={clsx(
-                "font-montserrat min-h-screen text-gray-800",
-                "transition-colors duration-1000",
-                theme
-              )}
-            >
-              <Component {...pageProps} />
-            </div>
-          </ThemeContext.Provider>
-        </ToastProvider>
+        <PermissionProvider client={permissionsRef}>
+          <ToastProvider
+            autoDismissTimeout={4000}
+            autoDismiss
+            placement="top-center"
+          >
+            <ThemeContext.Provider value={{ theme, setTheme }}>
+              <div
+                className={clsx(
+                  "font-montserrat min-h-screen text-gray-800",
+                  "transition-colors duration-1000",
+                  theme
+                )}
+              >
+                <Component {...pageProps} />
+              </div>
+            </ThemeContext.Provider>
+          </ToastProvider>
+        </PermissionProvider>
       </QueryClientProvider>
     </Provider>
   );

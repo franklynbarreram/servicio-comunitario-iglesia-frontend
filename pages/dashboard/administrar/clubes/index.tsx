@@ -29,6 +29,11 @@ import ViewIglesia from "components/administrar/iglesias/view";
 import CreateClub from "components/administrar/clubes/create";
 import ViewClub from "components/administrar/clubes/view";
 import EditClub from "components/administrar/clubes/edit";
+import { PermissionsEnums } from "consts/permissionsEnum";
+import { ModuleEnums } from "consts/modulesEmuns";
+import { routeValidForUser } from "lib/helper";
+import { ProfilApiService } from "services";
+import Restricted from "context/PermissionProvider/Restricted";
 
 // import Image from "next/image";
 type Params = {
@@ -83,7 +88,7 @@ const Clubes = () => {
     data: response,
     isLoading,
     refetch,
-  } = useQuery<any>([UseQueryEnums.GET_ALL_IGLESIAS, params], () =>
+  } = useQuery<any>([UseQueryEnums.GET_ALL_CLUBES, params], () =>
     ClubesServices.getAll(params)
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
@@ -189,22 +194,32 @@ const Clubes = () => {
       tdClassName: DataClassName,
       selector: (value: any) => (
         <div className="flex items-center">
-          <div className="flex-shrink-0 h-10 w-8">
-            <Icon
-              src={Icons.edit}
-              fill="white"
-              className="max-w-[50px] w-8 text-primary cursor-pointer"
-              onClick={() => handleOnEdit(value)}
-            />
-          </div>
-          <div className="flex-shrink-0 h-10 w-8 ml-5">
-            <Icon
-              src={Icons.more}
-              fill="var(--color-primary)"
-              className="max-w-[50px] w-8 cursor-pointer"
-              onClick={() => handleOnView(value)}
-            />
-          </div>
+          <Restricted
+            module={ModuleEnums.CLUBES}
+            typePermisse={PermissionsEnums.EDIT}
+          >
+            <div className="flex-shrink-0 h-10 w-8">
+              <Icon
+                src={Icons.edit}
+                fill="white"
+                className="max-w-[50px] w-8 text-primary cursor-pointer"
+                onClick={() => handleOnEdit(value)}
+              />
+            </div>
+          </Restricted>
+          <Restricted
+            module={ModuleEnums.CLUBES}
+            typePermisse={PermissionsEnums.DETAIL}
+          >
+            <div className="flex-shrink-0 h-10 w-8 ml-5">
+              <Icon
+                src={Icons.more}
+                fill="var(--color-primary)"
+                className="max-w-[50px] w-8 cursor-pointer"
+                onClick={() => handleOnView(value)}
+              />
+            </div>
+          </Restricted>
         </div>
       ),
     },
@@ -228,7 +243,11 @@ const Clubes = () => {
         distinctUntilChanged(),
         // switch to new search observable each time the term changes
         map((term: string) => {
-          updateQuery("search", term);
+          if (isEmpty(term)) {
+            updateQuery("search", undefined);
+          } else {
+            updateQuery("search", term);
+          }
           updateQuery("page", undefined);
         })
       )
@@ -252,7 +271,7 @@ const Clubes = () => {
 
   return (
     <LayoutDashboard title="Clubes">
-      <div className="px-20 mt-12">
+      <div className="lg:px-20 mt-12">
         {isLoading && !onSearch ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
@@ -274,13 +293,18 @@ const Clubes = () => {
                   leftImg={Icons.search}
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
-                <div className="px-2" onClick={show}>
-                  <Icon
-                    src={Icons.addUser}
-                    fill="var(--color-primary)"
-                    className="max-w-[50px] w-12 cursor-pointer"
-                  />
-                </div>
+                <Restricted
+                  module={ModuleEnums.CLUBES}
+                  typePermisse={PermissionsEnums.ADD}
+                >
+                  <div className="px-2" onClick={show}>
+                    <Icon
+                      src={Icons.addUser}
+                      fill="var(--color-primary)"
+                      className="max-w-[50px] w-12 cursor-pointer"
+                    />
+                  </div>
+                </Restricted>
               </div>
             </form>
             {isLoading ? (
@@ -313,9 +337,33 @@ const Clubes = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  if (session && session.accessToken) {
+  const token = session?.accessToken as string;
+
+  let profile: any = [];
+  try {
+    profile = await ProfilApiService.getUser(token);
+  } catch (e) {
+    console.log("error", e);
+  }
+
+  const isValid = routeValidForUser(
+    profile,
+    PermissionsEnums.VIEW,
+    ModuleEnums.CLUBES
+  );
+
+  if (session && session.accessToken && isValid) {
     return {
       props: {},
+    };
+  }
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: "/dashboard/permission-denied",
+        permanent: false,
+      },
     };
   }
   return {
