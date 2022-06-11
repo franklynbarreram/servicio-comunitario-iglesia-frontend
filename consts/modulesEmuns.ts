@@ -4,6 +4,7 @@ export enum ModuleEnums {
   IGLESIAS = "iglesias",
   CLUBES = "clubes",
   MIEMBROS = "miembros",
+  LISTADO_CAMPOREE = "listado-camporee",
 }
 
 export const ModuleMap = {
@@ -12,4 +13,5 @@ export const ModuleMap = {
   [ModuleEnums.IGLESIAS]: ModuleEnums.IGLESIAS,
   [ModuleEnums.CLUBES]: ModuleEnums.CLUBES,
   [ModuleEnums.MIEMBROS]: ModuleEnums.MIEMBROS,
+  [ModuleEnums.LISTADO_CAMPOREE]: ModuleEnums.LISTADO_CAMPOREE,
 };

@@ -18,6 +18,9 @@ export const appRouter = {
       },
       camporee: {
         href: "/camporee",
+        subLinks: {
+          listaCamporee: { href: "listado-camporee" },
+        },
       },
       especialidades: {
         href: "/especialidades",

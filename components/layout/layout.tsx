@@ -35,12 +35,18 @@ export const LayoutDashboard: React.FC<LayoutDashboardProps> = ({
 
   const showSubmenu = (item: any, positionMenu: any, positionSubMenu: any) => {
     let auxMenu = navigation;
+    console.log("posicion menu:", positionMenu);
+    console.log("posicion SubMenu:", positionSubMenu);
+    console.log(
+      "LOO",
+      auxMenu[positionMenu].subNavigation[positionSubMenu].dropdownVisible
+    );
 
     auxMenu[positionMenu].subNavigation[positionSubMenu].dropdownVisible =
       !auxMenu[positionMenu].subNavigation[positionSubMenu].dropdownVisible;
 
     console.log("sin: ", auxMenu);
-    console.log("con: ", [...auxMenu]);
+    // console.log("con: ", [...auxMenu]);
 
     return [...auxMenu];
   };
