@@ -46,29 +46,22 @@ export const navigation = [
           },
         ],
       },
-      // {
-      //   id: 2,
-      //   name: "camporee",
-      //   label: "Camporee",
-      //   href: `${appRouter.dashboard.subLinks.camporee.href}`,
-      //   icon: Icons.camporee,
-      //   dropdownVisible: false,
-      //   dropdown: [
-      //     {
-      //       name: "listado-camporee",
-      //       label: "Listado",
-      //       href: `${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.listaCamporee.href}`,
-      //       icon: Icons.card,
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 4,
-      //   name: "especialidades",
-      //   label: "Especialidades",
-      //   href: `${appRouter.dashboard.subLinks.especialidades.href}`,
-      //   icon: Icons.card,
-      // },
+      {
+        id: 2,
+        name: "camporee",
+        label: "Camporee",
+        href: `${appRouter.dashboard.subLinks.camporee.href}`,
+        icon: Icons.camporee,
+        dropdownVisible: false,
+        dropdown: [
+          {
+            name: "listado-camporee",
+            label: "Listado",
+            href: `${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.listaCamporee.href}`,
+            icon: Icons.card,
+          },
+        ],
+      },
     ],
   },
 ];
