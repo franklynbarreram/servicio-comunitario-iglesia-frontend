@@ -154,3 +154,35 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+.tabs-antd-custom.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list {
+  gap: 10px;
+}
+
+.tabs-antd-custom.ant-tabs-card
+  > .ant-tabs-nav
+  .ant-tabs-tab.ant-tabs-tab-active {
+  background-color: var(--color-yellow);
+  color: black;
+  font-weight: 600;
+}
+
+.tabs-antd-custom.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+  background-color: transparent;
+  color: black;
+  font-weight: 600;
+}
+
+.tabs-antd-custom .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black;
+  // font-weight: bold;
+}
+
+.tabs-antd-custom .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black;
+  text-shadow: 0 0 0.25px currentColor;
+}
+
+.tabs-antd-custom.justify-center.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+  justify-content: center;
+}

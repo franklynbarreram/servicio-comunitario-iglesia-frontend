@@ -27,9 +27,6 @@ export const ItemNavbar: React.FC<itemNavbarsProps> = ({
     <Fragment key={`nav-${isMobile ? "mobile" : "desktop"}-${item.id}`}>
       <p className="text-white f-18 font-semibold px-3 pt-7">{item.label}</p>
       {item?.subNavigation?.map((subItem: any, positionSubMenu: any) => {
-        {
-          console.log("lassss", positionSubMenu);
-        }
         return (
           <Fragment key={subItem.name}>
             {subItem.dropdown ? (

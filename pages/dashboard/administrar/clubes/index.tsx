@@ -358,7 +358,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  if (!isValid) {
+  if (session && session.accessToken && !isValid && !isEmpty(profile)) {
     return {
       redirect: {
         destination: "/dashboard/permission-denied",
@@ -366,11 +366,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
+    props: {},
   };
 };
 

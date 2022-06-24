@@ -99,10 +99,10 @@ export default function Pagination({
     total,
     limit
   );
-  console.log("cu", currentPage);
-  console.log("to", total);
-  console.log("limi", limit);
-  useEffect(() => {}, [pages]);
+  // console.log("cu", currentPage);
+  // console.log("to", total);
+  // console.log("limi", limit);
+  // useEffect(() => {}, [pages]);
 
   return (
     <Container>

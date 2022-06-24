@@ -6,7 +6,7 @@ export enum Icons {
   faq = "/icons/faq.svg",
   support = "/icons/support.svg",
   terms = "/icons/terms.svg",
-  security = "/icons/terms.svg",
+  security = "/icons/security.svg",
   defaultAvatar = "/icons/user.svg",
   logout = "/icons/logout.svg",
   profile = "/icons/profile.svg",
@@ -30,4 +30,8 @@ export enum Icons {
   camporee = "/icons/camporee.svg",
   estadisticas = "/icons/estadisticas.svg",
   noImgUser = "/icons/icon-user.png",
+  location = "/icons/ubicacion.svg",
+  iglesia = "/icons/iglesia.svg",
+  calendar = "/icons/calendar.svg",
+  medalla = "/icons/medalla.svg",
 }

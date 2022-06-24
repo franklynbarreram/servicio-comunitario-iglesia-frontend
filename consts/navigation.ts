@@ -55,9 +55,9 @@ export const navigation = [
         dropdownVisible: false,
         dropdown: [
           {
-            name: "listado-camporee",
+            name: "listado",
             label: "Listado",
-            href: `${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.listaCamporee.href}`,
+            href: `${appRouter.dashboard.subLinks.camporee.href}`,
             icon: Icons.card,
           },
         ],

@@ -1,36 +1,14 @@
-import { Input } from "components/common/form/input";
-import { GetServerSideProps } from "next";
 import { getSession, signIn } from "next-auth/client";
 import * as React from "react";
-import AsyncSelect from "react-select/async";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button } from "components/common/button/button";
-// import { useQuery } from "react-query";
-// import { UseQueryEnums } from "consts/useQueryEnums";
-import {
-  AuthService,
-  ConsejosRegionalesServices,
-  PersonasServices,
-} from "services";
+import { AuthService } from "services";
 import { Spinner } from "components/common/spinner/spinner";
 import { useToasts } from "react-toast-notifications";
-import { Upload, message } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Typography } from "components/common/typography";
-import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
-import { isNil, isEmpty, get } from "lodash";
-import { PastoresService } from "services/Pastores";
-import { DistritosServices } from "services/Distritos";
-import { customStyles } from "consts/stylesReactSelect.helper";
-import { AncianosService } from "services/Ancianos";
-import { IglesiasServices } from "services/Iglesias";
-import { MiembrosServices } from "services/Miembros";
+import { get } from "lodash";
 import { InputListSearch } from "components/common/form/input-list-search";
 import { OptionType } from "interfaces";
-import { useQuery } from "react-query";
-import { UseQueryEnums } from "consts/useQueryEnums";
-import { CargosServices } from "services/Cargos";
 import { useRouter } from "next/router";
 
 interface TypeMiembros {
@@ -89,21 +67,37 @@ const EditProfile = ({ data, hide, refetch }: any) => {
         });
         console.log("response change:", response);
 
-        getSession().then((res) => {
-          signIn("credentials", {
-            newData: JSON.stringify(response),
-            redirect: false,
-            oldSession: JSON.stringify(res),
-          });
-          refetch();
-          hide();
-          router.reload();
+        getSession()
+          .then((res) => {
+            signIn("credentials", {
+              newData: JSON.stringify(response),
+              redirect: false,
+              oldSession: JSON.stringify(res),
+            })
+              .then((response) => {
+                refetch();
+                hide();
+                router.reload();
+              })
+              .catch((e: any) => {
+                console.log("Error signin: ", e);
+                // GenerateErrorToast(e, addToast);
+                setIsLoading(false);
+              })
+              .finally(() => {
+                setIsLoading(false);
+              });
 
-          setIsLoading(false);
-        });
+            setIsLoading(false);
+          })
+          .catch((e: any) => {
+            console.log("Error get session: ", e);
+            // GenerateErrorToast(e, addToast);
+            setIsLoading(false);
+          });
       })
       .catch((e: any) => {
-        console.log("Error: ", e);
+        console.log("Error service profile: ", e);
         GenerateErrorToast(e, addToast);
         setIsLoading(false);
       });

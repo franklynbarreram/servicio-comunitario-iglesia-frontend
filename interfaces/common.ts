@@ -18,5 +18,6 @@ export interface InputProps {
   rightClick?: () => void;
   leftClick?: () => void;
   otherStyles?: string;
+  isTextArea?: boolean;
   error?: any;
 }

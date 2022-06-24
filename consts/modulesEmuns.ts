@@ -4,7 +4,9 @@ export enum ModuleEnums {
   IGLESIAS = "iglesias",
   CLUBES = "clubes",
   MIEMBROS = "miembros",
-  LISTADO_CAMPOREE = "listado-camporee",
+  CAMPOREE = "listado",
+  LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE = "evento-precamporee",
+  EVENTO_PRECAMPOREE_DETAIL = "evento-precamporee-detail",
 }
 
 export const ModuleMap = {
@@ -13,5 +15,9 @@ export const ModuleMap = {
   [ModuleEnums.IGLESIAS]: ModuleEnums.IGLESIAS,
   [ModuleEnums.CLUBES]: ModuleEnums.CLUBES,
   [ModuleEnums.MIEMBROS]: ModuleEnums.MIEMBROS,
-  [ModuleEnums.LISTADO_CAMPOREE]: ModuleEnums.LISTADO_CAMPOREE,
+  [ModuleEnums.CAMPOREE]: ModuleEnums.CAMPOREE,
+  [ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE]:
+    ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+  [ModuleEnums.EVENTO_PRECAMPOREE_DETAIL]:
+    ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
 };

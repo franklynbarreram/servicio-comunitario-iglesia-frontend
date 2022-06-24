@@ -47,8 +47,25 @@ export const PermissionByRol = [
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.EDIT,
+        ],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.LOAD_SCORE,
+        ],
       },
     ],
   },
@@ -83,8 +100,20 @@ export const PermissionByRol = [
         ],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.LOAD_FORMS,
+        ],
       },
     ],
   },
@@ -112,8 +141,21 @@ export const PermissionByRol = [
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.APPROVE_FORM,
+        ],
       },
     ],
   },
@@ -141,8 +183,21 @@ export const PermissionByRol = [
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.APPROVE_FORM,
+        ],
       },
     ],
   },
@@ -170,7 +225,15 @@ export const PermissionByRol = [
         permissionsActions: [],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
     ],
@@ -204,8 +267,21 @@ export const PermissionByRol = [
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
       {
-        name: ModuleEnums.LISTADO_CAMPOREE,
+        name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.APPROVE_FORM,
+        ],
       },
     ],
   },

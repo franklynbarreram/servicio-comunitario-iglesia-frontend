@@ -13,8 +13,8 @@ class Service {
   //   return this.client.post("/auth/register", payload);
   // }
 
-  async getAll(params: any): Promise<any> {
-    return this.client.get("/personas", { params });
+  async getAll(): Promise<any> {
+    return this.client.get("/personas");
   }
 }
 

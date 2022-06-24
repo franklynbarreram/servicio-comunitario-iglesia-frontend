@@ -23,7 +23,7 @@ const Profile = () => {
 
   return (
     <LayoutDashboard title="Perfil">
-      <div className="lg:px-20 mt-12">
+      <div className="2xl:px-20 mt-12">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
@@ -55,7 +55,7 @@ const Profile = () => {
                 {`${user?.nombres} ${user?.apellidos}`}
               </Typography>
             </div>
-            <div className="container-form mt-16 gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
+            <div className="container-form mt-16 gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 text-left ">
               <div className="item col-span-1">
                 <Typography
                   type="label"

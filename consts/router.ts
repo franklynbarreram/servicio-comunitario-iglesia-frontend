@@ -19,7 +19,19 @@ export const appRouter = {
       camporee: {
         href: "/camporee",
         subLinks: {
-          listaCamporee: { href: "listado-camporee" },
+          detail: { href: "detail" },
+          events: {
+            href: "eventos",
+            subLinks: {
+              precamporee: {
+                href: "precamporee",
+                subLinks: {
+                  detail: { href: "detail" },
+                },
+              },
+              camporee: { href: "camporee" },
+            },
+          },
         },
       },
       especialidades: {

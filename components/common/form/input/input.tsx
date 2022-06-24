@@ -7,7 +7,9 @@ import { Icons } from "consts/icons";
 import { InputProps } from "interfaces/common";
 
 export const Input: React.FC<
-  InputProps & React.InputHTMLAttributes<HTMLInputElement>
+  InputProps &
+    React.InputHTMLAttributes<HTMLInputElement> &
+    React.InputHTMLAttributes<HTMLTextAreaElement>
 > = ({
   name,
   title,
@@ -28,6 +30,7 @@ export const Input: React.FC<
   handleVerification,
   className,
   primary,
+  isTextArea,
   ...props
 }) => {
   const [showLabel, setShowLabel] = React.useState(false);
@@ -67,57 +70,111 @@ export const Input: React.FC<
           )}
         </div>
         <div className="relative container-input">
-          <input
-            onKeyUp={(e) => {
-              if (props.type === "tel") {
-                e.currentTarget.value === ""
+          {!isTextArea ? (
+            <input
+              onKeyUp={(e) => {
+                if (props.type === "tel") {
+                  e.currentTarget.value === ""
+                    ? setShowLabel(false)
+                    : setShowLabel(true);
+                }
+              }}
+              id={name}
+              name={name}
+              placeholder={customPlaceholder || title}
+              autoComplete="off"
+              className={clsx(
+                {
+                  "border-alert-error focus:border-alert-error placeholder-alert-error focus:ring-transparent":
+                    error || verifyValue === false,
+                },
+                {
+                  "text-alert-error": error,
+                },
+                { "opacity-50 bg-gray-200": props.disabled },
+                { "px-4": !leftImg && !rightImg },
+                { "pl-21 md:pl-36 pr-4": InputSelect },
+                { "pl-14 pr-4": leftImg },
+                { "pr-8": rightImg },
+                { "bg-white border-primary": isFill },
+                { "bg-white border-primary": primary && !error },
+                { "bg-white": !isFill },
+                !!isFill && styles.inputDateWithValue,
+                "placeholder-gray-500 w-full text-gray-500 font-montserrat border",
+                {
+                  "pb-4 pt-4 rounded-full f-24": !otherStyles,
+                },
+                otherStyles,
+                {
+                  "border-gray-500": !error && !isFill,
+                },
+                "disabled:placeholder-gray-200 disabled:cursor-not-allowed disabled:text-gray-500",
+                {
+                  "focus:outline-none focus:bg-gray-opacity-10 focus:ring-offset-transparent focus:ring-opacity-0 focus:border-gray-opacity-10 focus:ring-transparent":
+                    !error,
+                }
+              )}
+              ref={registerAux && registerAux.ref}
+              onChange={(e) => {
+                registerAux && registerAux.onChange(e); // method from hook form register
+                onChangeCustom && onChangeCustom(e); // your method
+                e.target.value === ""
                   ? setShowLabel(false)
                   : setShowLabel(true);
-              }
-            }}
-            id={name}
-            name={name}
-            placeholder={customPlaceholder || title}
-            autoComplete="off"
-            className={clsx(
-              {
-                "border-alert-error focus:border-alert-error placeholder-alert-error focus:ring-transparent":
-                  error || verifyValue === false,
-              },
-              {
-                "text-alert-error": error,
-              },
-              { "px-4": !leftImg && !rightImg },
-              { "pl-21 md:pl-36 pr-4": InputSelect },
-              { "pl-14 pr-4": leftImg },
-              { "pr-8": rightImg },
-              { "bg-white border-primary": isFill },
-              { "bg-white border-primary": primary && !error },
-              { "bg-white": !isFill },
-              !!isFill && styles.inputDateWithValue,
-              "placeholder-gray-500 w-full text-gray-500 font-montserrat border",
-              {
-                "pb-4 pt-4 rounded-full f-24": !otherStyles,
-              },
-              otherStyles,
-              {
-                "border-gray-500": !error && !isFill,
-              },
-              "disabled:placeholder-gray-200 disabled:cursor-not-allowed disabled:text-gray-500",
-              {
-                "focus:outline-none focus:bg-gray-opacity-10 focus:ring-offset-transparent focus:ring-opacity-0 focus:border-gray-opacity-10 focus:ring-transparent":
-                  !error,
-              }
-            )}
-            ref={registerAux && registerAux.ref}
-            onChange={(e) => {
-              registerAux && registerAux.onChange(e); // method from hook form register
-              onChangeCustom && onChangeCustom(e); // your method
-              e.target.value === "" ? setShowLabel(false) : setShowLabel(true);
-            }}
-            // ref={register ? register(rules) : () => ({})}
-            {...props}
-          />
+              }}
+              // ref={register ? register(rules) : () => ({})}
+              {...props}
+            />
+          ) : (
+            <textarea
+              id={name}
+              name={name}
+              placeholder={customPlaceholder || title}
+              autoComplete="off"
+              className={clsx(
+                {
+                  "border-alert-error focus:border-alert-error placeholder-alert-error focus:ring-transparent":
+                    error || verifyValue === false,
+                },
+                {
+                  "text-alert-error": error,
+                },
+                { "opacity-50 bg-gray-200": props.disabled },
+                { "px-4": !leftImg && !rightImg },
+                { "pl-21 md:pl-36 pr-4": InputSelect },
+                { "pl-14 pr-4": leftImg },
+                { "pr-8": rightImg },
+                { "bg-white border-primary": isFill },
+                { "bg-white border-primary": primary && !error },
+                { "bg-white": !isFill },
+                !!isFill && styles.inputDateWithValue,
+                "placeholder-gray-500 w-full text-gray-500 font-montserrat border",
+                {
+                  "pb-4 pt-4 rounded-full f-24": !otherStyles,
+                },
+                otherStyles,
+                {
+                  "border-gray-500": !error && !isFill,
+                },
+                "disabled:placeholder-gray-200 disabled:cursor-not-allowed disabled:text-gray-500",
+                {
+                  "focus:outline-none focus:bg-gray-opacity-10 focus:ring-offset-transparent focus:ring-opacity-0 focus:border-gray-opacity-10 focus:ring-transparent":
+                    !error,
+                }
+              )}
+              ref={registerAux && registerAux.ref}
+              onChange={(e) => {
+                registerAux && registerAux.onChange(e); // method from hook form register
+                onChangeCustom && onChangeCustom(e); // your method
+                e.target.value === ""
+                  ? setShowLabel(false)
+                  : setShowLabel(true);
+              }}
+              // ref={register ? register(rules) : () => ({})}
+              {...props}
+            />
+          )}
+
           {InputSelect && (
             <div className="absolute top-0 h-full w-20 md:w-32">
               <InputSelect />
