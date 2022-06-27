@@ -23,6 +23,8 @@ import { Icons } from "consts";
 import Back from "components/common/back";
 import EditCamporee from "components/camporee/edit-camporee";
 import { Tabs } from "antd";
+import EditEventPrecamporee from "components/camporee/eventos-precamporee/edit";
+import EventosCamporee from "components/camporee/eventos-camporee";
 
 const { TabPane } = Tabs;
 
@@ -42,12 +44,6 @@ const CamporeeDetail = () => {
     show: showEdit,
   } = useModal();
 
-  const {
-    Modal: ModalView,
-    hide: hideView,
-    isShow: isShowView,
-    show: showView,
-  } = useModal();
   const [dataEdit, setDataEdit] = React.useState<any>();
   // const [response, setResponse] = React.useState<any>();
   // const [isLoading, setIsLoading] = React.useState<any>(true);
@@ -63,32 +59,6 @@ const CamporeeDetail = () => {
   } = useQuery<any>([`${UseQueryEnums.GET_CAMPOREE_BY_ID}_${id}`], () =>
     CamporeeServices.getById(id)
   );
-
-  // React.useEffect(() => {
-  //   setIsLoading(true);
-  //   CamporeeServices.getById(params).then((data) => {
-  //     setResponse(data);
-  //     setIsLoading(false);
-  //   });
-  // }, []);
-
-  // const [tabs, setTabs] = React.useState([
-  //   {
-  //     name: "Eventos Precamporee",
-  //     component: <EventosPrecamporee idCamporee={id} />,
-  //     current: true,
-  //   },
-  //   {
-  //     name: "Eventos Camporee",
-  //     component: <></>,
-  //     current: false,
-  //   },
-  //   {
-  //     name: "Resultados",
-  //     component: <></>,
-  //     current: false,
-  //   },
-  // ]);
 
   const {
     register,
@@ -106,13 +76,13 @@ const CamporeeDetail = () => {
     showEdit();
   };
 
-  const handleOnView = (selected: any) => {
-    const findSelected = response?.data?.data?.find(
-      (item: any) => item.id === selected.id
-    );
-    setDataView(findSelected);
-    showView();
-  };
+  // const handleOnView = (selected: any) => {
+  //   const findSelected = response?.data?.data?.find(
+  //     (item: any) => item.id === selected.id
+  //   );
+  //   setDataView(findSelected);
+  //   showEditPrecamporee();
+  // };
 
   const values = get(response, "data", []);
 
@@ -120,11 +90,11 @@ const CamporeeDetail = () => {
     return [
       {
         icon: Icons.calendar,
-        title: `${values?.fecha_inicio} a ${values?.fecha_fin}`,
+        content: `${values?.fecha_inicio} a ${values?.fecha_fin}`,
       },
       {
         icon: Icons.location,
-        title: (
+        content: (
           <>
             <strong className="text-[black]">Direccion:</strong>
             {` ${values?.lugar}`}
@@ -134,7 +104,7 @@ const CamporeeDetail = () => {
       ,
       {
         icon: Icons.iglesia,
-        title: (
+        content: (
           <>
             <strong className="text-[black]">Capellan:</strong>
             {` ${values?.capellan}`}
@@ -143,7 +113,7 @@ const CamporeeDetail = () => {
       },
       {
         icon: Icons.camporee,
-        title: (
+        content: (
           <>
             <strong className="text-[black]">Lider juvenil:</strong>
             {` ${values?.lider_juvenil}`}
@@ -157,7 +127,7 @@ const CamporeeDetail = () => {
 
   return (
     <LayoutDashboard title="Detalle Camporee">
-      <div className="px-4 3xl:px-20 mt-12">
+      <div className="px-4 mt-12">
         <Back className="mb-12" />
         <div className="flex flex-wrap flex-row">
           <div className="flex flex-wrap flex-auto flex-col">
@@ -166,12 +136,10 @@ const CamporeeDetail = () => {
 						*/}
             <Tabs type="card" className="tabs-antd-custom">
               <TabPane tab="Eventos Precamporee" key="1">
-                <EventosPrecamporee idCamporee={id} />
+                <EventosPrecamporee idCamporee={id} className="px-2" />
               </TabPane>
               <TabPane tab="Eventos Camporee" key="2">
-                <p>Content of Tab Pane 2</p>
-                <p>Content of Tab Pane 2</p>
-                <p>Content of Tab Pane 2</p>
+                <EventosCamporee idCamporee={id} className="px-2" />
               </TabPane>
               <TabPane tab="Resultados" key="3">
                 <p>Content of Tab Pane 3</p>
@@ -202,9 +170,10 @@ const CamporeeDetail = () => {
         <CreateClub hide={hide} refetch={refetch} />
       </Modal>
   
-      <ModalView isShow={isShowView}>
-        <ViewClub hide={hideView} data={dataView} refetch={refetch} />
+      <ModalView isShow={isShowViewPrecamporee}>
+        <ViewClub hide={hideViewCamporee} data={dataView} refetch={refetch} />
       </ModalView> */}
+
       <ModalEdit isShow={isShowEdit}>
         <EditCamporee hide={hideEdit} data={values} refetch={refetch} />
       </ModalEdit>

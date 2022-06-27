@@ -4,21 +4,16 @@ import * as React from "react";
 
 interface ItemIconoProps {
   icon: string;
-  title: string;
+  content: string;
   className?: string;
 }
 
-const ItemIcon = ({ icon, title, className }: ItemIconoProps) => {
+const ItemIcon = ({ icon, className, content }: ItemIconoProps) => {
   return (
     <div className={clsx("container", className)}>
-      <div
-        className={clsx("flex flex-row gap-x-2 items-center", className)}
-        key={title}
-      >
-        {icon && (
-          <img className="w-5" src={ValidateImage(icon)} title={title} />
-        )}
-        <p className="text-black text-sm">{title}</p>
+      <div className={clsx("flex flex-row gap-x-2 items-center", className)}>
+        {icon && <img className="w-5" src={ValidateImage(icon)} />}
+        <p className="text-black text-sm"> {content}</p>
       </div>
     </div>
   );

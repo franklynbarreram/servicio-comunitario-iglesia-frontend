@@ -12,7 +12,7 @@ import type { UploadFile } from "antd/es/upload/interface";
 import { DragAndDrop } from "components/common/dragger/";
 import { CamporeeServices } from "services/Camporee";
 import { useToasts } from "react-toast-notifications";
-import { GenerateErrorToast } from "lib/helper";
+import { formatDates, GenerateErrorToast } from "lib/helper";
 import { Spinner } from "components/common/spinner/spinner";
 import { isEmpty, isNil } from "lodash";
 import { Icon } from "components/icon";
@@ -29,7 +29,6 @@ type InformeFormProps = {
   informe?: any;
 };
 
-const formatDates = "YYYY-MM-DD";
 export const InformeForm: React.FC<InformeFormProps> = ({
   // onHandleSubmit,
   // isLoading,

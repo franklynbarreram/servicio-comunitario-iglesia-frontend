@@ -7,10 +7,27 @@ class Service {
   async create(data: any): Promise<any> {
     return this.client.post("/camporees", data);
   }
+
+  async createEventCamporee(data: any): Promise<any> {
+    return this.client.post("/eventos", data);
+  }
+
   async edit(data: any, id: any): Promise<any> {
     return this.client.put(`/camporees/${id}`, data);
   }
-
+  async createEventPrecamporee(data: any): Promise<any> {
+    return this.client.post("/precamporee", data);
+  }
+  async editEventPrecamporee(
+    data: any,
+    id_camporee_precamporee: any
+  ): Promise<any> {
+    return this.client.put(`/precamporee/${id_camporee_precamporee}`, data);
+  }
+  async getAllEventsCamporeeByIdCamporee(params: any): Promise<any> {
+    const { idCamporee } = params;
+    return this.client.get(`/eventos/camporee/${idCamporee}`, { params });
+  }
   async getById(id: any): Promise<any> {
     return this.client.get(`/camporees/${id}`);
   }

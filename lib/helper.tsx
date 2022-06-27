@@ -3,6 +3,8 @@ import { PermissionByRol } from "consts/permissionByRol";
 import { useUser } from "hooks/user";
 import { isNil, isEmpty, get } from "lodash";
 
+export const formatDates = "YYYY-MM-DD";
+
 export const ValidateImageUser = (img: any) => {
   if (
     img === "" ||

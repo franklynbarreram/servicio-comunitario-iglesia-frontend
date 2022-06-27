@@ -22,13 +22,19 @@ import {
   PhoneIcon,
   ViewListIcon,
   PlusIcon,
+  ClipboardCheckIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
-import EditEventPrecamporee from "./edit";
+import EditEventPrecporee from "./edit";
 import clsx from "clsx";
 import CreateEventPrecamporee from "./create";
+import {
+  TypesSelectCapellanMap,
+  TypesSelectYesOrNot,
+} from "consts/typesSelectEnum";
+import CreateEventCamporee from "./create";
 
-interface EventosPrecamporeeProps {
+interface EventosCamporeeProps {
   idCamporee: number | string | string[] | undefined;
   className?: string;
 }
@@ -43,37 +49,34 @@ type Params = {
   idCamporee: number | string | string[] | undefined;
 };
 
-const EventosPrecamporee = ({
-  idCamporee,
-  className,
-}: EventosPrecamporeeProps) => {
+const EventosCamporee = ({ idCamporee, className }: EventosCamporeeProps) => {
   const [params, setValue] = useQueryParams<Params>({
     limit: 6,
     idCamporee: idCamporee,
   });
   const {
-    Modal: ModalEditPrecamporee,
-    hide: hideEditPrecamporee,
-    isShow: isShowEditPrecamporee,
-    show: showEditPrecamporee,
+    Modal: ModalEditCamporee,
+    hide: hideEditCamporee,
+    isShow: isShowEditCamporee,
+    show: showEditCamporee,
   } = useModal();
 
   const {
-    Modal: ModalCreatePrecamporee,
-    hide: hideCreatePrecamporee,
-    isShow: isShowCreatePrecamporee,
-    show: showCreatePrecamporee,
+    Modal: ModalCreateCamporee,
+    hide: hideCreateCamporee,
+    isShow: isShowCreateCamporee,
+    show: showCreateCamporee,
   } = useModal();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataEdit, setDataEdit] = React.useState();
   const [subject, setSubject] = React.useState(new Subject<string>());
 
   const { data, isLoading, refetch } = useQuery<any>(
-    [`${UseQueryEnums.GET_ALL_PRECAMPOREE_CAMPOREE}_${idCamporee}`, params],
-    () => CamporeeServices.getAllEventsPrecamporeeByIdCamporee(params)
+    [`${UseQueryEnums.GET_EVENT_CAMPOREE_BY_ID}_${idCamporee}`, params],
+    () => CamporeeServices.getAllEventsCamporeeByIdCamporee(params)
   );
 
-  const allPrecamporee = get(data, "data.data", []);
+  const allCamporee = get(data, "data.data", []);
   const total = get(data, "data.total", 1);
   const currentPage = get(data, "data.page", 1);
   const limit = get(data, "data.limit", params.limit);
@@ -101,11 +104,11 @@ const EventosPrecamporee = ({
   };
 
   const handleOnEdit = (selected: any) => {
-    const findSelected = allPrecamporee.find(
+    const findSelected = allCamporee.find(
       (item: any) => item.id === selected.id
     );
     setDataEdit(findSelected);
-    showEditPrecamporee();
+    showEditCamporee();
   };
 
   React.useEffect(() => {
@@ -173,7 +176,7 @@ const EventosPrecamporee = ({
                   module={ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE}
                   typePermisse={PermissionsEnums.ADD}
                 > */}
-                <div className="px-2" onClick={showCreatePrecamporee}>
+                <div className="px-2" onClick={showCreateCamporee}>
                   <Icon
                     src={Icons.more}
                     fill="var(--color-primary)"
@@ -188,19 +191,41 @@ const EventosPrecamporee = ({
               role="list"
               className="grid grid-cols-1 gap-6 sm:grid-cols-2 3xl:grid-cols-3 "
             >
-              {allPrecamporee.map((item: any) => {
-                const itemsPrecamporeeCard = [
+              {allCamporee.map((item: any) => {
+                const itemsCamporeeCard = [
                   {
-                    icon: Icons.calendar,
-                    content: `${item?.fecha_inicio} a ${item?.fecha_fin}`,
+                    icon: Icons.item,
+                    content: (
+                      <>
+                        <strong className="text-[black]">Categoría:</strong>
+                        {` ${item?.categoria}`}
+                      </>
+                    ),
                   },
                   {
-                    icon: Icons.medalla,
-                    content: `${item?.puntaje_maximo} pts ${
-                      item?.mensual ? "mensuales" : ""
-                    }`,
+                    icon: Icons.item,
+                    content: (
+                      <>
+                        <strong className="text-[black]">
+                          Puntuación maxima:
+                        </strong>
+                        {` ${item?.puntuacion_maxima}`}
+                      </>
+                    ),
                   },
-                  ,
+                  {
+                    icon: Icons.item,
+                    content: (
+                      <>
+                        <strong className="text-[black]">Realizado:</strong>
+                        {` ${
+                          item?.realizado
+                            ? TypesSelectYesOrNot.SI
+                            : TypesSelectYesOrNot.NO
+                        }`}
+                      </>
+                    ),
+                  },
                 ];
                 return (
                   <li
@@ -218,14 +243,13 @@ const EventosPrecamporee = ({
                           {item.descripcion}
                         </p>
                       </div>
-                      {itemsPrecamporeeCard && (
+                      {itemsCamporeeCard && (
                         <div className="mt-8 flex-grow flex w-full flex-col justify-start gap-y-4">
-                          {itemsPrecamporeeCard.map((item: any, index: any) => {
+                          {itemsCamporeeCard.map((item: any, index: any) => {
                             return (
                               <ItemIcon
                                 key={index}
                                 icon={item?.icon}
-                                title={item?.title}
                                 content={item?.content}
                               />
                             );
@@ -279,7 +303,7 @@ const EventosPrecamporee = ({
               })}
               {/* return <ItemIcon icon={item?.icon} title={item?.title} />; */}
             </ul>
-            {!isEmpty(allPrecamporee) && !isLoading ? (
+            {!isEmpty(allCamporee) && !isLoading ? (
               <div className="mt-10 justify-center flex">
                 <Pagination
                   currentPage={parseInt(currentPage)}
@@ -298,21 +322,22 @@ const EventosPrecamporee = ({
           </>
         )}
       </div>
-      <ModalCreatePrecamporee isShow={isShowCreatePrecamporee}>
-        <CreateEventPrecamporee
-          hide={hideCreatePrecamporee}
+      <ModalCreateCamporee isShow={isShowCreateCamporee}>
+        <CreateEventCamporee
+          hide={hideCreateCamporee}
           refetch={refetch}
+          idCamporee={idCamporee}
         />
-      </ModalCreatePrecamporee>
-      <ModalEditPrecamporee isShow={isShowEditPrecamporee}>
-        <EditEventPrecamporee
-          hide={hideEditPrecamporee}
+      </ModalCreateCamporee>
+      <ModalEditCamporee isShow={isShowEditCamporee}>
+        {/* <EditEventCamporee
+          hide={hideEditCamporee}
           data={dataEdit}
           refetch={refetch}
-        />
-      </ModalEditPrecamporee>
+        /> */}
+      </ModalEditCamporee>
     </div>
   );
 };
 
-export default EventosPrecamporee;
+export default EventosCamporee;

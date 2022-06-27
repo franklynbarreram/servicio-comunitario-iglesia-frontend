@@ -34,4 +34,6 @@ export enum Icons {
   iglesia = "/icons/iglesia.svg",
   calendar = "/icons/calendar.svg",
   medalla = "/icons/medalla.svg",
+  item = "/icons/item.svg",
+  item2 = "/icons/item2.svg",
 }

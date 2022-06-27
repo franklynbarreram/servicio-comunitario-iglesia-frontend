@@ -35,6 +35,7 @@ import { routeValidForUser } from "lib/helper";
 import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import Link from "next/link";
+import CreateCamporee from "components/camporee/create-camporee";
 
 // import Image from "next/image";
 type Params = {
@@ -65,20 +66,13 @@ const DataClassName = `
 `;
 
 const CamporeeList = () => {
-  const { Modal, hide, isShow, show } = useModal();
   const {
-    Modal: ModalEdit,
-    hide: hideEdit,
-    isShow: isShowEdit,
-    show: showEdit,
+    Modal: ModalCreate,
+    hide: hideCreate,
+    isShow: isShowCreate,
+    show: showCreate,
   } = useModal();
 
-  const {
-    Modal: ModalView,
-    hide: hideView,
-    isShow: isShowView,
-    show: showView,
-  } = useModal();
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
@@ -97,15 +91,6 @@ const CamporeeList = () => {
   };
 
   console.log("all camporee", response);
-  React.useEffect(() => {
-    // ConsejosRegionalesServices.getAll()
-    //   .then((response: any) => {
-    //     console.log("response get consejos regionales:", response);
-    //   })
-    //   .catch((e: any) => {
-    //     console.log("Error: ", e);
-    //   });
-  }, []);
 
   const {
     register,
@@ -117,22 +102,6 @@ const CamporeeList = () => {
 
   const handleSubmitData = (data: any) => {
     console.log(data);
-  };
-
-  const handleOnEdit = (selected: any) => {
-    const findSelected = response?.data?.data?.find(
-      (item: any) => item.id === selected.id
-    );
-    setDataEdit(findSelected);
-    showEdit();
-  };
-
-  const handleOnView = (selected: any) => {
-    const findSelected = response?.data?.data?.find(
-      (item: any) => item.id === selected.id
-    );
-    setDataView(findSelected);
-    showView();
   };
 
   const columns: TableColumnType[] = [
@@ -173,7 +142,7 @@ const CamporeeList = () => {
     },
     {
       name: "fechaFin",
-      label: "Fecha Fnicio",
+      label: "Fecha Fin",
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
@@ -188,29 +157,21 @@ const CamporeeList = () => {
       selector: (value: any) => (
         <div className="flex items-center">
           <Restricted
-            module={ModuleEnums.CLUBES}
-            typePermisse={PermissionsEnums.EDIT}
-          >
-            <div className="flex-shrink-0 h-10 w-8">
-              <Icon
-                src={Icons.edit}
-                fill="white"
-                className="max-w-[50px] w-8 text-primary cursor-pointer"
-                onClick={() => handleOnEdit(value)}
-              />
-            </div>
-          </Restricted>
-          <Restricted
-            module={ModuleEnums.CLUBES}
-            typePermisse={PermissionsEnums.DETAIL}
+            module={ModuleEnums.CAMPOREE}
+            typePermisse={PermissionsEnums.VIEW}
           >
             <div className="flex-shrink-0 h-10 w-8 ml-5">
-              <Icon
-                src={Icons.more}
-                fill="var(--color-primary)"
-                className="max-w-[50px] w-8 cursor-pointer"
-                onClick={() => handleOnView(value)}
-              />
+              <Link
+                href={`${appRouter.dashboard.href}${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.detail.href}/${value.id}`}
+              >
+                <a>
+                  <Icon
+                    src={Icons.more}
+                    fill="var(--color-primary)"
+                    className="max-w-[50px] w-8 cursor-pointer"
+                  />
+                </a>
+              </Link>
             </div>
           </Restricted>
         </div>
@@ -290,7 +251,7 @@ const CamporeeList = () => {
                   module={ModuleEnums.CLUBES}
                   typePermisse={PermissionsEnums.ADD}
                 >
-                  <div className="px-2" onClick={show}>
+                  <div className="px-2" onClick={showCreate}>
                     <Icon
                       src={Icons.addUser}
                       fill="var(--color-primary)"
@@ -315,15 +276,9 @@ const CamporeeList = () => {
           </>
         )}
       </div>
-      <Modal isShow={isShow}>
-        <CreateClub hide={hide} refetch={refetch} />
-      </Modal>
-      <ModalEdit isShow={isShowEdit}>
-        <EditClub hide={hideEdit} data={dataEdit} refetch={refetch} />
-      </ModalEdit>
-      <ModalView isShow={isShowView}>
-        <ViewClub hide={hideView} data={dataView} refetch={refetch} />
-      </ModalView>
+      <ModalCreate isShow={isShowCreate}>
+        <CreateCamporee hide={hideCreate} refetch={refetch} />
+      </ModalCreate>
     </LayoutDashboard>
   );
 };

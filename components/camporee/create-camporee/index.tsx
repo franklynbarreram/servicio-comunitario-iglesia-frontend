@@ -5,25 +5,14 @@ import * as React from "react";
 import AsyncSelect from "react-select/async";
 import { useForm } from "react-hook-form";
 import { Button } from "components/common/button/button";
-// import { useQuery } from "react-query";
-// import { UseQueryEnums } from "consts/useQueryEnums";
-import { ConsejosRegionalesServices, PersonasServices } from "services";
+import { PersonasServices } from "services";
 import { Spinner } from "components/common/spinner/spinner";
 import { useToasts } from "react-toast-notifications";
 import { Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Typography } from "components/common/typography";
-import clsx from "clsx";
 import { GenerateErrorToast, ValidateImage } from "lib/helper";
 import { isNil, isEmpty } from "lodash";
-import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
-import { DistritosServices } from "services/Distritos";
-import { PastoresService } from "services/Pastores";
 import { customStyles } from "consts/stylesReactSelect.helper";
-import { IglesiasServices } from "services/Iglesias";
-import { AncianosService } from "services/Ancianos";
-import { ClubesServices } from "services/Clubes";
-import { DirectorService } from "services/Director";
 import { OptionType } from "interfaces";
 import { InputListSearch } from "components/common/form/input-list-search";
 import { DatePickerCustom } from "components/common/date-picker/datePicker";
@@ -35,40 +24,21 @@ import {
 import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";
 
-const EditCamporee = ({ data, hide, refetch }: any) => {
-  console.log("data de camporeee", data);
-  const findTypeCapellan = () => {
-    return {
-      value: data?.id_capellan
-        ? TypesSelectCapellanEnums.INTERNO
-        : TypesSelectCapellanEnums.EXTERNO,
-      text: data?.id_capellan
-        ? TypesSelectCapellanEnums.INTERNO
-        : TypesSelectCapellanEnums.EXTERNO,
-      disabled: false,
-      placeholder: false,
-    };
-  };
+const CreateCamporee = ({ hide, refetch }: any) => {
+  const [fechaInicio, setFechaInicio] = React.useState();
+  const [tipoCapellan, setTipoCapellan] =
+    React.useState<{ value: string; label: string }>();
+  const [fechaFin, setFechaFin] = React.useState();
+  const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
 
-  const [fechaInicio, setFechaInicio] = React.useState(data?.fecha_inicio);
-  const [tipoCapellan, setTipoCapellan] = React.useState(findTypeCapellan());
-  const [fechaFin, setFechaFin] = React.useState(data?.fecha_fin);
-  const [fechaInicioInformes, setFechaInicioInformes] = React.useState(
-    data?.fecha_inicio_informes
-  );
-
-  const [selectValuePersona, setSelectValuePersona] = React.useState<{
-    value: Number;
-    label: string;
-  }>({ value: data.cedula_director, label: data.director });
+  const [selectValuePersona, setSelectValuePersona] =
+    React.useState<{ value: Number; label: string }>();
 
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState(
-    data?.logo !== "string" && data?.logo
-  );
+  const [imageUrl, setImageUrl] = React.useState();
   const [dataPersona, setDataPersona] = React.useState<any>();
 
   const {
@@ -81,27 +51,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
     control,
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      name: data?.nombre,
-      lugar: data?.lugar,
-      nivel1: data?.nivel1,
-      nivel2: data?.nivel2,
-      nivel3: data?.nivel3,
-      nivel4: data?.nivel4,
-      puntuacion_maxima_informe: data?.puntuacion_maxima_informe,
-      fecha_inicio: data?.fecha_inicio,
-      fecha_fin: data?.fecha_fin,
-      fecha_inicio_informes: data?.fecha_inicio_informes,
-      tipo: {
-        value: data?.tipo,
-        text: data?.tipo,
-        disabled: false,
-        placeholder: false,
-      },
-      tipoCapellan: findTypeCapellan(),
-      capellanExterno: data?.capellan,
-      icon: data?.logo,
-    },
   });
   const rules = {
     name: {
@@ -159,12 +108,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   };
 
   const handleSubmitData = (form: any) => {
-    // const FinalData = {
-    //   nivel1_biblicos: form.nivel1,
-    //   cedula_director: selectValuePersona?.value,
-    //   tipo: form.tipo.value ? form.tipo.value : form.tipo,
-    // };
-
     const FinalData = {
       nombre: form?.name,
       logo: form?.icon,
@@ -191,12 +134,12 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
     console.log("A ENVIAR", FinalData);
     setIsLoading(true);
 
-    CamporeeServices.edit(FinalData, data?.id)
+    CamporeeServices.create(FinalData)
       .then((response: any) => {
-        addToast("Camporee editado exitosamente", {
+        addToast("Camporee creado exitosamente", {
           appearance: "success",
         });
-        console.log("response edit camporee:", response);
+        console.log("response crear camporee:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -288,7 +231,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
 
   return (
     <div className="text-center">
-      <h2 className="text-3xl md:text-4xl font-bold">Editar Camporee</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Crear Camporee</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
@@ -453,7 +396,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                   error={errors.tipoCapellan}
                   handleChange={(data: OptionType) => {
                     setValue("tipoCapellan", data, { shouldValidate: true });
-                    setTipoCapellan(data);
+                    setTipoCapellan(data as any);
                   }}
                   myDefaultValue={watch("tipoCapellan")}
                 />
@@ -486,29 +429,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                 otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
             )}
-            {/* <div className="flex-auto">
-              <Typography
-                type="label"
-                className={clsx("ml-3 font-normal mb-2 block f-18")}
-              >
-                Icon
-              </Typography>
-              <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-            </div> */}
             <InputImage
               control={control}
               name="icon"
@@ -517,11 +437,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
               error={errors.icon}
               setErrorRHF={setError}
               setValueRHF={setValue}
-              image={data?.logo !== "string" && data?.logo}
-              // fileList={fileList}
-              // setFileList={setFileList}
-              // isEdit={informe ? true : false}
-              // disabled={!editInformeCreated}
+              // image={data?.logo !== "string" && data?.logo}
             />
             <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
               <Button
@@ -537,26 +453,13 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
               />
               <Button
                 labelProps="f-18 font-normal"
-                label={"Guardar"}
+                label={"Crear"}
                 fill
                 // loading={isLoading}
                 boderRadius="rounded-full"
                 size="full"
                 type="submit"
                 sizesButton="py-3"
-                // disabled={
-                //   !isDirty ||
-                //   !isValid ||
-                //   !!isLoading ||
-                //   isEmpty(selectValuePersona?.label) ||
-                //   isNil(selectValuePersona?.label) ||
-                //   isNil(selectValuePersona) ||
-                //   isEmpty(selectValueIglesias?.label) ||
-                //   isNil(selectValueIglesias?.label) ||
-                //   isNil(selectValueIglesias)
-                //   // isEmpty(imageUrl) ||
-                //   // isNil(imageUrl)
-                // }
               />
             </div>
           </form>
@@ -566,4 +469,4 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   );
 };
 
-export default EditCamporee;
+export default CreateCamporee;

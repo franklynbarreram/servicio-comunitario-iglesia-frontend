@@ -12,6 +12,7 @@ import { Icon } from "components/icon";
 import { Icons } from "consts";
 import { Typography } from "components/common/typography";
 import { isEmpty } from "lodash";
+import { classNames } from "react-select/dist/declarations/src/utils";
 
 export interface InputListProps {
   options: OptionType[];
@@ -21,6 +22,7 @@ export interface InputListProps {
   widhtList?: "full" | "normal";
   right?: boolean;
   customClassNamesOptions?: string;
+  classNamesContainer?: string;
 }
 
 export const InputListSearch: React.FC<
@@ -36,6 +38,7 @@ export const InputListSearch: React.FC<
   register,
   error,
   customClassNamesOptions,
+  classNamesContainer,
   ...props
 }) => {
   // const [selected, setSelected] = React.useState(
@@ -81,7 +84,7 @@ export const InputListSearch: React.FC<
   };
 
   return (
-    <div className="h-full py-2">
+    <div className={clsx("h-full py-2", classNamesContainer)}>
       <input
         id={props.name}
         name={props.name}

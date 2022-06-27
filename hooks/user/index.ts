@@ -8,7 +8,7 @@ export const useUser = () => {
   const [session] = useSession();
   // const user = session?.user ? (session.user as UserType) : undefined;
   // if (session) {
-  console.log(session);
+  // console.log(session);
   const { data, isLoading, refetch } = useQuery<any>([GET_USER], () =>
     ProfilApiService.getUser()
   );
