@@ -59,3 +59,64 @@ export const TypesSelectTypoEventoCamporeeMap = {
   [TypesSelectTypoEventoCamporeeEnums.CLUBES]:
     TypesSelectTypoEventoCamporeeEnums.CLUBES,
 };
+
+export enum TypesSelectSexoEnums {
+  HOMBRES = "hombres",
+  MUJERES = "mujeres",
+  AMBOS = "ambos",
+}
+
+export const TypesSelectSexoMap = {
+  [TypesSelectSexoEnums.HOMBRES]: TypesSelectSexoEnums.HOMBRES,
+  [TypesSelectSexoEnums.MUJERES]: TypesSelectSexoEnums.MUJERES,
+  [TypesSelectSexoEnums.AMBOS]: TypesSelectSexoEnums.AMBOS,
+};
+
+export enum TypesSelectSexoRegisterEnums {
+  MASCULINO = "Masculino",
+  FEMENINO = "femenino",
+}
+
+export const TypesSelectSexoRegisterMap = {
+  [TypesSelectSexoRegisterEnums.MASCULINO]:
+    TypesSelectSexoRegisterEnums.MASCULINO,
+  [TypesSelectSexoRegisterEnums.FEMENINO]:
+    TypesSelectSexoRegisterEnums.FEMENINO,
+};
+
+export enum TypesSelectEstadoCivilEnums {
+  SOLTERO = "Soltero(a)",
+  CASADO = "Casado(a)",
+  DIVORCIADO = "Divorciado(a)",
+  VIUDO = "Viudo(a)",
+}
+
+export const TypesSelectEstadoCivilMap = {
+  [TypesSelectEstadoCivilEnums.SOLTERO]: TypesSelectEstadoCivilEnums.SOLTERO,
+  [TypesSelectEstadoCivilEnums.CASADO]: TypesSelectEstadoCivilEnums.CASADO,
+  [TypesSelectEstadoCivilEnums.DIVORCIADO]:
+    TypesSelectEstadoCivilEnums.DIVORCIADO,
+  [TypesSelectEstadoCivilEnums.VIUDO]: TypesSelectEstadoCivilEnums.VIUDO,
+};
+
+export enum TypesSelectSangreEnums {
+  A_NEGATIVO = "A-",
+  A_POSITIVO = "A+",
+  B_NEGATIVO = "B-",
+  B_POSITIVO = "B+",
+  AB_NEGATIVO = "AB-",
+  AB_POSITIVO = "AB+",
+  O_POSITIVO = "O+",
+  O_NEGATIVO = "O-",
+}
+
+export const TypesSelectSangreMap = {
+  [TypesSelectSangreEnums.A_NEGATIVO]: TypesSelectSangreEnums.A_NEGATIVO,
+  [TypesSelectSangreEnums.A_POSITIVO]: TypesSelectSangreEnums.A_POSITIVO,
+  [TypesSelectSangreEnums.B_NEGATIVO]: TypesSelectSangreEnums.B_NEGATIVO,
+  [TypesSelectSangreEnums.B_POSITIVO]: TypesSelectSangreEnums.B_POSITIVO,
+  [TypesSelectSangreEnums.AB_NEGATIVO]: TypesSelectSangreEnums.AB_NEGATIVO,
+  [TypesSelectSangreEnums.AB_POSITIVO]: TypesSelectSangreEnums.AB_POSITIVO,
+  [TypesSelectSangreEnums.O_POSITIVO]: TypesSelectSangreEnums.O_POSITIVO,
+  [TypesSelectSangreEnums.O_NEGATIVO]: TypesSelectSangreEnums.O_NEGATIVO,
+};

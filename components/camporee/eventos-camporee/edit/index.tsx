@@ -39,16 +39,17 @@ import { CamporeeServices } from "services/Camporee";
 import moment from "moment";
 import { number } from "prop-types";
 
-const CreateEventCamporee = ({
+const EditEventCamporee = ({
   tipoCamporee,
   idCamporee,
+  data,
   hide,
   refetch,
 }: any) => {
   const [fechaInicio, setFechaInicio] = React.useState();
   const [fechaFin, setFechaFin] = React.useState();
   const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
-
+  console.log("edit data event camporee", data);
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -65,6 +66,41 @@ const CreateEventCamporee = ({
     control,
   } = useForm({
     mode: "onChange",
+    defaultValues: {
+      name: data?.nombre,
+      descripcion: data?.descripcion,
+      category: {
+        value: data?.categoria,
+        text: data?.categoria,
+        disabled: false,
+        placeholder: false,
+      },
+      puntuacion_maxima: data?.puntuacion_maxima,
+      oro: data?.oro,
+      plata: data?.plata,
+      bronce: data?.bronce,
+      hierro: data?.hierro,
+      tipoEvento: {
+        value: data?.inscripcion_federacion
+          ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+          : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+        text: data?.inscripcion_federacion
+          ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+          : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+        disabled: false,
+        placeholder: false,
+      },
+      eliminatoria: {
+        value: data?.eliminatoria
+          ? TypesSelectYesOrNot.SI
+          : TypesSelectYesOrNot.NO,
+        text: data?.eliminatoria
+          ? TypesSelectYesOrNot.SI
+          : TypesSelectYesOrNot.NO,
+        disabled: false,
+        placeholder: false,
+      },
+    },
   });
   const rules = {
     name: {
@@ -80,13 +116,6 @@ const CreateEventCamporee = ({
       // required: { value: true, message: "This is required" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
-    fecha_inicio: {
-      required: { value: true, message: "This is required" },
-    },
-    fecha_fin: {
-      required: { value: true, message: "This is required" },
-    },
-
     oro: {
       min: { value: 4, message: "Debe ser mayor a 3" },
       required: { value: true, message: "This is required" },
@@ -334,7 +363,7 @@ const CreateEventCamporee = ({
 
   return (
     <div className="text-center">
-      <h2 className="text-3xl md:text-4xl font-bold">Crear Evento Camporee</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Editar Evento Camporee</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
@@ -610,4 +639,4 @@ const CreateEventCamporee = ({
   );
 };
 
-export default CreateEventCamporee;
+export default EditEventCamporee;

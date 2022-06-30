@@ -25,7 +25,6 @@ import {
   ClipboardCheckIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
-import EditEventPrecporee from "./edit";
 import clsx from "clsx";
 import CreateEventPrecamporee from "./create";
 import {
@@ -33,10 +32,12 @@ import {
   TypesSelectYesOrNot,
 } from "consts/typesSelectEnum";
 import CreateEventCamporee from "./create";
+import EditEventCamporee from "./edit";
 
 interface EventosCamporeeProps {
   idCamporee: number | string | string[] | undefined;
   className?: string;
+  tipoCamporee: string;
 }
 type Params = {
   search?: string;
@@ -45,11 +46,14 @@ type Params = {
   page?: number;
   limit?: number;
   userId?: number;
-
   idCamporee: number | string | string[] | undefined;
 };
 
-const EventosCamporee = ({ idCamporee, className }: EventosCamporeeProps) => {
+const EventosCamporee = ({
+  tipoCamporee,
+  idCamporee,
+  className,
+}: EventosCamporeeProps) => {
   const [params, setValue] = useQueryParams<Params>({
     limit: 6,
     idCamporee: idCamporee,
@@ -324,17 +328,20 @@ const EventosCamporee = ({ idCamporee, className }: EventosCamporeeProps) => {
       </div>
       <ModalCreateCamporee isShow={isShowCreateCamporee}>
         <CreateEventCamporee
+          tipoCamporee={tipoCamporee}
           hide={hideCreateCamporee}
           refetch={refetch}
           idCamporee={idCamporee}
         />
       </ModalCreateCamporee>
       <ModalEditCamporee isShow={isShowEditCamporee}>
-        {/* <EditEventCamporee
+        <EditEventCamporee
           hide={hideEditCamporee}
           data={dataEdit}
+          idCamporee={idCamporee}
+          tipoCamporee={tipoCamporee}
           refetch={refetch}
-        /> */}
+        />
       </ModalEditCamporee>
     </div>
   );

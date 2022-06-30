@@ -139,7 +139,11 @@ const CamporeeDetail = () => {
                 <EventosPrecamporee idCamporee={id} className="px-2" />
               </TabPane>
               <TabPane tab="Eventos Camporee" key="2">
-                <EventosCamporee idCamporee={id} className="px-2" />
+                <EventosCamporee
+                  tipoCamporee={values?.tipo}
+                  idCamporee={id}
+                  className="px-2"
+                />
               </TabPane>
               <TabPane tab="Resultados" key="3">
                 <p>Content of Tab Pane 3</p>

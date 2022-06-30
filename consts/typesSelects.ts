@@ -4,6 +4,10 @@ import {
   TypesSelectCamporeeMap,
   TypesSelectCapellanEnums,
   TypesSelectEnums,
+  TypesSelectEstadoCivilEnums,
+  TypesSelectSangreEnums,
+  TypesSelectSexoEnums,
+  TypesSelectSexoRegisterEnums,
   TypesSelectTypoEventoCamporeeEnums,
   TypesSelectTypoEventoCamporeeMap,
   TypesSelectYesOrNot,
@@ -111,6 +115,137 @@ export const optionsTypeEventCamporee: OptionType[] = [
     id: 2,
     text: TypesSelectTypoEventoCamporeeEnums.CLUBES,
     value: TypesSelectTypoEventoCamporeeEnums.CLUBES,
+    disabled: false,
+    placeholder: false,
+  },
+];
+
+export const optionsTypeSexo: OptionType[] = [
+  {
+    id: 1,
+    text: TypesSelectSexoEnums.HOMBRES,
+    value: TypesSelectSexoEnums.HOMBRES,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 2,
+    text: TypesSelectSexoEnums.MUJERES,
+    value: TypesSelectSexoEnums.MUJERES,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 3,
+    text: TypesSelectSexoEnums.AMBOS,
+    value: TypesSelectSexoEnums.AMBOS,
+    disabled: false,
+    placeholder: false,
+  },
+];
+
+export const optionsTypeSexoMasculinoAndFemenino: OptionType[] = [
+  {
+    id: 1,
+    text: TypesSelectSexoRegisterEnums.MASCULINO,
+    value: TypesSelectSexoRegisterEnums.MASCULINO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 2,
+    text: TypesSelectSexoRegisterEnums.FEMENINO,
+    value: TypesSelectSexoRegisterEnums.FEMENINO,
+    disabled: false,
+    placeholder: false,
+  },
+];
+
+export const optionsTypeEstadoCivil: OptionType[] = [
+  {
+    id: 1,
+    text: TypesSelectEstadoCivilEnums.SOLTERO,
+    value: TypesSelectEstadoCivilEnums.SOLTERO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 2,
+    text: TypesSelectEstadoCivilEnums.CASADO,
+    value: TypesSelectEstadoCivilEnums.CASADO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 3,
+    text: TypesSelectEstadoCivilEnums.DIVORCIADO,
+    value: TypesSelectEstadoCivilEnums.DIVORCIADO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 4,
+    text: TypesSelectEstadoCivilEnums.VIUDO,
+    value: TypesSelectEstadoCivilEnums.VIUDO,
+    disabled: false,
+    placeholder: false,
+  },
+];
+
+export const optionsTypesSangre: OptionType[] = [
+  {
+    id: 1,
+    text: TypesSelectSangreEnums.A_POSITIVO,
+    value: TypesSelectSangreEnums.A_POSITIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 2,
+    text: TypesSelectSangreEnums.A_NEGATIVO,
+    value: TypesSelectSangreEnums.A_NEGATIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 3,
+    text: TypesSelectSangreEnums.B_POSITIVO,
+    value: TypesSelectSangreEnums.B_POSITIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 4,
+    text: TypesSelectSangreEnums.B_NEGATIVO,
+    value: TypesSelectSangreEnums.B_NEGATIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 5,
+    text: TypesSelectSangreEnums.AB_POSITIVO,
+    value: TypesSelectSangreEnums.AB_POSITIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 6,
+    text: TypesSelectSangreEnums.AB_NEGATIVO,
+    value: TypesSelectSangreEnums.AB_NEGATIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 7,
+    text: TypesSelectSangreEnums.O_POSITIVO,
+    value: TypesSelectSangreEnums.O_POSITIVO,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 8,
+    text: TypesSelectSangreEnums.O_NEGATIVO,
+    value: TypesSelectSangreEnums.O_NEGATIVO,
     disabled: false,
     placeholder: false,
   },

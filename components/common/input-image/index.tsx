@@ -46,6 +46,8 @@ export interface AlertProps {
   isEdit?: boolean;
   disabled?: boolean;
   image?: string;
+  className?: string;
+  label?: string;
 }
 
 /**
@@ -54,10 +56,12 @@ export interface AlertProps {
 export const InputImage: React.FC<AlertProps> = ({
   setValueRHF,
   disabled,
+  label,
   name,
   error,
   setErrorRHF,
   register,
+  className,
   isEdit,
   rules,
   image,
@@ -115,13 +119,15 @@ export const InputImage: React.FC<AlertProps> = ({
         formState: { errors: error }, //optional, but necessary if you want to show an error message
       }) => (
         <>
-          <div className="flex-auto">
-            <Typography
-              type="label"
-              className={clsx("ml-3 font-normal mb-2 block f-18")}
-            >
-              Icon
-            </Typography>
+          <div className={clsx("flex-auto", className)}>
+            {label && (
+              <Typography
+                type="label"
+                className={clsx("ml-3 font-normal mb-2 block f-18")}
+              >
+                {label}
+              </Typography>
+            )}
             <Upload
               {...props}
               name="avatar"
