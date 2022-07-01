@@ -254,6 +254,14 @@ const EditEventCamporee = ({
               form?.participantes_conquistadores_f
             ),
           };
+        } else if (
+          watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
+        ) {
+          return {
+            participantes_conquistadores_m: parseInt(
+              form?.participantes_conquistadores_m
+            ),
+          };
         }
 
         break;
@@ -277,6 +285,14 @@ const EditEventCamporee = ({
             ),
             participantes_guias_mayores_f: parseInt(
               form?.participantes_guias_mayores_f
+            ),
+          };
+        } else if (
+          watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
+        ) {
+          return {
+            participantes_guias_mayores_m: parseInt(
+              form?.participantes_guias_mayores_m
             ),
           };
         }
@@ -313,6 +329,17 @@ const EditEventCamporee = ({
             ),
             participantes_guias_mayores_f: parseInt(
               form?.participantes_guias_mayores_f
+            ),
+          };
+        } else if (
+          watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
+        ) {
+          return {
+            participantes_conquistadores_m: parseInt(
+              form?.participantes_conquistadores_m
+            ),
+            participantes_guias_mayores_m: parseInt(
+              form?.participantes_guias_mayores_m
             ),
           };
         }
@@ -473,12 +500,19 @@ const EditEventCamporee = ({
                 tipoCamporee === TypesSelectEnums.INTEGRADO) && (
                 <>
                   {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
+                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                    watch("sexo")?.value ===
+                      TypesSelectSexoEnums.SIN_DISTINCION) && (
                     <div className="col-span-1">
                       <Input
                         name="participantes_guias_mayores_m"
                         type="number"
-                        title="Hombres guias mayores"
+                        title={
+                          watch("sexo")?.value ===
+                          TypesSelectSexoEnums.SIN_DISTINCION
+                            ? "Nro guias mayores"
+                            : "Hombres guias mayores"
+                        }
                         labelVisible
                         isFill={!!watch("participantes_guias_mayores_m")}
                         register={register}
@@ -512,12 +546,19 @@ const EditEventCamporee = ({
                 tipoCamporee === TypesSelectEnums.INTEGRADO) && (
                 <>
                   {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
+                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                    watch("sexo")?.value ===
+                      TypesSelectSexoEnums.SIN_DISTINCION) && (
                     <div className="col-span-1">
                       <Input
                         name="participantes_conquistadores_m"
                         type="number"
-                        title="Hombres conquistadores"
+                        title={
+                          watch("sexo")?.value ===
+                          TypesSelectSexoEnums.SIN_DISTINCION
+                            ? "Nro conquistadores"
+                            : "Hombres conquistadores"
+                        }
                         labelVisible
                         isFill={!!watch("participantes_conquistadores_m")}
                         register={register}

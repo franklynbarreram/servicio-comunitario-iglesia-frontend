@@ -31,7 +31,7 @@ export const TypesSelectYesOrNotMap = {
 };
 
 export enum TypesSelectCamporeeEnums {
-  EVENTO_BIBLICO = "evento bíblico",
+  EVENTO_BIBLICO = "evento biblico",
   EVENTO_PIONERISMO = "evento de pionerismo",
   EVENTO_DEPORTIVO = "evento deportivo",
   EVENTO_ESPECIAL = "evento especial",
@@ -64,12 +64,14 @@ export enum TypesSelectSexoEnums {
   HOMBRES = "hombres",
   MUJERES = "mujeres",
   AMBOS = "ambos",
+  SIN_DISTINCION = "sin distincion",
 }
 
 export const TypesSelectSexoMap = {
   [TypesSelectSexoEnums.HOMBRES]: TypesSelectSexoEnums.HOMBRES,
   [TypesSelectSexoEnums.MUJERES]: TypesSelectSexoEnums.MUJERES,
   [TypesSelectSexoEnums.AMBOS]: TypesSelectSexoEnums.AMBOS,
+  [TypesSelectSexoEnums.SIN_DISTINCION]: TypesSelectSexoEnums.SIN_DISTINCION,
 };
 
 export enum TypesSelectSexoRegisterEnums {
@@ -77,11 +79,9 @@ export enum TypesSelectSexoRegisterEnums {
   FEMENINO = "femenino",
 }
 
-export const TypesSelectSexoRegisterMap = {
-  [TypesSelectSexoRegisterEnums.MASCULINO]:
-    TypesSelectSexoRegisterEnums.MASCULINO,
-  [TypesSelectSexoRegisterEnums.FEMENINO]:
-    TypesSelectSexoRegisterEnums.FEMENINO,
+export const TypesSelectSexoRegisterMap: any = {
+  [TypesSelectSexoRegisterEnums.MASCULINO]: "M",
+  [TypesSelectSexoRegisterEnums.FEMENINO]: "F",
 };
 
 export enum TypesSelectEstadoCivilEnums {
@@ -91,12 +91,11 @@ export enum TypesSelectEstadoCivilEnums {
   VIUDO = "Viudo(a)",
 }
 
-export const TypesSelectEstadoCivilMap = {
-  [TypesSelectEstadoCivilEnums.SOLTERO]: TypesSelectEstadoCivilEnums.SOLTERO,
-  [TypesSelectEstadoCivilEnums.CASADO]: TypesSelectEstadoCivilEnums.CASADO,
-  [TypesSelectEstadoCivilEnums.DIVORCIADO]:
-    TypesSelectEstadoCivilEnums.DIVORCIADO,
-  [TypesSelectEstadoCivilEnums.VIUDO]: TypesSelectEstadoCivilEnums.VIUDO,
+export const TypesSelectEstadoCivilMap: any = {
+  [TypesSelectEstadoCivilEnums.SOLTERO]: "S",
+  [TypesSelectEstadoCivilEnums.CASADO]: "C",
+  [TypesSelectEstadoCivilEnums.DIVORCIADO]: "D",
+  [TypesSelectEstadoCivilEnums.VIUDO]: "V",
 };
 
 export enum TypesSelectSangreEnums {

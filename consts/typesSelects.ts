@@ -142,6 +142,13 @@ export const optionsTypeSexo: OptionType[] = [
     disabled: false,
     placeholder: false,
   },
+  {
+    id: 4,
+    text: TypesSelectSexoEnums.SIN_DISTINCION,
+    value: TypesSelectSexoEnums.SIN_DISTINCION,
+    disabled: false,
+    placeholder: false,
+  },
 ];
 
 export const optionsTypeSexoMasculinoAndFemenino: OptionType[] = [

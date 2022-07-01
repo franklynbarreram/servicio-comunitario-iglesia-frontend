@@ -24,6 +24,13 @@ import {
   optionsTypesSangre,
 } from "consts/typesSelects";
 import { InputImage } from "components/common/input-image";
+import {
+  TypesSelectEstadoCivilMap,
+  TypesSelectSexoRegisterMap,
+} from "consts/typesSelectEnum";
+import moment from "moment";
+import { formatDates, GenerateErrorToast } from "lib/helper";
+import { AuthService } from "services";
 
 const Register = () => {
   const {
@@ -43,23 +50,43 @@ const Register = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [fechaNacimiento, setFechaNacimiento] = React.useState();
   const [fechaBautizo, setFechaBautizo] = React.useState();
-  const handleSubmitData = (data: any) => {
-    setIsLoading(true);
+  const handleSubmitData = (form: any) => {
+    const finalData = {
+      username: form.username,
+      email: form.email,
+      password: form.password,
+      cedula: form.cedula,
+      nombres: form.names,
+      apellidos: form.last_name,
+      fecha_nacimiento: moment(form.fecha_nacimiento).format(formatDates),
+      direccion: form.direccion,
+      tipo_sangre: form.tipo_sangre?.value,
+      alergias: form.alergias,
+      enfermedades: form.enfermedades,
+      fecha_bautizo: moment(form.fecha_bautizo).format(formatDates),
+      profesion: form.profesion,
+      sexo: TypesSelectSexoRegisterMap[form.sexo?.value],
+      estado_civil: TypesSelectEstadoCivilMap[form.estado_civil?.value],
+      foto: form?.foto,
+    };
 
-    signIn("credentials", {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-      callbackUrl: "/dashboard",
-    })
-      .then((response) => {
-        if (response?.error) {
-          addToast(response.error, { appearance: "error" });
-        } else {
-          router.push("/dashboard");
-        }
+    console.log("finalData:::", finalData);
+
+    setIsLoading(true);
+    AuthService.registerUser(finalData)
+      .then((response: any) => {
+        addToast("Cuenta creada exitosamente", {
+          appearance: "success",
+        });
+        console.log("response create cuenta:", response);
+        setTimeout(() => {
+          router.push("/auth/signin");
+        }, 4000);
+        setIsLoading(false);
       })
-      .finally(() => {
+      .catch((e: any) => {
+        console.log("Error: ", e);
+        GenerateErrorToast(e, addToast);
         setIsLoading(false);
       });
   };
@@ -108,7 +135,7 @@ const Register = () => {
       required: { value: true, message: "This is required" },
     },
     foto: {
-      // required: { value: true, message: "This is required" },
+      required: { value: true, message: "This is required" },
     },
     password: {
       required: { value: true, message: "This is required" },

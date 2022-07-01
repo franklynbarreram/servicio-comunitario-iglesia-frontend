@@ -16,8 +16,8 @@ class Service {
     return this.client.post("/auth/check-values", payload);
   }
 
-  async registerUser(payload: UserRegisterRequest): Promise<AuthSession> {
-    return this.client.post("/auth/register", payload);
+  async registerUser(payload: any): Promise<any> {
+    return this.client.post("/auth/signup", payload);
   }
 
   async login(payload: LoginRequest): Promise<AuthSession> {
