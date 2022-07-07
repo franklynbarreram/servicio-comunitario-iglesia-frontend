@@ -29,7 +29,12 @@ export const appRouter = {
                   detail: { href: "detail" },
                 },
               },
-              camporee: { href: "camporee" },
+              camporee: {
+                href: "camporee",
+                subLinks: {
+                  detail: { href: "detail" },
+                },
+              },
             },
           },
         },

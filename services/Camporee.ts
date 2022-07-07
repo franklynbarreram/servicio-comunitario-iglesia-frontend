@@ -12,6 +12,14 @@ class Service {
     return this.client.post("/eventos", data);
   }
 
+  async inscribirClubToEventCamporee(data: any): Promise<any> {
+    return this.client.post("/eventos/inscribir_club", data);
+  }
+
+  async editEventCamporee(data: any, id_camporee_evento: any): Promise<any> {
+    return this.client.put(`/eventos/${id_camporee_evento}`, data);
+  }
+
   async edit(data: any, id: any): Promise<any> {
     return this.client.put(`/camporees/${id}`, data);
   }
@@ -41,6 +49,10 @@ class Service {
   }
   async getEventPrecamporeeById(id: any): Promise<any> {
     return this.client.get(`/precamporee/${id}`);
+  }
+
+  async getEventCamporeeById(id: any): Promise<any> {
+    return this.client.get(`/eventos/${id}`);
   }
 
   async createInformePrecamporee(data: any): Promise<any> {

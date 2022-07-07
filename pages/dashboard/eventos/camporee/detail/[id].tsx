@@ -39,6 +39,12 @@ import { RoleEnums } from "consts/rolesEnum";
 import PreviewImage from "components/common/preview-image";
 import Back from "components/common/back";
 import { Tabs } from "antd";
+import {
+  TypesSelectEnums,
+  TypesSelectSexoEnums,
+  TypesSelectTypoEventoCamporeeEnums,
+} from "consts/typesSelectEnum";
+import InscribirClub from "components/camporee/eventos-camporee/inscribir-club";
 
 const { TabPane } = Tabs;
 
@@ -48,7 +54,7 @@ type Params = {
 
 const classNamesForms = "w-full px-4 md:w-[550px] mx-auto md:mt-8";
 
-const EventPrecamporeeDetail = () => {
+const EventCamporeeDetail = () => {
   const { Modal, hide, isShow, show } = useModal();
 
   const {
@@ -74,6 +80,12 @@ const EventPrecamporeeDetail = () => {
     isShow: isShowViewImages,
     show: showViewImages,
   } = useModal();
+  const {
+    Modal: ModalInscription,
+    hide: hideInscription,
+    isShow: isShowInscription,
+    show: showInscription,
+  } = useModal();
   const [dataPreview, setDataPreview] = React.useState<any>();
   const profile = useUser();
 
@@ -81,6 +93,7 @@ const EventPrecamporeeDetail = () => {
   // const [response, setResponse] = React.useState<any>();
   // const [isLoading, setIsLoading] = React.useState<any>(true);
   const [onSearch, setOnSearch] = React.useState(false);
+  const [isEdit, setIsEdit] = React.useState(false);
   const [dataApprove, setDataApprove] = React.useState<any>();
   const [dataLoadScore, setDataLoadScore] = React.useState<any>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,8 +104,8 @@ const EventPrecamporeeDetail = () => {
     isLoading,
     refetch,
   } = useQuery<any>(
-    [`${UseQueryEnums.GET_EVENT_PRECAMPOREE_BY_ID}_${id}`],
-    () => CamporeeServices.getEventPrecamporeeById(id)
+    [`${UseQueryEnums.GET_EVENT_CAMPOREE_BY_ID_DETAIL_ID}_${id}`],
+    () => CamporeeServices.getEventCamporeeById(id)
   );
 
   const [tabs, setTabs] = React.useState<any>();
@@ -190,6 +203,12 @@ const EventPrecamporeeDetail = () => {
     showApprove();
   };
 
+  const handleShowInscription = (isEdit?: boolean) => {
+    // setDataApprove(id);
+    if (isEdit) setIsEdit(true);
+    showInscription();
+  };
+
   const isFirmado = (informe: any) => {
     switch (dataUser?.scope_actual) {
       case RoleEnums.ANCIANO: {
@@ -212,10 +231,10 @@ const EventPrecamporeeDetail = () => {
     showViewImages();
   };
 
-  console.log("los value evento precampore by id", values);
+  console.log("los value evento camporee by id", values);
 
   return (
-    <LayoutDashboard title="Detalle Precamporee">
+    <LayoutDashboard title="Detalle Evento">
       <div className="lg:px-20 mt-12">
         <div className="flex flex-wrap justify-center flex-row">
           {isLoading ? (
@@ -233,7 +252,7 @@ const EventPrecamporeeDetail = () => {
                   {`${values?.nombre}`}
                 </Typography>
               </div>
-              <div className="container-form w-full mt-16 gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
+              <div className="container-form justify-center w-full mt-16 gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 text-left ">
                 <div className="item col-span-1">
                   <Typography
                     type="label"
@@ -253,43 +272,48 @@ const EventPrecamporeeDetail = () => {
                     type="label"
                     className={clsx("ml-3 font-bold mb-2 block f-18")}
                   >
-                    Mensual
+                    Categoria
                   </Typography>
                   <Typography
                     type="span"
                     className={clsx("ml-3 font-normal mb-2 block f-18")}
                   >
-                    {values?.mensual ? "Si" : "No"}
+                    {values?.categoria}
                   </Typography>
                 </div>
-                {values.meses && (
-                  <div className="item col-span-1">
-                    <Typography
-                      type="label"
-                      className={clsx("ml-3 font-bold mb-2 block f-18")}
-                    >
-                      Meses
-                    </Typography>
 
-                    <ul className="ml-3">
-                      {values?.meses.map((item: any, index: any) => {
-                        return <li key={index}>{item.mes}</li>;
-                      })}
-                    </ul>
-                  </div>
-                )}
                 <div className="item col-span-1">
                   <Typography
                     type="label"
                     className={clsx("ml-3 font-bold mb-2 block f-18")}
                   >
-                    Puntaje maximo
+                    Tipo evento
                   </Typography>
                   <Typography
                     type="span"
                     className={clsx("ml-3 font-normal mb-2 block f-18")}
                   >
-                    {values?.puntaje_maximo}
+                    {values?.inscripcion_federacion
+                      ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+                      : TypesSelectTypoEventoCamporeeEnums.CLUBES}
+                  </Typography>
+                </div>
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Eliminatoria
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.eliminatoria ? (
+                      <span className="text-secondary font-bold">SI</span>
+                    ) : (
+                      <span className="text-alert-error font-bold">NO</span>
+                    )}
                   </Typography>
                 </div>
                 <div className="item col-span-1">
@@ -303,33 +327,198 @@ const EventPrecamporeeDetail = () => {
                     type="span"
                     className={clsx("ml-3 font-normal mb-2 block f-18")}
                   >
-                    {values?.realizado ? "Si" : "No"}
+                    {values?.realizado ? (
+                      <span className="text-secondary font-bold">SI</span>
+                    ) : (
+                      <span className="text-alert-error font-bold">NO</span>
+                    )}
                   </Typography>
                 </div>
-              </div>
-              <Restricted
-                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                typePermisse={PermissionsEnums.VIEW_DATA_FORMS}
-              >
-                {values?.informes?.map((itemClub: any, index: any) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <div className="item bg-yellow flex text-center justify-center w-full mt-20">
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Puntuación maxima
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.puntuacion_maxima}
+                  </Typography>
+                </div>
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Oro
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.oro}
+                  </Typography>
+                </div>
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Plata
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.plata}
+                  </Typography>
+                </div>
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Bronce
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.bronce}
+                  </Typography>
+                </div>
+                <div className="item col-span-1">
+                  <Typography
+                    type="label"
+                    className={clsx("ml-3 font-bold mb-2 block f-18")}
+                  >
+                    Hierro
+                  </Typography>
+                  <Typography
+                    type="span"
+                    className={clsx("ml-3 font-normal mb-2 block f-18")}
+                  >
+                    {values?.hierro}
+                  </Typography>
+                </div>
+                {(values?.tipo === TypesSelectEnums.CONQUISTADORES ||
+                  values?.tipo === TypesSelectEnums.INTEGRADO) && (
+                  <>
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.HOMBRES ||
+                      values?.distincion_sexo === TypesSelectSexoEnums.AMBOS ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="item col-span-1">
                         <Typography
                           type="label"
-                          className={clsx(
-                            "font-bold block text-primary text-3xl px-2 py-3"
-                          )}
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
                         >
-                          {itemClub?.club}
+                          Nro. Conquistadores{" "}
+                          {values?.distincion_sexo !==
+                            TypesSelectSexoEnums.SIN_DISTINCION && "Hombres"}
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_conquistadores_m}
                         </Typography>
                       </div>
-                      {itemClub?.informes?.map((informe: any, index: any) => {
-                        return (
-                          <div
-                            key={index}
-                            className="container-form shadow-md pb-10 px-5 w-full my-16 "
-                          >
+                    )}
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.MUJERES ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.AMBOS) && (
+                      <div className="item col-span-1">
+                        <Typography
+                          type="label"
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
+                        >
+                          Nro. Conquistadores Mujeres
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_conquistadores_f}
+                        </Typography>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {(values?.tipo === TypesSelectEnums.GUIAS_MAYORES ||
+                  values?.tipo === TypesSelectEnums.INTEGRADO) && (
+                  <>
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.HOMBRES ||
+                      values?.distincion_sexo === TypesSelectSexoEnums.AMBOS ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="item col-span-1">
+                        <Typography
+                          type="label"
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
+                        >
+                          Nro. Guias Mayores{" "}
+                          {values?.distincion_sexo !==
+                            TypesSelectSexoEnums.SIN_DISTINCION && "Hombres"}
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_guias_mayores_m}
+                        </Typography>
+                      </div>
+                    )}
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.MUJERES ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.AMBOS) && (
+                      <div className="item col-span-1">
+                        <Typography
+                          type="label"
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
+                        >
+                          Nro. Guias Mayores Mujeres
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_guias_mayores_f}
+                        </Typography>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+
+              <Restricted
+                module={ModuleEnums.EVENTO_CAMPOREE}
+                typePermisse={PermissionsEnums.VIEW_CLUBES_INSCRITOS}
+              >
+                {values?.datos_inscripcion?.map((itemClub: any, index: any) => {
+                  return (
+                    <React.Fragment key={index}>
+                      {itemClub?.inscrito && (
+                        <>
+                          <div className="item bg-yellow flex text-center justify-center w-full mt-20">
+                            <Typography
+                              type="label"
+                              className={clsx(
+                                "font-bold block text-primary text-3xl px-2 py-3"
+                              )}
+                            >
+                              {itemClub?.nombre}
+                            </Typography>
+                          </div>
+                          <div className="container-form shadow-md pb-10 px-5 w-full my-16 ">
                             <div className="gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
                               <React.Fragment key={index}>
                                 <div className="item col-span-1">
@@ -339,7 +528,7 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-bold mb-2 block f-18"
                                     )}
                                   >
-                                    Descripcion
+                                    Clasificado
                                   </Typography>
                                   <Typography
                                     type="span"
@@ -347,80 +536,7 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-normal mb-2 block f-18"
                                     )}
                                   >
-                                    {ValidateString(informe?.descripcion)}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Objetivo
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {ValidateString(informe?.objetivo)}
-                                  </Typography>
-                                </div>
-
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Participantes
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.participantes}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Fecha Enviado
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.fecha_enviado}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Firma Anciano
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.firma_anciano ? (
+                                    {itemClub?.clasificado ? (
                                       <span className="text-secondary font-bold">
                                         SI
                                       </span>
@@ -438,7 +554,7 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-bold mb-2 block f-18"
                                     )}
                                   >
-                                    Firma Consejo
+                                    Observacion
                                   </Typography>
                                   <Typography
                                     type="span"
@@ -446,33 +562,7 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-normal mb-2 block f-18"
                                     )}
                                   >
-                                    {informe?.firma_consejo_regional ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Firma Pastor
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.firma_pastor ? (
+                                    {itemClub?.observacion ? (
                                       <span className="text-secondary font-bold">
                                         SI
                                       </span>
@@ -498,8 +588,8 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-normal mb-2 block f-18"
                                     )}
                                   >
-                                    {informe?.puntuacion
-                                      ? informe?.puntuacion
+                                    {itemClub?.puntuacion
+                                      ? itemClub?.puntuacion
                                       : "N/A"}
                                   </Typography>
                                 </div>
@@ -510,7 +600,7 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-bold mb-2 block f-18"
                                     )}
                                   >
-                                    Observación
+                                    Puntuación Eliminatoria
                                   </Typography>
                                   <Typography
                                     type="span"
@@ -518,59 +608,14 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-normal mb-2 block f-18"
                                     )}
                                   >
-                                    {informe?.observacion
-                                      ? informe?.observacion
+                                    {itemClub?.puntuacion_eliminatoria
+                                      ? itemClub?.puntuacion_eliminatoria
                                       : "N/A"}
                                   </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Puntuación Maxima
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.puntuacion_maxima}
-                                  </Typography>
-                                </div>
-
-                                <div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
-                                  <img
-                                    src={informe?.imagen1}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image1"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen1)
-                                    }
-                                  />
-                                  <img
-                                    src={informe?.imagen2}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image2"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen2)
-                                    }
-                                  />
-                                  <img
-                                    src={informe?.imagen3}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image3"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen3)
-                                    }
-                                  />
                                 </div>
                               </React.Fragment>
                             </div>
-                            {!isFirmado(informe) && (
+                            {/* {!isFirmado(informe) && (
                               <Restricted
                                 module={ModuleEnums.EVENTO_PRECAMPOREE}
                                 typePermisse={PermissionsEnums.APPROVE_FORM}
@@ -609,75 +654,57 @@ const EventPrecamporeeDetail = () => {
                                   />
                                 </div>
                               </Restricted>
-                            )}
+                            )} */}
                           </div>
-                        );
-                      })}
+                        </>
+                      )}
                     </React.Fragment>
                   );
                 })}
               </Restricted>
-              <Restricted
-                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                typePermisse={PermissionsEnums.LOAD_FORMS}
-              >
-                <div className="my-14 w-full">
-                  <div className="item flex text-center justify-center w-full">
-                    <Typography
-                      type="label"
-                      className={clsx(
-                        "ml-3 font-bold mb-2 mt-3 block text-primary text-3xl"
-                      )}
-                    >
-                      Informe{values?.meses ? "s" : ""}
-                    </Typography>
-                  </div>
-
-                  {!isEmpty(values?.meses) ? (
-                    <div className="mt-20 w-full md:w-[70%] mx-auto mb-20">
-                      {/* {tabs && <Tabs tabs={tabs} setTabs={setTabs} /> */}
-                      <Tabs
-                        type="card"
-                        className="tabs-antd-custom justify-center"
-                      >
-                        {values.meses?.map((item: any, index: number) => {
-                          const informe = findInforme(item.value);
-                          console.log("el infomre lleg", informe);
-                          return (
-                            <TabPane
-                              tab={item?.mes}
-                              key={index}
-                              className="mb-10"
-                            >
-                              <InformeForm
-                                refetch={refetch}
-                                informe={informe ? informe : null}
-                                isAvailable={item?.activo}
-                                idPrecamporee={id}
-                                isRecurrent
-                                mes={item.value}
-                                className={classNamesForms}
-                              />
-                            </TabPane>
-                          );
-                        })}
-                      </Tabs>
-                    </div>
-                  ) : (
-                    <InformeForm
-                      refetch={refetch}
-                      idPrecamporee={id}
-                      informe={
-                        isEmpty(values?.informes) ? null : values?.informes[0]
-                      }
-                      isAvailable={values?.activo}
-                      className={classNamesForms}
-                    />
-                  )}
-                </div>
-              </Restricted>
             </>
           )}
+          <Restricted
+            module={ModuleEnums.EVENTO_CAMPOREE}
+            typePermisse={PermissionsEnums.INSCRIBIR_CLUB}
+          >
+            {!isNil(values?.datos_inscripcion) &&
+              !isEmpty(values?.datos_inscripcion) && (
+                <>
+                  {!values?.datos_inscripcion[0]?.inscrito &&
+                    values?.datos_inscripcion[0]?.inscribible && (
+                      <div className="mt-10  mb-20 justify-center text-center flex w-full">
+                        <Button
+                          labelProps="f-18 font-bold"
+                          label={"Inscribir club"}
+                          fill
+                          className="bg-alert-success border-alert-success max-w-[200px]"
+                          boderRadius="rounded-full"
+                          size="full"
+                          sizesButton="py-3"
+                          onClick={() => handleShowInscription()}
+                        />
+                      </div>
+                    )}
+
+                  {values?.datos_inscripcion[0]?.inscrito &&
+                    values?.datos_inscripcion[0]?.inscribible && (
+                      <div className="mt-10 mb-20  justify-center text-center flex w-full">
+                        <Button
+                          labelProps="f-18 font-bold"
+                          label={"Editar inscripcion"}
+                          fill
+                          className="bg-alert-success border-alert-success max-w-[200px]"
+                          boderRadius="rounded-full"
+                          size="full"
+                          sizesButton="py-3"
+                          onClick={() => handleShowInscription(true)}
+                        />
+                      </div>
+                    )}
+                </>
+              )}
+          </Restricted>
         </div>
       </div>
       <ModalApprove isShow={isShowApprove}>
@@ -697,6 +724,15 @@ const EventPrecamporeeDetail = () => {
       <ModalViewImages isShow={isShowViewImages}>
         <PreviewImage src={dataPreview} />
       </ModalViewImages>
+      <ModalInscription isShow={isShowInscription}>
+        <InscribirClub
+          hide={hideInscription}
+          data={values}
+          isEdit={isEdit}
+          // id_camporee_evento={id}
+          refetch={refetch}
+        />
+      </ModalInscription>
       {/*
       <ModalEdit isShow={isShowEdit}>
         <EditClub hide={hideEdit} data={dataEdit} refetch={refetch} />
@@ -723,7 +759,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isValid = routeValidForUser(
     profile,
     PermissionsEnums.VIEW,
-    ModuleEnums.EVENTO_PRECAMPOREE
+    ModuleEnums.EVENTO_CAMPOREE
   );
 
   if (session && session.accessToken && isValid) {
@@ -755,4 +791,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default EventPrecamporeeDetail;
+export default EventCamporeeDetail;

@@ -5,13 +5,18 @@ export const customStyles = {
     color: state.isSelected ? "black" : state.isFocused ? "white" : "black",
     fontWeight: state.isSelected ? "bold" : "400",
     backgroundColor: state.isDisabled
-      ? undefined
+      ? "#323334"
       : state.isSelected
       ? "#fcc824"
       : state.isFocused
       ? "var(--color-primary)"
       : undefined,
-    cursor: state.isFocused ? "pointer" : undefined,
+    cursor: state.isDisabled
+      ? "not-allowed"
+      : state.isFocused
+      ? "pointer"
+      : undefined,
+    opacity: state.isDisabled ? 0.2 : 1,
   }),
   menu: (defaultStyles: any) => ({
     ...defaultStyles,

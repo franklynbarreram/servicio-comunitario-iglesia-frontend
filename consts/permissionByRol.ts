@@ -54,17 +54,26 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
         ],
       },
+
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
-      },
-      {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
         permissionsActions: [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.ADD,
+          PermissionsEnums.EDIT,
           PermissionsEnums.VIEW_DATA_FORMS,
           PermissionsEnums.LOAD_SCORE,
+        ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.ADD,
+          PermissionsEnums.INSCRIBIR_CLUB,
+          PermissionsEnums.VIEW_CLUBES_INSCRITOS,
         ],
       },
     ],
@@ -103,16 +112,22 @@ export const PermissionByRol = [
         name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
-      },
-      {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
         permissionsActions: [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.LOAD_FORMS,
+        ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.INSCRIBIR_CLUB,
+          PermissionsEnums.VIEW_CLUBES_INSCRITOS,
         ],
       },
     ],
@@ -144,18 +159,19 @@ export const PermissionByRol = [
         name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
-      },
-      {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
         permissionsActions: [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.VIEW_DATA_FORMS,
           PermissionsEnums.APPROVE_FORM,
         ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
     ],
   },
@@ -186,18 +202,19 @@ export const PermissionByRol = [
         name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
-      },
-      {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
         permissionsActions: [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.VIEW_DATA_FORMS,
           PermissionsEnums.APPROVE_FORM,
         ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
     ],
   },
@@ -228,12 +245,13 @@ export const PermissionByRol = [
         name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+
       {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
-        permissionsActions: [],
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
+        name: ModuleEnums.EVENTO_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
     ],
@@ -270,17 +288,22 @@ export const PermissionByRol = [
         name: ModuleEnums.CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+
       {
-        name: ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
-      },
-      {
-        name: ModuleEnums.EVENTO_PRECAMPOREE_DETAIL,
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
         permissionsActions: [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.VIEW_DATA_FORMS,
           PermissionsEnums.APPROVE_FORM,
+        ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.VIEW_CLUBES_INSCRITOS,
         ],
       },
     ],

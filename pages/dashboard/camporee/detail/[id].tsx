@@ -200,7 +200,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const isValid = routeValidForUser(
     profile,
     PermissionsEnums.VIEW,
-    ModuleEnums.LISTADO_EVENTO_PRECAMPOREE_BY_CAMPOREE
+    ModuleEnums.EVENTO_PRECAMPOREE
   );
 
   if (session && session.accessToken && isValid) {

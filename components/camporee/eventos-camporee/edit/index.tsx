@@ -100,6 +100,19 @@ const EditEventCamporee = ({
         disabled: false,
         placeholder: false,
       },
+      sexo: {
+        value: data?.distincion_sexo,
+        text: data?.distincion_sexo,
+        disabled: false,
+        placeholder: false,
+      },
+      participantes_conquistadores_f: data?.participantes_conquistadores_f,
+      participantes_conquistadores_m: data?.participantes_conquistadores_m,
+      participantes_guias_mayores_f: data?.participantes_guias_mayores_f,
+      participantes_guias_mayores_m: data?.participantes_guias_mayores_m,
+      participacion_total: data?.participacion_total
+        ? TypesSelectYesOrNot.SI
+        : TypesSelectYesOrNot.NO,
     },
   });
   const rules = {
@@ -228,6 +241,9 @@ const EditEventCamporee = ({
     sexo: {
       required: { value: true, message: "This is required" },
     },
+    participacion_total: {
+      required: { value: true, message: "This is required" },
+    },
   };
 
   const participants = (form: any) => {
@@ -347,7 +363,11 @@ const EditEventCamporee = ({
     }
   };
   const handleSubmitData = (form: any) => {
-    const dateParticipants = participants(form);
+    const dateParticipants =
+      form?.participacion_total?.value === TypesSelectYesOrNot.NO ||
+      form?.tipoEvento?.value === TypesSelectTypoEventoCamporeeEnums.FEDERACION
+        ? participants(form)
+        : {};
 
     const FinalData = {
       nombre: form?.name,
@@ -367,16 +387,21 @@ const EditEventCamporee = ({
       hierro: parseInt(form?.hierro),
       categoria: form?.category?.value,
       puntuacion_maxima: parseInt(form?.puntuacion_maxima),
+      distincion_sexo: form?.sexo?.value,
+      participacion_total:
+        form?.participacion_total?.value === TypesSelectYesOrNot.SI
+          ? true
+          : false,
     };
 
     console.log("A ENVIAR", FinalData);
     setIsLoading(true);
-    CamporeeServices.createEventCamporee(FinalData)
+    CamporeeServices.editEventCamporee(FinalData, data?.id)
       .then((response: any) => {
-        addToast("Evento camporee creado exitosamente", {
+        addToast("Evento camporee editado exitosamente", {
           appearance: "success",
         });
-        console.log("response create evento camporee:", response);
+        console.log("response edit evento camporee:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -478,118 +503,145 @@ const EditEventCamporee = ({
               />
             </div>
 
-            <div className="flex mt-7">
-              <InputListSearch
-                name="sexo"
-                title="Distincion de sexo"
-                className="mb-4 h-10 rounded-full text-sm"
-                classNamesContainer="flex-1"
-                options={optionsTypeSexo}
-                register={register}
-                rules={rules.sexo}
-                error={errors.sexo}
-                handleChange={(data: OptionType) =>
-                  setValue("sexo", data, { shouldValidate: true })
-                }
-                myDefaultValue={watch("sexo")}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2 mt-7">
-              {(tipoCamporee === TypesSelectEnums.GUIAS_MAYORES ||
-                tipoCamporee === TypesSelectEnums.INTEGRADO) && (
-                <>
-                  {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
-                    watch("sexo")?.value ===
-                      TypesSelectSexoEnums.SIN_DISTINCION) && (
-                    <div className="col-span-1">
-                      <Input
-                        name="participantes_guias_mayores_m"
-                        type="number"
-                        title={
-                          watch("sexo")?.value ===
-                          TypesSelectSexoEnums.SIN_DISTINCION
-                            ? "Nro guias mayores"
-                            : "Hombres guias mayores"
-                        }
-                        labelVisible
-                        isFill={!!watch("participantes_guias_mayores_m")}
-                        register={register}
-                        rules={rules.participantes_guias_mayores_m}
-                        error={errors.participantes_guias_mayores_m}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                  )}
-                  {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
-                    <div className="col-span-1">
-                      <Input
-                        name="participantes_guias_mayores_f"
-                        type="number"
-                        title="Mujeres guias mayores"
-                        labelVisible
-                        isFill={!!watch("participantes_guias_mayores_f")}
-                        register={register}
-                        rules={rules.participantes_guias_mayores_f}
-                        error={errors.participantes_guias_mayores_f}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                  )}
-                </>
+            <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
+              {watch("tipoEvento")?.value !==
+                TypesSelectTypoEventoCamporeeEnums.FEDERACION && (
+                <InputListSearch
+                  name="participacion_total"
+                  title="¿Participación total?"
+                  className="mb-4 h-10 rounded-full text-sm"
+                  classNamesContainer="flex-1"
+                  options={optionsTypeYesOrNot}
+                  register={register}
+                  rules={rules.participacion_total}
+                  error={errors.participacion_total}
+                  handleChange={(data: OptionType) =>
+                    setValue("participacion_total", data, {
+                      shouldValidate: true,
+                    })
+                  }
+                  myDefaultValue={watch("participacion_total")}
+                />
               )}
-              {(tipoCamporee === TypesSelectEnums.CONQUISTADORES ||
-                tipoCamporee === TypesSelectEnums.INTEGRADO) && (
-                <>
-                  {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
-                    watch("sexo")?.value ===
-                      TypesSelectSexoEnums.SIN_DISTINCION) && (
-                    <div className="col-span-1">
-                      <Input
-                        name="participantes_conquistadores_m"
-                        type="number"
-                        title={
-                          watch("sexo")?.value ===
-                          TypesSelectSexoEnums.SIN_DISTINCION
-                            ? "Nro conquistadores"
-                            : "Hombres conquistadores"
-                        }
-                        labelVisible
-                        isFill={!!watch("participantes_conquistadores_m")}
-                        register={register}
-                        rules={rules.participantes_conquistadores_m}
-                        error={errors.participantes_conquistadores_m}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                  )}
-
-                  {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
-                    watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
-                    <div className="col-span-1">
-                      <Input
-                        name="participantes_conquistadores_f"
-                        type="number"
-                        title="Mujeres conquistadores"
-                        labelVisible
-                        isFill={!!watch("participantes_conquistadores_f")}
-                        register={register}
-                        rules={rules.participantes_conquistadores_f}
-                        error={errors.participantes_conquistadores_f}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                  )}
-                </>
+              {(watch("participacion_total")?.value ===
+                TypesSelectYesOrNot.NO ||
+                watch("tipoEvento")?.value ===
+                  TypesSelectTypoEventoCamporeeEnums.FEDERACION) && (
+                <InputListSearch
+                  name="sexo"
+                  title="Distincion de sexo"
+                  className="mb-4 h-10 rounded-full text-sm"
+                  classNamesContainer="flex-1"
+                  options={optionsTypeSexo}
+                  register={register}
+                  rules={rules.sexo}
+                  error={errors.sexo}
+                  handleChange={(data: OptionType) =>
+                    setValue("sexo", data, { shouldValidate: true })
+                  }
+                  myDefaultValue={watch("sexo")}
+                />
               )}
             </div>
+            {(watch("participacion_total")?.value === TypesSelectYesOrNot.NO ||
+              watch("tipoEvento")?.value ===
+                TypesSelectTypoEventoCamporeeEnums.FEDERACION) && (
+              <div className="grid grid-cols-2 gap-2 mt-7">
+                {(tipoCamporee === TypesSelectEnums.GUIAS_MAYORES ||
+                  tipoCamporee === TypesSelectEnums.INTEGRADO) && (
+                  <>
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                      watch("sexo")?.value ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_guias_mayores_m"
+                          type="number"
+                          title={
+                            watch("sexo")?.value ===
+                            TypesSelectSexoEnums.SIN_DISTINCION
+                              ? "Nro guias mayores"
+                              : "Hombres guias mayores"
+                          }
+                          labelVisible
+                          isFill={!!watch("participantes_guias_mayores_m")}
+                          register={register}
+                          rules={rules.participantes_guias_mayores_m}
+                          error={errors.participantes_guias_mayores_m}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_guias_mayores_f"
+                          type="number"
+                          title="Mujeres guias mayores"
+                          labelVisible
+                          isFill={!!watch("participantes_guias_mayores_f")}
+                          register={register}
+                          rules={rules.participantes_guias_mayores_f}
+                          error={errors.participantes_guias_mayores_f}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+                {(tipoCamporee === TypesSelectEnums.CONQUISTADORES ||
+                  tipoCamporee === TypesSelectEnums.INTEGRADO) && (
+                  <>
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                      watch("sexo")?.value ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_conquistadores_m"
+                          type="number"
+                          title={
+                            watch("sexo")?.value ===
+                            TypesSelectSexoEnums.SIN_DISTINCION
+                              ? "Nro conquistadores"
+                              : "Hombres conquistadores"
+                          }
+                          labelVisible
+                          isFill={!!watch("participantes_conquistadores_m")}
+                          register={register}
+                          rules={rules.participantes_conquistadores_m}
+                          error={errors.participantes_conquistadores_m}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_conquistadores_f"
+                          type="number"
+                          title="Mujeres conquistadores"
+                          labelVisible
+                          isFill={!!watch("participantes_conquistadores_f")}
+                          register={register}
+                          rules={rules.participantes_conquistadores_f}
+                          error={errors.participantes_conquistadores_f}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-2">
               <div className="col-span-1">
@@ -664,7 +716,7 @@ const EditEventCamporee = ({
               />
               <Button
                 labelProps="f-18 font-normal"
-                label={"Crear"}
+                label={"Guardar"}
                 fill
                 // loading={isLoading}
                 boderRadius="rounded-full"

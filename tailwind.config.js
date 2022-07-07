@@ -43,14 +43,12 @@ module.exports = {
         },
       },
     },
-
-    extend: {
-      screens: {
-        ...defaultTheme.screens,
-        xs: "380px",
-        "3xl": "1700px",
-      },
+    screens: {
+      xs: "380px",
+      "3xl": "1700px",
+      ...defaultTheme.screens,
     },
+    extend: {},
   },
   variants: {
     extend: {},

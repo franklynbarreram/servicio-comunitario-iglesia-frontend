@@ -13,6 +13,9 @@ class Service {
   async getAll(params: any): Promise<any> {
     return this.client.get("/clubes", { params });
   }
+  async getAllMiembros(params: any): Promise<any> {
+    return this.client.get("/clubes/miembros", { params });
+  }
 }
 
 export const ClubesServices = new Service(axiosClient);
