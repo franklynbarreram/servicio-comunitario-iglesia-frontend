@@ -66,9 +66,9 @@ const EditClub = ({ data, hide, refetch }: any) => {
     lema: {
       required: { value: true, message: "This is required" },
     },
-    blanco_estudios: {
-      required: { value: true, message: "This is required" },
-    },
+    // blanco_estudios: {
+    //   required: { value: true, message: "This is required" },
+    // },
     direccion: {
       required: { value: true, message: "This is required" },
     },
@@ -88,10 +88,10 @@ const EditClub = ({ data, hide, refetch }: any) => {
           shouldValidate: true,
           shouldDirty: true,
         });
-        setValue("blanco_estudios", data.blanco_estudios_biblicos, {
-          shouldValidate: true,
-          shouldDirty: true,
-        });
+        // setValue("blanco_estudios", data.blanco_estudios_biblicos, {
+        //   shouldValidate: true,
+        //   shouldDirty: true,
+        // });
         setValue("lema", data.lema, {
           shouldValidate: true,
           shouldDirty: true,
@@ -110,7 +110,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
       logo: imageUrl,
       lema: form.lema,
       direccion: form.direccion,
-      blanco_estudios_biblicos: form.blanco_estudios,
+      // blanco_estudios_biblicos: form.blanco_estudios,
       id_iglesia: selectValueIglesias?.value,
       cedula_director: selectValueDirector?.value,
       tipo: form.tipo.value ? form.tipo.value : form.tipo,
@@ -315,7 +315,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
                   otherStyles="pt-3 pb-3 rounded-full text-sm"
                 />
               </div>
-              <div className="col-span-1">
+              {/* <div className="col-span-1">
                 <Input
                   name="blanco_estudios"
                   title="Blanco Estudios Biblicos"
@@ -328,7 +328,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
                   type="number"
                   otherStyles="pt-3 pb-3 rounded-full text-sm"
                 />
-              </div>
+              </div> */}
             </div>
 
             <InputListSearch

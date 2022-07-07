@@ -59,9 +59,9 @@ const CreateClub = ({ hide, refetch }: any) => {
     lema: {
       required: { value: true, message: "This is required" },
     },
-    blanco_estudios: {
-      required: { value: true, message: "This is required" },
-    },
+    // blanco_estudios: {
+    //   required: { value: true, message: "This is required" },
+    // },
     direccion: {
       required: { value: true, message: "This is required" },
     },
@@ -76,7 +76,7 @@ const CreateClub = ({ hide, refetch }: any) => {
       logo: imageUrl,
       lema: data.lema,
       direccion: data.direccion,
-      blanco_estudios_biblicos: data.blanco_estudios,
+      // blanco_estudios_biblicos: data.blanco_estudios,
       id_iglesia: selectValueIglesias?.value,
       cedula_director: selectValueDirector?.value,
       tipo: data.tipo.value,
@@ -272,7 +272,7 @@ const CreateClub = ({ hide, refetch }: any) => {
                   otherStyles="pt-3 pb-3 rounded-full text-sm"
                 />
               </div>
-              <div className="col-span-1">
+              {/* <div className="col-span-1">
                 <Input
                   name="blanco_estudios"
                   title="Blanco Estudios Biblicos"
@@ -285,7 +285,7 @@ const CreateClub = ({ hide, refetch }: any) => {
                   type="number"
                   otherStyles="pt-3 pb-3 rounded-full text-sm"
                 />
-              </div>
+              </div> */}
             </div>
 
             <InputListSearch
