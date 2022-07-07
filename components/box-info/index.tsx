@@ -45,7 +45,7 @@ const BoxInfo = ({
                     <ItemIcon
                       key={index}
                       icon={item?.icon}
-                      title={item?.title}
+                      // title={item?.title}
                       content={item?.content}
                     />
                   );
