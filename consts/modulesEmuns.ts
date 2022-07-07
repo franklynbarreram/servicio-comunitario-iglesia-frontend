@@ -5,7 +5,7 @@ export enum ModuleEnums {
   CLUBES = "clubes",
   MIEMBROS = "miembros",
   CAMPOREE = "listado",
-  EVENTO_PRECAMPOREE = "evento-precamporee",
+  // EVENTO_PRECAMPOREE = "evento-precamporee",
   EVENTO_PRECAMPOREE = "evento-precamporee-detail",
   EVENTO_CAMPOREE = "evento-camporee-detail",
 }

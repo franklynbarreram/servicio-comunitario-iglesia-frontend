@@ -64,7 +64,7 @@ const EditEventCamporee = ({
     clearErrors,
     watch,
     control,
-  } = useForm({
+  } = useForm<any>({
     mode: "onChange",
     defaultValues: {
       name: data?.nombre,
@@ -471,7 +471,6 @@ const EditEventCamporee = ({
                 otherStyles="rounded-full text-sm pt-3 pb-3"
               />
             </div>
-
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
               <InputListSearch
                 name="tipoEvento"
@@ -482,7 +481,7 @@ const EditEventCamporee = ({
                 register={register}
                 rules={rules.tipoEvento}
                 error={errors.tipoEvento}
-                handleChange={(data: OptionType) =>
+                handleChange={(data: OptionType | any) =>
                   setValue("tipoEvento", data, { shouldValidate: true })
                 }
                 myDefaultValue={watch("tipoEvento")}
@@ -496,13 +495,12 @@ const EditEventCamporee = ({
                 register={register}
                 rules={rules.eliminatoria}
                 error={errors.eliminatoria}
-                handleChange={(data: OptionType) =>
+                handleChange={(data: OptionType | any) =>
                   setValue("eliminatoria", data, { shouldValidate: true })
                 }
                 myDefaultValue={watch("eliminatoria")}
               />
             </div>
-
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
               {watch("tipoEvento")?.value !==
                 TypesSelectTypoEventoCamporeeEnums.FEDERACION && (
@@ -515,7 +513,7 @@ const EditEventCamporee = ({
                   register={register}
                   rules={rules.participacion_total}
                   error={errors.participacion_total}
-                  handleChange={(data: OptionType) =>
+                  handleChange={(data: OptionType | any) =>
                     setValue("participacion_total", data, {
                       shouldValidate: true,
                     })
@@ -536,7 +534,7 @@ const EditEventCamporee = ({
                   register={register}
                   rules={rules.sexo}
                   error={errors.sexo}
-                  handleChange={(data: OptionType) =>
+                  handleChange={(data: OptionType | any) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
                   myDefaultValue={watch("sexo")}
@@ -642,7 +640,6 @@ const EditEventCamporee = ({
                 )}
               </div>
             )}
-
             <div className="grid grid-cols-2 gap-2">
               <div className="col-span-1">
                 <Input
@@ -701,7 +698,6 @@ const EditEventCamporee = ({
                 />
               </div>
             </div>
-
             <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
               <Button
                 labelProps="f-18 font-normal"

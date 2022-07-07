@@ -451,7 +451,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                   register={register}
                   rules={rules.tipoCapellan}
                   error={errors.tipoCapellan}
-                  handleChange={(data: OptionType) => {
+                  handleChange={(data: OptionType | any) => {
                     setValue("tipoCapellan", data, { shouldValidate: true });
                     setTipoCapellan(data);
                   }}

@@ -7,9 +7,7 @@ import { Icons } from "consts/icons";
 import { InputProps } from "interfaces/common";
 
 export const Input: React.FC<
-  InputProps &
-    React.InputHTMLAttributes<HTMLInputElement> &
-    React.InputHTMLAttributes<HTMLTextAreaElement>
+  InputProps & React.InputHTMLAttributes<HTMLInputElement> & any
 > = ({
   name,
   title,

@@ -208,7 +208,7 @@ const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
                 register={register}
                 rules={rules.tipo}
                 error={errors.tipo}
-                handleChange={(data: OptionType) =>
+                handleChange={(data: OptionType | any) =>
                   setValue("tipo", data, { shouldValidate: true })
                 }
                 myDefaultValue={watch("tipo")}
