@@ -137,6 +137,7 @@ const EditProfile = ({ data, hide, refetch }: any) => {
                 className="mb-4"
                 options={optionsType()}
                 register={register}
+                customClassNamesOptions="max-h-32 w-full overflow-auto bg-white py-1 text-base sm:text-sm"
                 // rules={selectRules}
                 // error={selectError}
                 // isFill={selectIsFill}

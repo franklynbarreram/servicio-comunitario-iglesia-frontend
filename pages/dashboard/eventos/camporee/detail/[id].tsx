@@ -528,6 +528,24 @@ const EventCamporeeDetail = () => {
                                       "ml-3 font-bold mb-2 block f-18"
                                     )}
                                   >
+                                    Nivel
+                                  </Typography>
+                                  <Typography
+                                    type="span"
+                                    className={clsx(
+                                      "ml-3 font-normal mb-2 block f-18"
+                                    )}
+                                  >
+                                    {itemClub?.nivel}
+                                  </Typography>
+                                </div>
+                                <div className="item col-span-1">
+                                  <Typography
+                                    type="label"
+                                    className={clsx(
+                                      "ml-3 font-bold mb-2 block f-18"
+                                    )}
+                                  >
                                     Clasificado
                                   </Typography>
                                   <Typography
@@ -612,6 +630,49 @@ const EventCamporeeDetail = () => {
                                       ? itemClub?.puntuacion_eliminatoria
                                       : "N/A"}
                                   </Typography>
+                                </div>
+                                <div className="item col-span-2">
+                                  <Typography
+                                    type="label"
+                                    className={clsx(
+                                      "ml-3 font-bold mb-2 block f-18"
+                                    )}
+                                  >
+                                    Participantes
+                                  </Typography>
+
+                                  {!isEmpty(itemClub?.participantes) && (
+                                    <ul className="list-disc ml-3">
+                                      {itemClub.participantes.map(
+                                        (item: any, index: any) => {
+                                          return (
+                                            <li key={index}>
+                                              <Typography
+                                                type="span"
+                                                className={clsx(
+                                                  "font-normal mb-2 block f-18"
+                                                )}
+                                              >
+                                                {`${item.nombres} ${item.apellidos}, CI-${item?.cedula}, `}
+                                                <span
+                                                  className={clsx({
+                                                    "text-[deeppink]":
+                                                      item?.sexo === "F",
+                                                    "text-[blue]":
+                                                      item?.sexo === "M",
+                                                  })}
+                                                >
+                                                  {item?.sexo === "F"
+                                                    ? "Femenino"
+                                                    : "Masculino"}
+                                                </span>
+                                              </Typography>
+                                            </li>
+                                          );
+                                        }
+                                      )}
+                                    </ul>
+                                  )}
                                 </div>
                               </React.Fragment>
                             </div>
