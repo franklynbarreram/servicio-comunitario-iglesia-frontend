@@ -40,6 +40,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "no-sparse-arrays": "off",
+        "no-extra-boolean-cast": "off",
       },
     },
   ],
