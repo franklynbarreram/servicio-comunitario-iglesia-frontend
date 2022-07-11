@@ -16,6 +16,10 @@ class Service {
     return this.client.post("/eventos/inscribir_club", data);
   }
 
+  async inscribirConsejoToEventCamporee(data: any): Promise<any> {
+    return this.client.post("/eventos/inscribir_consejo", data);
+  }
+
   async editEventCamporee(data: any, id_camporee_evento: any): Promise<any> {
     return this.client.put(`/eventos/${id_camporee_evento}`, data);
   }
@@ -71,6 +75,14 @@ class Service {
       `/informes_precamporee/${id_informe_precamporee}`,
       data
     );
+  }
+
+  async LoadScoreCamporeeEventClub(data: any): Promise<any> {
+    return this.client.post(`/eventos/puntuacion_eliminatoria`, data);
+  }
+
+  async LoadScoreCamporeeEvent(data: any): Promise<any> {
+    return this.client.post(`/eventos/puntuacion_camporee`, data);
   }
 }
 export const CamporeeServices = new Service(axiosClient);

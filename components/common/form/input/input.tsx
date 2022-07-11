@@ -29,6 +29,8 @@ export const Input: React.FC<
   className,
   primary,
   isTextArea,
+  isArray,
+  arrayIndex,
   ...props
 }) => {
   const [showLabel, setShowLabel] = React.useState(false);
@@ -84,10 +86,12 @@ export const Input: React.FC<
               className={clsx(
                 {
                   "border-alert-error focus:border-alert-error placeholder-alert-error focus:ring-transparent":
-                    error || verifyValue === false,
+                    (error && (error.message || error[arrayIndex]?.message)) ||
+                    verifyValue === false,
                 },
                 {
-                  "text-alert-error": error,
+                  "text-alert-error":
+                    error && (error.message || error[arrayIndex]?.message),
                 },
                 { "opacity-50 bg-gray-200": props.disabled },
                 { "px-4": !leftImg && !rightImg },
@@ -204,7 +208,7 @@ export const Input: React.FC<
             </div>
           )}
         </div>
-        {error && error.message && (
+        {error && (error.message || error[arrayIndex]) && (
           <span className="flex items-center mt-3 text-alert-error font-montserrat">
             <div className="mr-1 w-4 h-3">
               <Icon
@@ -214,7 +218,7 @@ export const Input: React.FC<
               />
             </div>
             <Typography type="caption" className="f-12">
-              {error.message}
+              {isArray ? error[arrayIndex]?.message : error.message}
             </Typography>
           </span>
         )}

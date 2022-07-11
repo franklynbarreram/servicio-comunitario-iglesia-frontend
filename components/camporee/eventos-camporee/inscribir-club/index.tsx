@@ -17,6 +17,8 @@ import { useQuery } from "react-query";
 import { UseQueryEnums } from "consts/useQueryEnums";
 import { useQueryParams } from "consts/query.helper";
 import { CamporeeServices } from "services/Camporee";
+import { useUser } from "hooks/user";
+import { RoleEnums } from "consts/rolesEnum";
 type Params = {
   distincion_sexo?: string;
   tipo?: string;
@@ -52,7 +54,8 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
   // const [dataPersons, setDataPersons] = React.useState<any>();
 
   const { addToast } = useToasts();
-
+  const profile = useUser();
+  const dataUser = get(profile, "data", []);
   const {
     register,
     handleSubmit,
@@ -168,12 +171,19 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
     console.log("FinalData", extractOnlyValues);
     setIsLoading(true);
 
-    CamporeeServices.inscribirClubToEventCamporee(FinalData)
+    let Fetch: any = Promise;
+    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
+      Fetch = CamporeeServices.inscribirConsejoToEventCamporee(FinalData);
+    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
+      Fetch = CamporeeServices.inscribirClubToEventCamporee(FinalData);
+    }
+
+    Fetch.inscribirClubToEventCamporee(FinalData)
       .then((response: any) => {
-        addToast("Club inscrito exitosamente", {
+        addToast("Entidad inscrita exitosamente", {
           appearance: "success",
         });
-        console.log("response inscribir club:", response);
+        console.log("response inscribir entidad:", response);
         refetch();
         hide();
         setIsLoading(false);

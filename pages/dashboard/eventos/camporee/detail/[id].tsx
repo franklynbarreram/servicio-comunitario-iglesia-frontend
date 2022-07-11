@@ -1,51 +1,49 @@
-import { InputText } from "components/common/form/input-text";
-import { Icon } from "components/icon";
 import { LayoutDashboard } from "components/layout";
-import { appRouter, Icons } from "consts";
 import { useModal } from "hooks/modal";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { UseQueryEnums } from "consts/useQueryEnums";
 import { useQuery } from "react-query";
 import { Spinner } from "components/common/spinner/spinner";
 import { useQueryParams } from "consts/query.helper";
-import { IconWithText } from "components/icon-with-text";
-import DataTableComponent, {
-  TableColumnType,
-} from "components/data-table/DataTableComponent";
 import { get, isNil, isEmpty } from "lodash";
 import { Subject } from "rxjs";
 import { CamporeeServices } from "services/Camporee";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
-import { routeValidForUser, ValidateImage, ValidateString } from "lib/helper";
+import {
+  GenerateErrorToast,
+  routeValidForUser,
+  ValidateString,
+} from "lib/helper";
 import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
-import Link from "next/link";
 import { useRouter } from "next/router";
-// import { Tabs } from "components/common/tabs2";
-import EventosPrecamporee from "components/camporee/eventos-precamporee";
-import BoxInfo from "components/box-info";
 import clsx from "clsx";
 import { Typography } from "components/common/typography";
 import { InformeForm } from "components/events/precamporee/form-informe";
 import { Button } from "components/common/button";
-import ApproveInforme from "components/events/precamporee/approve-informe";
-import LoadScore from "components/events/precamporee/load-score";
 import { useUser } from "hooks/user";
 import { RoleEnums } from "consts/rolesEnum";
-import PreviewImage from "components/common/preview-image";
 import Back from "components/common/back";
-import { Tabs } from "antd";
+import { Table, Tabs } from "antd";
 import {
   TypesSelectEnums,
   TypesSelectSexoEnums,
   TypesSelectTypoEventoCamporeeEnums,
 } from "consts/typesSelectEnum";
 import InscribirClub from "components/camporee/eventos-camporee/inscribir-club";
+import { Collapse } from "antd";
+import { ArrowCircleRightIcon } from "@heroicons/react/outline";
+import { ArrowRightIcon, SaveIcon } from "@heroicons/react/solid";
+import { Alert } from "components/common/alert";
+import { Input } from "components/common/form/input";
+import { InputCheck } from "components/common/form/input-check";
+import { useToasts } from "react-toast-notifications";
 
+const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 type Params = {
@@ -57,45 +55,23 @@ const classNamesForms = "w-full px-4 md:w-[550px] mx-auto md:mt-8";
 const EventCamporeeDetail = () => {
   const { Modal, hide, isShow, show } = useModal();
 
-  const {
-    Modal: ModalApprove,
-    hide: hideApprove,
-    isShow: isShowApprove,
-    show: showApprove,
-  } = useModal();
-
   const router = useRouter();
   const { id } = router.query;
-  // console.log("el id:", id);
-  const {
-    Modal: ModalLoadScore,
-    hide: hideLoadScore,
-    isShow: isShowLoadScore,
-    show: showLoadScore,
-  } = useModal();
 
-  const {
-    Modal: ModalViewImages,
-    hide: hideViewImages,
-    isShow: isShowViewImages,
-    show: showViewImages,
-  } = useModal();
   const {
     Modal: ModalInscription,
     hide: hideInscription,
     isShow: isShowInscription,
     show: showInscription,
   } = useModal();
-  const [dataPreview, setDataPreview] = React.useState<any>();
+  const { addToast } = useToasts();
+
   const profile = useUser();
 
   const dataUser = get(profile, "data", []);
-  // const [response, setResponse] = React.useState<any>();
-  // const [isLoading, setIsLoading] = React.useState<any>(true);
-  const [onSearch, setOnSearch] = React.useState(false);
+
   const [isEdit, setIsEdit] = React.useState(false);
-  const [dataApprove, setDataApprove] = React.useState<any>();
-  const [dataLoadScore, setDataLoadScore] = React.useState<any>();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [subject, setSubject] = React.useState(new Subject<string>());
   const [params, setValue] = useQueryParams<Params>({ id });
@@ -107,6 +83,7 @@ const EventCamporeeDetail = () => {
     [`${UseQueryEnums.GET_EVENT_CAMPOREE_BY_ID_DETAIL_ID}_${id}`],
     () => CamporeeServices.getEventCamporeeById(id)
   );
+  const values = get(response, "data", []);
 
   const [tabs, setTabs] = React.useState<any>();
 
@@ -151,57 +128,29 @@ const EventCamporeeDetail = () => {
     register,
     handleSubmit,
     setValue: setValueForm,
+    control,
     formState: { errors },
     watch,
   } = useForm({ mode: "onChange" });
-
-  const values = get(response, "data", []);
-
-  const itemsCamporee = React.useMemo(() => {
-    return [
-      {
-        icon: Icons.calendar,
-        title: `${values?.fecha_inicio} a ${values?.fecha_fin}`,
+  const rules = {
+    puntuacion: {
+      // required: { value: true, message: "This is required" },
+      max: {
+        value: values?.puntuacion_maxima,
+        message: `Debe ser menor o igual a ${values?.puntuacion_maxima}`,
       },
-      {
-        icon: Icons.location,
-        title: (
-          <>
-            <strong className="text-[black]">Direccion:</strong>
-            {` ${values?.lugar}`}
-          </>
-        ),
-      },
-      ,
-      {
-        icon: Icons.iglesia,
-        title: (
-          <>
-            <strong className="text-[black]">Capellan:</strong>
-            {` ${values?.capellan}`}
-          </>
-        ),
-      },
-      {
-        icon: Icons.camporee,
-        title: (
-          <>
-            <strong className="text-[black]">Lider juvenil:</strong>
-            {` ${values?.lider_juvenil}`}
-          </>
-        ),
-      },
-    ];
-  }, [response]);
-
-  const handleShowLoadScore = (data: any) => {
-    setDataLoadScore(data);
-    showLoadScore();
+    },
+    clasificado: {
+      // required: { value: true, message: "This is required" },
+    },
   };
-  const handleShowApprove = (id: any) => {
-    setDataApprove(id);
-    showApprove();
-  };
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: "puntuacion", // unique name for your Field Array
+    }
+  );
 
   const handleShowInscription = (isEdit?: boolean) => {
     // setDataApprove(id);
@@ -226,12 +175,124 @@ const EventCamporeeDetail = () => {
     }
   };
 
-  const handlePreviewImage = (src: string) => {
-    setDataPreview(src);
-    showViewImages();
+  const callback = (key: any) => {
+    console.log(key);
+  };
+  console.log("los value evento camporee by id", values);
+
+  const columnsMiembros = [
+    {
+      title: "Nombres",
+      dataIndex: "nombres",
+      key: "nombres",
+    },
+    {
+      title: "Apellidos",
+      dataIndex: "apellidos",
+      key: "apellidos",
+    },
+    {
+      title: "Cedula",
+      dataIndex: "cedula",
+      key: "cedula",
+    },
+    {
+      title: "Sexo",
+      dataIndex: "sexo",
+      key: "sexo",
+      render: (sexo: any) => {
+        return (
+          <>
+            <span
+              className={clsx({
+                "text-[deeppink]": sexo === "F",
+                "text-[blue]": sexo === "M",
+              })}
+            >
+              {sexo === "F" ? "Femenino" : "Masculino"}
+            </span>
+          </>
+        );
+      },
+    },
+    {
+      title: "Categoria",
+      dataIndex: "categoria",
+      key: "categoria",
+    },
+  ];
+
+  const getPuntuacion = (item: any) => {
+    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
+      return item.puntuacion_eliminatoria;
+    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
+      return item.puntuacion_eliminatoria;
+    }
   };
 
-  console.log("los value evento camporee by id", values);
+  const handleSubmitData = (data: any) => {
+    console.log("data puntuacion", data);
+
+    let finalData: any = [];
+
+    let clasificadoIdEntidad = data.clasificado.map((item: any, index: any) => {
+      if (Boolean(item)) {
+        return values?.datos_inscripcion[index]?.id_entidad;
+      }
+    });
+    //Eliminar vacios, undefined y null
+    clasificadoIdEntidad = clasificadoIdEntidad.filter((item: any) => item);
+    let puntuacionIdEntidad = data.puntuacion.map((item: any, index: any) => {
+      if (!isEmpty(item)) {
+        return values?.datos_inscripcion[index]?.id_entidad;
+      }
+    });
+
+    //Eliminar vacios, undefined y null
+    puntuacionIdEntidad = puntuacionIdEntidad.filter((item: any) => item);
+    let puntuacionParseInt = data?.puntuacion?.map((item: any) => {
+      if (!isEmpty(item)) {
+        return parseInt(item);
+      }
+    });
+    //Eliminar vacios, undefined y null
+    puntuacionParseInt = puntuacionParseInt.filter((item: any) => item);
+
+    let FinalData: any = {};
+    let Fetch: any = Promise;
+
+    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
+      FinalData = {
+        puntuacion: [...puntuacionParseInt],
+        id_clubes: [...puntuacionIdEntidad],
+        clasificados: [...clasificadoIdEntidad],
+        id_camporee_evento: parseInt(id as any),
+      };
+      Fetch = CamporeeServices.LoadScoreCamporeeEventClub(FinalData);
+    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
+      FinalData = {
+        puntuacion: [...puntuacionParseInt],
+        id_entidad: [...puntuacionIdEntidad],
+        id_camporee_evento: parseInt(id as any),
+      };
+      Fetch = CamporeeServices.LoadScoreCamporeeEvent(FinalData);
+    }
+
+    console.log("final data", FinalData);
+    Fetch.then((response: any) => {
+      addToast("Datos cargados exitosamente", {
+        appearance: "success",
+      });
+      console.log("response puntuacion y clasificacion:", response);
+      refetch();
+      hide();
+      // setIsLoading(false);
+    }).catch((e: any) => {
+      console.log("Error: ", e);
+      GenerateErrorToast(e, addToast);
+      // setIsLoading(false);
+    });
+  };
 
   return (
     <LayoutDashboard title="Detalle Evento">
@@ -503,225 +564,264 @@ const EventCamporeeDetail = () => {
                 module={ModuleEnums.EVENTO_CAMPOREE}
                 typePermisse={PermissionsEnums.VIEW_CLUBES_INSCRITOS}
               >
-                {values?.datos_inscripcion?.map((itemClub: any, index: any) => {
-                  return (
-                    <React.Fragment key={index}>
-                      {itemClub?.inscrito && (
-                        <>
-                          <div className="item bg-yellow flex text-center justify-center w-full mt-20">
-                            <Typography
-                              type="label"
-                              className={clsx(
-                                "font-bold block text-primary text-3xl px-2 py-3"
-                              )}
-                            >
-                              {itemClub?.nombre}
-                            </Typography>
-                          </div>
-                          <div className="container-form shadow-md pb-10 px-5 w-full my-16 ">
-                            <div className="gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
-                              <React.Fragment key={index}>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Nivel
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {itemClub?.nivel}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Clasificado
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {itemClub?.clasificado ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Observacion
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {itemClub?.observacion ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Puntuación
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {itemClub?.puntuacion
-                                      ? itemClub?.puntuacion
-                                      : "N/A"}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Puntuación Eliminatoria
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {itemClub?.puntuacion_eliminatoria
-                                      ? itemClub?.puntuacion_eliminatoria
-                                      : "N/A"}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-2">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Participantes
-                                  </Typography>
-
-                                  {!isEmpty(itemClub?.participantes) && (
-                                    <ul className="list-disc ml-3">
-                                      {itemClub.participantes.map(
-                                        (item: any, index: any) => {
-                                          return (
-                                            <li key={index}>
-                                              <Typography
-                                                type="span"
-                                                className={clsx(
-                                                  "font-normal mb-2 block f-18"
-                                                )}
-                                              >
-                                                {`${item.nombres} ${item.apellidos}, CI-${item?.cedula}, `}
-                                                <span
-                                                  className={clsx({
-                                                    "text-[deeppink]":
-                                                      item?.sexo === "F",
-                                                    "text-[blue]":
-                                                      item?.sexo === "M",
-                                                  })}
-                                                >
-                                                  {item?.sexo === "F"
-                                                    ? "Femenino"
-                                                    : "Masculino"}
-                                                </span>
-                                              </Typography>
-                                            </li>
-                                          );
-                                        }
-                                      )}
-                                    </ul>
-                                  )}
-                                </div>
-                              </React.Fragment>
-                            </div>
-                            {/* {!isFirmado(informe) && (
-                              <Restricted
-                                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                                typePermisse={PermissionsEnums.APPROVE_FORM}
-                              >
-                                <div className="mt-28 justify-center text-center flex w-full">
-                                  <Button
-                                    labelProps="f-18 font-bold"
-                                    label={"Aprobar Informe"}
-                                    fill
-                                    className="bg-alert-success border-alert-success max-w-[200px]"
-                                    boderRadius="rounded-full"
-                                    size="full"
-                                    sizesButton="py-3"
-                                    onClick={() =>
-                                      handleShowApprove(informe?.id)
-                                    }
-                                  />
-                                </div>
-                              </Restricted>
-                            )}
-                            {informe?.editar && (
-                              <Restricted
-                                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                                typePermisse={PermissionsEnums.LOAD_SCORE}
-                              >
-                                <div className="mt-28 justify-center text-center flex w-full">
-                                  <Button
-                                    labelProps="f-18 font-bold"
-                                    label={"Cargar Puntuación"}
-                                    fill
-                                    className="bg-alert-success border-alert-success max-w-[200px]"
-                                    boderRadius="rounded-full"
-                                    size="full"
-                                    sizesButton="py-3"
-                                    onClick={() => handleShowLoadScore(informe)}
-                                  />
-                                </div>
-                              </Restricted>
-                            )} */}
-                          </div>
-                        </>
+                <form
+                  onSubmit={handleSubmit(handleSubmitData)}
+                  className="w-full"
+                >
+                  {values?.calificable && (
+                    <Restricted
+                      module={ModuleEnums.EVENTO_CAMPOREE}
+                      typePermisse={PermissionsEnums.LOAD_SCORE}
+                    >
+                      <Button
+                        labelProps="text-xs font-normal"
+                        label={"Guardar"}
+                        fill
+                        boderRadius="rounded-full"
+                        size="full"
+                        type="submit"
+                        sizesButton="py-2 px-1"
+                        className="fixed  bottom-16 right-8 z-10 max-w-[80px]"
+                      />
+                    </Restricted>
+                  )}
+                  {!isEmpty(values?.datos_inscripcion) && (
+                    <Collapse
+                      defaultActiveKey={["1"]}
+                      onChange={callback}
+                      className="w-full custom-collapse"
+                      collapsible="header"
+                      expandIcon={({ isActive }) => (
+                        <ArrowRightIcon
+                          className={clsx(
+                            "w-10 h-10 absolute top-0 left-5 bottom-0 m-auto",
+                            {
+                              "rotate-90": isActive,
+                            }
+                          )}
+                        />
                       )}
-                    </React.Fragment>
-                  );
-                })}
+                    >
+                      {values?.datos_inscripcion?.map(
+                        (itemClub: any, index: any) => {
+                          return (
+                            <React.Fragment key={index}>
+                              {itemClub?.inscrito && (
+                                <>
+                                  <Panel
+                                    header={
+                                      // <div className="item bg-yellow flex text-center justify-between pl-24 pr-3 w-full">
+                                      <Typography
+                                        type="label"
+                                        className={clsx(
+                                          "font-bold block text-primary text-3xl px-2 py-3 cursor-pointer"
+                                        )}
+                                      >
+                                        {itemClub?.nombre}
+                                      </Typography>
+                                      // </div>
+                                    }
+                                    extra={
+                                      <>
+                                        {!values?.calificable && (
+                                          <div className="justify-items-end gap-4 z-50 flex-initial flex items-center">
+                                            <Restricted
+                                              module={
+                                                ModuleEnums.EVENTO_CAMPOREE
+                                              }
+                                              typePermisse={
+                                                PermissionsEnums.LOAD_SCORE
+                                              }
+                                            >
+                                              <Input
+                                                name={`puntuacion[${index}]`}
+                                                title="Puntuación"
+                                                defaultValue={getPuntuacion(
+                                                  itemClub
+                                                )}
+                                                type="number"
+                                                // labelVisible
+                                                isFill={
+                                                  !!watch(
+                                                    `puntuacion[${index}]`
+                                                  )
+                                                }
+                                                register={register}
+                                                rules={rules.puntuacion}
+                                                error={errors.puntuacion}
+                                                isArray
+                                                arrayIndex={index}
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm"
+                                              />
+                                            </Restricted>
+                                            <Restricted
+                                              module={
+                                                ModuleEnums.EVENTO_CAMPOREE
+                                              }
+                                              typePermisse={
+                                                PermissionsEnums.CHECK_CLASIFICATION
+                                              }
+                                            >
+                                              <InputCheck
+                                                name={`clasificado[${index}]`}
+                                                title="Clasificado"
+                                                defaultChecked={
+                                                  itemClub?.clasificado
+                                                }
+                                                labelVisible
+                                                isFill={
+                                                  !!watch(
+                                                    `clasificado[${index}]`
+                                                  )
+                                                }
+                                                register={register}
+                                                rules={rules.clasificado}
+                                                error={errors.clasificado}
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm"
+                                              >
+                                                Clasificado
+                                              </InputCheck>
+                                            </Restricted>
+                                          </div>
+                                        )}
+                                      </>
+                                    }
+                                    key={index}
+                                    className="custom-collapse-header"
+                                  >
+                                    {itemClub?.observacion && (
+                                      <Alert
+                                        color="danger"
+                                        message="Observación pendiente"
+                                      />
+                                    )}
+                                    <div className="container-form shadow-md pb-10 px-5 w-fullS">
+                                      <div className="gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
+                                        <React.Fragment key={index}>
+                                          <div className="item col-span-1">
+                                            <Typography
+                                              type="label"
+                                              className={clsx(
+                                                "ml-3 font-bold mb-2 block f-18"
+                                              )}
+                                            >
+                                              Nivel
+                                            </Typography>
+                                            <Typography
+                                              type="span"
+                                              className={clsx(
+                                                "ml-3 font-normal mb-2 block f-18"
+                                              )}
+                                            >
+                                              {itemClub?.nivel}
+                                            </Typography>
+                                          </div>
+                                          <div className="item col-span-1">
+                                            <Typography
+                                              type="label"
+                                              className={clsx(
+                                                "ml-3 font-bold mb-2 block f-18"
+                                              )}
+                                            >
+                                              Clasificado
+                                            </Typography>
+                                            <Typography
+                                              type="span"
+                                              className={clsx(
+                                                "ml-3 font-normal mb-2 block f-18"
+                                              )}
+                                            >
+                                              {itemClub?.clasificado ? (
+                                                <span className="text-secondary font-bold">
+                                                  SI
+                                                </span>
+                                              ) : (
+                                                <span className="text-alert-error font-bold">
+                                                  NO
+                                                </span>
+                                              )}
+                                            </Typography>
+                                          </div>
+
+                                          <div className="item col-span-1">
+                                            <Typography
+                                              type="label"
+                                              className={clsx(
+                                                "ml-3 font-bold mb-2 block f-18"
+                                              )}
+                                            >
+                                              Puntuación
+                                            </Typography>
+                                            <Typography
+                                              type="span"
+                                              className={clsx(
+                                                "ml-3 font-normal mb-2 block f-18"
+                                              )}
+                                            >
+                                              {itemClub?.puntuacion
+                                                ? itemClub?.puntuacion
+                                                : "N/A"}
+                                            </Typography>
+                                          </div>
+                                          <div className="item col-span-1">
+                                            <Typography
+                                              type="label"
+                                              className={clsx(
+                                                "ml-3 font-bold mb-2 block f-18"
+                                              )}
+                                            >
+                                              Puntuación Eliminatoria
+                                            </Typography>
+                                            <Typography
+                                              type="span"
+                                              className={clsx(
+                                                "ml-3 font-normal mb-2 block f-18"
+                                              )}
+                                            >
+                                              {itemClub?.puntuacion_eliminatoria
+                                                ? itemClub?.puntuacion_eliminatoria
+                                                : "N/A"}
+                                            </Typography>
+                                          </div>
+                                          {!isEmpty(
+                                            itemClub?.participantes
+                                          ) && (
+                                            <div className="item col-span-full">
+                                              <>
+                                                <Typography
+                                                  type="label"
+                                                  className={clsx(
+                                                    "ml-3 font-bold mb-2 block f-18"
+                                                  )}
+                                                >
+                                                  Participantes
+                                                </Typography>
+
+                                                <Table
+                                                  columns={columnsMiembros}
+                                                  dataSource={
+                                                    itemClub?.participantes
+                                                  }
+                                                  className="table_club_miembros w-full table_ant_custom shadow-md overflow-x-auto border-b border-gray-200 rounded-lg"
+                                                  pagination={false}
+                                                  rowKey="cedula"
+                                                />
+                                              </>
+                                            </div>
+                                          )}
+                                        </React.Fragment>
+                                      </div>
+                                    </div>
+                                  </Panel>
+                                </>
+                              )}
+                            </React.Fragment>
+                          );
+                        }
+                      )}
+                    </Collapse>
+                  )}
+                </form>
               </Restricted>
             </>
           )}
@@ -736,10 +836,15 @@ const EventCamporeeDetail = () => {
                     values?.datos_inscripcion[0]?.inscribible && (
                       <div className="mt-10  mb-20 justify-center text-center flex w-full">
                         <Button
-                          labelProps="f-18 font-bold"
-                          label={"Inscribir club"}
+                          labelProps="f-18 font-bold text-[black]"
+                          label={
+                            dataUser?.scope_actual ===
+                            RoleEnums.PRESIDENTE_CONSEJO
+                              ? "Inscribir Consejo"
+                              : "Inscribir club"
+                          }
                           fill
-                          className="bg-alert-success border-alert-success max-w-[200px]"
+                          className="bg-yellow  border-yellow  max-w-[200px]"
                           boderRadius="rounded-full"
                           size="full"
                           sizesButton="py-3"
@@ -752,10 +857,10 @@ const EventCamporeeDetail = () => {
                     values?.datos_inscripcion[0]?.inscribible && (
                       <div className="mt-10 mb-20  justify-center text-center flex w-full">
                         <Button
-                          labelProps="f-18 font-bold"
+                          labelProps="f-18 font-bold text-[black]"
                           label={"Editar inscripcion"}
                           fill
-                          className="bg-alert-success border-alert-success max-w-[200px]"
+                          className="bg-yellow  border-yellow  max-w-[200px]"
                           boderRadius="rounded-full"
                           size="full"
                           sizesButton="py-3"
@@ -768,23 +873,6 @@ const EventCamporeeDetail = () => {
           </Restricted>
         </div>
       </div>
-      <ModalApprove isShow={isShowApprove}>
-        <ApproveInforme
-          hide={hideApprove}
-          refetch={refetch}
-          id_informe={dataApprove}
-        />
-      </ModalApprove>
-      <ModalLoadScore isShow={isShowLoadScore}>
-        <LoadScore
-          hide={hideLoadScore}
-          data={dataLoadScore}
-          refetch={refetch}
-        />
-      </ModalLoadScore>
-      <ModalViewImages isShow={isShowViewImages}>
-        <PreviewImage src={dataPreview} />
-      </ModalViewImages>
       <ModalInscription isShow={isShowInscription}>
         <InscribirClub
           hide={hideInscription}
@@ -794,13 +882,6 @@ const EventCamporeeDetail = () => {
           refetch={refetch}
         />
       </ModalInscription>
-      {/*
-      <ModalEdit isShow={isShowEdit}>
-        <EditClub hide={hideEdit} data={dataEdit} refetch={refetch} />
-      </ModalEdit>
-      <ModalView isShow={isShowView}>
-        <ViewClub hide={hideView} data={dataView} refetch={refetch} />
-      </ModalView> */}
     </LayoutDashboard>
   );
 };

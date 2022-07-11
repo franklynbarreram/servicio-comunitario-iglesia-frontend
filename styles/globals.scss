@@ -186,3 +186,21 @@ body {
 .tabs-antd-custom.justify-center.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
   justify-content: center;
 }
+
+.custom-collapse.ant-collapse {
+  margin-top: 6%;
+}
+.custom-collapse.ant-collapse .custom-collapse-header .ant-collapse-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--color-yellow);
+}
+.custom-collapse.ant-collapse > .ant-collapse-item {
+  margin-bottom: 2px;
+}
+.custom-collapse.ant-collapse
+  > .ant-collapse-item.custom-collapse-header
+  > .ant-collapse-header::after {
+  content: "";
+  display: none;
+}

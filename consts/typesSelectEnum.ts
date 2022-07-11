@@ -23,6 +23,7 @@ export const TypesSelectCapellanMap = {
 export enum TypesSelectYesOrNot {
   SI = "si",
   NO = "no",
+  value = "value",
 }
 
 export const TypesSelectYesOrNotMap = {
