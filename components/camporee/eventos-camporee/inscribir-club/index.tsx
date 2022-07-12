@@ -174,25 +174,23 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
     let Fetch: any = Promise;
     if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
       Fetch = CamporeeServices.inscribirConsejoToEventCamporee(FinalData);
-    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
+    } else if (dataUser.scope_actual === RoleEnums.DIRECTOR) {
       Fetch = CamporeeServices.inscribirClubToEventCamporee(FinalData);
     }
 
-    Fetch.inscribirClubToEventCamporee(FinalData)
-      .then((response: any) => {
-        addToast("Entidad inscrita exitosamente", {
-          appearance: "success",
-        });
-        console.log("response inscribir entidad:", response);
-        refetch();
-        hide();
-        setIsLoading(false);
-      })
-      .catch((e: any) => {
-        console.log("Error: ", e);
-        GenerateErrorToast(e, addToast);
-        setIsLoading(false);
+    Fetch.then((response: any) => {
+      addToast("Entidad inscrita exitosamente", {
+        appearance: "success",
       });
+      console.log("response inscribir entidad:", response);
+      refetch();
+      hide();
+      setIsLoading(false);
+    }).catch((e: any) => {
+      console.log("Error: ", e);
+      GenerateErrorToast(e, addToast);
+      setIsLoading(false);
+    });
   };
   const handleChangeSelectConquistadoresHombres = (selected: any) => {
     console.log("selected", selected);
