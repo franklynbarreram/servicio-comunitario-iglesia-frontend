@@ -639,6 +639,7 @@ const EventCamporeeDetail = () => {
                                                 defaultValue={getPuntuacion(
                                                   itemClub
                                                 )}
+                                                disabled={!values?.calificable}
                                                 type="number"
                                                 // labelVisible
                                                 isFill={
@@ -651,7 +652,8 @@ const EventCamporeeDetail = () => {
                                                 error={errors.puntuacion}
                                                 isArray
                                                 arrayIndex={index}
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm"
+                                                // className="placeholder:text-black"
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c9e]"
                                               />
                                             </Restricted>
                                             <Restricted
@@ -668,6 +670,7 @@ const EventCamporeeDetail = () => {
                                                 defaultChecked={
                                                   itemClub?.clasificado
                                                 }
+                                                disabled={!values?.calificable}
                                                 labelVisible
                                                 isFill={
                                                   !!watch(
@@ -677,7 +680,7 @@ const EventCamporeeDetail = () => {
                                                 register={register}
                                                 rules={rules.clasificado}
                                                 error={errors.clasificado}
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm"
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c9e]"
                                               >
                                                 Clasificado
                                               </InputCheck>

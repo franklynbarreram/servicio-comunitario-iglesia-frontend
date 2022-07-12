@@ -308,6 +308,7 @@ export const PermissionByRol = [
           PermissionsEnums.VIEW_CLUBES_INSCRITOS,
           PermissionsEnums.LOAD_SCORE,
           PermissionsEnums.CHECK_CLASIFICATION,
+          PermissionsEnums.INSCRIBIR_CLUB,
         ],
       },
     ],
