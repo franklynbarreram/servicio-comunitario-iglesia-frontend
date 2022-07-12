@@ -294,6 +294,23 @@ const EventCamporeeDetail = () => {
     });
   };
 
+  const isPermitted = () => {
+    if (
+      values?.calificable &&
+      dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO &&
+      !values?.inscripcion_federacion
+    ) {
+      return true;
+    } else if (
+      values?.calificable &&
+      dataUser.scope_actual !== RoleEnums.PRESIDENTE_CONSEJO
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <LayoutDashboard title="Detalle Evento">
       <div className="lg:px-20 mt-12">
@@ -623,7 +640,7 @@ const EventCamporeeDetail = () => {
                                     }
                                     extra={
                                       <>
-                                        {!values?.calificable && (
+                                        {isPermitted() && (
                                           <div className="justify-items-end gap-4 z-50 flex-initial flex items-center">
                                             <Restricted
                                               module={
