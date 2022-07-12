@@ -34,7 +34,7 @@ import {
   TypesSelectSexoEnums,
   TypesSelectTypoEventoCamporeeEnums,
 } from "consts/typesSelectEnum";
-import InscribirClub from "components/camporee/eventos-camporee/inscribir-club";
+import InscribirEntidad from "components/camporee/eventos-camporee/inscribir-entidad";
 import { Collapse } from "antd";
 import { ArrowCircleRightIcon } from "@heroicons/react/outline";
 import { ArrowRightIcon, SaveIcon } from "@heroicons/react/solid";
@@ -877,7 +877,7 @@ const EventCamporeeDetail = () => {
         </div>
       </div>
       <ModalInscription isShow={isShowInscription}>
-        <InscribirClub
+        <InscribirEntidad
           hide={hideInscription}
           data={values}
           isEdit={isEdit}

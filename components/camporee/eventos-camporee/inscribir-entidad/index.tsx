@@ -10,7 +10,7 @@ import { isNil, isEmpty, get, merge } from "lodash";
 import { customStyles } from "consts/stylesReactSelect.helper";
 import { DirectorService } from "services/Director";
 import { ClubesServices } from "services/Clubes";
-import { PersonasServices } from "services";
+import { ConsejosRegionalesServices, PersonasServices } from "services";
 import ItemIcon from "components/item-icon";
 import { TypesSelectEnums, TypesSelectSexoEnums } from "consts/typesSelectEnum";
 import { useQuery } from "react-query";
@@ -23,7 +23,7 @@ type Params = {
   distincion_sexo?: string;
   tipo?: string;
 };
-const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
+const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
   const [
     selectValueConquistadoresHombres,
     setSelectValueConquistadoresHombres,
@@ -44,8 +44,18 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
     data: response,
     isLoading: isLoadingFetch,
     refetch: refetchMiembros,
-  } = useQuery<any>([`${UseQueryEnums.GET_ALL_MIEMBROS}`], () =>
-    ClubesServices.getAllMiembros(params)
+  } = useQuery<any>(
+    [`${UseQueryEnums.GET_ALL_MIEMBROS}`],
+    () => {
+      let Fetch: any = Promise;
+      if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
+        Fetch = ConsejosRegionalesServices.getAllMiembros(params);
+      } else if (dataUser.scope_actual === RoleEnums.DIRECTOR) {
+        Fetch = ClubesServices.getAllMiembros(params);
+      }
+      return Fetch;
+    },
+    { cacheTime: 0 }
   );
 
   const dataPersons = get(response, "data", []);
@@ -363,11 +373,17 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
     return data?.distincion_sexo === sexo;
   };
 
-  console.log("principaal", data);
-
+  // console.log("principaal", data);
+  const getTitle = () => {
+    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
+      return "Consejo";
+    } else if (dataUser.scope_actual === RoleEnums.DIRECTOR) {
+      return "Club";
+    }
+  };
   return (
     <div className="text-center">
-      <h2 className="text-3xl md:text-4xl font-bold">Inscribir Club</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Inscribir {getTitle()}</h2>
       <div className="requires flex flex-col justify-start text-left mt-10">
         <p className="ml-3 font-bold">Cantidades requeridas:</p>
         {(data?.tipo === TypesSelectEnums.CONQUISTADORES ||
@@ -601,4 +617,4 @@ const InscribirClub = ({ data, hide, refetch, isEdit }: any) => {
   );
 };
 
-export default InscribirClub;
+export default InscribirEntidad;

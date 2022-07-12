@@ -13,6 +13,9 @@ class Service {
   async getAll(params?: any): Promise<any> {
     return this.client.get("/consejos_regionales", { params });
   }
+  async getAllMiembros(params: any): Promise<any> {
+    return this.client.get("/consejos_regionales/miembros", { params });
+  }
 }
 
 export const ConsejosRegionalesServices = new Service(axiosClient);
