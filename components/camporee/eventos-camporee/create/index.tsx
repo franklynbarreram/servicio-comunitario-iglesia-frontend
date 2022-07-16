@@ -346,6 +346,10 @@ const CreateEventCamporee = ({
       categoria: form?.category?.value,
       puntuacion_maxima: parseInt(form?.puntuacion_maxima),
       distincion_sexo: form?.sexo?.value,
+      participacion_total:
+        form?.participacion_total?.value === TypesSelectYesOrNot.SI
+          ? true
+          : false,
     };
 
     console.log("A ENVIAR", FinalData);
@@ -441,20 +445,23 @@ const CreateEventCamporee = ({
                 }
                 myDefaultValue={watch("tipoEvento")}
               />
-              <InputListSearch
-                name="eliminatoria"
-                title="¿Eliminatoria?"
-                className="mb-4 h-10 rounded-full text-sm"
-                classNamesContainer="flex-1"
-                options={optionsTypeYesOrNot}
-                register={register}
-                rules={rules.eliminatoria}
-                error={errors.eliminatoria}
-                handleChange={(data: OptionType) =>
-                  setValue("eliminatoria", data, { shouldValidate: true })
-                }
-                myDefaultValue={watch("eliminatoria")}
-              />
+              {watch("tipoEvento")?.value ===
+                TypesSelectTypoEventoCamporeeEnums.CLUBES && (
+                <InputListSearch
+                  name="eliminatoria"
+                  title="¿Eliminatoria?"
+                  className="mb-4 h-10 rounded-full text-sm"
+                  classNamesContainer="flex-1"
+                  options={optionsTypeYesOrNot}
+                  register={register}
+                  rules={rules.eliminatoria}
+                  error={errors.eliminatoria}
+                  handleChange={(data: OptionType) =>
+                    setValue("eliminatoria", data, { shouldValidate: true })
+                  }
+                  myDefaultValue={watch("eliminatoria")}
+                />
+              )}
             </div>
 
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">

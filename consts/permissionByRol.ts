@@ -52,6 +52,7 @@ export const PermissionByRol = [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.EDIT,
+          PermissionsEnums.ADD,
         ],
       },
 
@@ -72,6 +73,7 @@ export const PermissionByRol = [
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
           PermissionsEnums.ADD,
+          PermissionsEnums.EDIT,
           // PermissionsEnums.INSCRIBIR_CLUB,
           PermissionsEnums.VIEW_CLUBES_INSCRITOS,
           PermissionsEnums.LOAD_SCORE,

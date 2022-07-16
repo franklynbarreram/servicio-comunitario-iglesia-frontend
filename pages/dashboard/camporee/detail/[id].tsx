@@ -25,6 +25,7 @@ import EditCamporee from "components/camporee/edit-camporee";
 import { Tabs } from "antd";
 import EditEventPrecamporee from "components/camporee/eventos-precamporee/edit";
 import EventosCamporee from "components/camporee/eventos-camporee";
+import ResultadosCamporee from "components/camporee/resultados";
 
 const { TabPane } = Tabs;
 
@@ -123,7 +124,27 @@ const CamporeeDetail = () => {
     ];
   }, [response]);
 
-  // console.log("los value campore by id", values);
+  const itemsCamporeeHead = React.useMemo(() => {
+    return [
+      {
+        title: `Nro. Clubes`,
+        content: (
+          <>
+            <strong>{parseInt(values?.nro_clubes)}</strong>
+          </>
+        ),
+      },
+      {
+        title: `Nro. Miembros`,
+        content: (
+          <>
+            <strong>{parseInt(values?.nro_miembros)}</strong>
+          </>
+        ),
+      },
+    ];
+  }, [response]);
+  console.log("los value campore by id", values);
 
   return (
     <LayoutDashboard title="Detalle Camporee">
@@ -146,9 +167,7 @@ const CamporeeDetail = () => {
                 />
               </TabPane>
               <TabPane tab="Resultados" key="3">
-                <p>Content of Tab Pane 3</p>
-                <p>Content of Tab Pane 3</p>
-                <p>Content of Tab Pane 3</p>
+                <ResultadosCamporee idCamporee={id} className="px-2" />
               </TabPane>
             </Tabs>
 
@@ -165,6 +184,7 @@ const CamporeeDetail = () => {
                 image={ValidateImage(values?.logo)}
                 title={values?.nombre}
                 items={itemsCamporee}
+                headItems={itemsCamporeeHead}
               />
             </>
           )}

@@ -1,0 +1,114 @@
+/* eslint-disable */
+import { Listbox, Transition } from "@headlessui/react";
+import { ChevronDownIcon, XIcon } from "@heroicons/react/solid";
+import { entries, get, isNil } from "lodash";
+import { Fragment, useState } from "react";
+import styled from "styled-components";
+
+type SelectInputProps = {
+  name: string;
+  label: string;
+  options: { [key: string]: string };
+  maxwidth?: string;
+  value?: string | number;
+  className?: string;
+  setValue: (key: string, value: string | number | undefined) => void;
+};
+
+const Container = styled.div.attrs<any>(({ maxwidth, className }: any) => ({
+  className: `
+    flex-auto,
+		${className},
+    ${maxwidth ? maxwidth : "max-w-[200px]"}
+`,
+}))<any>``;
+
+export function SelectInput({
+  name,
+  label,
+  options,
+  maxwidth,
+  value,
+  className,
+  setValue,
+}: SelectInputProps) {
+  const [selectedValue, selectValue] = useState<string | number | undefined>(
+    value
+  );
+
+  const isSelected = () => {
+    return !isNil(selectedValue);
+  };
+
+  const clearFilter = () => {
+    setValue(name, undefined);
+    selectValue(undefined);
+  };
+
+  const handleChange = (value: string) => {
+    setValue(name, value);
+    selectValue(value);
+  };
+
+  const values = entries(options);
+
+  return (
+    <Container maxwidth={maxwidth} className={className}>
+      <Listbox value={selectedValue} onChange={handleChange}>
+        <div className="relative">
+          <Listbox.Button className="relative w-full h-10 pl-3 pr-10 text-left bg-transparent shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-[black] focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-yellow sm:text-sm border-yellow border rounded-full">
+            {!isSelected() && (
+              <>
+                <span className="block truncate text-[black] text-xs">
+                  {label}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <ChevronDownIcon
+                    className="w-5 h-5 text-[black]"
+                    aria-hidden="true"
+                  />
+                </span>
+              </>
+            )}
+            {isSelected() && (
+              <>
+                <span className="flex justify-between truncate text-[black] font-bold text-xs">
+                  {`${get(options, selectedValue!, "N/A")}`}
+                </span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <XIcon
+                    onClick={clearFilter}
+                    className="w-5 h-5 text-[black] cursor-pointer"
+                    aria-hidden="true"
+                  />
+                </span>
+              </>
+            )}
+          </Listbox.Button>
+          {!isSelected() && (
+            <Transition
+              as={Fragment}
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Listbox.Options className="absolute   z-50 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {values.map(([key, value], index) => {
+                  return (
+                    <Listbox.Option
+                      key={`opt-${name}-${index}`}
+                      className="cursor-default hover:bg-primary hover:text-white select-none relative py-2 pl-10 pr-4 text-[black]"
+                      value={key}
+                    >
+                      {value}
+                    </Listbox.Option>
+                  );
+                })}
+              </Listbox.Options>
+            </Transition>
+          )}
+        </div>
+      </Listbox>
+    </Container>
+  );
+}

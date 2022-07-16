@@ -248,7 +248,7 @@ const CamporeeList = () => {
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
                 <Restricted
-                  module={ModuleEnums.CLUBES}
+                  module={ModuleEnums.CAMPOREE}
                   typePermisse={PermissionsEnums.ADD}
                 >
                   <div className="px-2" onClick={showCreate}>

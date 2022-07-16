@@ -736,32 +736,34 @@ const EventCamporeeDetail = () => {
                                               {itemClub?.nivel}
                                             </Typography>
                                           </div>
-                                          <div className="item col-span-1">
-                                            <Typography
-                                              type="label"
-                                              className={clsx(
-                                                "ml-3 font-bold mb-2 block f-18"
-                                              )}
-                                            >
-                                              Clasificado
-                                            </Typography>
-                                            <Typography
-                                              type="span"
-                                              className={clsx(
-                                                "ml-3 font-normal mb-2 block f-18"
-                                              )}
-                                            >
-                                              {itemClub?.clasificado ? (
-                                                <span className="text-secondary font-bold">
-                                                  SI
-                                                </span>
-                                              ) : (
-                                                <span className="text-alert-error font-bold">
-                                                  NO
-                                                </span>
-                                              )}
-                                            </Typography>
-                                          </div>
+                                          {values?.inscripcion_federacion && (
+                                            <div className="item col-span-1">
+                                              <Typography
+                                                type="label"
+                                                className={clsx(
+                                                  "ml-3 font-bold mb-2 block f-18"
+                                                )}
+                                              >
+                                                Clasificado
+                                              </Typography>
+                                              <Typography
+                                                type="span"
+                                                className={clsx(
+                                                  "ml-3 font-normal mb-2 block f-18"
+                                                )}
+                                              >
+                                                {itemClub?.clasificado ? (
+                                                  <span className="text-secondary font-bold">
+                                                    SI
+                                                  </span>
+                                                ) : (
+                                                  <span className="text-alert-error font-bold">
+                                                    NO
+                                                  </span>
+                                                )}
+                                              </Typography>
+                                            </div>
+                                          )}
 
                                           <div className="item col-span-1">
                                             <Typography
@@ -783,26 +785,28 @@ const EventCamporeeDetail = () => {
                                                 : "N/A"}
                                             </Typography>
                                           </div>
-                                          <div className="item col-span-1">
-                                            <Typography
-                                              type="label"
-                                              className={clsx(
-                                                "ml-3 font-bold mb-2 block f-18"
-                                              )}
-                                            >
-                                              Puntuación Eliminatoria
-                                            </Typography>
-                                            <Typography
-                                              type="span"
-                                              className={clsx(
-                                                "ml-3 font-normal mb-2 block f-18"
-                                              )}
-                                            >
-                                              {itemClub?.puntuacion_eliminatoria
-                                                ? itemClub?.puntuacion_eliminatoria
-                                                : "N/A"}
-                                            </Typography>
-                                          </div>
+                                          {values?.inscripcion_federacion && (
+                                            <div className="item col-span-1">
+                                              <Typography
+                                                type="label"
+                                                className={clsx(
+                                                  "ml-3 font-bold mb-2 block f-18"
+                                                )}
+                                              >
+                                                Puntuación Eliminatoria
+                                              </Typography>
+                                              <Typography
+                                                type="span"
+                                                className={clsx(
+                                                  "ml-3 font-normal mb-2 block f-18"
+                                                )}
+                                              >
+                                                {itemClub?.puntuacion_eliminatoria
+                                                  ? itemClub?.puntuacion_eliminatoria
+                                                  : "N/A"}
+                                              </Typography>
+                                            </div>
+                                          )}
                                           {!isEmpty(
                                             itemClub?.participantes
                                           ) && (

@@ -13,6 +13,7 @@ interface BoxInfoProps {
   title: string;
   className?: string;
   items?: any[];
+  headItems?: any[];
   withEditButton?: boolean;
   showModal?: any;
 }
@@ -22,6 +23,7 @@ const BoxInfo = ({
   title,
   className,
   items,
+  headItems,
   withEditButton,
   showModal,
 }: BoxInfoProps) => {
@@ -38,6 +40,16 @@ const BoxInfo = ({
             <h3 className="mt-6 text-gray-900 font-semibold text-xl text-center capitalize">
               {title}
             </h3>
+            {headItems && (
+              <div className="flex gap-4 justify-center items-center text-center mt-3 border border-[black] bg-white py-2 rounded-md">
+                {headItems.map((item, index) => (
+                  <div className="flex-col justify-center items-center text-center text-[black]">
+                    <h5>{item?.title}</h5>
+                    <>{item?.content}</>
+                  </div>
+                ))}
+              </div>
+            )}
             {items && (
               <div className="mt-8 flex-grow flex flex-col justify-between gap-y-4">
                 {items.map((item: any, index: any) => {

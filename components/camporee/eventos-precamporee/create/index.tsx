@@ -31,7 +31,7 @@ import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";
 import moment from "moment";
 
-const CreateEventPrecamporee = ({ hide, refetch }: any) => {
+const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
   const [fechaInicio, setFechaInicio] = React.useState();
   const [fechaFin, setFechaFin] = React.useState();
   const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
@@ -81,6 +81,7 @@ const CreateEventPrecamporee = ({ hide, refetch }: any) => {
       fecha_fin: moment(form?.fecha_fin).format(formatDates),
       mensual: form.tipo.value === TypesSelectYesOrNot.SI ? true : false,
       puntaje_maximo: form?.puntaje_maximo,
+      id_camporee: id_camporee,
     };
 
     console.log("A ENVIAR", FinalData);

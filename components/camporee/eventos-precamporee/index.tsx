@@ -101,8 +101,11 @@ const EventosPrecamporee = ({
   };
 
   const handleOnEdit = (selected: any) => {
+    console.log("todos los precamporee", allPrecamporee);
+    console.log("el seleccionado", selected);
     const findSelected = allPrecamporee.find(
-      (item: any) => item.id === selected.id
+      (item: any) =>
+        item.id_camporee_precamporee === selected.id_camporee_precamporee
     );
     setDataEdit(findSelected);
     showEditPrecamporee();
@@ -143,7 +146,7 @@ const EventosPrecamporee = ({
     return subject.next(value);
   };
 
-  // console.log("all pre camporee", data);
+  console.log("all pre camporee", data);
 
   return (
     <div className="text-center w-full">
@@ -169,18 +172,20 @@ const EventosPrecamporee = ({
                   leftImg={Icons.search}
                   otherStyles="pt-3 pb-3 rounded-full"
                 />
-                <Restricted
-                  module={ModuleEnums.EVENTO_PRECAMPOREE}
-                  typePermisse={PermissionsEnums.ADD}
-                >
-                  <div className="px-2" onClick={showCreatePrecamporee}>
-                    <Icon
-                      src={Icons.more}
-                      fill="var(--color-primary)"
-                      className="max-w-[50px] w-12 cursor-pointer"
-                    />
-                  </div>
-                </Restricted>
+                {data?.data?.modificacion && (
+                  <Restricted
+                    module={ModuleEnums.EVENTO_PRECAMPOREE}
+                    typePermisse={PermissionsEnums.ADD}
+                  >
+                    <div className="px-2" onClick={showCreatePrecamporee}>
+                      <Icon
+                        src={Icons.more}
+                        fill="var(--color-primary)"
+                        className="max-w-[50px] w-12 cursor-pointer"
+                      />
+                    </div>
+                  </Restricted>
+                )}
               </div>
             </form>
 
@@ -235,23 +240,26 @@ const EventosPrecamporee = ({
                     </div>
                     <div>
                       <div className="-mt-px flex divide-x divide-gray-200">
-                        <Restricted
-                          module={ModuleEnums.EVENTO_PRECAMPOREE}
-                          typePermisse={PermissionsEnums.EDIT}
-                        >
-                          <div className="w-0 flex-1 flex">
-                            <div
-                              className="cursor-pointer relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
-                              onClick={() => handleOnEdit(item)}
-                            >
-                              <PencilIcon
-                                className="w-5 h-5 text-gray-400"
-                                aria-hidden="true"
-                              />
-                              <span className="ml-3">Editar</span>
+                        {data?.data?.modificacion && (
+                          <Restricted
+                            module={ModuleEnums.EVENTO_PRECAMPOREE}
+                            typePermisse={PermissionsEnums.EDIT}
+                          >
+                            <div className="w-0 flex-1 flex">
+                              <div
+                                className="cursor-pointer relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                                onClick={() => handleOnEdit(item)}
+                              >
+                                <PencilIcon
+                                  className="w-5 h-5 text-gray-400"
+                                  aria-hidden="true"
+                                />
+                                <span className="ml-3">Editar</span>
+                              </div>
                             </div>
-                          </div>
-                        </Restricted>
+                          </Restricted>
+                        )}
+
                         <Restricted
                           module={ModuleEnums.EVENTO_PRECAMPOREE}
                           typePermisse={PermissionsEnums.VIEW}
@@ -305,6 +313,7 @@ const EventosPrecamporee = ({
       </div>
       <ModalCreatePrecamporee isShow={isShowCreatePrecamporee}>
         <CreateEventPrecamporee
+          id_camporee={idCamporee}
           hide={hideCreatePrecamporee}
           refetch={refetch}
         />

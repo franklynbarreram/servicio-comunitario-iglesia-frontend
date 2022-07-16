@@ -110,9 +110,16 @@ const EditEventCamporee = ({
       participantes_conquistadores_m: data?.participantes_conquistadores_m,
       participantes_guias_mayores_f: data?.participantes_guias_mayores_f,
       participantes_guias_mayores_m: data?.participantes_guias_mayores_m,
-      participacion_total: data?.participacion_total
-        ? TypesSelectYesOrNot.SI
-        : TypesSelectYesOrNot.NO,
+      participacion_total: {
+        value: data?.participacion_total
+          ? TypesSelectYesOrNot.SI
+          : TypesSelectYesOrNot.NO,
+        text: data?.participacion_total
+          ? TypesSelectYesOrNot.SI
+          : TypesSelectYesOrNot.NO,
+        disabled: false,
+        placeholder: false,
+      },
     },
   });
   const rules = {
