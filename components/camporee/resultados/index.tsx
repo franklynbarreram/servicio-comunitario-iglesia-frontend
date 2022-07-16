@@ -186,112 +186,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     },
   };
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control, // control props comes from useForm (optional: if you are using FormContext)
-      name: "puntuacion", // unique name for your Field Array
-    }
-  );
-
-  const handleShowInscription = (isEdit?: boolean) => {
-    // setDataApprove(id);
-    if (isEdit) setIsEdit(true);
-    showInscription();
-  };
-
-  const callback = (key: any) => {
-    console.log(key);
-  };
   console.log("los value resultados camporee by id", values);
-
-  const getPuntuacion = (item: any) => {
-    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
-      return item.puntuacion_eliminatoria;
-    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
-      return item.puntuacion_eliminatoria;
-    }
-  };
-
-  const handleSubmitData = (data: any) => {
-    console.log("data puntuacion", data);
-
-    let finalData: any = [];
-
-    let clasificadoIdEntidad = data.clasificado.map((item: any, index: any) => {
-      if (Boolean(item)) {
-        return values?.datos_inscripcion[index]?.id_entidad;
-      }
-    });
-    //Eliminar vacios, undefined y null
-    clasificadoIdEntidad = clasificadoIdEntidad.filter((item: any) => item);
-    let puntuacionIdEntidad = data.puntuacion.map((item: any, index: any) => {
-      if (!isEmpty(item)) {
-        return values?.datos_inscripcion[index]?.id_entidad;
-      }
-    });
-
-    //Eliminar vacios, undefined y null
-    puntuacionIdEntidad = puntuacionIdEntidad.filter((item: any) => item);
-    let puntuacionParseInt = data?.puntuacion?.map((item: any) => {
-      if (!isEmpty(item)) {
-        return parseInt(item);
-      }
-    });
-    //Eliminar vacios, undefined y null
-    puntuacionParseInt = puntuacionParseInt.filter((item: any) => item);
-
-    let FinalData: any = {};
-    let Fetch: any = Promise;
-
-    if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
-      FinalData = {
-        puntuacion: [...puntuacionParseInt],
-        id_clubes: [...puntuacionIdEntidad],
-        clasificados: [...clasificadoIdEntidad],
-        id_camporee_evento: parseInt(id as any),
-      };
-      Fetch = CamporeeServices.LoadScoreCamporeeEventClub(FinalData);
-    } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
-      FinalData = {
-        puntuacion: [...puntuacionParseInt],
-        id_entidad: [...puntuacionIdEntidad],
-        id_camporee_evento: parseInt(id as any),
-      };
-      Fetch = CamporeeServices.LoadScoreCamporeeEvent(FinalData);
-    }
-
-    console.log("final data", FinalData);
-    Fetch.then((response: any) => {
-      addToast("Datos cargados exitosamente", {
-        appearance: "success",
-      });
-      console.log("response puntuacion y clasificacion:", response);
-      refetch();
-      hide();
-      // setIsLoading(false);
-    }).catch((e: any) => {
-      console.log("Error: ", e);
-      GenerateErrorToast(e, addToast);
-      // setIsLoading(false);
-    });
-  };
-
-  const isPermitted = () => {
-    if (
-      values?.calificable &&
-      dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO &&
-      !values?.inscripcion_federacion
-    ) {
-      return true;
-    } else if (
-      values?.calificable &&
-      dataUser.scope_actual !== RoleEnums.PRESIDENTE_CONSEJO
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
 
   const handleChangeSearch = (e: any) => {
     const value = e.target.value;
@@ -420,10 +315,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
             <Spinner type="loadingPage" className="py-10" />
           ) : (
             <>
-              <form
-                className="w-full text-left"
-                onSubmit={handleSubmit(handleSubmitData)}
-              >
+              <>
                 <div className="flex justify-center items-center mb-5">
                   <InputText
                     name="search"
@@ -452,7 +344,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                   {/* </Restricted>
                   )} */}
                 </div>
-              </form>
+              </>
               <div className="flex gap-4 w-full">
                 <SelectInput
                   className="mb-10 z-50 flex-auto"
@@ -488,26 +380,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                   },
                   rowExpandable: (record) => record.items,
                 }}
-                // expandable={{
-                //   expandedRowRender: expandedTableMiembros,
-                // }}
-                // expandIcon={({ expanded, onExpand, record }) =>
-                //   expanded ? (
-                //     <div
-                //       className="h-full flex items-center justify-center cursor-pointer"
-                //       onClick={(e) => onExpand(record, e)}
-                //     >
-                //       <MinusIcon className="h-5 w-5 text-blue-500 flex items-center" />
-                //     </div>
-                //   ) : (
-                //     <div
-                //       className="h-full flex items-center justify-center cursor-pointer"
-                //       onClick={(e) => onExpand(record, e)}
-                //     >
-                //       <PlusIcon className="h-5 w-5 text-blue-500 flex items-center" />
-                //     </div>
-                //   )
-                // }
               />
               {/* {!isEmpty(allPrecamporee) && !isLoading ? (
                 <div className="mt-10 justify-center flex">
