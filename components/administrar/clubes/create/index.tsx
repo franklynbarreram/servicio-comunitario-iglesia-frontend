@@ -83,6 +83,15 @@ const CreateClub = ({ hide, refetch }: any) => {
     redes: {
       required: { value: true, message: "This is required" },
     },
+    redesUrl: {
+      required: { value: true, message: "This is required" },
+
+      pattern: {
+        value:
+          /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
+        message: "URL invalida",
+      },
+    },
   };
 
   const handleSubmitData = (data: any) => {
@@ -386,7 +395,7 @@ const CreateClub = ({ hide, refetch }: any) => {
                       labelVisible
                       // isFill={!!watch(`redes[${index}].url`)}
                       register={register}
-                      rules={rules.redes}
+                      rules={rules.redesUrl}
                       error={errors.redes?.[index]?.url}
                       className="mb-3 md:mb-5"
                       otherStyles="pt-3 pb-3 rounded-full text-sm"

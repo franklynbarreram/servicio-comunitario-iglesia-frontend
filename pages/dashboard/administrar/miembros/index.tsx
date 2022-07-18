@@ -44,6 +44,7 @@ import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import Restricted from "context/PermissionProvider/Restricted";
 import { Button } from "components/common/button";
+import { RoleEnums } from "consts/rolesEnum";
 
 // import Image from "next/image";
 type Params = {
@@ -192,7 +193,7 @@ const Miembros = () => {
       key: "periodo",
       render: (data: any) => (
         <div className="flex items-center">
-          {data?.activo && (
+          {data?.activo && data?.cargo !== RoleEnums.DIRECTOR && (
             <Restricted
               module={ModuleEnums.MIEMBROS}
               typePermisse={PermissionsEnums.DAR_DE_BAJA_MIEMBRO}

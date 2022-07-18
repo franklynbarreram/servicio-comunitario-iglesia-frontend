@@ -88,6 +88,15 @@ const EditClub = ({ data, hide, refetch }: any) => {
     redes: {
       required: { value: true, message: "This is required" },
     },
+    redesUrl: {
+      required: { value: true, message: "This is required" },
+
+      pattern: {
+        value:
+          /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
+        message: "URL invalida",
+      },
+    },
   };
 
   React.useEffect(() => {
@@ -115,9 +124,11 @@ const EditClub = ({ data, hide, refetch }: any) => {
         });
       }
       if (!isEmpty(data?.redes)) {
+        const aux: any = [];
         data?.redes.forEach((item: any) => {
-          append({ name: item.nombre, url: item.url });
+          aux.push({ name: item.nombre, url: item.url });
         });
+        append(aux);
       }
     }
   }, []);
@@ -415,6 +426,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
               >
                 Redes
               </Typography>
+              {console.log("fififif:", fields)}
               {fields.map((item, index) => {
                 return (
                   <div key={item.id} className="flex gap-3 items-center">
@@ -441,7 +453,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
                       labelVisible
                       // isFill={!!watch(`redes[${index}].url`)}
                       register={register}
-                      rules={rules.redes}
+                      rules={rules.redesUrl}
                       error={errors.redes?.[index]?.url}
                       className="mb-3 md:mb-5"
                       otherStyles="pt-3 pb-3 rounded-full text-sm"
