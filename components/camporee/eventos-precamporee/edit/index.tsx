@@ -211,7 +211,7 @@ const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
                 handleChange={(data: OptionType | any) =>
                   setValue("tipo", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("tipo")}
+                // myDefaultValue={watch("tipo")}
               />
               <Input
                 name="puntaje_maximo"

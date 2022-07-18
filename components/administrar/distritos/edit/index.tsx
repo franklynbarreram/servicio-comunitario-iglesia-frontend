@@ -146,17 +146,17 @@ const EditDistrito = ({ data, hide, refetch }: any) => {
       return ConsejosRegionalesServices.getAll().then((response) => {
         setDataConsejosRegionales(response);
         const options = response?.data?.map((item: any) => {
-          return { value: item.id, label: item.abreviatura };
+          return { value: item.id, label: item.nombre };
         });
         return options;
       });
     } else {
       const filter = dataConsejosRegionales?.data?.filter((item: any) =>
-        item.abreviatura.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombre.toLowerCase().includes(inputValue.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {
-        return { value: item.cedula, label: item.abreviatura };
+        return { value: item.id, label: item.nombre };
       });
       return callback(options);
     }

@@ -224,7 +224,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
       );
 
       const options = filter?.map((item: any) => {
-        return { value: item.cedula, label: item.nombre };
+        return { value: item.id, label: item.nombre };
       });
       return callback(options);
     }
@@ -270,12 +270,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
   );
 
   const optionsType: OptionType[] = [
-    // {
-    //   text: "Seleccione un Tipo...",
-    //   value: "",
-    //   disabled: true,
-    //   placeholder: true,
-    // },
     {
       id: 1,
       text: "conquistadores",

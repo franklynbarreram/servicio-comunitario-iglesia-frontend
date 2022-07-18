@@ -136,7 +136,7 @@ const CreateDistrito = ({ hide, refetch }: any) => {
       );
 
       const options = filter?.map((item: any) => {
-        return { value: item.cedula, label: item.nombre };
+        return { value: item.id, label: item.nombre };
       });
       return callback(options);
     }

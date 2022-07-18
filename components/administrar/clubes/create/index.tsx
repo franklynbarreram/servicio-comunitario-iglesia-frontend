@@ -185,7 +185,7 @@ const CreateClub = ({ hide, refetch }: any) => {
       );
 
       const options = filter?.map((item: any) => {
-        return { value: item.cedula, label: item.nombre };
+        return { value: item.id, label: item.nombre };
       });
       return callback(options);
     }
@@ -232,25 +232,27 @@ const CreateClub = ({ hide, refetch }: any) => {
 
   const optionsType: OptionType[] = [
     {
-      text: "Conquistadores",
+      id: 1,
+      text: "conquistadores",
       value: "conquistadores",
       disabled: false,
       placeholder: false,
     },
     {
-      text: "Guias Mayores",
+      id: 2,
+      text: "guias mayores",
       value: "guias mayores",
       disabled: false,
       placeholder: false,
     },
     {
-      text: "Integrado ",
+      id: 3,
+      text: "integrado",
       value: "integrado",
       disabled: false,
       placeholder: false,
     },
   ];
-
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Crear Club</h2>
@@ -329,7 +331,7 @@ const CreateClub = ({ hide, refetch }: any) => {
               handleChange={(data: OptionType) =>
                 setValue("tipo", data, { shouldValidate: true })
               }
-              myDefaultValue={watch("tipo")}
+              // myDefaultValue={watch("tipo")}
               // onChangeCustom={(event: any) => {
               //   console.log("siiuuuu", event.target.value);
               //   setValue("tipo", event.target.value);

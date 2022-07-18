@@ -382,7 +382,7 @@ const CreateCamporee = ({ hide, refetch }: any) => {
                   handleChange={(data: OptionType) =>
                     setValue("tipo", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("tipo")}
+                  // myDefaultValue={watch("tipo")}
                 />
               </div>
               <div className="col-span-1">
@@ -398,7 +398,7 @@ const CreateCamporee = ({ hide, refetch }: any) => {
                     setValue("tipoCapellan", data, { shouldValidate: true });
                     setTipoCapellan(data as any);
                   }}
-                  myDefaultValue={watch("tipoCapellan")}
+                  // myDefaultValue={watch("tipoCapellan")}
                 />
               </div>
             </div>

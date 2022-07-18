@@ -311,7 +311,7 @@ const Register = () => {
                 handleChange={(data: OptionType) =>
                   setValue("tipo_sangre", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("tipo_sangre")}
+                // myDefaultValue={watch("tipo_sangre")}
                 classNamesContainer="flex-auto w-full"
               />
 
@@ -364,7 +364,7 @@ const Register = () => {
                   handleChange={(data: OptionType) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("sexo")}
+                  // myDefaultValue={watch("sexo")}
                 />
               </div>
               <div className="col-span-1">
@@ -379,7 +379,7 @@ const Register = () => {
                   handleChange={(data: OptionType) => {
                     setValue("estado_civil", data, { shouldValidate: true });
                   }}
-                  myDefaultValue={watch("estado_civil")}
+                  // myDefaultValue={watch("estado_civil")}
                 />
               </div>
             </div>

@@ -414,7 +414,7 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("category", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("category")}
+                // myDefaultValue={watch("category")}
               />
               <Input
                 name="puntuacion_maxima"
@@ -443,7 +443,7 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("tipoEvento", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("tipoEvento")}
+                // myDefaultValue={watch("tipoEvento")}
               />
               {watch("tipoEvento")?.value ===
                 TypesSelectTypoEventoCamporeeEnums.CLUBES && (
@@ -459,7 +459,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("eliminatoria", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("eliminatoria")}
+                  // myDefaultValue={watch("eliminatoria")}
                 />
               )}
             </div>
@@ -481,7 +481,7 @@ const CreateEventCamporee = ({
                       shouldValidate: true,
                     })
                   }
-                  myDefaultValue={watch("participacion_total")}
+                  // myDefaultValue={watch("participacion_total")}
                 />
               )}
               {(watch("participacion_total")?.value ===
@@ -500,7 +500,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("sexo")}
+                  // myDefaultValue={watch("sexo")}
                 />
               )}
             </div>
