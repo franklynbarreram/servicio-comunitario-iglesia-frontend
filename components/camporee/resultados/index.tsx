@@ -286,7 +286,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     },
     // Table.EXPAND_COLUMN,
     {
-      title: "Level",
+      title: "Nivel",
       dataIndex: "",
       key: "",
       // width: "30%",
@@ -325,7 +325,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       key: "tipo",
     },
     {
-      title: "Level",
+      title: "Nivel",
       dataIndex: "",
       key: "",
       // width: "30%",

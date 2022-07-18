@@ -541,7 +541,24 @@ const EventPrecamporeeDetail = () => {
                                     {informe?.puntuacion_maxima}
                                   </Typography>
                                 </div>
-
+                                <div className="item col-span-1">
+                                  <Typography
+                                    type="label"
+                                    className={clsx(
+                                      "ml-3 font-bold mb-2 block f-18"
+                                    )}
+                                  >
+                                    Mes
+                                  </Typography>
+                                  <Typography
+                                    type="span"
+                                    className={clsx(
+                                      "ml-3 font-normal mb-2 block f-18"
+                                    )}
+                                  >
+                                    {informe?.nombre_mes}
+                                  </Typography>
+                                </div>
                                 <div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
                                   <img
                                     src={informe?.imagen1}
