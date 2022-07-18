@@ -592,20 +592,22 @@ const EventPrecamporeeDetail = () => {
                                 module={ModuleEnums.EVENTO_PRECAMPOREE}
                                 typePermisse={PermissionsEnums.APPROVE_FORM}
                               >
-                                <div className="mt-28 justify-center text-center flex w-full">
-                                  <Button
-                                    labelProps="f-18 font-bold"
-                                    label={"Aprobar Informe"}
-                                    fill
-                                    className="bg-alert-success border-alert-success max-w-[200px]"
-                                    boderRadius="rounded-full"
-                                    size="full"
-                                    sizesButton="py-3"
-                                    onClick={() =>
-                                      handleShowApprove(informe?.id)
-                                    }
-                                  />
-                                </div>
+                                {informe?.editar && (
+                                  <div className="mt-28 justify-center text-center flex w-full">
+                                    <Button
+                                      labelProps="f-18 font-bold"
+                                      label={"Aprobar Informe"}
+                                      fill
+                                      className="bg-alert-success border-alert-success max-w-[200px]"
+                                      boderRadius="rounded-full"
+                                      size="full"
+                                      sizesButton="py-3"
+                                      onClick={() =>
+                                        handleShowApprove(informe?.id)
+                                      }
+                                    />
+                                  </div>
+                                )}
                               </Restricted>
                             )}
                             {informe?.editar && (
