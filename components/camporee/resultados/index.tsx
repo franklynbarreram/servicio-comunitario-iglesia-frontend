@@ -404,13 +404,13 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                       module={ModuleEnums.EVENTO_PRECAMPOREE}
                       typePermisse={PermissionsEnums.ADD}
                     > */}
-                  <div className="px-2" onClick={() => {}}>
+                  {/* <div className="px-2" onClick={() => {}}>
                     <Icon
                       src={Icons.more}
                       fill="var(--color-primary)"
                       className="max-w-[50px] w-12 cursor-pointer"
                     />
-                  </div>
+                  </div> */}
                   {/* </Restricted>
                   )} */}
                 </div>
