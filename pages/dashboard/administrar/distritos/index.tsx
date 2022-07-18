@@ -28,6 +28,7 @@ import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import { routeValidForUser } from "lib/helper";
 import { Tooltip } from "antd";
+import { Button } from "components/common/button";
 
 // import Image from "next/image";
 type Params = {
@@ -330,10 +331,15 @@ const Distritos = () => {
                 >
                   <Tooltip title="Agregar">
                     <div className="px-2" onClick={show}>
-                      <Icon
-                        src={Icons.addUser}
-                        fill="var(--color-primary)"
-                        className="max-w-[50px] w-12 cursor-pointer"
+                      <Button
+                        labelProps="text-sm text-[black] font-bold"
+                        label={"Añadir"}
+                        fill
+                        boderRadius="rounded-full"
+                        size="full"
+                        type="submit"
+                        sizesButton="py-3"
+                        className="bg-yellow w-[100px]"
                       />
                     </div>
                   </Tooltip>
