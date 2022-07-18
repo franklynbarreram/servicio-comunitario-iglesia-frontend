@@ -30,6 +30,10 @@ const LoadScore = ({ data, hide, refetch }: any) => {
     puntuacion: {
       required: { value: true, message: "This is required" },
       min: { value: 1, message: "Debe ser mayor a 0" },
+      max: {
+        value: data?.puntuacion_maxima,
+        message: `Debe ser menor o igual a ${data?.puntuacion_maxima}`,
+      },
     },
     nota: {
       required: { value: true, message: "This is required" },
