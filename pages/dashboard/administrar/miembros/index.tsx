@@ -165,7 +165,7 @@ const Miembros = () => {
       key: "cedula",
     },
     {
-      title: "Cargo",
+      title: "Rol",
       dataIndex: "cargo",
       key: "cargo",
     },

@@ -4,7 +4,7 @@ import { appRouter } from "consts/router";
 export const navigation = [
   {
     id: 1,
-    label: "Dashboard",
+    label: "AVSOC",
     subNavigation: [
       {
         id: 1,
