@@ -36,6 +36,8 @@ import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import Link from "next/link";
 import CreateCamporee from "components/camporee/create-camporee";
+import { Button } from "components/common/button";
+import { Tooltip } from "antd";
 
 // import Image from "next/image";
 type Params = {
@@ -160,19 +162,21 @@ const CamporeeList = () => {
             module={ModuleEnums.CAMPOREE}
             typePermisse={PermissionsEnums.VIEW}
           >
-            <div className="flex-shrink-0 h-10 w-8 ml-5">
-              <Link
-                href={`${appRouter.dashboard.href}${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.detail.href}/${value.id}`}
-              >
-                <a>
-                  <Icon
-                    src={Icons.more}
-                    fill="var(--color-primary)"
-                    className="max-w-[50px] w-8 cursor-pointer"
-                  />
-                </a>
-              </Link>
-            </div>
+            <Tooltip title="Ver detalle">
+              <div className="flex-shrink-0 h-10 w-8 ml-5">
+                <Link
+                  href={`${appRouter.dashboard.href}${appRouter.dashboard.subLinks.camporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.detail.href}/${value.id}`}
+                >
+                  <a>
+                    <Icon
+                      src={Icons.more}
+                      fill="var(--color-primary)"
+                      className="max-w-[50px] w-8 cursor-pointer"
+                    />
+                  </a>
+                </Link>
+              </div>
+            </Tooltip>
           </Restricted>
         </div>
       ),
@@ -252,10 +256,15 @@ const CamporeeList = () => {
                   typePermisse={PermissionsEnums.ADD}
                 >
                   <div className="px-2" onClick={showCreate}>
-                    <Icon
-                      src={Icons.addUser}
-                      fill="var(--color-primary)"
-                      className="max-w-[50px] w-12 cursor-pointer"
+                    <Button
+                      labelProps="text-sm text-[black] font-bold"
+                      label={"Añadir"}
+                      fill
+                      boderRadius="rounded-full"
+                      size="full"
+                      type="submit"
+                      sizesButton="py-3"
+                      className="bg-yellow w-[100px]"
                     />
                   </div>
                 </Restricted>

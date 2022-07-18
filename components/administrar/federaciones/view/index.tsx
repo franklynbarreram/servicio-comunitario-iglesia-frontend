@@ -15,7 +15,10 @@ const ViewFederacion = ({ data, hide, refetch }: any) => {
     nro_gm,
     logo,
     nombre,
+    email,
     foto_presidente,
+    cedula_presidente,
+    telefono,
   } = data;
   return (
     <div className="text-center">
@@ -107,23 +110,45 @@ const ViewFederacion = ({ data, hide, refetch }: any) => {
       </div>
 
       <div className="item mx-auto text-center justify-center mt-8">
-        <Typography
-          type="title"
-          className={clsx("ml-3 font-bold mb-2 block f-24")}
-        >
-          Presidente de Consejo
-        </Typography>
-        <Typography
-          type="label"
-          className={clsx("ml-3 font-normal mb-2 block f-20")}
-        >
-          <IconWithText
-            classNameContainer="justify-center"
-            icon={foto_presidente}
-            text={presidente}
-            isUser
-          />
-        </Typography>
+        <div className="bg-yellow p-4 mx-auto max-w-[300px] rounded-md">
+          <Typography
+            type="title"
+            className={clsx("ml-3 font-bold mb-2 block f-24")}
+          >
+            Presidente
+          </Typography>
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-normal mb-2 block f-20")}
+          >
+            <IconWithText
+              classNameContainer="justify-center gap-2"
+              icon={foto_presidente}
+              text={presidente}
+              isUser
+              isVertical
+            >
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {email ? email : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {cedula_presidente ? "CI-" + cedula_presidente : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {telefono ? "Telf: " + telefono : "N/A"}
+              </Typography>
+            </IconWithText>
+          </Typography>
+        </div>
       </div>
     </div>
   );

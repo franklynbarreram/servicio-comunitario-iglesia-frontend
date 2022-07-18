@@ -8,6 +8,7 @@ import { PencilAltIcon, PencilIcon } from "@heroicons/react/solid";
 import { ModuleEnums } from "consts/modulesEmuns";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import Restricted from "context/PermissionProvider/Restricted";
+import { Tooltip } from "antd";
 interface BoxInfoProps {
   image: string;
   title: string;
@@ -69,13 +70,15 @@ const BoxInfo = ({
               typePermisse={PermissionsEnums.EDIT}
             >
               {withEditButton && (
-                <div className="absolute top-3 right-3">
-                  <PencilIcon
-                    fill="text-black"
-                    className={`w-8 cursor-pointer p-1 rounded-full shadow-sm shadow-primary bg-white`}
-                    onClick={showModal}
-                  />
-                </div>
+                <Tooltip title="Editar">
+                  <div className="absolute top-3 right-3">
+                    <PencilIcon
+                      fill="text-black"
+                      className={`w-8 cursor-pointer p-1 rounded-full shadow-sm shadow-primary bg-white`}
+                      onClick={showModal}
+                    />
+                  </div>
+                </Tooltip>
               )}
             </Restricted>
           </div>

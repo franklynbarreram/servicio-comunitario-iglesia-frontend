@@ -117,23 +117,45 @@ const ViewDistrito = ({ data, hide, refetch }: any) => {
       </div>
 
       <div className="item mx-auto text-center justify-center mt-8">
-        <Typography
-          type="title"
-          className={clsx("ml-3 font-bold mb-2 block f-24")}
-        >
-          Pastor
-        </Typography>
-        <Typography
-          type="label"
-          className={clsx("ml-3 font-normal mb-2 block f-20")}
-        >
-          <IconWithText
-            classNameContainer="justify-center"
-            icon={foto_pastor}
-            text={pastor}
-            isUser
-          />
-        </Typography>
+        <div className="bg-yellow p-4 mx-auto max-w-[300px] rounded-md">
+          <Typography
+            type="title"
+            className={clsx("ml-3 font-bold mb-2 block f-24")}
+          >
+            Pastor
+          </Typography>
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-normal mb-2 block f-20")}
+          >
+            <IconWithText
+              classNameContainer="justify-center gap-2"
+              icon={foto_pastor}
+              text={data?.pastor}
+              isUser
+              isVertical
+            >
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {data?.email ? data?.email : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {data?.cedula_pastor ? "CI-" + data?.cedula_pastor : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {data?.telefono ? "Telf: " + data?.telefono : "N/A"}
+              </Typography>
+            </IconWithText>
+          </Typography>
+        </div>
       </div>
     </div>
   );
