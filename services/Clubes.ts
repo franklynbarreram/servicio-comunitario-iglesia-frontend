@@ -13,6 +13,9 @@ class Service {
   async getAll(params: any): Promise<any> {
     return this.client.get("/clubes", { params });
   }
+  async delete(id: any): Promise<any> {
+    return this.client.delete(`/clubes/${id}`);
+  }
   async getAllMiembros(params: any): Promise<any> {
     return this.client.get("/clubes/miembros", { params });
   }

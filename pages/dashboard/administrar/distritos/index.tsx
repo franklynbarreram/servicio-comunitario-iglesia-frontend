@@ -29,6 +29,8 @@ import { ModuleEnums } from "consts/modulesEmuns";
 import { routeValidForUser } from "lib/helper";
 import { Tooltip } from "antd";
 import { Button } from "components/common/button";
+import DesactivarDistrito from "components/administrar/distritos/desactivar";
+import { TrashIcon } from "@heroicons/react/solid";
 
 // import Image from "next/image";
 type Params = {
@@ -73,6 +75,14 @@ const Distritos = () => {
     isShow: isShowView,
     show: showView,
   } = useModal();
+
+  const {
+    Modal: ModalDelete,
+    hide: hideDelete,
+    isShow: isShowDelete,
+    show: showDelete,
+  } = useModal();
+  const [dataDelete, setDataDelete] = React.useState<any>();
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
@@ -88,6 +98,10 @@ const Distritos = () => {
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
+  };
+  const handleOnDelete = (selected: any) => {
+    setDataDelete(selected);
+    showDelete();
   };
 
   console.log("all distritos", response);
@@ -252,6 +266,21 @@ const Distritos = () => {
               </div>
             </Tooltip>
           </Restricted>
+          {value?.activo && (
+            <Restricted
+              module={ModuleEnums.DISTRITOS}
+              typePermisse={PermissionsEnums.DESACTIVAR_ENTIDAD}
+            >
+              <Tooltip title="Desactivar">
+                <div className="flex-shrink-0 w-8 ml-5 items-center">
+                  <TrashIcon
+                    className="text-blue-500 fill-alert-error flex items-center cursor-pointer"
+                    onClick={() => handleOnDelete(value)}
+                  />
+                </div>
+              </Tooltip>
+            </Restricted>
+          )}
         </div>
       ),
     },
@@ -370,6 +399,13 @@ const Distritos = () => {
       <ModalView isShow={isShowView}>
         <ViewDistrito hide={hideView} data={dataView} refetch={refetch} />
       </ModalView>
+      <ModalDelete isShow={isShowDelete}>
+        <DesactivarDistrito
+          hide={hideDelete}
+          data={dataDelete}
+          refetch={refetch}
+        />
+      </ModalDelete>
     </LayoutDashboard>
   );
 };

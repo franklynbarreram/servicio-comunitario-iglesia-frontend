@@ -10,6 +10,9 @@ class Service {
   async edit(data: any, id: any): Promise<any> {
     return this.client.put(`/consejos_regionales/${id}`, data);
   }
+  async delete(id: any): Promise<any> {
+    return this.client.delete(`/consejos_regionales/${id}`);
+  }
   async getAll(params?: any): Promise<any> {
     return this.client.get("/consejos_regionales", { params });
   }

@@ -3,6 +3,7 @@ export enum PermissionsEnums {
   EDIT = "edit",
   ADD = "add",
   DETAIL = "detail",
+  DESACTIVAR_ENTIDAD = "DESACTIVAR_ENTIDAD",
   DAR_DE_BAJA_MIEMBRO = "DAR_DE_BAJA_MIEMBRO",
   DETALLE_MIEMBRO = "DETALLE_MIEMBRO",
   LOAD_FORMS = "LOAD_FORMS",

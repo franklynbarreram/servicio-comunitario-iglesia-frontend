@@ -13,6 +13,7 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.DESACTIVAR_ENTIDAD,
         ],
       },
       {
@@ -22,6 +23,7 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.DESACTIVAR_ENTIDAD,
         ],
       },
       {
@@ -31,6 +33,7 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.DESACTIVAR_ENTIDAD,
         ],
       },
       {
@@ -40,6 +43,7 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.DESACTIVAR_ENTIDAD,
         ],
       },
       {
@@ -356,6 +360,7 @@ export const PermissionByRol = [
           PermissionsEnums.EDIT,
           PermissionsEnums.DETAIL,
           PermissionsEnums.VIEW,
+          PermissionsEnums.DESACTIVAR_ENTIDAD,
         ],
       },
       {

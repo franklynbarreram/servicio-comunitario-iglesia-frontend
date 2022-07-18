@@ -36,6 +36,10 @@ import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import { Tooltip } from "antd";
 import { Button } from "components/common/button";
+import DesactivarClub from "components/administrar/clubes/desactivar";
+import { TrashIcon } from "@heroicons/react/solid";
+import { useUser } from "hooks/user";
+import { RoleEnums } from "consts/rolesEnum";
 
 // import Image from "next/image";
 type Params = {
@@ -80,6 +84,16 @@ const Clubes = () => {
     isShow: isShowView,
     show: showView,
   } = useModal();
+
+  const {
+    Modal: ModalDelete,
+    hide: hideDelete,
+    isShow: isShowDelete,
+    show: showDelete,
+  } = useModal();
+  const profile = useUser();
+  const dataUser = get(profile, "data", []);
+  const [dataDelete, setDataDelete] = React.useState<any>();
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
@@ -95,6 +109,10 @@ const Clubes = () => {
   );
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
+  };
+  const handleOnDelete = (selected: any) => {
+    setDataDelete(selected);
+    showDelete();
   };
 
   console.log("all CLUBES", response);
@@ -245,6 +263,25 @@ const Clubes = () => {
               </div>
             </Tooltip>
           </Restricted>
+          {((value?.activo &&
+            dataUser.scope_actual !== RoleEnums.PRESIDENTE_CONSEJO) ||
+            (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO &&
+              value?.editable &&
+              value?.activo)) && (
+            <Restricted
+              module={ModuleEnums.CLUBES}
+              typePermisse={PermissionsEnums.DESACTIVAR_ENTIDAD}
+            >
+              <Tooltip title="Desactivar">
+                <div className="flex-shrink-0 w-8 ml-5 items-center">
+                  <TrashIcon
+                    className="text-blue-500 fill-alert-error flex items-center cursor-pointer"
+                    onClick={() => handleOnDelete(value)}
+                  />
+                </div>
+              </Tooltip>
+            </Restricted>
+          )}
         </div>
       ),
     },
@@ -363,6 +400,9 @@ const Clubes = () => {
       <ModalView isShow={isShowView}>
         <ViewClub hide={hideView} data={dataView} refetch={refetch} />
       </ModalView>
+      <ModalDelete isShow={isShowDelete}>
+        <DesactivarClub hide={hideDelete} data={dataDelete} refetch={refetch} />
+      </ModalDelete>
     </LayoutDashboard>
   );
 };
