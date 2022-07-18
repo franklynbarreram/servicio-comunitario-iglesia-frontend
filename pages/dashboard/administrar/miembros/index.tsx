@@ -27,7 +27,7 @@ import CreateIglesia from "components/administrar/iglesias/create";
 import EditIglesia from "components/administrar/iglesias/edit";
 import ViewIglesia from "components/administrar/iglesias/view";
 import { MiembrosServices } from "services/Miembros";
-import { Table, Switch, Space } from "antd";
+import { Table, Switch, Space, Tooltip } from "antd";
 import {
   LockClosedIcon,
   MinusIcon,
@@ -196,26 +196,30 @@ const Miembros = () => {
               module={ModuleEnums.MIEMBROS}
               typePermisse={PermissionsEnums.DAR_DE_BAJA_MIEMBRO}
             >
-              <div className="flex-shrink-0 w-8">
-                <TrashIcon
-                  className="text-blue-500 flex items-center cursor-pointer"
-                  onClick={() => handleOnDelete(data)}
-                />
-              </div>
+              <Tooltip title="Dar de baja">
+                <div className="flex-shrink-0 w-8">
+                  <TrashIcon
+                    className="text-blue-500 flex items-center cursor-pointer"
+                    onClick={() => handleOnDelete(data)}
+                  />
+                </div>
+              </Tooltip>
             </Restricted>
           )}
           <Restricted
             module={ModuleEnums.MIEMBROS}
             typePermisse={PermissionsEnums.DETALLE_MIEMBRO}
           >
-            <div className="flex-shrink-0 h-10 w-8 ml-5">
-              <Icon
-                src={Icons.more}
-                fill="var(--color-primary)"
-                className="max-w-[50px] w-8 cursor-pointer"
-                onClick={() => handleOnViewOnlyMember(data)}
-              />
-            </div>
+            <Tooltip title="Ver más">
+              <div className="flex-shrink-0 h-10 w-8 ml-5">
+                <Icon
+                  src={Icons.more}
+                  fill="var(--color-primary)"
+                  className="max-w-[50px] w-8 cursor-pointer"
+                  onClick={() => handleOnViewOnlyMember(data)}
+                />
+              </div>
+            </Tooltip>
           </Restricted>
         </div>
       ),
@@ -309,13 +313,15 @@ const Miembros = () => {
                   module={ModuleEnums.MIEMBROS}
                   typePermisse={PermissionsEnums.ADD}
                 >
-                  <div className="px-2" onClick={show}>
-                    <Icon
-                      src={Icons.addUser}
-                      fill="var(--color-primary)"
-                      className="max-w-[50px] w-12 cursor-pointer"
-                    />
-                  </div>
+                  <Tooltip title="Agregar">
+                    <div className="px-2" onClick={show}>
+                      <Icon
+                        src={Icons.addUser}
+                        fill="var(--color-primary)"
+                        className="max-w-[50px] w-12 cursor-pointer"
+                      />
+                    </div>
+                  </Tooltip>
                 </Restricted>
               </div>
             </form>

@@ -27,6 +27,7 @@ import { ProfilApiService } from "services";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import { routeValidForUser } from "lib/helper";
+import { Tooltip } from "antd";
 
 // import Image from "next/image";
 type Params = {
@@ -224,27 +225,31 @@ const Distritos = () => {
             module={ModuleEnums.DISTRITOS}
             typePermisse={PermissionsEnums.EDIT}
           >
-            <div className="flex-shrink-0 h-10 w-8">
-              <Icon
-                src={Icons.edit}
-                fill="white"
-                className="max-w-[50px] w-8 text-primary cursor-pointer"
-                onClick={() => handleOnEdit(value)}
-              />
-            </div>
+            <Tooltip title="Editar">
+              <div className="flex-shrink-0 h-10 w-8">
+                <Icon
+                  src={Icons.edit}
+                  fill="white"
+                  className="max-w-[50px] w-8 text-primary cursor-pointer"
+                  onClick={() => handleOnEdit(value)}
+                />
+              </div>
+            </Tooltip>
           </Restricted>
           <Restricted
             module={ModuleEnums.DISTRITOS}
             typePermisse={PermissionsEnums.DETAIL}
           >
-            <div className="flex-shrink-0 h-10 w-8 ml-5">
-              <Icon
-                src={Icons.more}
-                fill="var(--color-primary)"
-                className="max-w-[50px] w-8 cursor-pointer"
-                onClick={() => handleOnView(value)}
-              />
-            </div>
+            <Tooltip title="Ver más">
+              <div className="flex-shrink-0 h-10 w-8 ml-5">
+                <Icon
+                  src={Icons.more}
+                  fill="var(--color-primary)"
+                  className="max-w-[50px] w-8 cursor-pointer"
+                  onClick={() => handleOnView(value)}
+                />
+              </div>
+            </Tooltip>
           </Restricted>
         </div>
       ),
@@ -323,13 +328,15 @@ const Distritos = () => {
                   module={ModuleEnums.DISTRITOS}
                   typePermisse={PermissionsEnums.ADD}
                 >
-                  <div className="px-2" onClick={show}>
-                    <Icon
-                      src={Icons.addUser}
-                      fill="var(--color-primary)"
-                      className="max-w-[50px] w-12 cursor-pointer"
-                    />
-                  </div>
+                  <Tooltip title="Agregar">
+                    <div className="px-2" onClick={show}>
+                      <Icon
+                        src={Icons.addUser}
+                        fill="var(--color-primary)"
+                        className="max-w-[50px] w-12 cursor-pointer"
+                      />
+                    </div>
+                  </Tooltip>
                 </Restricted>
               </div>
             </form>
