@@ -44,7 +44,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.MIEMBROS,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.DETALLE_MIEMBRO,
+        ],
       },
       {
         name: ModuleEnums.CAMPOREE,
@@ -157,7 +161,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.MIEMBROS,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.DETALLE_MIEMBRO,
+        ],
       },
       {
         name: ModuleEnums.CAMPOREE,
@@ -200,7 +208,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.MIEMBROS,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.DETALLE_MIEMBRO,
+        ],
       },
       {
         name: ModuleEnums.CAMPOREE,
@@ -286,7 +298,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.MIEMBROS,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.DETALLE_MIEMBRO,
+        ],
       },
       {
         name: ModuleEnums.CAMPOREE,

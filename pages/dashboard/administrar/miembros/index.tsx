@@ -170,11 +170,6 @@ const Miembros = () => {
       key: "cargo",
     },
     {
-      title: "Periodo",
-      dataIndex: "periodo",
-      key: "periodo",
-    },
-    {
       title: "Status",
       dataIndex: "",
       key: "status",

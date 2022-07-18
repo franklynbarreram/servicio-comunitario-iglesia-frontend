@@ -1,12 +1,38 @@
 import * as React from "react";
 import { Typography } from "components/common/typography";
 import clsx from "clsx";
-import { ValidateImage, ValidateString } from "lib/helper";
+import { formatDates, ValidateImage, ValidateString } from "lib/helper";
 import { IconWithText } from "components/icon-with-text";
+import { Table } from "antd";
+import moment from "moment";
+import { isEmpty } from "lodash";
 
 const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
   console.log("detalle all miembros per club", data);
   const { cedula, nombre, periodo, cargo, foto, activo } = data;
+
+  const columnsPeriodos = [
+    {
+      title: "Cargo",
+      dataIndex: "cargo",
+      key: "cargo",
+    },
+
+    {
+      title: "Fecha inicio",
+      dataIndex: "",
+      key: "",
+      render: (value: any) => moment(value.fecha_inicio).format(formatDates),
+    },
+    {
+      title: "Fecha inicio",
+      dataIndex: "",
+      key: "",
+      render: (value: any) =>
+        value?.fecha_fin ? moment(value.fecha_fin).format(formatDates) : "N/A",
+    },
+  ];
+
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Detalle de Miembro</h2>
@@ -52,20 +78,7 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
             {cedula}
           </Typography>
         </div>
-        <div className="item col-span-1">
-          <Typography
-            type="label"
-            className={clsx("ml-3 font-bold mb-2 block f-18")}
-          >
-            Periodo
-          </Typography>
-          <Typography
-            type="span"
-            className={clsx("ml-3 font-normal mb-2 block f-18")}
-          >
-            {periodo}
-          </Typography>
-        </div>
+
         <div className="item col-span-1">
           <Typography
             type="label"
@@ -99,6 +112,23 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
           </Typography>
         </div>
       </div>
+      {!isEmpty(data?.periodos) && (
+        <div className="mt-8">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Periodos
+          </Typography>
+          <Table
+            className="table_club_miembros table_ant_custom shadow-md overflow-x-auto border-b border-gray-200 rounded-lg"
+            columns={columnsPeriodos}
+            dataSource={data?.periodos}
+            pagination={false}
+            rowKey="periodos"
+          />
+        </div>
+      )}
     </div>
   );
 };
