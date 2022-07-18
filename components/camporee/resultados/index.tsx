@@ -280,7 +280,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 
   const columns = [
     {
-      title: "Club",
+      title: `${values?.tipo === "clubes" ? "Club" : "Consejo"}`,
       dataIndex: "nombre",
       key: "id",
     },
@@ -387,7 +387,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
             <>
               <>
                 <div className="flex justify-center items-center mb-5">
-                  <InputText
+                  {/* <InputText
                     name="search"
                     title="Search"
                     labelVisible={false}
@@ -398,7 +398,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                     error={errors.search}
                     leftImg={Icons.search}
                     otherStyles="pt-3 pb-3 rounded-full"
-                  />
+                  /> */}
                   {/* {data?.data?.modificacion && (
                     <Restricted
                       module={ModuleEnums.EVENTO_PRECAMPOREE}
