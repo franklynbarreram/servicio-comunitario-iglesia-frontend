@@ -24,6 +24,8 @@ import { InputList } from "components/common/form/input-list";
 import { InputListSearch } from "components/common/form/input-list-search";
 import { OptionType } from "interfaces";
 import { ClubesServices } from "services/Clubes";
+import { Icons } from "consts";
+import { Icon } from "components/icon";
 
 const CreateClub = ({ hide, refetch }: any) => {
   const [selectValueDirector, setSelectValueDirector] =
@@ -50,7 +52,17 @@ const CreateClub = ({ hide, refetch }: any) => {
     control,
     formState: { errors, isDirty, isValid },
     watch,
-  } = useForm({ mode: "onChange" });
+  } = useForm<any>({
+    mode: "onChange",
+    defaultValues: { redes: [{ name: "", url: "" }] },
+  });
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "redes",
+    }
+  );
 
   const rules = {
     name: {
@@ -68,6 +80,9 @@ const CreateClub = ({ hide, refetch }: any) => {
     tipo: {
       required: { value: true, message: "This is required" },
     },
+    redes: {
+      required: { value: true, message: "This is required" },
+    },
   };
 
   const handleSubmitData = (data: any) => {
@@ -80,6 +95,7 @@ const CreateClub = ({ hide, refetch }: any) => {
       id_iglesia: selectValueIglesias?.value,
       cedula_director: selectValueDirector?.value,
       tipo: data.tipo.value,
+      redes: data?.redes,
     };
 
     console.log("FinalData", FinalData);
@@ -334,6 +350,83 @@ const CreateClub = ({ hide, refetch }: any) => {
                 className={"text-sm"}
                 onChange={handleChangeSelectDirector}
               />
+            </div>
+            <div className="border-2 border-yellow mt-7 py-4 px-2 rounded-md mb-4">
+              <Typography
+                type="label"
+                className={clsx(
+                  "ml-3 font-bold mb-2 block text-xl text-center"
+                )}
+              >
+                Redes
+              </Typography>
+              {fields.map((item, index) => {
+                return (
+                  <div key={item.id} className="flex gap-3 items-center">
+                    {/* <input
+                    name={`test[${index}].firstName`}
+                    defaultValue={`${item.firstName}`} // make sure to set up defaultValue
+                    ref={register()}
+                  /> */}
+
+                    <Input
+                      name={`redes[${index}].name`}
+                      title="Nombre"
+                      labelVisible
+                      // isFill={!!watch(`redes[${index}].name`)}
+                      register={register}
+                      rules={rules.redes}
+                      error={errors.redes?.[index]?.name}
+                      className="mb-3 md:mb-5"
+                      otherStyles="pt-3 pb-3 rounded-full text-sm"
+                    />
+                    <Input
+                      name={`redes[${index}].url`}
+                      title="URL"
+                      labelVisible
+                      // isFill={!!watch(`redes[${index}].url`)}
+                      register={register}
+                      rules={rules.redes}
+                      error={errors.redes?.[index]?.url}
+                      className="mb-3 md:mb-5"
+                      otherStyles="pt-3 pb-3 rounded-full text-sm"
+                    />
+                    <button
+                      type="button"
+                      className={clsx({
+                        "cursor-not-allowed pointer-events-none":
+                          fields.length === 1,
+                      })}
+                      onClick={() => {
+                        if (fields.length > 1) remove(index);
+                      }}
+                    >
+                      <img
+                        src={Icons.iconTrash}
+                        className={clsx(
+                          {
+                            "cursor-not-allowed pointer-events-none":
+                              fields.length === 1,
+                          },
+                          "w-16 mt-2"
+                        )}
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                );
+              })}
+              <div className="text-center">
+                <button
+                  type="button"
+                  className="text-gray-800 text-sm font-bold text-center"
+                  onClick={() => {
+                    append({ name: "", url: "" });
+                  }}
+                >
+                  {`+ Agregar red`}
+                </button>
+              </div>
             </div>
             <div className="flex-auto">
               <Typography

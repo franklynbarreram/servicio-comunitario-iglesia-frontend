@@ -103,7 +103,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.CLUBES,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.EDIT,
+        ],
       },
       {
         name: ModuleEnums.MIEMBROS,

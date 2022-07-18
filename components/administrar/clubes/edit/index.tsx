@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import * as React from "react";
 import AsyncSelect from "react-select/async";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Button } from "components/common/button/button";
 // import { useQuery } from "react-query";
 // import { UseQueryEnums } from "consts/useQueryEnums";
@@ -15,7 +15,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Typography } from "components/common/typography";
 import clsx from "clsx";
 import { GenerateErrorToast } from "lib/helper";
-import { isNil, isEmpty } from "lodash";
+import { isNil, isEmpty, get } from "lodash";
 import { PresidentesConsejoRegional } from "services/PresidentesConsejoRegional";
 import { DistritosServices } from "services/Distritos";
 import { PastoresService } from "services/Pastores";
@@ -26,6 +26,9 @@ import { ClubesServices } from "services/Clubes";
 import { DirectorService } from "services/Director";
 import { OptionType } from "interfaces";
 import { InputListSearch } from "components/common/form/input-list-search";
+import { RoleEnums } from "consts/rolesEnum";
+import { useUser } from "hooks/user";
+import { Icons } from "consts";
 
 const EditClub = ({ data, hide, refetch }: any) => {
   const [selectValueDirector, setSelectValueDirector] = React.useState<{
@@ -56,9 +59,16 @@ const EditClub = ({ data, hide, refetch }: any) => {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isDirty, isValid },
     watch,
   } = useForm({ mode: "onChange" });
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "redes",
+    }
+  );
   const rules = {
     name: {
       required: { value: true, message: "This is required" },
@@ -73,6 +83,9 @@ const EditClub = ({ data, hide, refetch }: any) => {
       required: { value: true, message: "This is required" },
     },
     tipo: {
+      required: { value: true, message: "This is required" },
+    },
+    redes: {
       required: { value: true, message: "This is required" },
     },
   };
@@ -101,6 +114,11 @@ const EditClub = ({ data, hide, refetch }: any) => {
           shouldDirty: true,
         });
       }
+      if (!isEmpty(data?.redes)) {
+        data?.redes.forEach((item: any) => {
+          append({ name: item.nombre, url: item.url });
+        });
+      }
     }
   }, []);
 
@@ -114,6 +132,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
       id_iglesia: selectValueIglesias?.value,
       cedula_director: selectValueDirector?.value,
       tipo: form.tipo.value ? form.tipo.value : form.tipo,
+      redes: form.redes,
     };
 
     console.log("FinalData", FinalData);
@@ -268,7 +287,8 @@ const EditClub = ({ data, hide, refetch }: any) => {
       placeholder: false,
     },
   ];
-
+  const profile = useUser();
+  const dataUser = get(profile, "data", []);
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Editar Club</h2>
@@ -330,58 +350,138 @@ const EditClub = ({ data, hide, refetch }: any) => {
                 />
               </div> */}
             </div>
+            {dataUser.scope_actual !== RoleEnums.DIRECTOR && (
+              <>
+                <InputListSearch
+                  // myDefaultValue={myDefaultValue}
+                  name="tipo"
+                  title="Tipo"
+                  className="mb-4"
+                  options={optionsType}
+                  register={register}
+                  // rules={selectRules}
+                  // error={selectError}
+                  // isFill={selectIsFill}
+                  // handleChange={handleChange}
+                  rules={rules.tipo}
+                  error={errors.tipo}
+                  handleChange={(data: OptionType) =>
+                    setValue("tipo", data, { shouldValidate: true })
+                  }
+                  myDefaultValue={{
+                    value: data.tipo,
+                    text: data?.tipo,
+                    disabled: false,
+                    placeholder: false,
+                  }}
+                  // onChangeCustom={(event: any) => {
+                  //   console.log("siiuuuu", event.target.value);
+                  //   setValue("tipo", event.target.value);
+                  // }}
+                />
 
-            <InputListSearch
-              // myDefaultValue={myDefaultValue}
-              name="tipo"
-              title="Tipo"
-              className="mb-4"
-              options={optionsType}
-              register={register}
-              // rules={selectRules}
-              // error={selectError}
-              // isFill={selectIsFill}
-              // handleChange={handleChange}
-              rules={rules.tipo}
-              error={errors.tipo}
-              handleChange={(data: OptionType) =>
-                setValue("tipo", data, { shouldValidate: true })
-              }
-              myDefaultValue={{
-                value: data.tipo,
-                text: data?.tipo,
-                disabled: false,
-                placeholder: false,
-              }}
-              // onChangeCustom={(event: any) => {
-              //   console.log("siiuuuu", event.target.value);
-              //   setValue("tipo", event.target.value);
-              // }}
-            />
+                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                  <p className={"ml-3 font-normal mb-2 block f-18"}>Iglesia</p>
+                  <AsyncSelect
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={promiseOptionsIglesias}
+                    styles={customStyles}
+                    value={selectValueIglesias}
+                    className={"text-sm"}
+                    onChange={handleChangeSelectConsejosIglesias}
+                  />
+                </div>
+                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                  <p className={"ml-3 font-normal mb-2 block f-18"}>Director</p>
+                  <AsyncSelect
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={promiseOptionsDirector}
+                    styles={customStyles}
+                    value={selectValueDirector}
+                    className={"text-sm"}
+                    onChange={handleChangeSelectDirector}
+                  />
+                </div>
+              </>
+            )}
+            <div className="border-2 border-yellow mt-7 py-4 px-2 rounded-md mb-4">
+              <Typography
+                type="label"
+                className={clsx(
+                  "ml-3 font-bold mb-2 block text-xl text-center"
+                )}
+              >
+                Redes
+              </Typography>
+              {fields.map((item, index) => {
+                return (
+                  <div key={item.id} className="flex gap-3 items-center">
+                    {/* <input
+                    name={`test[${index}].firstName`}
+                    defaultValue={`${item.firstName}`} // make sure to set up defaultValue
+                    ref={register()}
+                  /> */}
 
-            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-              <p className={"ml-3 font-normal mb-2 block f-18"}>Iglesia</p>
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                loadOptions={promiseOptionsIglesias}
-                styles={customStyles}
-                value={selectValueIglesias}
-                className={"text-sm"}
-                onChange={handleChangeSelectConsejosIglesias}
-              />
-            </div>
-            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-              <p className={"ml-3 font-normal mb-2 block f-18"}>Director</p>
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                loadOptions={promiseOptionsDirector}
-                styles={customStyles}
-                value={selectValueDirector}
-                className={"text-sm"}
-                onChange={handleChangeSelectDirector}
-              />
+                    <Input
+                      name={`redes[${index}].name`}
+                      title="Nombre"
+                      labelVisible
+                      // isFill={!!watch(`redes[${index}].name`)}
+                      register={register}
+                      rules={rules.redes}
+                      error={errors.redes?.[index]?.name}
+                      className="mb-3 md:mb-5"
+                      otherStyles="pt-3 pb-3 rounded-full text-sm"
+                    />
+                    <Input
+                      name={`redes[${index}].url`}
+                      title="URL"
+                      labelVisible
+                      // isFill={!!watch(`redes[${index}].url`)}
+                      register={register}
+                      rules={rules.redes}
+                      error={errors.redes?.[index]?.url}
+                      className="mb-3 md:mb-5"
+                      otherStyles="pt-3 pb-3 rounded-full text-sm"
+                    />
+                    <button
+                      type="button"
+                      className={clsx({
+                        "cursor-not-allowed pointer-events-none":
+                          fields.length === 1,
+                      })}
+                      onClick={() => {
+                        if (fields.length > 1) remove(index);
+                      }}
+                    >
+                      <img
+                        src={Icons.iconTrash}
+                        className={clsx(
+                          {
+                            "cursor-not-allowed pointer-events-none":
+                              fields.length === 1,
+                          },
+                          "w-16 mt-2"
+                        )}
+                        alt=""
+                      />
+                    </button>
+                  </div>
+                );
+              })}
+              <div className="text-center">
+                <button
+                  type="button"
+                  className="text-gray-800 text-sm font-bold text-center"
+                  onClick={() => {
+                    append({ name: "", url: "" });
+                  }}
+                >
+                  {`+ Agregar red`}
+                </button>
+              </div>
             </div>
             <div className="flex-auto">
               <Typography
