@@ -18,7 +18,7 @@ import {
   routeValidForUser,
   ValidateString,
 } from "lib/helper";
-import { ProfilApiService } from "services";
+import { ConsejosRegionalesServices, ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import { useRouter } from "next/router";
 import clsx from "clsx";
@@ -63,6 +63,9 @@ type Params = {
   idCamporee: any;
   categoria: any;
   id_club: any;
+  id_consejo: any;
+  id_camporee_evento: any;
+  id_camporee_precamporee: any;
 };
 
 const classNamesForms = "w-full px-4 md:w-[550px] mx-auto md:mt-8";
@@ -85,6 +88,12 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
   const [onSearch, setOnSearch] = React.useState(false);
   const [clubesType, setClubesType] = React.useState<any>({});
   const [clubesTypeMap, setClubesTypeMap] = React.useState<any>({});
+  const [consejosTypeMap, setConsejosTypeMap] = React.useState<any>({});
+  const [eventoPrecamporeeTypeMap, setEventoPrecamporeeTypeMap] =
+    React.useState<any>({});
+  const [eventoCamporeeTypeMap, setEventoCamporeeTypeMap] = React.useState<any>(
+    {}
+  );
   const [isEdit, setIsEdit] = React.useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -108,9 +117,38 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     () => CamporeeServices.getAllClubesType(idCamporee)
   );
 
+  const {
+    data: consejosFilter,
+    isLoading: isLoadingConsejosFilter,
+    refetch: refetchConsejosFilter,
+  } = useQuery<any>(
+    [`${UseQueryEnums.GET_ALL_CONSEJOS_TYPE}_${idCamporee}`],
+    () => ConsejosRegionalesServices.getAll(idCamporee)
+  );
+
+  const {
+    data: camporeeFilter,
+    isLoading: isLoadingCamporeeFilter,
+    refetch: refetchCamporeeFilter,
+  } = useQuery<any>(
+    [`${UseQueryEnums.GET_ALL_EVENTO_CAMPOREE_TYPE}_${idCamporee}`],
+    () => CamporeeServices.getAllCamporeeType(idCamporee)
+  );
+
+  const {
+    data: precamporeeFilter,
+    isLoading: isLoadingPrecamporeeFilter,
+    refetch: refetchPrecamporeeFilter,
+  } = useQuery<any>(
+    [`${UseQueryEnums.GET_ALL_EVENTO_PRECAMPOREE_TYPE}_${idCamporee}`],
+    () => CamporeeServices.getAllPreCamporeeType(idCamporee)
+  );
+
   const values = get(response, "data", []);
   console.log("all reportes", values);
   console.log("all clubes type", clubesFilter);
+  console.log("all consejos type", consejosFilter);
+
   const [tabs, setTabs] = React.useState<any>();
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
@@ -118,7 +156,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 
   React.useEffect(() => {
     if (!isLoadingClubesFilter) {
-      // setClubesType(clubesFilter?.data.map((item: any) => item.id));
       const aux: any = {};
 
       clubesFilter.data.map((item: any) => {
@@ -127,6 +164,39 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       setClubesTypeMap(aux);
     }
   }, [clubesFilter]);
+
+  React.useEffect(() => {
+    if (!isLoadingConsejosFilter) {
+      const aux: any = {};
+
+      consejosFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setConsejosTypeMap(aux);
+    }
+  }, [consejosFilter]);
+
+  React.useEffect(() => {
+    if (!isLoadingCamporeeFilter) {
+      const aux: any = {};
+
+      camporeeFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setEventoCamporeeTypeMap(aux);
+    }
+  }, [camporeeFilter]);
+
+  React.useEffect(() => {
+    if (!isLoadingPrecamporeeFilter) {
+      const aux: any = {};
+
+      precamporeeFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setEventoPrecamporeeTypeMap(aux);
+    }
+  }, [precamporeeFilter]);
 
   const findInforme = (mes: string) => {
     if (!isEmpty(response?.data?.informes)) {
@@ -362,6 +432,33 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                   options={clubesTypeMap}
                   maxwidth="max-w-[208px]"
                   value={params.id_club}
+                  setValue={updateQuery}
+                ></SelectInput>
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_consejo"
+                  label="Consejos regionales"
+                  options={consejosTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_consejo}
+                  setValue={updateQuery}
+                ></SelectInput>
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_camporee_evento"
+                  label="Evento camporee"
+                  options={eventoCamporeeTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_camporee_evento}
+                  setValue={updateQuery}
+                ></SelectInput>
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_camporee_precamporee"
+                  label="Evento preCamporee"
+                  options={eventoPrecamporeeTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_camporee_precamporee}
                   setValue={updateQuery}
                 ></SelectInput>
               </div>

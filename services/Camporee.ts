@@ -69,7 +69,12 @@ class Service {
   async getAllClubesType(id: any): Promise<any> {
     return this.client.get(`/camporees/clubes/${id}`);
   }
-
+  async getAllCamporeeType(id: any): Promise<any> {
+    return this.client.get(`/camporees/eventos_camporee/${id}`);
+  }
+  async getAllPreCamporeeType(id: any): Promise<any> {
+    return this.client.get(`/camporees/eventos_precamporee/${id}`);
+  }
   async createInformePrecamporee(data: any): Promise<any> {
     return this.client.post("/informes_precamporee", data);
   }
