@@ -292,18 +292,21 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       // width: "30%",
       render: (values: any) => (
         <div className="flex gap-1 items-center">
-          {(() => {
-            const quantityStarts = howManyStarts(values.level);
-            let starts: any = [];
-            for (let i = 0; i < 5; i++) {
-              starts.push(
-                <StarIcon
-                  className={clsx("w-5", { "opacity-50": i > quantityStarts })}
-                ></StarIcon>
-              );
-            }
-            return starts;
-          })()}
+          {values?.level &&
+            (() => {
+              const quantityStarts = howManyStarts(values.level);
+              let starts: any = [];
+              for (let i = 0; i < 5; i++) {
+                starts.push(
+                  <StarIcon
+                    className={clsx("w-5", {
+                      "opacity-50": i > quantityStarts,
+                    })}
+                  ></StarIcon>
+                );
+              }
+              return starts;
+            })()}
         </div>
       ),
     },
@@ -312,9 +315,10 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       dataIndex: "",
       key: "",
       // width: "30%",
-      render: (values: any) => (
-        <Progress size="small" percent={values?.puntuacion_porcentual} />
-      ),
+      render: (values: any) =>
+        values?.puntuacion_porcentual && (
+          <Progress size="small" percent={values?.puntuacion_porcentual} />
+        ),
     },
   ];
 
@@ -331,18 +335,21 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       // width: "30%",
       render: (values: any) => (
         <div className="flex gap-1 items-center">
-          {(() => {
-            const quantityStarts = howManyStarts(values.level);
-            let starts: any = [];
-            for (let i = 0; i < 5; i++) {
-              starts.push(
-                <StarIcon
-                  className={clsx("w-5", { "opacity-50": i > quantityStarts })}
-                ></StarIcon>
-              );
-            }
-            return starts;
-          })()}
+          {values?.level &&
+            (() => {
+              const quantityStarts = howManyStarts(values.level);
+              let starts: any = [];
+              for (let i = 0; i < 5; i++) {
+                starts.push(
+                  <StarIcon
+                    className={clsx("w-5", {
+                      "opacity-50": i > quantityStarts,
+                    })}
+                  ></StarIcon>
+                );
+              }
+              return starts;
+            })()}
         </div>
       ),
     },
@@ -351,9 +358,10 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
       dataIndex: "",
       key: "",
       // width: "30%",
-      render: (values: any) => (
-        <Progress size="small" percent={values?.puntuacion_porcentual} />
-      ),
+      render: (values: any) =>
+        values?.puntuacion_porcentual && (
+          <Progress size="small" percent={values?.puntuacion_porcentual} />
+        ),
     },
   ];
 
