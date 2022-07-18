@@ -3,6 +3,8 @@ import { Typography } from "components/common/typography";
 import clsx from "clsx";
 import { ValidateImage, ValidateString } from "lib/helper";
 import { IconWithText } from "components/icon-with-text";
+import { isEmpty } from "lodash";
+import { Table } from "antd";
 
 const ViewClub = ({ data, hide, refetch }: any) => {
   console.log("detalle", data);
@@ -18,6 +20,27 @@ const ViewClub = ({ data, hide, refetch }: any) => {
     nro_conquistadores,
     nro_gm,
   } = data;
+
+  const columnsRedes = [
+    {
+      title: "Nombre",
+      dataIndex: "nombre",
+      key: "nombre",
+    },
+
+    {
+      title: "URL",
+      dataIndex: "",
+      key: "",
+      render: (value: any) => (
+        <a href={`${value.url}`} className="hover:text-yellow" target="_blank">
+          {" "}
+          {value.url}
+        </a>
+      ),
+    },
+  ];
+
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Detalle de Club</h2>
@@ -135,7 +158,23 @@ const ViewClub = ({ data, hide, refetch }: any) => {
           </Typography>
         </div>
       </div>
-
+      {!isEmpty(data?.redes) && (
+        <div className="mt-8">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Redes
+          </Typography>
+          <Table
+            className="table_club_miembros table_ant_custom shadow-md overflow-x-auto border-b border-gray-200 rounded-lg"
+            columns={columnsRedes}
+            dataSource={data?.redes}
+            pagination={false}
+            rowKey="redes"
+          />
+        </div>
+      )}
       <div className="item mx-auto text-center justify-center mt-8">
         <Typography
           type="title"
