@@ -5,4 +5,5 @@ export enum RoleEnums {
   ANCIANO = "anciano",
   DIRECTOR = "director",
   PERSONA = "persona",
+  SECRETARIO_CLUB = "secretario-club",
 }

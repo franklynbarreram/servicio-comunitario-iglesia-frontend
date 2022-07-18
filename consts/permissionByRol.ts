@@ -145,6 +145,64 @@ export const PermissionByRol = [
     ],
   },
   {
+    role: RoleEnums.SECRETARIO_CLUB,
+    modules: [
+      {
+        name: ModuleEnums.DISTRITOS,
+        permissionsActions: [PermissionsEnums.VIEW, PermissionsEnums.DETAIL],
+      },
+      {
+        name: ModuleEnums.FEDERACIONES,
+        permissionsActions: [PermissionsEnums.VIEW, PermissionsEnums.DETAIL],
+      },
+      {
+        name: ModuleEnums.IGLESIAS,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.CLUBES,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.EDIT,
+        ],
+      },
+      {
+        name: ModuleEnums.MIEMBROS,
+        permissionsActions: [
+          PermissionsEnums.ADD,
+          PermissionsEnums.EDIT,
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.DAR_DE_BAJA_MIEMBRO,
+          PermissionsEnums.DETALLE_MIEMBRO,
+        ],
+      },
+      {
+        name: ModuleEnums.CAMPOREE,
+        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+
+      {
+        name: ModuleEnums.EVENTO_PRECAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.LOAD_FORMS,
+        ],
+      },
+      {
+        name: ModuleEnums.EVENTO_CAMPOREE,
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.INSCRIBIR_CLUB,
+          PermissionsEnums.VIEW_CLUBES_INSCRITOS,
+        ],
+      },
+    ],
+  },
+  {
     role: RoleEnums.PASTOR,
     modules: [
       {
