@@ -13,6 +13,14 @@ const ViewIglesia = ({ data, hide, refetch }: any) => {
     nro_gm,
     nombre,
     foto_primer_anciano,
+    pastor,
+    foto_pastor,
+    email_pastor,
+    email_anciano,
+    cedula_primer_anciano,
+    cedula_pastor,
+    telefono_anciano,
+    telefono_pastor,
   } = data;
   return (
     <div className="text-center">
@@ -86,24 +94,85 @@ const ViewIglesia = ({ data, hide, refetch }: any) => {
         </div>
       </div>
 
-      <div className="item mx-auto text-center justify-center mt-8">
-        <Typography
-          type="title"
-          className={clsx("ml-3 font-bold mb-2 block f-24")}
-        >
-          Anciano
-        </Typography>
-        <Typography
-          type="label"
-          className={clsx("ml-3 font-normal mb-2 block f-20")}
-        >
-          <IconWithText
-            classNameContainer="justify-center"
-            icon={foto_primer_anciano}
-            text={primer_anciano}
-            isUser
-          />
-        </Typography>
+      <div className="item mx-auto text-center justify-center mt-8 flex gap-8">
+        <div className="container-anciano">
+          <Typography
+            type="title"
+            className={clsx("ml-3 font-bold mb-2 block f-24")}
+          >
+            Anciano
+          </Typography>
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-normal mb-2 block f-20")}
+          >
+            <IconWithText
+              classNameContainer="justify-center gap-2"
+              icon={foto_primer_anciano}
+              text={primer_anciano}
+              isUser
+              isVertical
+            >
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {email_anciano ? email_anciano : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {cedula_primer_anciano ? "CI-" + cedula_primer_anciano : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {telefono_anciano ? "Telf: " + telefono_anciano : "N/A"}
+              </Typography>
+            </IconWithText>
+          </Typography>
+        </div>
+        <div className="container-pastor">
+          <Typography
+            type="title"
+            className={clsx("ml-3 font-bold mb-2 block f-24")}
+          >
+            Pastor
+          </Typography>
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-normal mb-2 block f-20")}
+          >
+            <IconWithText
+              classNameContainer="justify-center gap-2"
+              icon={foto_pastor}
+              text={pastor}
+              isUser
+              isVertical
+            >
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {email_pastor ? email_pastor : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {cedula_pastor ? "CI-" + cedula_pastor : "N/A"}
+              </Typography>
+              <Typography
+                type="label"
+                className={clsx(" font-normal mb-2 block text-sm")}
+              >
+                {telefono_pastor ? "Telf: " + telefono_pastor : "N/A"}
+              </Typography>
+            </IconWithText>
+          </Typography>
+        </div>
       </div>
     </div>
   );
