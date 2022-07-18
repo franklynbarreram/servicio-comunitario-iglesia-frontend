@@ -171,7 +171,7 @@ const Clubes = () => {
     },
     {
       name: "nro_conquistadores",
-      label: " Nro. Conquis",
+      label: " Nro. Conquistadores",
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
@@ -188,25 +188,44 @@ const Clubes = () => {
       ),
     },
     {
+      name: "status",
+      label: "Status",
+      thClassName: HeaderClassName,
+      tdClassName: DataClassName,
+      selector: (value: any) => {
+        return (
+          <>
+            {value?.activo ? (
+              <span className="font-bold text-secondary">Activo</span>
+            ) : (
+              <span className="font-bold text-alert-error">Inactivo</span>
+            )}
+          </>
+        );
+      },
+    },
+    {
       name: "acciones",
       label: "Acciones",
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
         <div className="flex items-center">
-          <Restricted
-            module={ModuleEnums.CLUBES}
-            typePermisse={PermissionsEnums.EDIT}
-          >
-            <div className="flex-shrink-0 h-10 w-8">
-              <Icon
-                src={Icons.edit}
-                fill="white"
-                className="max-w-[50px] w-8 text-primary cursor-pointer"
-                onClick={() => handleOnEdit(value)}
-              />
-            </div>
-          </Restricted>
+          {value?.editable && (
+            <Restricted
+              module={ModuleEnums.CLUBES}
+              typePermisse={PermissionsEnums.EDIT}
+            >
+              <div className="flex-shrink-0 h-10 w-8">
+                <Icon
+                  src={Icons.edit}
+                  fill="white"
+                  className="max-w-[50px] w-8 text-primary cursor-pointer"
+                  onClick={() => handleOnEdit(value)}
+                />
+              </div>
+            </Restricted>
+          )}
           <Restricted
             module={ModuleEnums.CLUBES}
             typePermisse={PermissionsEnums.DETAIL}

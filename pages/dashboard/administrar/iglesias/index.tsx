@@ -185,6 +185,23 @@ const Iglesias = () => {
       ),
     },
     {
+      name: "status",
+      label: "Status",
+      thClassName: HeaderClassName,
+      tdClassName: DataClassName,
+      selector: (value: any) => {
+        return (
+          <>
+            {value?.activo ? (
+              <span className="font-bold text-secondary">Activo</span>
+            ) : (
+              <span className="font-bold text-alert-error">Inactivo</span>
+            )}
+          </>
+        );
+      },
+    },
+    {
       name: "acciones",
       label: "Acciones",
       thClassName: HeaderClassName,
