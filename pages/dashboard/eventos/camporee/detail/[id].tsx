@@ -309,7 +309,8 @@ const EventCamporeeDetail = () => {
     ) {
       return true;
     } else {
-      return false;
+      return true;
+      // return false;
     }
   };
 
@@ -588,7 +589,7 @@ const EventCamporeeDetail = () => {
                   onSubmit={handleSubmit(handleSubmitData)}
                   className="w-full"
                 >
-                  {values?.calificable && (
+                  {values?.calificable && !isEmpty(values?.datos_inscripcion) && (
                     <Restricted
                       module={ModuleEnums.EVENTO_CAMPOREE}
                       typePermisse={PermissionsEnums.LOAD_SCORE}
@@ -672,8 +673,8 @@ const EventCamporeeDetail = () => {
                                                 error={errors.puntuacion}
                                                 isArray
                                                 arrayIndex={index}
-                                                // className="placeholder:text-black"
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c9e]"
+                                                className="placeholder:text-[black] text-[black] font-bold"
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c33]"
                                               />
                                             </Restricted>
                                             <Restricted
