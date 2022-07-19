@@ -423,7 +423,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                   )} */}
                 </div>
               </>
-              <div className="flex gap-4 w-full">
+              <div className="flex flex-wrap gap-x-4 w-full">
                 <SelectInput
                   className="mb-10 z-50 flex-auto"
                   name="categoria"

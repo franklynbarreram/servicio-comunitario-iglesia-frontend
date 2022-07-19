@@ -158,7 +158,9 @@ body {
 .tabs-antd-custom.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list {
   gap: 10px;
 }
-
+.tabs-antd-custom.flex-wrap.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list {
+  flex-wrap: wrap;
+}
 .tabs-antd-custom.ant-tabs-card
   > .ant-tabs-nav
   .ant-tabs-tab.ant-tabs-tab-active {

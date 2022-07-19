@@ -12,7 +12,11 @@ const Dashboard = () => {
     <LayoutDashboard title="AVSOC">
       <div className="py-4">
         <div className="flex flex-col justify-center">
-          <img src="/logos/logo.png" className="mx-auto max-w-[600px]" alt="" />
+          <img
+            src="/logos/logo.png"
+            className="mx-auto max-w-[600px] w-full"
+            alt=""
+          />
           <h1 className="f-50 font-bold text-center mt-6">Bienvenido,</h1>
           <h4 className="text-2xl font-bold text-center">
             {profile?.nombres} {profile?.apellidos}

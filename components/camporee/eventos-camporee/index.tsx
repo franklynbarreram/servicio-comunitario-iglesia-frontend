@@ -195,7 +195,7 @@ const EventosCamporee = ({
 
             <ul
               role="list"
-              className="grid grid-cols-1 gap-6 sm:grid-cols-2 3xl:grid-cols-3 "
+              className="grid grid-cols-1 gap-6 lg:grid-cols-2 3xl:grid-cols-3 "
             >
               {allCamporee.map((item: any) => {
                 const itemsCamporeeCard = [

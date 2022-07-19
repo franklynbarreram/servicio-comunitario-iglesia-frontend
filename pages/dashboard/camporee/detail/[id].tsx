@@ -155,7 +155,10 @@ const CamporeeDetail = () => {
             {/* <Tabs tabs={tabs} setTabs={setTabs} />
 						
 						*/}
-            <Tabs type="card" className="tabs-antd-custom">
+            <Tabs
+              type="card"
+              className="tabs-antd-custom overflow-x-auto flex-wrap"
+            >
               <TabPane tab="Eventos Precamporee" key="1">
                 <EventosPrecamporee idCamporee={id} className="px-2" />
               </TabPane>
@@ -180,7 +183,7 @@ const CamporeeDetail = () => {
               <BoxInfo
                 withEditButton
                 showModal={showEdit}
-                className="flex-1 min-w-[400px]"
+                className="flex-1 min-w-[100%] md:min-w-[400px] md:max-w-[400px] mx-auto"
                 image={ValidateImage(values?.logo)}
                 title={values?.nombre}
                 items={itemsCamporee}
