@@ -23,7 +23,7 @@ import ViewDistrito from "components/administrar/distritos/view";
 import EditDistrito from "components/administrar/distritos/edit";
 import CreateDistrito from "components/administrar/distritos/create";
 import Restricted from "context/PermissionProvider/Restricted";
-import { ProfilApiService } from "services";
+import { ConsejosRegionalesServices, ProfilApiService } from "services";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import { routeValidForUser } from "lib/helper";
@@ -31,6 +31,7 @@ import { Tooltip } from "antd";
 import { Button } from "components/common/button";
 import DesactivarDistrito from "components/administrar/distritos/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
+import { SelectInput } from "components/common/form/select/SelectInput";
 
 // import Image from "next/image";
 type Params = {
@@ -85,6 +86,8 @@ const Distritos = () => {
   const [dataDelete, setDataDelete] = React.useState<any>();
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
+  const [consejosTypeMap, setConsejosTypeMap] = React.useState<any>({});
+
   const [dataView, setDataView] = React.useState<any>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [subject, setSubject] = React.useState(new Subject<string>());
@@ -96,6 +99,14 @@ const Distritos = () => {
   } = useQuery<any>([UseQueryEnums.GET_ALL_DISTRITOS, params], () =>
     DistritosServices.getAll(params)
   );
+  const {
+    data: consejosFilter,
+    isLoading: isLoadingConsejosFilter,
+    refetch: refetchConsejosFilter,
+  } = useQuery<any>([`${UseQueryEnums.GET_ALL_CONSEJOS_TYPE}`], () =>
+    ConsejosRegionalesServices.getAll()
+  );
+
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
   };
@@ -103,7 +114,16 @@ const Distritos = () => {
     setDataDelete(selected);
     showDelete();
   };
+  React.useEffect(() => {
+    if (!isLoadingConsejosFilter) {
+      const aux: any = {};
 
+      consejosFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setConsejosTypeMap(aux);
+    }
+  }, [consejosFilter]);
   console.log("all distritos", response);
   React.useEffect(() => {
     // ConsejosRegionalesServices.getAll()
@@ -373,6 +393,17 @@ const Distritos = () => {
                     </div>
                   </Tooltip>
                 </Restricted>
+              </div>
+              <div className="flex flex-wrap gap-x-4 w-full">
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_consejo"
+                  label="Consejo"
+                  options={consejosTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_consejo}
+                  setValue={updateQuery}
+                ></SelectInput>
               </div>
             </form>
             {isLoading ? (

@@ -32,7 +32,7 @@ import EditClub from "components/administrar/clubes/edit";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import { routeValidForUser } from "lib/helper";
-import { ProfilApiService } from "services";
+import { ConsejosRegionalesServices, ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import { Tooltip } from "antd";
 import { Button } from "components/common/button";
@@ -40,6 +40,7 @@ import DesactivarClub from "components/administrar/clubes/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
 import { useUser } from "hooks/user";
 import { RoleEnums } from "consts/rolesEnum";
+import { SelectInput } from "components/common/form/select/SelectInput";
 
 // import Image from "next/image";
 type Params = {
@@ -49,6 +50,7 @@ type Params = {
   page?: number;
   limit?: number;
   userId?: number;
+  id_consejo?: any;
 };
 
 const HeaderClassName = `
@@ -97,6 +99,8 @@ const Clubes = () => {
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
+  const [consejosTypeMap, setConsejosTypeMap] = React.useState<any>({});
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [subject, setSubject] = React.useState(new Subject<string>());
   const [params, setValue] = useQueryParams<Params>({ limit: 8 });
@@ -107,6 +111,14 @@ const Clubes = () => {
   } = useQuery<any>([UseQueryEnums.GET_ALL_CLUBES, params], () =>
     ClubesServices.getAll(params)
   );
+  const {
+    data: consejosFilter,
+    isLoading: isLoadingConsejosFilter,
+    refetch: refetchConsejosFilter,
+  } = useQuery<any>([`${UseQueryEnums.GET_ALL_CONSEJOS_TYPE}`], () =>
+    ConsejosRegionalesServices.getAll()
+  );
+
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
   };
@@ -114,7 +126,16 @@ const Clubes = () => {
     setDataDelete(selected);
     showDelete();
   };
+  React.useEffect(() => {
+    if (!isLoadingConsejosFilter) {
+      const aux: any = {};
 
+      consejosFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setConsejosTypeMap(aux);
+    }
+  }, [consejosFilter]);
   console.log("all CLUBES", response);
   React.useEffect(() => {
     // ConsejosRegionalesServices.getAll()
@@ -181,12 +202,14 @@ const Clubes = () => {
     },
 
     {
-      name: "iglesia",
-      label: "Iglesia",
+      name: "consejo",
+      label: "Consejo",
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
-        <span className="text-gray-500 capitalize">{value?.iglesia}</span>
+        <span className="text-gray-500 capitalize">
+          {value?.consejo_regional}
+        </span>
       ),
     },
     {
@@ -374,6 +397,17 @@ const Clubes = () => {
                     </div>
                   </Tooltip>
                 </Restricted>
+              </div>
+              <div className="flex flex-wrap gap-x-4 w-full">
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_consejo"
+                  label="Consejo"
+                  options={consejosTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_consejo}
+                  setValue={updateQuery}
+                ></SelectInput>
               </div>
             </form>
             {isLoading ? (

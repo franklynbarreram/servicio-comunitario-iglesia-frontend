@@ -35,6 +35,7 @@ import { Tooltip } from "antd";
 import { Button } from "components/common/button";
 import DesactivarIglesia from "components/administrar/iglesias/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
+import { SelectInput } from "components/common/form/select/SelectInput";
 
 // import Image from "next/image";
 type Params = {
@@ -42,6 +43,7 @@ type Params = {
   fromDate?: string;
   toDate?: string;
   page?: number;
+  id_distrito?: any;
   limit?: number;
   userId?: number;
 };
@@ -90,6 +92,8 @@ const Iglesias = () => {
   const [dataDelete, setDataDelete] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
+  const [distritosTypeMap, setDistritosTypeMap] = React.useState<any>({});
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [subject, setSubject] = React.useState(new Subject<string>());
   const [params, setValue] = useQueryParams<Params>({ limit: 8 });
@@ -100,6 +104,25 @@ const Iglesias = () => {
   } = useQuery<any>([UseQueryEnums.GET_ALL_IGLESIAS, params], () =>
     IglesiasServices.getAll(params)
   );
+
+  const {
+    data: distritosFilter,
+    isLoading: isLoadingDistritosFilter,
+    refetch: refetchDistritosFilter,
+  } = useQuery<any>([`${UseQueryEnums.GET_ALL_DISTRITOS}_TYPE`], () =>
+    DistritosServices.getAll()
+  );
+
+  React.useEffect(() => {
+    if (!isLoadingDistritosFilter) {
+      const aux: any = {};
+
+      distritosFilter.data.map((item: any) => {
+        aux[item.id] = item.nombre;
+      });
+      setDistritosTypeMap(aux);
+    }
+  }, [distritosFilter]);
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
   };
@@ -361,6 +384,17 @@ const Iglesias = () => {
                     </div>
                   </Tooltip>
                 </Restricted>
+              </div>
+              <div className="flex flex-wrap gap-x-4 w-full">
+                <SelectInput
+                  className="mb-10 z-50 flex-auto"
+                  name="id_distrito"
+                  label="Distrito"
+                  options={distritosTypeMap}
+                  maxwidth="max-w-[208px]"
+                  value={params.id_distrito}
+                  setValue={updateQuery}
+                ></SelectInput>
               </div>
             </form>
             {isLoading ? (

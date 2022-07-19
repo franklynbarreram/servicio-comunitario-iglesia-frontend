@@ -110,7 +110,7 @@ export const Input: React.FC<
                 {
                   "border-gray-500": !error && !isFill,
                 },
-                "disabled:placeholder-gray-200 disabled:cursor-not-allowed disabled:text-gray-500 ",
+                "disabled:placeholder-[black] disabled:cursor-not-allowed disabled:text-[black] ",
                 {
                   "focus:outline-none focus:bg-gray-opacity-10 focus:ring-offset-transparent focus:ring-opacity-0 focus:border-gray-opacity-10 focus:ring-transparent":
                     !error,
