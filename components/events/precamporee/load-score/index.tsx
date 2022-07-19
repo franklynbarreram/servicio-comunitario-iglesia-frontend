@@ -122,7 +122,7 @@ const LoadScore = ({ data, hide, refetch }: any) => {
                 <Button
                   className="bg-alert-success border-alert-success hover:bg-transparent hover:text-alert-success hover:border-alert-success"
                   labelProps="f-18 font-normal"
-                  label={"Aprobar"}
+                  label={"Cargar"}
                   fill
                   boderRadius="rounded-full"
                   size="full"
