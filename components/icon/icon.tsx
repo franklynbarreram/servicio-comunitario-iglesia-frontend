@@ -9,7 +9,7 @@ interface IconProps {
   height?: string;
   className?: string;
   pointer?: boolean;
-  fillPath?: boolean;
+  fillPath?: boolean | any;
   fillLine?: boolean;
   fillCircle?: boolean;
   fillRect?: boolean;

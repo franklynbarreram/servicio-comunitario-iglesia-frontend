@@ -29,6 +29,7 @@ import ResultadosCamporee from "components/camporee/resultados";
 import { Button } from "components/common/button";
 import InscribirClub from "components/camporee/inscribir-club";
 import Restricted from "context/PermissionProvider/Restricted";
+import { Icon } from "components/icon";
 
 const { TabPane } = Tabs;
 
@@ -219,6 +220,18 @@ const CamporeeDetail = () => {
                       />
                     </div>
                   </Restricted>
+                )}
+                {values?.inscrito && (
+                  <div className="flex justify-center items-center gap-2  mt-8">
+                    <p className="text-alert-success text-center font-bold">
+                      Club inscrito
+                    </p>
+                    <Icon
+                      src="/icons/selected.svg"
+                      className="w-5 text-alert-success"
+                      fillPath
+                    ></Icon>
+                  </div>
                 )}
               </BoxInfo>
             </>
