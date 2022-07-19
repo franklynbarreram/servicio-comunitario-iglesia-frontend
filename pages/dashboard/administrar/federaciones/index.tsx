@@ -186,7 +186,7 @@ const Federaciones = () => {
     },
     {
       name: "nro_conquistadores",
-      label: " Nro. Conquis",
+      label: " Nro. Conquistadores",
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (

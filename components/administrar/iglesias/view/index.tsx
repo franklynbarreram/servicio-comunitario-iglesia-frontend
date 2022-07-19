@@ -69,7 +69,7 @@ const ViewIglesia = ({ data, hide, refetch }: any) => {
             type="label"
             className={clsx("ml-3 font-bold mb-2 block f-18")}
           >
-            Nro. Conquis
+            Nro. Conquistadores
           </Typography>
           <Typography
             type="span"
