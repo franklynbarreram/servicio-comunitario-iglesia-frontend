@@ -673,8 +673,8 @@ const EventCamporeeDetail = () => {
                                                 error={errors.puntuacion}
                                                 isArray
                                                 arrayIndex={index}
-                                                className="placeholder:text-[black] text-[black] font-bold"
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c33]"
+                                                className="placeholder:font-bold placeholder:text-[black] text-[black] font-bold"
+                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#fff8f8]"
                                               />
                                             </Restricted>
                                             <Restricted
