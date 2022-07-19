@@ -41,6 +41,7 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "no-sparse-arrays": "off",
         "no-extra-boolean-cast": "off",
+        "no-useless-escape": "off",
       },
     },
   ],
