@@ -266,6 +266,8 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 
   const howManyStarts = (text: string) => {
     const start = text.split(" ");
+    console.log("epale son:", start[0]);
+
     return parseInt(start[0]);
   };
 
@@ -300,7 +302,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                 starts.push(
                   <StarIcon
                     className={clsx("w-5", {
-                      "opacity-50": i > quantityStarts,
+                      "opacity-50": i >= quantityStarts,
                     })}
                   ></StarIcon>
                 );
@@ -343,7 +345,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                 starts.push(
                   <StarIcon
                     className={clsx("w-5", {
-                      "opacity-50": i > quantityStarts,
+                      "opacity-50": i >= quantityStarts,
                     })}
                   ></StarIcon>
                 );
