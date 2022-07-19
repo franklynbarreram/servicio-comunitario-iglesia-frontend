@@ -65,7 +65,9 @@ class Service {
       params,
     });
   }
-
+  async inscribirClubToCamporee(id: any): Promise<any> {
+    return this.client.post(`/camporees/inscribir_club/${id}`);
+  }
   async getAllClubesType(id: any): Promise<any> {
     return this.client.get(`/camporees/clubes/${id}`);
   }

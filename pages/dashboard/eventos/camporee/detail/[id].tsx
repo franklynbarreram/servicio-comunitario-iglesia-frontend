@@ -320,6 +320,7 @@ const EventCamporeeDetail = () => {
           ) : (
             <>
               <Back />
+
               <div className="item flex flex-col gap-2 text-center justify-center w-full mt-8">
                 <Typography
                   type="label"

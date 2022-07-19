@@ -26,6 +26,9 @@ import { Tabs } from "antd";
 import EditEventPrecamporee from "components/camporee/eventos-precamporee/edit";
 import EventosCamporee from "components/camporee/eventos-camporee";
 import ResultadosCamporee from "components/camporee/resultados";
+import { Button } from "components/common/button";
+import InscribirClub from "components/camporee/inscribir-club";
+import Restricted from "context/PermissionProvider/Restricted";
 
 const { TabPane } = Tabs;
 
@@ -45,6 +48,12 @@ const CamporeeDetail = () => {
     show: showEdit,
   } = useModal();
 
+  const {
+    Modal: ModalInscription,
+    hide: hideInscription,
+    isShow: isShowInscription,
+    show: showInscription,
+  } = useModal();
   const [dataEdit, setDataEdit] = React.useState<any>();
   // const [response, setResponse] = React.useState<any>();
   // const [isLoading, setIsLoading] = React.useState<any>(true);
@@ -145,6 +154,9 @@ const CamporeeDetail = () => {
     ];
   }, [response]);
   console.log("los value campore by id", values);
+  const handleShowInscription = () => {
+    showInscription();
+  };
 
   return (
     <LayoutDashboard title="Detalle Camporee">
@@ -188,7 +200,27 @@ const CamporeeDetail = () => {
                 title={values?.nombre}
                 items={itemsCamporee}
                 headItems={itemsCamporeeHead}
-              />
+              >
+                {values?.inscribible && !values?.inscrito && (
+                  <Restricted
+                    module={ModuleEnums.CAMPOREE}
+                    typePermisse={PermissionsEnums.INSCRIBIR_CLUB_TO_CAMPOREE}
+                  >
+                    <div className="mt-8">
+                      <Button
+                        labelProps="text-base font-bold text-white"
+                        label={"Inscribir club"}
+                        fill
+                        className="bg-[black]  border-yellow  w-full animate-bounce"
+                        boderRadius="rounded-lg"
+                        size="full"
+                        sizesButton="py-3"
+                        onClick={() => handleShowInscription()}
+                      />
+                    </div>
+                  </Restricted>
+                )}
+              </BoxInfo>
             </>
           )}
         </div>
@@ -200,7 +232,15 @@ const CamporeeDetail = () => {
       <ModalView isShow={isShowViewPrecamporee}>
         <ViewClub hide={hideViewCamporee} data={dataView} refetch={refetch} />
       </ModalView> */}
-
+      <ModalInscription isShow={isShowInscription}>
+        <InscribirClub
+          hide={hideInscription}
+          data={values}
+          // isEdit={isEdit}
+          // id_camporee_evento={id}
+          refetch={refetch}
+        />
+      </ModalInscription>
       <ModalEdit isShow={isShowEdit}>
         <EditCamporee hide={hideEdit} data={values} refetch={refetch} />
       </ModalEdit>

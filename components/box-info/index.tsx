@@ -17,11 +17,13 @@ interface BoxInfoProps {
   headItems?: any[];
   withEditButton?: boolean;
   showModal?: any;
+  children?: any;
 }
 
 const BoxInfo = ({
   image,
   title,
+  children,
   className,
   items,
   headItems,
@@ -81,6 +83,7 @@ const BoxInfo = ({
                 </Tooltip>
               )}
             </Restricted>
+            {children}
           </div>
         </div>
       </div>

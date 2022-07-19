@@ -126,7 +126,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.INSCRIBIR_CLUB_TO_CAMPOREE,
+        ],
       },
 
       {
@@ -184,7 +188,11 @@ export const PermissionByRol = [
       },
       {
         name: ModuleEnums.CAMPOREE,
-        permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+        permissionsActions: [
+          PermissionsEnums.DETAIL,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.INSCRIBIR_CLUB_TO_CAMPOREE,
+        ],
       },
 
       {
