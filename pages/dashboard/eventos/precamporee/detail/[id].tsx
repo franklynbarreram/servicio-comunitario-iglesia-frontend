@@ -45,7 +45,9 @@ import PreviewImage from "components/common/preview-image";
 import Back from "components/common/back";
 import { Tabs } from "antd";
 import moment from "moment";
-
+import { Collapse } from "antd";
+import { ArrowRightIcon } from "@heroicons/react/solid";
+const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 type Params = {
@@ -217,7 +219,9 @@ const EventPrecamporeeDetail = () => {
     setDataPreview(src);
     showViewImages();
   };
-
+  const callback = (key: any) => {
+    console.log(key);
+  };
   console.log("los value evento precampore by id", values);
 
   return (
@@ -317,332 +321,365 @@ const EventPrecamporeeDetail = () => {
                 module={ModuleEnums.EVENTO_PRECAMPOREE}
                 typePermisse={PermissionsEnums.VIEW_DATA_FORMS}
               >
-                {values?.informes?.map((itemClub: any, index: any) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <div className="item bg-yellow flex text-center justify-center w-full mt-20">
-                        <Typography
-                          type="label"
-                          className={clsx(
-                            "font-bold block text-primary text-3xl px-2 py-3"
-                          )}
-                        >
-                          {itemClub?.club}
-                        </Typography>
-                      </div>
-                      {itemClub?.informes?.map((informe: any, index: any) => {
-                        return (
-                          <div
-                            key={index}
-                            className="container-form shadow-md pb-10 px-5 w-full my-16 "
-                          >
-                            <div className="gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
-                              <React.Fragment key={index}>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Descripcion
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {ValidateString(informe?.descripcion)}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Objetivo
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {ValidateString(informe?.objetivo)}
-                                  </Typography>
-                                </div>
-
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Participantes
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.participantes}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Fecha Enviado
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {moment(informe?.fecha_enviado).format(
-                                      formatDateComplete
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Firma Anciano
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.firma_anciano ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Firma Consejo
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.firma_consejo_regional ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Firma Pastor
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.firma_pastor ? (
-                                      <span className="text-secondary font-bold">
-                                        SI
-                                      </span>
-                                    ) : (
-                                      <span className="text-alert-error font-bold">
-                                        NO
-                                      </span>
-                                    )}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Puntuación
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.puntuacion
-                                      ? informe?.puntuacion
-                                      : "N/A"}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Observación
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.observacion
-                                      ? informe?.observacion
-                                      : "N/A"}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Puntuación Maxima
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.puntuacion_maxima}
-                                  </Typography>
-                                </div>
-                                <div className="item col-span-1">
-                                  <Typography
-                                    type="label"
-                                    className={clsx(
-                                      "ml-3 font-bold mb-2 block f-18"
-                                    )}
-                                  >
-                                    Mes
-                                  </Typography>
-                                  <Typography
-                                    type="span"
-                                    className={clsx(
-                                      "ml-3 font-normal mb-2 block f-18"
-                                    )}
-                                  >
-                                    {informe?.nombre_mes}
-                                  </Typography>
-                                </div>
-                                <div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
-                                  <img
-                                    src={informe?.imagen1}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image1"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen1)
-                                    }
-                                  />
-                                  <img
-                                    src={informe?.imagen2}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image2"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen2)
-                                    }
-                                  />
-                                  <img
-                                    src={informe?.imagen3}
-                                    className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                    alt="image3"
-                                    onClick={() =>
-                                      handlePreviewImage(informe?.imagen3)
-                                    }
-                                  />
-                                </div>
-                              </React.Fragment>
-                            </div>
-                            {!isFirmado(informe) && (
-                              <Restricted
-                                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                                typePermisse={PermissionsEnums.APPROVE_FORM}
-                              >
-                                {informe?.editar && (
-                                  <div className="mt-28 justify-center text-center flex w-full">
-                                    <Button
-                                      labelProps="f-18 font-bold"
-                                      label={"Aprobar Informe"}
-                                      fill
-                                      className="bg-alert-success border-alert-success max-w-[200px]"
-                                      boderRadius="rounded-full"
-                                      size="full"
-                                      sizesButton="py-3"
-                                      onClick={() =>
-                                        handleShowApprove(informe?.id)
-                                      }
-                                    />
-                                  </div>
+                <Collapse
+                  defaultActiveKey={["1"]}
+                  onChange={callback}
+                  className="w-full custom-collapse"
+                  collapsible="header"
+                  expandIcon={({ isActive }) => (
+                    <ArrowRightIcon
+                      className={clsx(
+                        "w-10 h-10 absolute top-0 left-5 bottom-0 m-auto",
+                        {
+                          "rotate-90": isActive,
+                        }
+                      )}
+                    />
+                  )}
+                >
+                  {values?.informes?.map((itemClub: any, index: any) => {
+                    return (
+                      <React.Fragment key={index}>
+                        <Panel
+                          header={
+                            <div className="item bg-yellow flex text-center justify-center w-full">
+                              <Typography
+                                type="label"
+                                className={clsx(
+                                  "font-bold block text-primary text-3xl px-2 py-3 cursor-pointer"
                                 )}
-                              </Restricted>
-                            )}
-                            {informe?.editar && (
-                              <Restricted
-                                module={ModuleEnums.EVENTO_PRECAMPOREE}
-                                typePermisse={PermissionsEnums.LOAD_SCORE}
                               >
-                                <div className="mt-28 justify-center text-center flex w-full">
-                                  <Button
-                                    labelProps="f-18 font-bold"
-                                    label={"Cargar Puntuación"}
-                                    fill
-                                    className="bg-alert-success border-alert-success max-w-[200px]"
-                                    boderRadius="rounded-full"
-                                    size="full"
-                                    sizesButton="py-3"
-                                    onClick={() => handleShowLoadScore(informe)}
-                                  />
+                                {itemClub?.club}
+                              </Typography>
+                            </div>
+                          }
+                          key={index}
+                          // extra={
+                          // 		<></>
+                          //     }
+                          className="custom-collapse-header justify-normal"
+                        >
+                          {itemClub?.informes?.map(
+                            (informe: any, index: any) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="container-form shadow-md pb-10 px-5 w-full my-16 "
+                                >
+                                  <div className="gap-x-6 gap-y-10 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 text-left ">
+                                    <React.Fragment key={index}>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Descripcion
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {ValidateString(informe?.descripcion)}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Objetivo
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {ValidateString(informe?.objetivo)}
+                                        </Typography>
+                                      </div>
+
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Participantes
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.participantes}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Fecha Enviado
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {moment(
+                                            informe?.fecha_enviado
+                                          ).format(formatDateComplete)}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Firma Anciano
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.firma_anciano ? (
+                                            <span className="text-secondary font-bold">
+                                              SI
+                                            </span>
+                                          ) : (
+                                            <span className="text-alert-error font-bold">
+                                              NO
+                                            </span>
+                                          )}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Firma Consejo
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.firma_consejo_regional ? (
+                                            <span className="text-secondary font-bold">
+                                              SI
+                                            </span>
+                                          ) : (
+                                            <span className="text-alert-error font-bold">
+                                              NO
+                                            </span>
+                                          )}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Firma Pastor
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.firma_pastor ? (
+                                            <span className="text-secondary font-bold">
+                                              SI
+                                            </span>
+                                          ) : (
+                                            <span className="text-alert-error font-bold">
+                                              NO
+                                            </span>
+                                          )}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Puntuación
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.puntuacion
+                                            ? informe?.puntuacion
+                                            : "N/A"}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Observación
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.observacion
+                                            ? informe?.observacion
+                                            : "N/A"}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Puntuación Maxima
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.puntuacion_maxima}
+                                        </Typography>
+                                      </div>
+                                      <div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Mes
+                                        </Typography>
+                                        <Typography
+                                          type="span"
+                                          className={clsx(
+                                            "ml-3 font-normal mb-2 block f-18"
+                                          )}
+                                        >
+                                          {informe?.nombre_mes}
+                                        </Typography>
+                                      </div>
+                                      <div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
+                                        <img
+                                          src={informe?.imagen1}
+                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
+                                          alt="image1"
+                                          onClick={() =>
+                                            handlePreviewImage(informe?.imagen1)
+                                          }
+                                        />
+                                        <img
+                                          src={informe?.imagen2}
+                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
+                                          alt="image2"
+                                          onClick={() =>
+                                            handlePreviewImage(informe?.imagen2)
+                                          }
+                                        />
+                                        <img
+                                          src={informe?.imagen3}
+                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
+                                          alt="image3"
+                                          onClick={() =>
+                                            handlePreviewImage(informe?.imagen3)
+                                          }
+                                        />
+                                      </div>
+                                    </React.Fragment>
+                                  </div>
+                                  {!isFirmado(informe) && (
+                                    <Restricted
+                                      module={ModuleEnums.EVENTO_PRECAMPOREE}
+                                      typePermisse={
+                                        PermissionsEnums.APPROVE_FORM
+                                      }
+                                    >
+                                      {informe?.editar && (
+                                        <div className="mt-28 justify-center text-center flex w-full">
+                                          <Button
+                                            labelProps="f-18 font-bold"
+                                            label={"Aprobar Informe"}
+                                            fill
+                                            className="bg-alert-success border-alert-success max-w-[200px]"
+                                            boderRadius="rounded-full"
+                                            size="full"
+                                            sizesButton="py-3"
+                                            onClick={() =>
+                                              handleShowApprove(informe?.id)
+                                            }
+                                          />
+                                        </div>
+                                      )}
+                                    </Restricted>
+                                  )}
+                                  {informe?.editar && (
+                                    <Restricted
+                                      module={ModuleEnums.EVENTO_PRECAMPOREE}
+                                      typePermisse={PermissionsEnums.LOAD_SCORE}
+                                    >
+                                      <div className="mt-28 justify-center text-center flex w-full">
+                                        <Button
+                                          labelProps="f-18 font-bold"
+                                          label={"Cargar Puntuación"}
+                                          fill
+                                          className="bg-alert-success border-alert-success max-w-[200px]"
+                                          boderRadius="rounded-full"
+                                          size="full"
+                                          sizesButton="py-3"
+                                          onClick={() =>
+                                            handleShowLoadScore(informe)
+                                          }
+                                        />
+                                      </div>
+                                    </Restricted>
+                                  )}
                                 </div>
-                              </Restricted>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </React.Fragment>
-                  );
-                })}
+                              );
+                            }
+                          )}
+                        </Panel>
+                      </React.Fragment>
+                    );
+                  })}
+                </Collapse>
               </Restricted>
               <Restricted
                 module={ModuleEnums.EVENTO_PRECAMPOREE}

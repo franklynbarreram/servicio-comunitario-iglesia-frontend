@@ -197,6 +197,13 @@ body {
   justify-content: space-between;
   background-color: var(--color-yellow);
 }
+
+.custom-collapse.ant-collapse
+  .custom-collapse-header.justify-normal
+  .ant-collapse-header {
+  justify-content: center;
+}
+
 .custom-collapse.ant-collapse > .ant-collapse-item {
   margin-bottom: 2px;
 }
