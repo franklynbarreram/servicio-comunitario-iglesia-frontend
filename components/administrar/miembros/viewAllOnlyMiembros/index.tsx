@@ -25,7 +25,7 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
       render: (value: any) => moment(value.fecha_inicio).format(formatDates),
     },
     {
-      title: "Fecha inicio",
+      title: "Fecha fin",
       dataIndex: "",
       key: "",
       render: (value: any) =>

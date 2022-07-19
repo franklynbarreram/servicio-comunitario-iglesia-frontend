@@ -12,15 +12,17 @@ const format_date = "MM/DD/YYYY";
 export interface DataPickerCustomProps {
   name: string;
   value: any;
-  setValue: any;
+  setValue?: any;
   register: any;
-  label: string;
+  label?: string;
   rules: any;
   error: any;
   control: any;
   setValueRHF: any;
   disabled?: boolean;
+  setValueParams?: any;
   className?: string;
+  hideLabelTitle?: boolean;
 }
 export function DatePickerCustom({
   name,
@@ -32,18 +34,23 @@ export function DatePickerCustom({
   rules,
   control,
   disabled,
+  hideLabelTitle,
   label,
+  setValueParams,
   className,
 }: DataPickerCustomProps) {
   const registerAux: any = register(name, rules);
   const convert = (date: any) => {
     const aux = new DateObject(date).format(format_date);
     setValueRHF(name, moment(aux).format(), { shouldValidate: true });
-    setValue(moment(aux).format());
+    setValueParams
+      ? setValueParams(name, moment(aux).format())
+      : setValue(moment(aux).format());
   };
 
   const resetDate = () => {
-    setValue(undefined);
+    setValueParams ? setValueParams(name, undefined) : setValue(undefined);
+
     setValueRHF(name, undefined);
   };
 
@@ -77,6 +84,7 @@ export function DatePickerCustom({
               customValue={value}
               resetValue={resetDate}
               disabled={disabled}
+              hideLabelTitle={hideLabelTitle}
             />
           }
           onFocusedDateChange={convert}
@@ -95,15 +103,18 @@ function CustomComponentPicker({
   resetValue,
   disabled,
   className,
+  hideLabelTitle,
 }: any) {
   return (
     <div className={className}>
-      <Typography
-        type="label"
-        className={clsx("ml-3 font-normal text-primary mb-2 block f-18")}
-      >
-        {label}
-      </Typography>
+      {!hideLabelTitle && (
+        <Typography
+          type="label"
+          className={clsx("ml-3 font-normal text-primary mb-2 block f-18")}
+        >
+          {label}
+        </Typography>
+      )}
       {customValue ? (
         <div
           className={clsx(

@@ -45,11 +45,12 @@ import { ModuleEnums } from "consts/modulesEmuns";
 import Restricted from "context/PermissionProvider/Restricted";
 import { Button } from "components/common/button";
 import { RoleEnums } from "consts/rolesEnum";
+import { DatePickerCustom } from "components/common/date-picker/datePicker";
 
 // import Image from "next/image";
 type Params = {
   search?: string;
-  fromDate?: string;
+  fecha?: string;
   toDate?: string;
   page?: number;
   limit?: number;
@@ -91,6 +92,7 @@ const Miembros = () => {
   } = useModal();
   const [dataDelete, setDataDelete] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
+  const [fecha, setFecha] = React.useState();
   const [dataViewOnlyMember, setDataView] = React.useState<any>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [subject, setSubject] = React.useState(new Subject<string>());
@@ -121,10 +123,13 @@ const Miembros = () => {
     register,
     handleSubmit,
     setValue: setValueForm,
+    control,
     formState: { errors },
     watch,
   } = useForm({ mode: "onChange" });
-
+  const rules = {
+    fecha: {},
+  };
   const handleSubmitData = (data: any) => {
     console.log(data);
   };
@@ -330,6 +335,24 @@ const Miembros = () => {
                     </div>
                   </Tooltip>
                 </Restricted>
+              </div>
+              <div className="flex my-5">
+                <DatePickerCustom
+                  name="fecha"
+                  register={register}
+                  rules={rules.fecha}
+                  error={errors.fecha}
+                  label={"Fecha"}
+                  hideLabelTitle
+                  className="max-w-[208px]"
+                  // value={fecha}
+                  control={control}
+                  // setValue={setFecha}
+                  setValueRHF={setValueForm}
+                  value={params.fecha}
+                  setValueParams={updateQuery}
+                  // disabled={isRecurrent || !editInformeCreated}
+                />
               </div>
             </form>
             {isLoading ? (
