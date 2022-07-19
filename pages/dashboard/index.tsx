@@ -1,4 +1,5 @@
 import { LayoutDashboard } from "components/layout";
+import { Images } from "consts";
 import { useUser } from "hooks/user";
 import { get } from "lodash";
 import { GetServerSideProps } from "next";
@@ -13,7 +14,7 @@ const Dashboard = () => {
       <div className="py-4">
         <div className="flex flex-col justify-center">
           <img
-            src="/logos/logo.png"
+            src={Images.logoWithColor}
             className="mx-auto max-w-[600px] w-full"
             alt=""
           />

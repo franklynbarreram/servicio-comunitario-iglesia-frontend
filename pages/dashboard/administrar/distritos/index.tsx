@@ -40,6 +40,7 @@ type Params = {
   toDate?: string;
   page?: number;
   limit?: number;
+  id_consejo?: any;
   userId?: number;
 };
 
