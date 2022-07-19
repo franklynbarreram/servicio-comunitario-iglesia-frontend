@@ -226,7 +226,7 @@ const EventCamporeeDetail = () => {
     if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
       return item.puntuacion_eliminatoria;
     } else if (dataUser.scope_actual === RoleEnums.LIDER_JUVENIL) {
-      return item.puntuacion_eliminatoria;
+      return item.puntuacion;
     }
   };
 
@@ -235,28 +235,30 @@ const EventCamporeeDetail = () => {
 
     let finalData: any = [];
 
-    let clasificadoIdEntidad = data.clasificado.map((item: any, index: any) => {
-      if (Boolean(item)) {
-        return values?.datos_inscripcion[index]?.id_entidad;
+    let clasificadoIdEntidad = data?.clasificado?.map(
+      (item: any, index: any) => {
+        if (Boolean(item)) {
+          return values?.datos_inscripcion[index]?.id_entidad;
+        }
       }
-    });
+    );
     //Eliminar vacios, undefined y null
-    clasificadoIdEntidad = clasificadoIdEntidad.filter((item: any) => item);
-    let puntuacionIdEntidad = data.puntuacion.map((item: any, index: any) => {
+    clasificadoIdEntidad = clasificadoIdEntidad?.filter((item: any) => item);
+    let puntuacionIdEntidad = data.puntuacion?.map((item: any, index: any) => {
       if (!isEmpty(item)) {
         return values?.datos_inscripcion[index]?.id_entidad;
       }
     });
 
     //Eliminar vacios, undefined y null
-    puntuacionIdEntidad = puntuacionIdEntidad.filter((item: any) => item);
+    puntuacionIdEntidad = puntuacionIdEntidad?.filter((item: any) => item);
     let puntuacionParseInt = data?.puntuacion?.map((item: any) => {
       if (!isEmpty(item)) {
         return parseInt(item);
       }
     });
     //Eliminar vacios, undefined y null
-    puntuacionParseInt = puntuacionParseInt.filter((item: any) => item);
+    puntuacionParseInt = puntuacionParseInt?.filter((item: any) => item);
 
     let FinalData: any = {};
     let Fetch: any = Promise;
