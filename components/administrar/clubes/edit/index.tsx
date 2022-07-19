@@ -355,62 +355,67 @@ const EditClub = ({ data, hide, refetch }: any) => {
                 />
               </div> */}
             </div>
-            {dataUser.scope_actual !== RoleEnums.DIRECTOR && (
-              <>
-                <InputListSearch
-                  // myDefaultValue={myDefaultValue}
-                  name="tipo"
-                  title="Tipo"
-                  className="mb-4"
-                  options={optionsType}
-                  register={register}
-                  // rules={selectRules}
-                  // error={selectError}
-                  // isFill={selectIsFill}
-                  // handleChange={handleChange}
-                  rules={rules.tipo}
-                  error={errors.tipo}
-                  handleChange={(data: OptionType) =>
-                    setValue("tipo", data, { shouldValidate: true })
-                  }
-                  myDefaultValue={{
-                    value: data.tipo,
-                    text: data?.tipo,
-                    disabled: false,
-                    placeholder: false,
-                  }}
-                  // onChangeCustom={(event: any) => {
-                  //   console.log("siiuuuu", event.target.value);
-                  //   setValue("tipo", event.target.value);
-                  // }}
-                />
+            {dataUser.scope_actual !== RoleEnums.DIRECTOR &&
+              dataUser.scope_actual !== RoleEnums.SECRETARIO_CLUB && (
+                <>
+                  <InputListSearch
+                    // myDefaultValue={myDefaultValue}
+                    name="tipo"
+                    title="Tipo"
+                    className="mb-4"
+                    options={optionsType}
+                    register={register}
+                    // rules={selectRules}
+                    // error={selectError}
+                    // isFill={selectIsFill}
+                    // handleChange={handleChange}
+                    rules={rules.tipo}
+                    error={errors.tipo}
+                    handleChange={(data: OptionType) =>
+                      setValue("tipo", data, { shouldValidate: true })
+                    }
+                    myDefaultValue={{
+                      value: data.tipo,
+                      text: data?.tipo,
+                      disabled: false,
+                      placeholder: false,
+                    }}
+                    // onChangeCustom={(event: any) => {
+                    //   console.log("siiuuuu", event.target.value);
+                    //   setValue("tipo", event.target.value);
+                    // }}
+                  />
 
-                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                  <p className={"ml-3 font-normal mb-2 block f-18"}>Iglesia</p>
-                  <AsyncSelect
-                    cacheOptions
-                    defaultOptions
-                    loadOptions={promiseOptionsIglesias}
-                    styles={customStyles}
-                    value={selectValueIglesias}
-                    className={"text-sm"}
-                    onChange={handleChangeSelectConsejosIglesias}
-                  />
-                </div>
-                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                  <p className={"ml-3 font-normal mb-2 block f-18"}>Director</p>
-                  <AsyncSelect
-                    cacheOptions
-                    defaultOptions
-                    loadOptions={promiseOptionsDirector}
-                    styles={customStyles}
-                    value={selectValueDirector}
-                    className={"text-sm"}
-                    onChange={handleChangeSelectDirector}
-                  />
-                </div>
-              </>
-            )}
+                  <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                      Iglesia
+                    </p>
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      loadOptions={promiseOptionsIglesias}
+                      styles={customStyles}
+                      value={selectValueIglesias}
+                      className={"text-sm"}
+                      onChange={handleChangeSelectConsejosIglesias}
+                    />
+                  </div>
+                  <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                      Director
+                    </p>
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      loadOptions={promiseOptionsDirector}
+                      styles={customStyles}
+                      value={selectValueDirector}
+                      className={"text-sm"}
+                      onChange={handleChangeSelectDirector}
+                    />
+                  </div>
+                </>
+              )}
             <div className="border-2 border-yellow mt-7 py-4 px-2 rounded-md mb-4">
               <Typography
                 type="label"
