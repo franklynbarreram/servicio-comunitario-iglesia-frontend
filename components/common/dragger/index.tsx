@@ -83,8 +83,12 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       reader.onerror = (error) => reject(error);
     });
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+  const handleChange: UploadProps["onChange"] = ({
+    fileList: newFileList,
+    ...rest
+  }) => {
     console.log("los file", newFileList);
+    console.log("el resto", rest);
     const aux: any = [];
     const filesNumber = newFileList.length;
     // console.log("la cantidad:", filesNumber);
@@ -99,17 +103,25 @@ export const DragAndDrop: React.FC<AlertProps> = ({
         setFileListBase64([...aux]);
 
         if (filesNumber < maxFiles) {
-          console.log("debe ser mayor a", maxFiles);
-          setErrorRHF(name, {
-            type: "custom",
-            message: `Debe subir ${maxFiles} archivos`,
-          });
+          // console.log("debe ser mayor a", maxFiles);
+          // setErrorRHF(name, {
+          //   type: "custom",
+          //   message: `Debe subir ${maxFiles} archivos`,
+          // });
           setValueRHF(name, aux);
         } else {
           setValueRHF(name, aux, { shouldValidate: true });
         }
       }
     });
+    if (filesNumber < maxFiles) {
+      console.log("debe ser mayor a", maxFiles);
+      setErrorRHF(name, {
+        type: "custom",
+        message: `Debe subir ${maxFiles} archivos`,
+      });
+    }
+
     // console.log("Elaux:", aux);
     setFileList(newFileList);
     // setFileList(newFileList);

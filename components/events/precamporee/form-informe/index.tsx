@@ -265,22 +265,22 @@ export const InformeForm: React.FC<InformeFormProps> = ({
           </div>
 
           <div className="mt-10">
-            {(!isEmpty(fileList) || (fileList && !informe)) && (
-              <DragAndDrop
-                control={control}
-                name="files"
-                maxFiles={3}
-                register={register}
-                rules={rules.files}
-                error={errors.files}
-                setErrorRHF={setErrorRHF}
-                setValueRHF={setValueRHF}
-                fileList={fileList}
-                setFileList={setFileList}
-                isEdit={informe ? true : false}
-                disabled={!editInformeCreated}
-              />
-            )}
+            {/* {!isNil(informe) && ( */}
+            <DragAndDrop
+              control={control}
+              name="files"
+              maxFiles={3}
+              register={register}
+              rules={rules.files}
+              error={errors.files}
+              setErrorRHF={setErrorRHF}
+              setValueRHF={setValueRHF}
+              fileList={fileList}
+              setFileList={setFileList}
+              isEdit={informe ? true : false}
+              disabled={!editInformeCreated}
+            />
+            {/* )} */}
           </div>
 
           {editInformeCreated && (
