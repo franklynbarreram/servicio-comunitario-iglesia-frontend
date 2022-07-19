@@ -27,6 +27,8 @@ import Link from "next/link";
 import EditEventPrecamporee from "./edit";
 import clsx from "clsx";
 import CreateEventPrecamporee from "./create";
+import moment from "moment";
+import { formatDateComplete } from "lib/helper";
 
 interface EventosPrecamporeeProps {
   idCamporee: number | string | string[] | undefined;
@@ -197,7 +199,9 @@ const EventosPrecamporee = ({
                 const itemsPrecamporeeCard = [
                   {
                     icon: Icons.calendar,
-                    content: `${item?.fecha_inicio} a ${item?.fecha_fin}`,
+                    content: `${moment(item?.fecha_inicio).format(
+                      formatDateComplete
+                    )} a ${moment(item?.fecha_fin).format(formatDateComplete)}`,
                   },
                   {
                     icon: Icons.medalla,

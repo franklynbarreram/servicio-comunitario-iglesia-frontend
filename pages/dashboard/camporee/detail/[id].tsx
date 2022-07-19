@@ -13,7 +13,11 @@ import { Subject } from "rxjs";
 import { CamporeeServices } from "services/Camporee";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
-import { routeValidForUser, ValidateImage } from "lib/helper";
+import {
+  formatDateComplete,
+  routeValidForUser,
+  ValidateImage,
+} from "lib/helper";
 import { ProfilApiService } from "services";
 import { useRouter } from "next/router";
 // import { Tabs } from "components/common/tabs2";
@@ -30,6 +34,7 @@ import { Button } from "components/common/button";
 import InscribirClub from "components/camporee/inscribir-club";
 import Restricted from "context/PermissionProvider/Restricted";
 import { Icon } from "components/icon";
+import moment from "moment";
 
 const { TabPane } = Tabs;
 
@@ -101,7 +106,9 @@ const CamporeeDetail = () => {
     return [
       {
         icon: Icons.calendar,
-        content: `${values?.fecha_inicio} a ${values?.fecha_fin}`,
+        content: `${moment(values?.fecha_inicio).format(
+          formatDateComplete
+        )} a ${moment(values?.fecha_fin).format(formatDateComplete)}`,
       },
       {
         icon: Icons.location,

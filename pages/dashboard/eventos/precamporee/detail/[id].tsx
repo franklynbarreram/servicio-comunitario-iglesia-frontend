@@ -20,7 +20,12 @@ import { Subject } from "rxjs";
 import { CamporeeServices } from "services/Camporee";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
-import { routeValidForUser, ValidateImage, ValidateString } from "lib/helper";
+import {
+  formatDateComplete,
+  routeValidForUser,
+  ValidateImage,
+  ValidateString,
+} from "lib/helper";
 import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import Link from "next/link";
@@ -39,6 +44,7 @@ import { RoleEnums } from "consts/rolesEnum";
 import PreviewImage from "components/common/preview-image";
 import Back from "components/common/back";
 import { Tabs } from "antd";
+import moment from "moment";
 
 const { TabPane } = Tabs;
 
@@ -402,7 +408,9 @@ const EventPrecamporeeDetail = () => {
                                       "ml-3 font-normal mb-2 block f-18"
                                     )}
                                   >
-                                    {informe?.fecha_enviado}
+                                    {moment(informe?.fecha_enviado).format(
+                                      formatDateComplete
+                                    )}
                                   </Typography>
                                 </div>
                                 <div className="item col-span-1">

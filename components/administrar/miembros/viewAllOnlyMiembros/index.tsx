@@ -1,7 +1,12 @@
 import * as React from "react";
 import { Typography } from "components/common/typography";
 import clsx from "clsx";
-import { formatDates, ValidateImage, ValidateString } from "lib/helper";
+import {
+  formatDateComplete,
+  formatDates,
+  ValidateImage,
+  ValidateString,
+} from "lib/helper";
 import { IconWithText } from "components/icon-with-text";
 import { Table } from "antd";
 import moment from "moment";
@@ -22,14 +27,17 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
       title: "Fecha inicio",
       dataIndex: "",
       key: "",
-      render: (value: any) => moment(value.fecha_inicio).format(formatDates),
+      render: (value: any) =>
+        moment(value.fecha_inicio).format(formatDateComplete),
     },
     {
       title: "Fecha fin",
       dataIndex: "",
       key: "",
       render: (value: any) =>
-        value?.fecha_fin ? moment(value.fecha_fin).format(formatDates) : "N/A",
+        value?.fecha_fin
+          ? moment(value.fecha_fin).format(formatDateComplete)
+          : "N/A",
     },
   ];
 
@@ -109,6 +117,132 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
             ) : (
               <span className="font-bold text-alert-error">Inactivo</span>
             )}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Alergias
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.alergias)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Dirección
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.direccion)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Enfermedades
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.enfermedades)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Estado civil
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.estado_civil)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Fecha nacimiento
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {moment(data?.fecha_nacimiento).format(formatDateComplete)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Fecha bautizo
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {moment(data?.fecha_bautizo).format(formatDateComplete)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Profesión
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.profesion)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Telefono
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.telefono)}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Tipo de sangre
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.tipo_sangre)}
           </Typography>
         </div>
       </div>

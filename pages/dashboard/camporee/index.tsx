@@ -31,13 +31,14 @@ import ViewClub from "components/administrar/clubes/view";
 import EditClub from "components/administrar/clubes/edit";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
-import { routeValidForUser } from "lib/helper";
+import { formatDateComplete, routeValidForUser } from "lib/helper";
 import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import Link from "next/link";
 import CreateCamporee from "components/camporee/create-camporee";
 import { Button } from "components/common/button";
 import { Tooltip } from "antd";
+import moment from "moment";
 
 // import Image from "next/image";
 type Params = {
@@ -139,7 +140,9 @@ const CamporeeList = () => {
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
-        <span className="text-gray-500 capitalize">{value?.fecha_inicio}</span>
+        <span className="text-gray-500 capitalize">
+          {moment(value?.fecha_inicio).format(formatDateComplete)}
+        </span>
       ),
     },
     {
@@ -148,7 +151,10 @@ const CamporeeList = () => {
       thClassName: HeaderClassName,
       tdClassName: DataClassName,
       selector: (value: any) => (
-        <span className="text-gray-500">{value.fecha_fin}</span>
+        <span className="text-gray-500">
+          {" "}
+          {moment(value?.fecha_fin).format(formatDateComplete)}
+        </span>
       ),
     },
     {
