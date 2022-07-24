@@ -86,7 +86,21 @@ const CreateEventCamporee = ({
     fecha_fin: {
       required: { value: true, message: "This is required" },
     },
-
+    edad_min: {
+      required: { value: true, message: "This is required" },
+      min: { value: 4, message: "Debe ser mayor a 3" },
+      max: { value: 9, message: "Debe ser menor o igual 9" },
+    },
+    edad_max: {
+      required: { value: true, message: "This is required" },
+      min: { value: 4, message: "Debe ser mayor a 3" },
+      max: { value: 9, message: "Debe ser menor o igual 9" },
+      validate: (value: string) => {
+        if (value < watch("edad_min")) {
+          return `El valor debe mayor o igual a ${watch("edad_min")}`;
+        }
+      },
+    },
     oro: {
       min: { value: 4, message: "Debe ser mayor a 3" },
       required: { value: true, message: "This is required" },
@@ -171,7 +185,7 @@ const CreateEventCamporee = ({
         }
       },
     },
-    participantes_conquistadores_m: {
+    participantes_conquis_aventureros_m: {
       required: { value: true, message: "This is required" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
@@ -179,7 +193,7 @@ const CreateEventCamporee = ({
       required: { value: true, message: "This is required" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
-    participantes_conquistadores_f: {
+    participantes_conquis_aventureros_f: {
       required: { value: true, message: "This is required" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
@@ -209,31 +223,31 @@ const CreateEventCamporee = ({
       case TypesSelectEnums.CONQUISTADORES:
         if (watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
           };
         } else if (watch("sexo")?.value === TypesSelectSexoEnums.MUJERES) {
           return {
-            participantes_conquistadores_f: parseInt(
-              form?.participantes_conquistadores_f
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
             ),
           };
         } else if (watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
-            participantes_conquistadores_f: parseInt(
-              form?.participantes_conquistadores_f
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
             ),
           };
         } else if (
           watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
         ) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
           };
         }
@@ -274,8 +288,8 @@ const CreateEventCamporee = ({
       case TypesSelectEnums.INTEGRADO:
         if (watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
             participantes_guias_mayores_m: parseInt(
               form?.participantes_guias_mayores_m
@@ -283,8 +297,8 @@ const CreateEventCamporee = ({
           };
         } else if (watch("sexo")?.value === TypesSelectSexoEnums.MUJERES) {
           return {
-            participantes_conquistadores_f: parseInt(
-              form?.participantes_conquistadores_f
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
             ),
             participantes_guias_mayores_f: parseInt(
               form?.participantes_guias_mayores_f
@@ -292,14 +306,14 @@ const CreateEventCamporee = ({
           };
         } else if (watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
             participantes_guias_mayores_m: parseInt(
               form?.participantes_guias_mayores_m
             ),
-            participantes_conquistadores_f: parseInt(
-              form?.participantes_conquistadores_f
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
             ),
             participantes_guias_mayores_f: parseInt(
               form?.participantes_guias_mayores_f
@@ -309,14 +323,55 @@ const CreateEventCamporee = ({
           watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
         ) {
           return {
-            participantes_conquistadores_m: parseInt(
-              form?.participantes_conquistadores_m
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
             ),
             participantes_guias_mayores_m: parseInt(
               form?.participantes_guias_mayores_m
             ),
           };
         }
+        break;
+      case TypesSelectEnums.AVENTUREROS:
+        if (watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES) {
+          return {
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
+            ),
+            edad_min: form?.edad_min,
+            edad_max: form?.edad_max,
+          };
+        } else if (watch("sexo")?.value === TypesSelectSexoEnums.MUJERES) {
+          return {
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
+            ),
+            edad_min: form?.edad_min,
+            edad_max: form?.edad_max,
+          };
+        } else if (watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) {
+          return {
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
+            ),
+            participantes_conquis_aventureros_f: parseInt(
+              form?.participantes_conquis_aventureros_f
+            ),
+            edad_min: form?.edad_min,
+            edad_max: form?.edad_max,
+          };
+        } else if (
+          watch("sexo")?.value === TypesSelectSexoEnums.SIN_DISTINCION
+        ) {
+          return {
+            participantes_conquis_aventureros_m: parseInt(
+              form?.participantes_conquis_aventureros_m
+            ),
+            edad_min: form?.edad_min,
+            edad_max: form?.edad_max,
+          };
+        }
+
         break;
     }
   };
@@ -414,7 +469,7 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("category", data, { shouldValidate: true })
                 }
-                // myDefaultValue={watch("category")}
+                myDefaultValue={watch("category")}
               />
               <Input
                 name="puntuacion_maxima"
@@ -443,7 +498,7 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("tipoEvento", data, { shouldValidate: true })
                 }
-                // myDefaultValue={watch("tipoEvento")}
+                myDefaultValue={watch("tipoEvento")}
               />
               {watch("tipoEvento")?.value ===
                 TypesSelectTypoEventoCamporeeEnums.CLUBES && (
@@ -459,7 +514,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("eliminatoria", data, { shouldValidate: true })
                   }
-                  // myDefaultValue={watch("eliminatoria")}
+                  myDefaultValue={watch("eliminatoria")}
                 />
               )}
             </div>
@@ -481,7 +536,7 @@ const CreateEventCamporee = ({
                       shouldValidate: true,
                     })
                   }
-                  // myDefaultValue={watch("participacion_total")}
+                  myDefaultValue={watch("participacion_total")}
                 />
               )}
               {(watch("participacion_total")?.value ===
@@ -500,7 +555,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
-                  // myDefaultValue={watch("sexo")}
+                  myDefaultValue={watch("sexo")}
                 />
               )}
             </div>
@@ -563,7 +618,7 @@ const CreateEventCamporee = ({
                         TypesSelectSexoEnums.SIN_DISTINCION) && (
                       <div className="col-span-1">
                         <Input
-                          name="participantes_conquistadores_m"
+                          name="participantes_conquis_aventureros_m"
                           type="number"
                           title={
                             watch("sexo")?.value ===
@@ -572,10 +627,12 @@ const CreateEventCamporee = ({
                               : "Hombres conquistadores"
                           }
                           labelVisible
-                          isFill={!!watch("participantes_conquistadores_m")}
+                          isFill={
+                            !!watch("participantes_conquis_aventureros_m")
+                          }
                           register={register}
-                          rules={rules.participantes_conquistadores_m}
-                          error={errors.participantes_conquistadores_m}
+                          rules={rules.participantes_conquis_aventureros_m}
+                          error={errors.participantes_conquis_aventureros_m}
                           className="mb-3 md:mb-5"
                           otherStyles="pt-3 pb-3 rounded-full text-sm"
                         />
@@ -586,19 +643,101 @@ const CreateEventCamporee = ({
                       watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
                       <div className="col-span-1">
                         <Input
-                          name="participantes_conquistadores_f"
+                          name="participantes_conquis_aventureros_f"
                           type="number"
                           title="Mujeres conquistadores"
                           labelVisible
-                          isFill={!!watch("participantes_conquistadores_f")}
+                          isFill={
+                            !!watch("participantes_conquis_aventureros_f")
+                          }
                           register={register}
-                          rules={rules.participantes_conquistadores_f}
-                          error={errors.participantes_conquistadores_f}
+                          rules={rules.participantes_conquis_aventureros_f}
+                          error={errors.participantes_conquis_aventureros_f}
                           className="mb-3 md:mb-5"
                           otherStyles="pt-3 pb-3 rounded-full text-sm"
                         />
                       </div>
                     )}
+                  </>
+                )}
+
+                {tipoCamporee === TypesSelectEnums.AVENTUREROS && (
+                  <>
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                      watch("sexo")?.value ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_conquis_aventureros_m"
+                          type="number"
+                          title={
+                            watch("sexo")?.value ===
+                            TypesSelectSexoEnums.SIN_DISTINCION
+                              ? "Nro aventureros"
+                              : "Niños aventureros"
+                          }
+                          labelVisible
+                          isFill={
+                            !!watch("participantes_conquis_aventureros_m")
+                          }
+                          register={register}
+                          rules={rules.participantes_conquis_aventureros_m}
+                          error={errors.participantes_conquis_aventureros_m}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+
+                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
+                      <div className="col-span-1">
+                        <Input
+                          name="participantes_conquis_aventureros_f"
+                          type="number"
+                          title="Niñas aventureras"
+                          labelVisible
+                          isFill={
+                            !!watch("participantes_conquis_aventureros_f")
+                          }
+                          register={register}
+                          rules={rules.participantes_conquis_aventureros_f}
+                          error={errors.participantes_conquis_aventureros_f}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    )}
+
+                    <div className="col-span-1">
+                      <Input
+                        name="edad_min"
+                        type="number"
+                        title="Edad mínima"
+                        labelVisible
+                        isFill={!!watch("edad_min")}
+                        register={register}
+                        rules={rules.edad_min}
+                        error={errors.edad_min}
+                        className="mb-3 md:mb-5"
+                        otherStyles="pt-3 pb-3 rounded-full text-sm"
+                      />
+                    </div>
+                    <div className="col-span-1">
+                      <Input
+                        name="edad_max"
+                        type="number"
+                        title="Edad máxima"
+                        labelVisible
+                        isFill={!!watch("edad_max")}
+                        register={register}
+                        rules={rules.edad_max}
+                        error={errors.edad_max}
+                        className="mb-3 md:mb-5"
+                        otherStyles="pt-3 pb-3 rounded-full text-sm"
+                      />
+                    </div>
                   </>
                 )}
               </div>
