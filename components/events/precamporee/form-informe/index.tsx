@@ -14,7 +14,7 @@ import { CamporeeServices } from "services/Camporee";
 import { useToasts } from "react-toast-notifications";
 import { formatDates, GenerateErrorToast } from "lib/helper";
 import { Spinner } from "components/common/spinner/spinner";
-import { isEmpty, isNil } from "lodash";
+import { isEmpty, isNil, size } from "lodash";
 import { Icon } from "components/icon";
 
 type InformeFormProps = {
@@ -75,7 +75,10 @@ export const InformeForm: React.FC<InformeFormProps> = ({
     files: {
       required: { value: true, message: "This is required" },
       validate: (value: any) => {
+        // console.log("en la validacion:", value);
+        // console.log("en la validacion lenght:", value?.length);
         if (value.length < 3) {
+          // console.log("NO APROBADO");
           return "Debe subir 3 archivos";
         }
       },
@@ -120,16 +123,19 @@ export const InformeForm: React.FC<InformeFormProps> = ({
           originFileObj: dataBase64toFile(informe.imagen1, "imagen1"),
           preview: informe.imagen1,
           name: "imagen1",
+          status: "done",
         },
         {
           originFileObj: dataBase64toFile(informe.imagen2, "imagen2"),
           preview: informe.imagen2,
           name: "imagen2",
+          status: "done",
         },
         {
           originFileObj: dataBase64toFile(informe.imagen3, "imagen3"),
           preview: informe.imagen3,
           name: "imagen3",
+          status: "done",
         },
       ];
       // const images: any = [];
@@ -162,7 +168,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       participantes: parseInt(data?.participantes),
       id_camporee_precamporee: parseInt(idPrecamporee),
     };
-
     setIsLoading(true);
     CamporeeServices.createInformePrecamporee(finalData)
       .then((response) => {

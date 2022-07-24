@@ -8,6 +8,7 @@ import { Controller } from "react-hook-form";
 import { Icon } from "components/icon";
 import { Icons } from "consts";
 import { Typography } from "../typography";
+import { isEmpty } from "lodash";
 
 const { Dragger } = Upload;
 
@@ -42,6 +43,7 @@ export interface AlertProps {
   name: string;
   setValueRHF: any;
   setErrorRHF: any;
+  defaultValues?: any;
   fileList: any;
   setFileList: any;
   isEdit?: boolean;
@@ -64,6 +66,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
   setErrorRHF,
   register,
   isEdit,
+  defaultValues,
   rules,
   control,
   fileList,
@@ -71,6 +74,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
 }) => {
   // const [fileList, setFileList] = React.useState<UploadFile[]>([]);
   const [fileListBase64, setFileListBase64] = React.useState<any>();
+  const [loadingFiles, setLoadingFiles] = React.useState(false);
   const [previewVisible, setPreviewVisible] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
   const [previewTitle, setPreviewTitle] = React.useState("");
@@ -82,25 +86,60 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = (error) => reject(error);
     });
+  const beforeUpload = (file: any) => {
+    if (fileList.length >= 3) {
+      message.error("Solo puede subir 3 archivos");
+      return Upload.LIST_IGNORE;
+    }
+
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+      return Upload.LIST_IGNORE;
+    }
+
+    const isLt2M = file.size / 1024 / 1024 <= 2;
+
+    if (!isLt2M) {
+      message.error("La imagen debe ser menor o igual a 2 MB!");
+      return Upload.LIST_IGNORE;
+    }
+
+    return isJpgOrPng && isLt2M;
+  };
 
   const handleChange: UploadProps["onChange"] = ({
     fileList: newFileList,
     ...rest
   }) => {
-    console.log("los file", newFileList);
-    console.log("el resto", rest);
+    console.log("status", rest);
+    console.log("ELLLLL", newFileList.slice());
+
+    // if (rest.file.status === "uploading") {
+    //   setFileList(newFileList);
+    //   //  setLoading(true);
+    //   return;
+    // }
+
+    // console.log("el resto", rest);
+    // if (rest.file.status === "done") {
+    setLoadingFiles(true);
+    // console.log("los file", newFileList);
+    // console.log("los file legth", newFileList.length);
     const aux: any = [];
     const filesNumber = newFileList.length;
     // console.log("la cantidad:", filesNumber);
-    newFileList.map(async (file, index) => {
+    newFileList.map(async (file: any, index) => {
       // console.log("diooooos", file);
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj as RcFile);
-      }
 
-      aux.push(file.url || (file.preview as string));
-      if (index === newFileList.length - 1) {
-        setFileListBase64([...aux]);
+      if (file.status === "done") {
+        if (!file.url && !file.preview) {
+          file.preview = await getBase64(file.originFileObj as RcFile);
+          // file.preview = URL.createObjectURL(file.originFileObj);
+        }
+
+        aux.push(file.url || (file.preview as string));
 
         if (filesNumber < maxFiles) {
           // console.log("debe ser mayor a", maxFiles);
@@ -110,7 +149,17 @@ export const DragAndDrop: React.FC<AlertProps> = ({
           // });
           setValueRHF(name, aux);
         } else {
-          setValueRHF(name, aux, { shouldValidate: true });
+          setFileListBase64(aux.slice());
+          setValueRHF(name, aux, {
+            shouldValidate: true,
+            shouldDirty: true,
+          });
+        }
+      }
+
+      if (file.status === "done") {
+        if (index === newFileList.length - 1) {
+          setLoadingFiles(false);
         }
       }
     });
@@ -124,12 +173,12 @@ export const DragAndDrop: React.FC<AlertProps> = ({
 
     // console.log("Elaux:", aux);
     setFileList(newFileList);
-    // setFileList(newFileList);
+    // }
   };
 
-  // React.useEffect(() => {
-  //   console.log("en base 64:", fileListBase64);
-  // }, [fileListBase64]);
+  React.useEffect(() => {
+    console.log("en base 64:", fileListBase64);
+  }, [fileListBase64]);
 
   // React.useEffect(() => {
   //   console.log("los files:", fileList);
@@ -165,7 +214,9 @@ export const DragAndDrop: React.FC<AlertProps> = ({
             fileList={fileList}
             maxCount={maxFiles}
             disabled={disabled}
+            showUploadList={!loadingFiles}
             accept=".jpg,.jpeg,.png"
+            beforeUpload={beforeUpload}
             // showUploadList={isEdit ? false : true}
             // disabled={fileList.length >= 3}
 
