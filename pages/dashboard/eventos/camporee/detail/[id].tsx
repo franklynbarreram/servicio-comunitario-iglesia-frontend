@@ -732,6 +732,7 @@ const EventCamporeeDetail = () => {
                                       <Alert
                                         color="danger"
                                         message="Observación pendiente"
+                                        className="mb-5"
                                       />
                                     )}
                                     <div className="container-form shadow-md pb-10 px-5 w-fullS">
