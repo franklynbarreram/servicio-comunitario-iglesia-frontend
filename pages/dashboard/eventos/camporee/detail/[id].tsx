@@ -672,7 +672,7 @@ const EventCamporeeDetail = () => {
                                                 PermissionsEnums.LOAD_SCORE
                                               }
                                             >
-                                              {
+                                              {actionIsPermitted() && (
                                                 <Input
                                                   name={`puntuacion[${index}]`}
                                                   title="Puntuación"
@@ -682,7 +682,8 @@ const EventCamporeeDetail = () => {
                                                   disabled={
                                                     !values?.calificable ||
                                                     (!itemClub.clasificado &&
-                                                      actionIsPermitted())
+                                                      dataUser.scope_actual ==
+                                                        RoleEnums.LIDER_JUVENIL)
                                                   }
                                                   type="number"
                                                   // labelVisible
@@ -699,7 +700,7 @@ const EventCamporeeDetail = () => {
                                                   className="placeholder:font-bold placeholder:text-[black] text-[black] font-bold disabled:text-[black]"
                                                   otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#fff8f8]"
                                                 />
-                                              }
+                                              )}
                                             </Restricted>
                                             <Restricted
                                               module={
@@ -709,7 +710,7 @@ const EventCamporeeDetail = () => {
                                                 PermissionsEnums.CHECK_CLASIFICATION
                                               }
                                             >
-                                              {
+                                              {actionIsPermitted() && (
                                                 <InputCheck
                                                   name={`clasificado[${index}]`}
                                                   title="Clasificado"
@@ -717,8 +718,7 @@ const EventCamporeeDetail = () => {
                                                     itemClub?.clasificado
                                                   }
                                                   disabled={
-                                                    !values?.calificable ||
-                                                    actionIsPermitted()
+                                                    !values?.calificable
                                                   }
                                                   labelVisible
                                                   isFill={
@@ -733,7 +733,7 @@ const EventCamporeeDetail = () => {
                                                 >
                                                   Clasificado
                                                 </InputCheck>
-                                              }
+                                              )}
                                             </Restricted>
                                           </div>
                                         )}
