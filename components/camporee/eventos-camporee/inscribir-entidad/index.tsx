@@ -28,18 +28,29 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
     selectValueConquistadoresHombres,
     setSelectValueConquistadoresHombres,
   ] = React.useState<{ value: Number; label: string } | any>();
+
   const [selectValueGuiasMayoresHombres, setSelectValueGuiasMayoresHombres] =
     React.useState<{ value: Number; label: string } | any>();
+
+  const [selectValueAventurerosHombres, setSelectValueAventurerosHombres] =
+    React.useState<{ value: Number; label: string } | any>();
+
   const [
     selectValueConquistadoresMujeres,
     setSelectValueConquistadoresMujeres,
   ] = React.useState<{ value: Number; label: string } | any>();
+
   const [params, setParams] = useQueryParams<Params>({
     distincion_sexo: data?.distincion_sexo,
     tipo: data?.tipo,
   });
+
   const [selectValueGuiasMayoresMujeres, setSelectValueGuiasMayoresMujeres] =
     React.useState<{ value: Number; label: string } | any>();
+
+  const [selectValueAventurerosMujeres, setSelectValueAventurerosMujeres] =
+    React.useState<{ value: Number; label: string } | any>();
+
   const {
     data: response,
     isLoading: isLoadingFetch,
@@ -85,6 +96,10 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
         data?.datos_inscripcion[0]?.participantes?.filter(
           (item: any) => item.categoria === "conquistador" && item.sexo === "M"
         );
+      const filterAventurerosHombres =
+        data?.datos_inscripcion[0]?.participantes?.filter(
+          (item: any) => item.categoria === "aventurero" && item.sexo === "M"
+        );
       const filterGuiasMayoresHombres =
         data?.datos_inscripcion[0]?.participantes?.filter(
           (item: any) => item.categoria === "guia_mayor" && item.sexo === "M"
@@ -96,6 +111,10 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       const filterGuiasMayoresMujeres =
         data?.datos_inscripcion[0]?.participantes?.filter(
           (item: any) => item.categoria === "guia_mayor" && item.sexo === "F"
+        );
+      const filterAventurerosMujeres =
+        data?.datos_inscripcion[0]?.participantes?.filter(
+          (item: any) => item.categoria === "aventurero" && item.sexo === "M"
         );
 
       setSelectValueConquistadoresHombres(
@@ -116,6 +135,15 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
         })
       );
 
+      setSelectValueAventurerosHombres(
+        filterAventurerosHombres?.map((item: any) => {
+          return {
+            value: item.cedula,
+            label: `${item.nombres} ${item.apellidos}`,
+          };
+        })
+      );
+
       setSelectValueConquistadoresMujeres(
         filterConquistadoresMujeres?.map((item: any) => {
           return {
@@ -126,6 +154,15 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       );
       setSelectValueGuiasMayoresMujeres(
         filterGuiasMayoresMujeres?.map((item: any) => {
+          return {
+            value: item.cedula,
+            label: `${item.nombres} ${item.apellidos}`,
+          };
+        })
+      );
+
+      setSelectValueAventurerosMujeres(
+        filterAventurerosMujeres?.map((item: any) => {
           return {
             value: item.cedula,
             label: `${item.nombres} ${item.apellidos}`,
@@ -164,7 +201,9 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       selectValueConquistadoresHombres?.slice(),
       selectValueConquistadoresMujeres?.slice(),
       selectValueGuiasMayoresHombres?.slice(),
-      selectValueGuiasMayoresMujeres?.slice()
+      selectValueGuiasMayoresMujeres?.slice(),
+      selectValueAventurerosHombres?.slice(),
+      selectValueAventurerosMujeres?.slice()
     );
 
     const FilterValuesWithoutUndefined = mergeData.filter(
@@ -212,6 +251,11 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
     setSelectValueGuiasMayoresHombres(selected);
   };
 
+  const handleChangeSelectAventurerosHombres = (selected: any) => {
+    console.log("selected", selected);
+    setSelectValueAventurerosHombres(selected);
+  };
+
   const handleChangeSelectConquistadoresMujeres = (selected: any) => {
     console.log("selected", selected);
     setSelectValueConquistadoresMujeres(selected);
@@ -220,6 +264,11 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
   const handleChangeSelectGuiasMayoresMujeres = (selected: any) => {
     console.log("selected", selected);
     setSelectValueGuiasMayoresMujeres(selected);
+  };
+
+  const handleChangeSelectAventurerosMujeres = (selected: any) => {
+    console.log("selected", selected);
+    setSelectValueAventurerosMujeres(selected);
   };
 
   React.useEffect(() => {
@@ -283,6 +332,37 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.guia_mayor?.M?.filter((item: any) =>
+          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+        );
+      }
+      const options = filter?.map((item: any) => {
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
+      });
+      return callback(options);
+    }
+  };
+
+  const promiseOptionsPersonsAventurerosHombres = (
+    inputValue: any,
+    callback: any
+  ) => {
+    if (!inputValue) {
+      const options = dataPersons?.aventurero?.M?.map((item: any) => {
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
+      });
+      return callback(options);
+    } else {
+      let filter = dataPersons?.aventurero?.M?.filter((item: any) =>
+        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      if (isEmpty(filter) || isNil(filter)) {
+        filter = dataPersons?.aventurero?.M?.filter((item: any) =>
           item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
         );
       }
@@ -365,6 +445,38 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       return callback(options);
     }
   };
+
+  const promiseOptionsPersonsAventurerosMujeres = (
+    inputValue: any,
+    callback: any
+  ) => {
+    if (!inputValue) {
+      const options = dataPersons?.aventurero?.F?.map((item: any) => {
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
+      });
+      return callback(options);
+    } else {
+      let filter = dataPersons?.aventurero?.F?.filter((item: any) =>
+        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      if (isEmpty(filter) || isNil(filter)) {
+        filter = dataPersons?.aventurero?.F?.filter((item: any) =>
+          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+        );
+      }
+      const options = filter?.map((item: any) => {
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
+      });
+      return callback(options);
+    }
+  };
+
   const lengthParticipans = (data: any) => {
     return data ? data.length : 0;
   };
@@ -392,18 +504,18 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
             {(isThisSexo(TypesSelectSexoEnums.HOMBRES) ||
               isThisSexo(TypesSelectSexoEnums.AMBOS) ||
               isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)) &&
-            data.participantes_conquistadores_m -
+            data.participantes_conquis_aventureros_m -
               lengthParticipans(selectValueConquistadoresHombres) >
               0 ? (
               <span className="text-base ml-5">
                 {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
                   ? "- Conquistadores"
                   : "- Hombres conquistadores: "}
-                {data.participantes_conquistadores_m -
+                {data.participantes_conquis_aventureros_m -
                   lengthParticipans(selectValueConquistadoresHombres)}
               </span>
             ) : (
-              data.participantes_conquistadores_m -
+              data.participantes_conquis_aventureros_m -
                 lengthParticipans(selectValueConquistadoresHombres) <
                 0 && (
                 <span className="text-base ml-5 text-alert-error">
@@ -411,7 +523,7 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
                     ? "- Conquistadores de más"
                     : "- Hombres conquistadores de más: "}
                   {Math.abs(
-                    data.participantes_conquistadores_m -
+                    data.participantes_conquis_aventureros_m -
                       lengthParticipans(selectValueConquistadoresHombres)
                   )}
                 </span>
@@ -419,27 +531,139 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
             )}
             {(isThisSexo(TypesSelectSexoEnums.MUJERES) ||
               isThisSexo(TypesSelectSexoEnums.AMBOS)) &&
-            data.participantes_conquistadores_f -
+            data.participantes_conquis_aventureros_f -
               lengthParticipans(selectValueConquistadoresMujeres) >
               0 ? (
               <span className="text-base ml-5">
                 - Mujeres conquistadores:{" "}
-                {data.participantes_conquistadores_f -
+                {data.participantes_conquis_aventureros_f -
                   lengthParticipans(selectValueConquistadoresMujeres)}
               </span>
             ) : (
-              data.participantes_conquistadores_f -
+              data.participantes_conquis_aventureros_f -
                 lengthParticipans(selectValueConquistadoresMujeres) <
                 0 && (
                 <span className="text-base ml-5 text-alert-error">
-                  - Mujeres conquistadores:{" "}
+                  - Mujeres conquistadores de más:{" "}
                   {Math.abs(
-                    data.participantes_conquistadores_f -
+                    data.participantes_conquis_aventureros_f -
                       lengthParticipans(selectValueConquistadoresMujeres)
                   )}
                 </span>
               )
             )}
+          </>
+        )}
+        {(data?.tipo === TypesSelectEnums.GUIAS_MAYORES ||
+          data?.tipo === TypesSelectEnums.INTEGRADO) && (
+          <>
+            {(isThisSexo(TypesSelectSexoEnums.HOMBRES) ||
+              isThisSexo(TypesSelectSexoEnums.AMBOS) ||
+              isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)) &&
+            data.participantes_guias_mayores_m -
+              lengthParticipans(selectValueGuiasMayoresHombres) >
+              0 ? (
+              <span className="text-base ml-5">
+                {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
+                  ? "- Guias mayores"
+                  : "- Hombres guias mayores: "}
+                {data.participantes_guias_mayores_m -
+                  lengthParticipans(selectValueGuiasMayoresHombres)}
+              </span>
+            ) : (
+              data.participantes_guias_mayores_m -
+                lengthParticipans(selectValueGuiasMayoresHombres) <
+                0 && (
+                <span className="text-base ml-5 text-alert-error">
+                  {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
+                    ? "- Guias mayores de más"
+                    : "- Hombres guias mayores de más: "}
+                  {Math.abs(
+                    data.participantes_guias_mayores_m -
+                      lengthParticipans(selectValueGuiasMayoresHombres)
+                  )}
+                </span>
+              )
+            )}
+            {(isThisSexo(TypesSelectSexoEnums.MUJERES) ||
+              isThisSexo(TypesSelectSexoEnums.AMBOS)) &&
+            data.participantes_guias_mayores_f -
+              lengthParticipans(selectValueGuiasMayoresMujeres) >
+              0 ? (
+              <span className="text-base ml-5">
+                - Mujeres guias mayores:{" "}
+                {data.participantes_guias_mayores_f -
+                  lengthParticipans(selectValueGuiasMayoresMujeres)}
+              </span>
+            ) : (
+              data.participantes_guias_mayores_f -
+                lengthParticipans(selectValueGuiasMayoresMujeres) <
+                0 && (
+                <span className="text-base ml-5 text-alert-error">
+                  - Mujeres guias mayores:{" "}
+                  {Math.abs(
+                    data.participantes_guias_mayores_f -
+                      lengthParticipans(selectValueGuiasMayoresMujeres)
+                  )}
+                </span>
+              )
+            )}
+          </>
+        )}
+        {data?.tipo === TypesSelectEnums.AVENTUREROS && (
+          <>
+            {" "}
+            {(isThisSexo(TypesSelectSexoEnums.HOMBRES) ||
+              isThisSexo(TypesSelectSexoEnums.AMBOS) ||
+              isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)) &&
+            data.participantes_conquis_aventureros_m -
+              lengthParticipans(selectValueAventurerosHombres) >
+              0 ? (
+              <span className="text-base ml-5">
+                {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
+                  ? "- Aventureros"
+                  : "- Niños aventureros: "}
+                {data.participantes_conquis_aventureros_m -
+                  lengthParticipans(selectValueAventurerosHombres)}
+              </span>
+            ) : (
+              data.participantes_conquis_aventureros_m -
+                lengthParticipans(selectValueAventurerosHombres) <
+                0 && (
+                <span className="text-base ml-5 text-alert-error">
+                  {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
+                    ? "- Aventureros de más"
+                    : "- Niños aventureros de más: "}
+                  {Math.abs(
+                    data.participantes_conquis_aventureros_m -
+                      lengthParticipans(selectValueAventurerosHombres)
+                  )}
+                </span>
+              )
+            )}{" "}
+            {(isThisSexo(TypesSelectSexoEnums.MUJERES) ||
+              isThisSexo(TypesSelectSexoEnums.AMBOS)) &&
+            data.participantes_conquis_aventureros_f -
+              lengthParticipans(selectValueAventurerosMujeres) >
+              0 ? (
+              <span className="text-base ml-5">
+                - Niñas aventureras:{" "}
+                {data.participantes_conquis_aventureros_f -
+                  lengthParticipans(selectValueAventurerosMujeres)}
+              </span>
+            ) : (
+              data.participantes_conquis_aventureros_f -
+                lengthParticipans(selectValueAventurerosMujeres) <
+                0 && (
+                <span className="text-base ml-5 text-alert-error">
+                  - Niñas aventureras de más:{" "}
+                  {Math.abs(
+                    data.participantes_conquis_aventureros_f -
+                      lengthParticipans(selectValueAventurerosMujeres)
+                  )}
+                </span>
+              )
+            )}{" "}
           </>
         )}
       </div>
@@ -476,7 +700,7 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
                           // isOptionDisabled={() =>
                           //   selectValueConquistadoresHombres &&
                           //   selectValueConquistadoresHombres?.length >=
-                          //     data?.participantes_conquistadores_m
+                          //     data?.participantes_conquis_aventureros_m
                           // }
                         />
                       </>
@@ -504,7 +728,7 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
                           // isOptionDisabled={() =>
                           //   selectValueConquistadoresMujeres &&
                           //   selectValueConquistadoresMujeres?.length >=
-                          //     data?.participantes_conquistadores_f
+                          //     data?.participantes_conquis_aventureros_f
                           // }
                         />
                       </>
@@ -538,7 +762,7 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
                           // isOptionDisabled={() =>
                           //   selectValueConquistadoresHombres &&
                           //   selectValueConquistadoresHombres?.length >=
-                          //     data?.participantes_conquistadores_m
+                          //     data?.participantes_conquis_aventureros_m
                           // }
                         />
                       </>
@@ -564,12 +788,54 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
                           // isOptionDisabled={() =>
                           //   selectValueConquistadoresMujeres &&
                           //   selectValueConquistadoresMujeres?.length >=
-                          //     data?.participantes_conquistadores_f
+                          //     data?.participantes_conquis_aventureros_f
                           // }
                         />
                       </>
                     )}
                   </div>
+                </>
+              )}
+
+              {data?.tipo === TypesSelectEnums.AVENTUREROS && (
+                <>
+                  {" "}
+                  <div className="mb-10 mt-5">
+                    {" "}
+                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                      {" "}
+                      {isThisSexo(TypesSelectSexoEnums.SIN_DISTINCION)
+                        ? "Nro aventureros"
+                        : "Niños aventureros"}{" "}
+                    </p>{" "}
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      loadOptions={promiseOptionsPersonsAventurerosHombres}
+                      styles={customStyles}
+                      value={selectValueAventurerosHombres}
+                      className={"text-sm"}
+                      onChange={handleChangeSelectAventurerosHombres}
+                      isMulti
+                    />{" "}
+                  </div>{" "}
+                  <div className="mb-10">
+                    {" "}
+                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                      {" "}
+                      Niñas aventureras{" "}
+                    </p>{" "}
+                    <AsyncSelect
+                      cacheOptions
+                      defaultOptions
+                      loadOptions={promiseOptionsPersonsAventurerosMujeres}
+                      styles={customStyles}
+                      value={selectValueAventurerosMujeres}
+                      className={"text-sm"}
+                      onChange={handleChangeSelectAventurerosMujeres}
+                      isMulti
+                    />{" "}
+                  </div>{" "}
                 </>
               )}
             </div>

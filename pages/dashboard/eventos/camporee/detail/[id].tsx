@@ -518,7 +518,7 @@ const EventCamporeeDetail = () => {
                           type="span"
                           className={clsx("ml-3 font-normal mb-2 block f-18")}
                         >
-                          {values?.participantes_conquistadores_m}
+                          {values?.participantes_conquis_aventureros_m}
                         </Typography>
                       </div>
                     )}
@@ -537,7 +537,7 @@ const EventCamporeeDetail = () => {
                           type="span"
                           className={clsx("ml-3 font-normal mb-2 block f-18")}
                         >
-                          {values?.participantes_conquistadores_f}
+                          {values?.participantes_conquis_aventureros_f}
                         </Typography>
                       </div>
                     )}
@@ -585,6 +585,52 @@ const EventCamporeeDetail = () => {
                           className={clsx("ml-3 font-normal mb-2 block f-18")}
                         >
                           {values?.participantes_guias_mayores_f}
+                        </Typography>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {values?.tipo === TypesSelectEnums.AVENTUREROS && (
+                  <>
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.HOMBRES ||
+                      values?.distincion_sexo === TypesSelectSexoEnums.AMBOS ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.SIN_DISTINCION) && (
+                      <div className="item col-span-1">
+                        <Typography
+                          type="label"
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
+                        >
+                          Nro. Aventureros{" "}
+                          {values?.distincion_sexo !==
+                            TypesSelectSexoEnums.SIN_DISTINCION && "Niños"}
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_conquis_aventureros_m}
+                        </Typography>
+                      </div>
+                    )}
+                    {(values?.distincion_sexo ===
+                      TypesSelectSexoEnums.MUJERES ||
+                      values?.distincion_sexo ===
+                        TypesSelectSexoEnums.AMBOS) && (
+                      <div className="item col-span-1">
+                        <Typography
+                          type="label"
+                          className={clsx("ml-3 font-bold mb-2 block f-18")}
+                        >
+                          Nro. Aventureras Niñas
+                        </Typography>
+                        <Typography
+                          type="span"
+                          className={clsx("ml-3 font-normal mb-2 block f-18")}
+                        >
+                          {values?.participantes_conquis_aventureros_f}
                         </Typography>
                       </div>
                     )}
