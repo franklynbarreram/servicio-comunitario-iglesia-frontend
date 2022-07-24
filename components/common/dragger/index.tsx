@@ -124,7 +124,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
 
     // console.log("el resto", rest);
     // if (rest.file.status === "done") {
-    setLoadingFiles(true);
+    // setLoadingFiles(true);
     // console.log("los file", newFileList);
     // console.log("los file legth", newFileList.length);
     const aux: any = [];
@@ -159,7 +159,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
 
       if (file.status === "done") {
         if (index === newFileList.length - 1) {
-          setLoadingFiles(false);
+          // setLoadingFiles(false);
         }
       }
     });
