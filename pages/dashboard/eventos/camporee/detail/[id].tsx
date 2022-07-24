@@ -659,28 +659,33 @@ const EventCamporeeDetail = () => {
                                                 PermissionsEnums.LOAD_SCORE
                                               }
                                             >
-                                              <Input
-                                                name={`puntuacion[${index}]`}
-                                                title="Puntuación"
-                                                defaultValue={getPuntuacion(
-                                                  itemClub
+                                              {!values?.inscripcion_federacion &&
+                                                values?.eliminatoria && (
+                                                  <Input
+                                                    name={`puntuacion[${index}]`}
+                                                    title="Puntuación"
+                                                    defaultValue={getPuntuacion(
+                                                      itemClub
+                                                    )}
+                                                    disabled={
+                                                      !values?.calificable
+                                                    }
+                                                    type="number"
+                                                    // labelVisible
+                                                    isFill={
+                                                      !!watch(
+                                                        `puntuacion[${index}]`
+                                                      )
+                                                    }
+                                                    register={register}
+                                                    rules={rules.puntuacion}
+                                                    error={errors.puntuacion}
+                                                    isArray
+                                                    arrayIndex={index}
+                                                    className="placeholder:font-bold placeholder:text-[black] text-[black] font-bold disabled:text-[black]"
+                                                    otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#fff8f8]"
+                                                  />
                                                 )}
-                                                disabled={!values?.calificable}
-                                                type="number"
-                                                // labelVisible
-                                                isFill={
-                                                  !!watch(
-                                                    `puntuacion[${index}]`
-                                                  )
-                                                }
-                                                register={register}
-                                                rules={rules.puntuacion}
-                                                error={errors.puntuacion}
-                                                isArray
-                                                arrayIndex={index}
-                                                className="placeholder:font-bold placeholder:text-[black] text-[black] font-bold disabled:text-[black]"
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#fff8f8]"
-                                              />
                                             </Restricted>
                                             <Restricted
                                               module={
@@ -690,26 +695,31 @@ const EventCamporeeDetail = () => {
                                                 PermissionsEnums.CHECK_CLASIFICATION
                                               }
                                             >
-                                              <InputCheck
-                                                name={`clasificado[${index}]`}
-                                                title="Clasificado"
-                                                defaultChecked={
-                                                  itemClub?.clasificado
-                                                }
-                                                disabled={!values?.calificable}
-                                                labelVisible
-                                                isFill={
-                                                  !!watch(
-                                                    `clasificado[${index}]`
-                                                  )
-                                                }
-                                                register={register}
-                                                rules={rules.clasificado}
-                                                error={errors.clasificado}
-                                                otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c9e]"
-                                              >
-                                                Clasificado
-                                              </InputCheck>
+                                              {!values?.inscripcion_federacion &&
+                                                values?.eliminatoria && (
+                                                  <InputCheck
+                                                    name={`clasificado[${index}]`}
+                                                    title="Clasificado"
+                                                    defaultChecked={
+                                                      itemClub?.clasificado
+                                                    }
+                                                    disabled={
+                                                      !values?.calificable
+                                                    }
+                                                    labelVisible
+                                                    isFill={
+                                                      !!watch(
+                                                        `clasificado[${index}]`
+                                                      )
+                                                    }
+                                                    register={register}
+                                                    rules={rules.clasificado}
+                                                    error={errors.clasificado}
+                                                    otherStyles="pt-3 pb-3 rounded-full text-sm disabled:bg-[#0c0c0c9e]"
+                                                  >
+                                                    Clasificado
+                                                  </InputCheck>
+                                                )}
                                             </Restricted>
                                           </div>
                                         )}

@@ -29,6 +29,7 @@ import { InputListSearch } from "components/common/form/input-list-search";
 import { RoleEnums } from "consts/rolesEnum";
 import { useUser } from "hooks/user";
 import { Icons } from "consts";
+import { optionsType } from "consts/typesSelects";
 
 const EditClub = ({ data, hide, refetch }: any) => {
   const [selectValueDirector, setSelectValueDirector] = React.useState<{
@@ -269,29 +270,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
     </div>
   );
 
-  const optionsType: OptionType[] = [
-    {
-      id: 1,
-      text: "conquistadores",
-      value: "conquistadores",
-      disabled: false,
-      placeholder: false,
-    },
-    {
-      id: 2,
-      text: "guias mayores",
-      value: "guias mayores",
-      disabled: false,
-      placeholder: false,
-    },
-    {
-      id: 3,
-      text: "integrado",
-      value: "integrado",
-      disabled: false,
-      placeholder: false,
-    },
-  ];
   const profile = useUser();
   const dataUser = get(profile, "data", []);
   return (

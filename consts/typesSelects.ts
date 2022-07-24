@@ -36,6 +36,13 @@ export const optionsType: OptionType[] = [
     disabled: false,
     placeholder: false,
   },
+  {
+    id: 4,
+    text: TypesSelectEnums.AVENTUREROS,
+    value: TypesSelectEnums.AVENTUREROS,
+    disabled: false,
+    placeholder: false,
+  },
 ];
 
 export const optionsTypeCategoryCamporee: OptionType[] = [

@@ -26,6 +26,7 @@ import { OptionType } from "interfaces";
 import { ClubesServices } from "services/Clubes";
 import { Icons } from "consts";
 import { Icon } from "components/icon";
+import { optionsType } from "consts/typesSelects";
 
 const CreateClub = ({ hide, refetch }: any) => {
   const [selectValueDirector, setSelectValueDirector] =
@@ -230,29 +231,6 @@ const CreateClub = ({ hide, refetch }: any) => {
     </div>
   );
 
-  const optionsType: OptionType[] = [
-    {
-      id: 1,
-      text: "conquistadores",
-      value: "conquistadores",
-      disabled: false,
-      placeholder: false,
-    },
-    {
-      id: 2,
-      text: "guias mayores",
-      value: "guias mayores",
-      disabled: false,
-      placeholder: false,
-    },
-    {
-      id: 3,
-      text: "integrado",
-      value: "integrado",
-      disabled: false,
-      placeholder: false,
-    },
-  ];
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Crear Club</h2>
