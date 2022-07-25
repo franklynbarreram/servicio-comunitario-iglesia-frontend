@@ -265,7 +265,7 @@ const EventCamporeeDetail = () => {
 
     if (dataUser.scope_actual === RoleEnums.PRESIDENTE_CONSEJO) {
       FinalData = {
-        puntuacion_eliminatoria: [...puntuacionParseInt],
+        puntuacion: [...puntuacionParseInt],
         id_clubes: [...puntuacionIdEntidad],
         clasificados: [...clasificadoIdEntidad],
         id_camporee_evento: parseInt(id as any),
