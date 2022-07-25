@@ -266,6 +266,22 @@ const Profile = () => {
                   {ValidateString(data?.scope_actual)}
                 </Typography>
               </div>
+              <div className="item col-span-1">
+                <Typography
+                  type="label"
+                  className={clsx("ml-3 font-bold mb-2 block f-18")}
+                >
+                  Categoría
+                </Typography>
+                <Typography
+                  type="span"
+                  className={clsx(
+                    "ml-3 font-normal mb-2 block f-18 capitalize"
+                  )}
+                >
+                  {ValidateString(user?.categoria?.replace("_", " "))}
+                </Typography>
+              </div>
             </div>
 
             <div className="mt-14 mb-24">

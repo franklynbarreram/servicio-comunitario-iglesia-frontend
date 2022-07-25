@@ -440,6 +440,12 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                     setValue("tipo", data, { shouldValidate: true })
                   }
                   // myDefaultValue={watch("tipo")}
+                  myDefaultValue={{
+                    value: data?.tipo,
+                    text: data?.tipo,
+                    disabled: false,
+                    placeholder: false,
+                  }}
                 />
               </div>
               <div className="col-span-1">
@@ -456,6 +462,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                     setTipoCapellan(data);
                   }}
                   // myDefaultValue={watch("tipoCapellan")}
+                  myDefaultValue={findTypeCapellan()}
                 />
               </div>
             </div>

@@ -457,6 +457,7 @@ const CreateEventCamporee = ({
               otherStyles="pt-3 pb-3 rounded-full text-sm"
             />
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
+              {console.log("aaaaaa", watch("category"))}
               <InputListSearch
                 name="category"
                 title="Categoría"
@@ -469,7 +470,15 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("category", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("category")}
+                // myDefaultValue={watch("category")}
+                // myDefaultValue={
+                //   !isNil(watch("category")) && {
+                //     value: watch("category")?.value,
+                //     text: watch("category")?.text,
+                //     disabled: false,
+                //     placeholder: false,
+                //   }
+                // }
               />
               <Input
                 name="puntuacion_maxima"
@@ -498,7 +507,7 @@ const CreateEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("tipoEvento", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("tipoEvento")}
+                // myDefaultValue={watch("tipoEvento")}
               />
               {watch("tipoEvento")?.value ===
                 TypesSelectTypoEventoCamporeeEnums.CLUBES && (
@@ -514,7 +523,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("eliminatoria", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("eliminatoria")}
+                  // myDefaultValue={watch("eliminatoria")}
                 />
               )}
             </div>
@@ -536,7 +545,7 @@ const CreateEventCamporee = ({
                       shouldValidate: true,
                     })
                   }
-                  myDefaultValue={watch("participacion_total")}
+                  // myDefaultValue={watch("participacion_total")}
                 />
               )}
               {(watch("participacion_total")?.value ===
@@ -555,7 +564,7 @@ const CreateEventCamporee = ({
                   handleChange={(data: OptionType) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("sexo")}
+                  // myDefaultValue={watch("sexo")}
                 />
               )}
             </div>

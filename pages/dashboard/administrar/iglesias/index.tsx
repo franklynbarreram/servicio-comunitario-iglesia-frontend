@@ -224,6 +224,15 @@ const Iglesias = () => {
       ),
     },
     {
+      name: "nro_aventureros",
+      label: " Nro. Aventureros",
+      thClassName: HeaderClassName,
+      tdClassName: DataClassName,
+      selector: (value: any) => (
+        <span className="text-gray-500">{value.nro_aventureros}</span>
+      ),
+    },
+    {
       name: "status",
       label: "Status",
       thClassName: HeaderClassName,

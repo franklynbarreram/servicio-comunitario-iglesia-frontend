@@ -524,7 +524,12 @@ const EditEventCamporee = ({
                 handleChange={(data: OptionType) =>
                   setValue("category", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("category")}
+                myDefaultValue={{
+                  value: data.categoria,
+                  text: data?.categoria,
+                  disabled: false,
+                  placeholder: false,
+                }}
               />
               <Input
                 name="puntuacion_maxima"
@@ -552,7 +557,16 @@ const EditEventCamporee = ({
                 handleChange={(data: OptionType | any) =>
                   setValue("tipoEvento", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("tipoEvento")}
+                myDefaultValue={{
+                  value: data?.inscripcion_federacion
+                    ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+                    : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+                  text: data?.inscripcion_federacion
+                    ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+                    : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+                  disabled: false,
+                  placeholder: false,
+                }}
               />
               <InputListSearch
                 name="eliminatoria"
@@ -566,7 +580,16 @@ const EditEventCamporee = ({
                 handleChange={(data: OptionType | any) =>
                   setValue("eliminatoria", data, { shouldValidate: true })
                 }
-                myDefaultValue={watch("eliminatoria")}
+                myDefaultValue={{
+                  value: data?.eliminatoria
+                    ? TypesSelectYesOrNot.SI
+                    : TypesSelectYesOrNot.NO,
+                  text: data?.eliminatoria
+                    ? TypesSelectYesOrNot.SI
+                    : TypesSelectYesOrNot.NO,
+                  disabled: false,
+                  placeholder: false,
+                }}
               />
             </div>
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
@@ -586,7 +609,16 @@ const EditEventCamporee = ({
                       shouldValidate: true,
                     })
                   }
-                  myDefaultValue={watch("participacion_total")}
+                  myDefaultValue={{
+                    value: data?.participacion_total
+                      ? TypesSelectYesOrNot.SI
+                      : TypesSelectYesOrNot.NO,
+                    text: data?.participacion_total
+                      ? TypesSelectYesOrNot.SI
+                      : TypesSelectYesOrNot.NO,
+                    disabled: false,
+                    placeholder: false,
+                  }}
                 />
               )}
               {(watch("participacion_total")?.value ===
@@ -605,7 +637,12 @@ const EditEventCamporee = ({
                   handleChange={(data: OptionType | any) =>
                     setValue("sexo", data, { shouldValidate: true })
                   }
-                  myDefaultValue={watch("sexo")}
+                  myDefaultValue={{
+                    value: data?.distincion_sexo,
+                    text: data?.distincion_sexo,
+                    disabled: false,
+                    placeholder: false,
+                  }}
                 />
               )}
             </div>

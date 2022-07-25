@@ -212,6 +212,16 @@ const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
                   setValue("tipo", data, { shouldValidate: true })
                 }
                 // myDefaultValue={watch("tipo")}
+                myDefaultValue={{
+                  value: data?.mensual
+                    ? TypesSelectYesOrNot.SI
+                    : TypesSelectYesOrNot.NO,
+                  text: data?.mensual
+                    ? TypesSelectYesOrNot.SI
+                    : TypesSelectYesOrNot.NO,
+                  disabled: false,
+                  placeholder: false,
+                }}
               />
               <Input
                 name="puntaje_maximo"

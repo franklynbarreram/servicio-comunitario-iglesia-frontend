@@ -138,6 +138,20 @@ const ViewAllOnlyMiembros = ({ data, hide, refetch }: any) => {
             type="label"
             className={clsx("ml-3 font-bold mb-2 block f-18")}
           >
+            Categoría
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18 capitalize")}
+          >
+            {ValidateString(data?.categoria?.replace("_", " "))}
+          </Typography>
+        </div>
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
             Dirección
           </Typography>
           <Typography

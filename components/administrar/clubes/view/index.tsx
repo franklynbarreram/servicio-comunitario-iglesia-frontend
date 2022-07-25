@@ -143,6 +143,21 @@ const ViewClub = ({ data, hide, refetch }: any) => {
             {nro_conquistadores}
           </Typography>
         </div>
+
+        <div className="item col-span-1">
+          <Typography
+            type="label"
+            className={clsx("ml-3 font-bold mb-2 block f-18")}
+          >
+            Nro. Aventureros
+          </Typography>
+          <Typography
+            type="span"
+            className={clsx("ml-3 font-normal mb-2 block f-18")}
+          >
+            {data?.nro_aventureros}
+          </Typography>
+        </div>
         <div className="item col-span-1">
           <Typography
             type="label"
