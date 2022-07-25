@@ -210,7 +210,7 @@ const CamporeeDetail = () => {
           ) : (
             <>
               <BoxInfo
-                withEditButton
+                withEditButton={values?.editable}
                 showModal={showEdit}
                 className="flex-1 min-w-[100%] md:min-w-[400px] md:max-w-[400px] mx-auto"
                 image={ValidateImage(values?.logo)}
