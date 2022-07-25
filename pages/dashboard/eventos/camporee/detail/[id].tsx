@@ -675,7 +675,8 @@ const EventCamporeeDetail = () => {
                       expandIcon={({ isActive }) => (
                         <ArrowRightIcon
                           className={clsx(
-                            "w-10 h-10 absolute top-0 left-5 bottom-0 m-auto",
+                            "w-10 h-10 absolute top-4 left-2 md:top-0 md:left-5 md:bottom-0 m-auto",
+
                             {
                               "rotate-90": isActive,
                             }
