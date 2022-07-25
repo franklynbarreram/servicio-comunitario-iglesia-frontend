@@ -60,7 +60,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   const [selectValuePersona, setSelectValuePersona] = React.useState<{
     value: Number;
     label: string;
-  }>({ value: data.cedula_director, label: data.director });
+  }>({ value: data.id_capellan, label: data.capellan });
 
   const { addToast } = useToasts();
 

@@ -138,6 +138,15 @@ const CamporeeDetail = () => {
           </>
         ),
       },
+      {
+        icon: Icons.medalla,
+        content: (
+          <>
+            <strong className="text-[black] capitalize">Tipo:</strong>
+            {` ${values?.tipo}`}
+          </>
+        ),
+      },
     ];
   }, [response]);
 

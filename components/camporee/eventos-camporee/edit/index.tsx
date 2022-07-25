@@ -38,6 +38,7 @@ import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";
 import moment from "moment";
 import { number } from "prop-types";
+import { customStyles } from "consts/stylesReactSelect.helper";
 
 const EditEventCamporee = ({
   tipoCamporee,
@@ -51,6 +52,11 @@ const EditEventCamporee = ({
   const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
   console.log("edit data event camporee", data);
   const { addToast } = useToasts();
+  const [selectValuePersona, setSelectValuePersona] = React.useState<{
+    value: Number;
+    label: string;
+  }>({ value: data.id_oficial, label: data.oficial });
+  const [dataPersona, setDataPersona] = React.useState<any>();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -241,21 +247,46 @@ const EditEventCamporee = ({
     },
     participantes_conquis_aventureros_m: {
       required: { value: true, message: "This is required" },
-      min: { value: 1, message: "Debe ser mayor a 0" },
+      min: {
+        value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
+        message:
+          tipoCamporee === TypesSelectEnums.INTEGRADO
+            ? "Debe ser mayor o igual a 0"
+            : "Debe ser mayor a 0",
+      },
     },
     participantes_guias_mayores_m: {
       required: { value: true, message: "This is required" },
-      min: { value: 1, message: "Debe ser mayor a 0" },
+      min: {
+        value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
+        message:
+          tipoCamporee === TypesSelectEnums.INTEGRADO
+            ? "Debe ser mayor o igual a 0"
+            : "Debe ser mayor a 0",
+      },
     },
     participantes_conquis_aventureros_f: {
       required: { value: true, message: "This is required" },
-      min: { value: 1, message: "Debe ser mayor a 0" },
+      min: {
+        value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
+        message:
+          tipoCamporee === TypesSelectEnums.INTEGRADO
+            ? "Debe ser mayor o igual a 0"
+            : "Debe ser mayor a 0",
+      },
     },
     participantes_guias_mayores_f: {
       required: { value: true, message: "This is required" },
-      min: { value: 1, message: "Debe ser mayor a 0" },
+      min: {
+        value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
+        message:
+          tipoCamporee === TypesSelectEnums.INTEGRADO
+            ? "Debe ser mayor o igual a 0"
+            : "Debe ser mayor a 0",
+      },
+
       validate: () => {
-        console.log("GUIAAAAA");
+        // console.log("GUIAAAAA");
       },
     },
     eliminatoria: {
@@ -480,7 +511,40 @@ const EditEventCamporee = ({
         setIsLoading(false);
       });
   };
+  const handleChangeSelectPersona = (selected: any) => {
+    setSelectValuePersona(selected);
+  };
+  const promiseOptionsPersona = (inputValue: any, callback: any) => {
+    if (!inputValue && !dataPersona) {
+      return PersonasServices.getAll().then((response) => {
+        setDataPersona(response);
+        const options = response?.data?.map((item: any) => {
+          return {
+            value: item.cedula,
+            label: `${item.nombres} ${item.apellidos}`,
+          };
+        });
+        return options;
+      });
+    } else {
+      let filter = dataPersona?.data?.filter((item: any) =>
+        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      if (isEmpty(filter) || isNil(filter)) {
+        filter = dataPersona?.data?.filter((item: any) =>
+          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+        );
+      }
 
+      const options = filter?.map((item: any) => {
+        return {
+          value: item.cedula,
+          label: `${item.nombres} ${item.apellidos}`,
+        };
+      });
+      return callback(options);
+    }
+  };
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Editar Evento Camporee</h2>
@@ -542,6 +606,18 @@ const EditEventCamporee = ({
                 error={errors.puntuacion_maxima}
                 className="mb-3 md:mb-5 flex-1 w-full"
                 otherStyles="rounded-full text-sm pt-3 pb-3"
+              />
+            </div>
+            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+              <p className={"ml-3 font-normal mb-2 block f-18"}>Oficial</p>
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
+                loadOptions={promiseOptionsPersona}
+                styles={customStyles}
+                value={selectValuePersona}
+                className={"text-sm"}
+                onChange={handleChangeSelectPersona}
               />
             </div>
             <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
