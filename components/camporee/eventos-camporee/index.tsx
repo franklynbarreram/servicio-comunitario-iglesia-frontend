@@ -33,6 +33,8 @@ import {
 } from "consts/typesSelectEnum";
 import CreateEventCamporee from "./create";
 import EditEventCamporee from "./edit";
+import { Tooltip } from "antd";
+import { Button } from "components/common/button";
 
 interface EventosCamporeeProps {
   idCamporee: number | string | string[] | undefined;
@@ -181,13 +183,20 @@ const EventosCamporee = ({
                     module={ModuleEnums.EVENTO_CAMPOREE}
                     typePermisse={PermissionsEnums.ADD}
                   >
-                    <div className="px-2" onClick={showCreateCamporee}>
-                      <Icon
-                        src={Icons.more}
-                        fill="var(--color-primary)"
-                        className="max-w-[50px] w-12 cursor-pointer"
-                      />
-                    </div>
+                    <Tooltip title="Agregar">
+                      <div className="px-2" onClick={showCreateCamporee}>
+                        <Button
+                          labelProps="text-sm text-[black] font-bold"
+                          label={"Añadir"}
+                          fill
+                          boderRadius="rounded-full"
+                          size="full"
+                          type="submit"
+                          sizesButton="py-3"
+                          className="bg-yellow w-[100px]"
+                        />
+                      </div>
+                    </Tooltip>
                   </Restricted>
                 )}
               </div>

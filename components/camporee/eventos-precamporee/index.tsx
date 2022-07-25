@@ -29,6 +29,8 @@ import clsx from "clsx";
 import CreateEventPrecamporee from "./create";
 import moment from "moment";
 import { formatDateComplete } from "lib/helper";
+import { Tooltip } from "antd";
+import { Button } from "components/common/button";
 
 interface EventosPrecamporeeProps {
   idCamporee: number | string | string[] | undefined;
@@ -179,13 +181,20 @@ const EventosPrecamporee = ({
                     module={ModuleEnums.EVENTO_PRECAMPOREE}
                     typePermisse={PermissionsEnums.ADD}
                   >
-                    <div className="px-2" onClick={showCreatePrecamporee}>
-                      <Icon
-                        src={Icons.more}
-                        fill="var(--color-primary)"
-                        className="max-w-[50px] w-12 cursor-pointer"
-                      />
-                    </div>
+                    <Tooltip title="Agregar">
+                      <div className="px-2" onClick={showCreatePrecamporee}>
+                        <Button
+                          labelProps="text-sm text-[black] font-bold"
+                          label={"Añadir"}
+                          fill
+                          boderRadius="rounded-full"
+                          size="full"
+                          type="submit"
+                          sizesButton="py-3"
+                          className="bg-yellow w-[100px]"
+                        />
+                      </div>
+                    </Tooltip>
                   </Restricted>
                 )}
               </div>
