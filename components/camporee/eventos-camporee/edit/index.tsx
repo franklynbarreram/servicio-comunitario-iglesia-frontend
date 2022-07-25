@@ -487,6 +487,7 @@ const EditEventCamporee = ({
       categoria: form?.category?.value,
       puntuacion_maxima: parseInt(form?.puntuacion_maxima),
       distincion_sexo: form?.sexo?.value,
+      id_oficial: selectValuePersona?.value,
       participacion_total:
         form?.participacion_total?.value === TypesSelectYesOrNot.SI
           ? true

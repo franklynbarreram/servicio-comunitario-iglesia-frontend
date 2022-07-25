@@ -432,6 +432,7 @@ const CreateEventCamporee = ({
       oro: parseInt(form?.oro),
       plata: parseInt(form?.plata),
       bronce: parseInt(form?.bronce),
+      id_oficial: selectValuePersona?.value,
       hierro: parseInt(form?.hierro),
       categoria: form?.category?.value,
       puntuacion_maxima: parseInt(form?.puntuacion_maxima),

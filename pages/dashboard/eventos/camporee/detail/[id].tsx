@@ -638,10 +638,11 @@ const EventCamporeeDetail = () => {
                 )}
               </div>
 
-              <Restricted
+              {/* <Restricted
                 module={ModuleEnums.EVENTO_CAMPOREE}
                 typePermisse={PermissionsEnums.VIEW_CLUBES_INSCRITOS}
-              >
+              > */}
+              {!isEmpty(values?.datos_inscripcion) && (
                 <form
                   onSubmit={handleSubmit(handleSubmitData)}
                   className="w-full"
@@ -928,7 +929,9 @@ const EventCamporeeDetail = () => {
                     </Collapse>
                   )}
                 </form>
-              </Restricted>
+              )}
+
+              {/* </Restricted> */}
             </>
           )}
           <Restricted
