@@ -7,6 +7,7 @@ import { MiembrosServices } from "services/Miembros";
 import { CamporeeServices } from "services/Camporee";
 import { Input } from "components/common/form/input";
 import { useForm } from "react-hook-form";
+import { Alert } from "components/common/alert";
 
 const LoadScore = ({ data, hide, refetch }: any) => {
   const { addToast } = useToasts();
@@ -85,6 +86,13 @@ const LoadScore = ({ data, hide, refetch }: any) => {
               className="w-full text-left mt-16"
               onSubmit={handleSubmit(onHandleSubmit)}
             >
+              {data?.puntuacion_recomendada && (
+                <Alert className="mb-5 bg-[#ffc107]">
+                  <p className="text-[black] text-base py-5">
+                    Puntuación recomendada: {data?.puntuacion_recomendada}
+                  </p>
+                </Alert>
+              )}
               <Input
                 name="puntuacion"
                 title="Puntuación"

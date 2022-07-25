@@ -85,6 +85,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
   const profile = useUser();
 
   const dataUser = get(profile, "data", []);
+
   const [onSearch, setOnSearch] = React.useState(false);
   const [clubesType, setClubesType] = React.useState<any>({});
   const [clubesTypeMap, setClubesTypeMap] = React.useState<any>({});
@@ -280,49 +281,107 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     }
   };
 
-  const columns = [
-    {
-      title: `${values?.tipo === "clubes" ? "Club" : "Consejo"}`,
-      dataIndex: "nombre",
-      key: "id",
-    },
-    // Table.EXPAND_COLUMN,
-    {
-      title: "Nivel",
-      dataIndex: "",
-      key: "",
-      // width: "30%",
-      render: (values: any) => (
-        <div className="flex gap-1 items-center">
-          {values?.level &&
-            (() => {
-              const quantityStarts = howManyStarts(values.level);
-              let starts: any = [];
-              for (let i = 0; i < 5; i++) {
-                starts.push(
-                  <StarIcon
-                    className={clsx("w-5", {
-                      "opacity-50": i >= quantityStarts,
-                    })}
-                  ></StarIcon>
-                );
-              }
-              return starts;
-            })()}
-        </div>
-      ),
-    },
-    {
-      title: "Puntuación porcentual",
-      dataIndex: "",
-      key: "",
-      // width: "30%",
-      render: (values: any) =>
-        values?.puntuacion_porcentual && (
-          <Progress size="small" percent={values?.puntuacion_porcentual} />
+  const dataColumns = () => {
+    if (
+      dataUser.scope_actual === RoleEnums.LIDER_JUVENIL &&
+      (values?.categoria?.toLowerCase() === "total" || isNil(values?.categoria))
+    ) {
+      return [
+        {
+          title: `${values?.tipo === "clubes" ? "Club" : "Consejo"}`,
+          dataIndex: "nombre",
+          key: "id",
+        },
+        // Table.EXPAND_COLUMN,
+        {
+          title: "Nivel",
+          dataIndex: "",
+          key: "",
+          // width: "30%",
+          render: (values: any) => (
+            <div className="flex gap-1 items-center">
+              {values?.level &&
+                (() => {
+                  const quantityStarts = howManyStarts(values.level);
+                  let starts: any = [];
+                  for (let i = 0; i < 5; i++) {
+                    starts.push(
+                      <StarIcon
+                        className={clsx("w-5", {
+                          "opacity-50": i >= quantityStarts,
+                        })}
+                      ></StarIcon>
+                    );
+                  }
+                  return starts;
+                })()}
+            </div>
+          ),
+        },
+
+        {
+          title: "Puntuación",
+          dataIndex: "puntuacion",
+          key: "puntuacion",
+        },
+        {
+          title: "Puntuación porcentual",
+          dataIndex: "",
+          key: "",
+          // width: "30%",
+          render: (values: any) =>
+            values?.puntuacion_porcentual && (
+              <Progress size="small" percent={values?.puntuacion_porcentual} />
+            ),
+        },
+      ];
+    }
+
+    return [
+      {
+        title: `${values?.tipo === "clubes" ? "Club" : "Consejo"}`,
+        dataIndex: "nombre",
+        key: "id",
+      },
+      // Table.EXPAND_COLUMN,
+      {
+        title: "Nivel",
+        dataIndex: "",
+        key: "",
+        // width: "30%",
+        render: (values: any) => (
+          <div className="flex gap-1 items-center">
+            {values?.level &&
+              (() => {
+                const quantityStarts = howManyStarts(values.level);
+                let starts: any = [];
+                for (let i = 0; i < 5; i++) {
+                  starts.push(
+                    <StarIcon
+                      className={clsx("w-5", {
+                        "opacity-50": i >= quantityStarts,
+                      })}
+                    ></StarIcon>
+                  );
+                }
+                return starts;
+              })()}
+          </div>
         ),
-    },
-  ];
+      },
+      {
+        title: "Puntuación porcentual",
+        dataIndex: "",
+        key: "",
+        // width: "30%",
+        render: (values: any) =>
+          values?.puntuacion_porcentual && (
+            <Progress size="small" percent={values?.puntuacion_porcentual} />
+          ),
+      },
+    ];
+  };
+  const columns = dataColumns();
 
   const columnsMiembros = [
     {

@@ -1,12 +1,14 @@
 import * as React from "react";
 import SVG from "react-inlinesvg";
 import clsx from "clsx";
+import { Icon } from "components/icon";
+import { Icons } from "consts";
 
 export interface AlertProps {
   /**
    * color background.
    */
-  color: "success" | "danger";
+  color?: "success" | "danger" | string;
   /**
    * Message that goes inside the alert.
    */
@@ -31,18 +33,18 @@ export const Alert: React.FC<AlertProps> = ({
   return (
     <div
       className={clsx(
-        "flex items-center px-12 w-680 h-24 text-gray-0 text-xl rounded-10",
+        "flex items-center px-12 w-680  text-gray-0 text-xl rounded-10",
         { "bg-alert-error": color === "danger" },
         { "bg-alert-success": color === "success" },
-        className
+        className,
+        { "h-24": !className }
       )}
     >
-      <SVG
-        src={customIcon || "/img/svg/alert/alert.svg"}
-        width="37"
-        height="37"
-        className="mr-7"
-      />
+      <Icon
+        src={Icons.exclamation}
+        fillPath
+        className="text-[black] w-4 mr-2"
+      ></Icon>
       {message || children}
     </div>
   );
