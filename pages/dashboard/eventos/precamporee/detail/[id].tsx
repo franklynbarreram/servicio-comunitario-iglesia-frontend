@@ -293,7 +293,7 @@ const EventPrecamporeeDetail = () => {
                     type="label"
                     className={clsx("ml-3 font-bold mb-2 block f-18")}
                   >
-                    Puntaje maximo
+                    Puntuación máxima
                   </Typography>
                   <Typography
                     type="span"

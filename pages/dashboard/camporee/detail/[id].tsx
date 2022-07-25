@@ -239,14 +239,16 @@ const CamporeeDetail = () => {
                 )}
                 {values?.inscrito && (
                   <div className="flex justify-center items-center gap-2  mt-8">
-                    <p className="text-alert-success text-center font-bold">
-                      Club inscrito
-                    </p>
-                    <Icon
-                      src="/icons/selected.svg"
-                      className="w-5 text-alert-success"
-                      fillPath
-                    ></Icon>
+                    <div className="container bg-[white] rounded-full gap-2 p-2 flex justify-center items-center">
+                      <p className="text-alert-success text-center font-bold">
+                        Club inscrito
+                      </p>
+                      <Icon
+                        src="/icons/selected.svg"
+                        className="w-5 text-alert-success"
+                        fillPath
+                      ></Icon>
+                    </div>
                   </div>
                 )}
               </BoxInfo>
