@@ -122,3 +122,24 @@ export const TypesSelectSangreMap = {
   [TypesSelectSangreEnums.O_POSITIVO]: TypesSelectSangreEnums.O_POSITIVO,
   [TypesSelectSangreEnums.O_NEGATIVO]: TypesSelectSangreEnums.O_NEGATIVO,
 };
+
+export enum TypesSelectInformesMensualesEnums {
+  REGULAR = "regular",
+  RECREATIVA = "recreativa",
+  ESPIRITUAL = "espiritual",
+  MISIONERA = "misionera",
+  EDUCATIVA = "educativa",
+}
+
+export const TypesSelectInformesMensualesMap = {
+  [TypesSelectInformesMensualesEnums.REGULAR]:
+    TypesSelectInformesMensualesEnums.REGULAR,
+  [TypesSelectInformesMensualesEnums.RECREATIVA]:
+    TypesSelectInformesMensualesEnums.RECREATIVA,
+  [TypesSelectInformesMensualesEnums.ESPIRITUAL]:
+    TypesSelectInformesMensualesEnums.ESPIRITUAL,
+  [TypesSelectInformesMensualesEnums.MISIONERA]:
+    TypesSelectInformesMensualesEnums.MISIONERA,
+  [TypesSelectInformesMensualesEnums.EDUCATIVA]:
+    TypesSelectInformesMensualesEnums.EDUCATIVA,
+};

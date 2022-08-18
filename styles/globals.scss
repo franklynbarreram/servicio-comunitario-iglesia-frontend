@@ -218,3 +218,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.custom-collapse.mt-0.ant-collapse {
+  margin-top: 0;
+}

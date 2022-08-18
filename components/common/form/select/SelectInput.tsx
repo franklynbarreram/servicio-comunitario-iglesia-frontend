@@ -12,6 +12,7 @@ type SelectInputProps = {
   maxwidth?: string;
   value?: string | number;
   className?: string;
+  hideDeleteSelected?: boolean;
   setValue: (key: string, value: string | number | undefined) => void;
 };
 
@@ -31,6 +32,7 @@ export function SelectInput({
   value,
   className,
   setValue,
+  hideDeleteSelected,
 }: SelectInputProps) {
   const [selectedValue, selectValue] = useState<string | number | undefined>(
     value
@@ -57,10 +59,12 @@ export function SelectInput({
       <Listbox value={selectedValue} onChange={handleChange}>
         <div className="relative">
           <Listbox.Button className="relative w-full h-10 pl-3 pr-10 text-left bg-transparent shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-[black] focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-yellow sm:text-sm border-yellow border rounded-full">
-            {!isSelected() && (
+            {(!isSelected() || hideDeleteSelected) && (
               <>
                 <span className="block truncate text-[black] text-xs">
-                  {label}
+                  {!hideDeleteSelected
+                    ? label
+                    : get(options, selectedValue!, "N/A")}
                 </span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <ChevronDownIcon
@@ -70,22 +74,24 @@ export function SelectInput({
                 </span>
               </>
             )}
-            {isSelected() && (
+            {isSelected() && !hideDeleteSelected && (
               <>
                 <span className="flex justify-between truncate text-[black] font-bold text-xs">
                   {`${get(options, selectedValue!, "N/A")}`}
                 </span>
-                <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-                  <XIcon
-                    onClick={clearFilter}
-                    className="w-5 h-5 text-[black] cursor-pointer"
-                    aria-hidden="true"
-                  />
-                </span>
+                {!hideDeleteSelected && (
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <XIcon
+                      onClick={clearFilter}
+                      className="w-5 h-5 text-[black] cursor-pointer"
+                      aria-hidden="true"
+                    />
+                  </span>
+                )}
               </>
             )}
           </Listbox.Button>
-          {!isSelected() && (
+          {(!isSelected() || hideDeleteSelected) && (
             <Transition
               as={Fragment}
               leave="transition ease-in duration-100"

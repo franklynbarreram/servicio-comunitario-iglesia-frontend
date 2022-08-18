@@ -37,6 +37,7 @@ export const InputListSearch: React.FC<
   onChangeCustom,
   register,
   error,
+  disabled,
   customClassNamesOptions,
   classNamesContainer,
   ...props
@@ -92,6 +93,7 @@ export const InputListSearch: React.FC<
         value={selected.value ? selected.value : ""}
         className="hidden"
         readOnly
+        disabled={disabled}
         ref={registerAux && registerAux.ref}
         onChange={(e) => {
           registerAux && registerAux.onChange(e); // method from hook form register
@@ -101,7 +103,11 @@ export const InputListSearch: React.FC<
 
       <div className="w-full">
         <p className={"ml-3 font-normal mb-2 block f-18"}>{props.title}</p>
-        <Combobox value={selected} onChange={handleChangeInputSearch}>
+        <Combobox
+          disabled={disabled}
+          value={selected}
+          onChange={handleChangeInputSearch}
+        >
           <div className="relative mt-1">
             <div className="focus-visible:border-0 focus:outline-none focus:ring-transparent relative border border-primary w-full cursor-default overflow-hidden rounded-full bg-white text-left sm:text-sm">
               <Combobox.Input
@@ -114,7 +120,7 @@ export const InputListSearch: React.FC<
                 {...props}
                 required={props.required}
                 placeholder="Seleccione un tipo"
-                className="w-full py-3 pl-3 pr-10 text-sm leading-5 text-gray-500 focus-visible:border-0 focus:ring-transparent focus:outline-none"
+                className="disabled:opacity-80 disabled:border-gray-200  w-full py-3 pl-3 pr-10 text-sm leading-5 text-gray-500 focus-visible:border-0 focus:ring-transparent focus:outline-none"
                 displayValue={(item: any) => item.text}
                 // defaultValue={myDefaultValue?.value}
                 // value={myDefaultValue?.value}

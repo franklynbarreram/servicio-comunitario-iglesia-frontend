@@ -205,7 +205,7 @@ const ViewClub = ({ data, hide, refetch }: any) => {
             <IconWithText
               classNameContainer="justify-center gap-2"
               icon={foto_director}
-              text={data?.nombre}
+              text={data?.director}
               isUser
               isVertical
             >

@@ -28,6 +28,7 @@ export enum Icons {
   more = "/icons/more.svg",
   administrar = "/icons/administrar.svg",
   camporee = "/icons/camporee.svg",
+  informes_mensuales = "/icons/terms.svg",
   estadisticas = "/icons/estadisticas.svg",
   noImgUser = "/icons/icon-user.png",
   location = "/icons/ubicacion.svg",

@@ -88,6 +88,14 @@ export const PermissionByRol = [
           // PermissionsEnums.CHECK_CLASIFICATION,
         ],
       },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.VIEW,
+          PermissionsEnums.LOAD_SCORE,
+        ],
+      },
     ],
   },
   {
@@ -148,6 +156,13 @@ export const PermissionByRol = [
           PermissionsEnums.VIEW,
           PermissionsEnums.INSCRIBIR_CLUB,
           PermissionsEnums.VIEW_CLUBES_INSCRITOS,
+        ],
+      },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.LOAD_FORMS,
+          PermissionsEnums.VIEW,
         ],
       },
     ],
@@ -212,6 +227,13 @@ export const PermissionByRol = [
           PermissionsEnums.VIEW_CLUBES_INSCRITOS,
         ],
       },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.LOAD_FORMS,
+          PermissionsEnums.VIEW,
+        ],
+      },
     ],
   },
   {
@@ -258,6 +280,14 @@ export const PermissionByRol = [
       {
         name: ModuleEnums.EVENTO_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.APPROVE_FORM,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.VIEW,
+        ],
       },
     ],
   },
@@ -306,6 +336,14 @@ export const PermissionByRol = [
         name: ModuleEnums.EVENTO_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
       },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.APPROVE_FORM,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.VIEW,
+        ],
+      },
     ],
   },
   {
@@ -343,6 +381,10 @@ export const PermissionByRol = [
       {
         name: ModuleEnums.EVENTO_CAMPOREE,
         permissionsActions: [PermissionsEnums.DETAIL, PermissionsEnums.VIEW],
+      },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [],
       },
     ],
   },
@@ -402,6 +444,14 @@ export const PermissionByRol = [
           PermissionsEnums.LOAD_SCORE,
           PermissionsEnums.CHECK_CLASIFICATION,
           PermissionsEnums.INSCRIBIR_CLUB,
+        ],
+      },
+      {
+        name: ModuleEnums.INFORMES_MENSUALES,
+        permissionsActions: [
+          PermissionsEnums.APPROVE_FORM,
+          PermissionsEnums.VIEW_DATA_FORMS,
+          PermissionsEnums.VIEW,
         ],
       },
     ],

@@ -18,6 +18,7 @@ export interface AlertProps {
    */
   customIcon?: string;
   className?: string;
+  hideIcon?: boolean;
 }
 
 /**
@@ -29,6 +30,7 @@ export const Alert: React.FC<AlertProps> = ({
   className,
   children,
   color,
+  hideIcon,
 }) => {
   return (
     <div
@@ -40,11 +42,14 @@ export const Alert: React.FC<AlertProps> = ({
         { "h-24": !className }
       )}
     >
-      <Icon
-        src={Icons.exclamation}
-        fillPath
-        className="text-[black] w-4 mr-2"
-      ></Icon>
+      {!hideIcon && (
+        <Icon
+          src={Icons.exclamation}
+          fillPath
+          className="text-[black] w-4 mr-2"
+        ></Icon>
+      )}
+
       {message || children}
     </div>
   );

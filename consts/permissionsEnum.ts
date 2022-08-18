@@ -1,4 +1,5 @@
 export enum PermissionsEnums {
+  ONLY_VIEW = "only_view",
   VIEW = "view",
   EDIT = "edit",
   ADD = "add",
@@ -7,6 +8,7 @@ export enum PermissionsEnums {
   DAR_DE_BAJA_MIEMBRO = "DAR_DE_BAJA_MIEMBRO",
   DETALLE_MIEMBRO = "DETALLE_MIEMBRO",
   LOAD_FORMS = "LOAD_FORMS",
+  EDIT_FORMS = "EDIT_FORMS",
   VIEW_DATA_FORMS = "VIEW_DATA_FORMS",
   APPROVE_FORM = "APPROVE_FORM",
   LOAD_SCORE = "LOAD_SCORE",

@@ -5,6 +5,7 @@ import {
   TypesSelectCapellanEnums,
   TypesSelectEnums,
   TypesSelectEstadoCivilEnums,
+  TypesSelectInformesMensualesEnums,
   TypesSelectSangreEnums,
   TypesSelectSexoEnums,
   TypesSelectSexoRegisterEnums,
@@ -40,6 +41,44 @@ export const optionsType: OptionType[] = [
     id: 4,
     text: TypesSelectEnums.AVENTUREROS,
     value: TypesSelectEnums.AVENTUREROS,
+    disabled: false,
+    placeholder: false,
+  },
+];
+
+export const optionsTypeInformesMensuales: OptionType[] = [
+  {
+    id: 1,
+    text: TypesSelectInformesMensualesEnums.REGULAR,
+    value: TypesSelectInformesMensualesEnums.REGULAR,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 2,
+    text: TypesSelectInformesMensualesEnums.RECREATIVA,
+    value: TypesSelectInformesMensualesEnums.RECREATIVA,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 3,
+    text: TypesSelectInformesMensualesEnums.ESPIRITUAL,
+    value: TypesSelectInformesMensualesEnums.ESPIRITUAL,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 4,
+    text: TypesSelectInformesMensualesEnums.MISIONERA,
+    value: TypesSelectInformesMensualesEnums.MISIONERA,
+    disabled: false,
+    placeholder: false,
+  },
+  {
+    id: 5,
+    text: TypesSelectInformesMensualesEnums.EDUCATIVA,
+    value: TypesSelectInformesMensualesEnums.EDUCATIVA,
     disabled: false,
     placeholder: false,
   },

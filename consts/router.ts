@@ -42,6 +42,9 @@ export const appRouter = {
       especialidades: {
         href: "/especialidades",
       },
+      informesMensuales: {
+        href: "/dashboard/informes-mensuales",
+      },
     },
   },
 };
