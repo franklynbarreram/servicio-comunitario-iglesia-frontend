@@ -30,7 +30,7 @@ const LoadScore = ({ data, hide, refetch }: any) => {
 
   const rules = {
     puntuacion: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: {
         value: data?.puntuacion_maxima,
@@ -38,7 +38,7 @@ const LoadScore = ({ data, hide, refetch }: any) => {
       },
     },
     nota: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
   const [isLoading, setIsLoading] = React.useState(false);

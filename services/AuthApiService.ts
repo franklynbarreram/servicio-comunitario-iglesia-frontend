@@ -19,7 +19,12 @@ class Service {
   async registerUser(payload: any): Promise<any> {
     return this.client.post("/auth/signup", payload);
   }
-
+  async sendEmailRecoveryPassword(payload: any): Promise<any> {
+    return this.client.post("/auth/forgot_password", payload);
+  }
+  async changePassword(payload: any): Promise<any> {
+    return this.client.post("/auth/reset_password", payload);
+  }
   async login(payload: LoginRequest): Promise<AuthSession> {
     return this.client.post("/users/login", payload);
   }

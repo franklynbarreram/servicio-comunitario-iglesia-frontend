@@ -105,56 +105,56 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   });
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
 
     nivel1: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: { value: 100, message: "Debe ser menor o igual a 100" },
     },
     nivel2: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: { value: 100, message: "Debe ser menor o igual a 100" },
     },
     nivel3: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: { value: 100, message: "Debe ser menor o igual a 100" },
     },
     nivel4: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: { value: 100, message: "Debe ser menor o igual a 100" },
     },
     lugar: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipoCapellan: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     puntuacion_maxima_informe: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     fecha_inicio: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     fecha_fin: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     fecha_inicio_informes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     capellanExterno: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     icon: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
 

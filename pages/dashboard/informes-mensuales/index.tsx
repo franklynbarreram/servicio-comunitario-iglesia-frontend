@@ -163,9 +163,29 @@ const Dashboard = () => {
               </div>
 
               {isEmpty(values) ? (
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 mt-20">
-                  No hay datos para mostrar
-                </h2>
+                <>
+                  <Restricted
+                    module={ModuleEnums.INFORMES_MENSUALES}
+                    typePermisse={PermissionsEnums.LOAD_FORMS}
+                  >
+                    <div className="flex justify-end">
+                      <Button
+                        className="bg-primary max-w-[200px] border-[black] hover:bg-transparent hover:text-alert-success hover:border-alert-success"
+                        labelProps="f-18 font-normal"
+                        label={"+ Crear actividad"}
+                        fill
+                        boderRadius="rounded-full"
+                        size="full"
+                        type="submit"
+                        sizesButton="py-3"
+                        onClick={showCreateActivity}
+                      />
+                    </div>
+                  </Restricted>
+                  <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 mt-20">
+                    No hay datos para mostrar
+                  </h2>
+                </>
               ) : (
                 <Collapse
                   defaultActiveKey={["1"]}
@@ -316,19 +336,21 @@ const Dashboard = () => {
                             <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 mt-20">
                               Actividades
                             </h2>
-                            <div className="flex justify-end">
-                              <Button
-                                className="bg-primary max-w-[200px] border-[black] hover:bg-transparent hover:text-alert-success hover:border-alert-success"
-                                labelProps="f-18 font-normal"
-                                label={"+ Crear actividad"}
-                                fill
-                                boderRadius="rounded-full"
-                                size="full"
-                                type="submit"
-                                sizesButton="py-3"
-                                onClick={showCreateActivity}
-                              />
-                            </div>
+                            {itemClub?.informe?.editar && (
+                              <div className="flex justify-end">
+                                <Button
+                                  className="bg-primary max-w-[200px] border-[black] hover:bg-transparent hover:text-alert-success hover:border-alert-success"
+                                  labelProps="f-18 font-normal"
+                                  label={"+ Crear actividad"}
+                                  fill
+                                  boderRadius="rounded-full"
+                                  size="full"
+                                  type="submit"
+                                  sizesButton="py-3"
+                                  onClick={showCreateActivity}
+                                />
+                              </div>
+                            )}
 
                             <div className="mt-10">
                               <Tabs

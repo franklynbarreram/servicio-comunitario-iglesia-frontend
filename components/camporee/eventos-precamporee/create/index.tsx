@@ -53,23 +53,23 @@ const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
   });
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     descripcion: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     puntaje_maximo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     fecha_inicio: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     fecha_fin: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
 

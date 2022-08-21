@@ -39,7 +39,7 @@ const EditProfile = ({ data, hide, refetch }: any) => {
   } = useForm({ mode: "onChange" });
   const rules = {
     rol: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
   // React.useEffect(() => {

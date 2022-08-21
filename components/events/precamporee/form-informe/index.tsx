@@ -57,23 +57,23 @@ export const InformeForm: React.FC<InformeFormProps> = ({
 
   const rules = {
     description: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     objetive: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     mes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     fecha_realizado: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     participantes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     files: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: any) => {
         // console.log("en la validacion:", value);
         // console.log("en la validacion lenght:", value?.length);

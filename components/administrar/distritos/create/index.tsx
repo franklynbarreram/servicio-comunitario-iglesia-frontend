@@ -47,7 +47,7 @@ const CreateDistrito = ({ hide, refetch }: any) => {
   } = useForm({ mode: "onChange" });
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
 

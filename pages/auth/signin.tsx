@@ -47,10 +47,10 @@ const SignIn = () => {
 
   const rules = {
     email: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     password: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     check: {},
   };
@@ -97,6 +97,17 @@ const SignIn = () => {
               error={errors.password}
               leftImg={Icons.locked}
             />
+            <Typography
+              type="caption"
+              className="mb-3 text-right f-18 font-normal text-gray-500"
+            >
+              <Link href="/auth/forgot-password">
+                <span className="text-[black] cursor-pointer font-normal f-18">
+                  {" "}
+                  ¿Olvidaste tu contraseña?
+                </span>
+              </Link>
+            </Typography>
             {/* <Typography
 							type="caption"
 							className="mb-3 text-right f-18 font-normal text-gray-500"

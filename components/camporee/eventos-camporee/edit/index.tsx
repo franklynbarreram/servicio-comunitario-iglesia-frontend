@@ -134,25 +134,25 @@ const EditEventCamporee = ({
   });
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     descripcion: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     category: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     puntuacion_maxima: {
-      // required: { value: true, message: "This is required" },
+      // required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     edad_min: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 4, message: "Debe ser mayor a 3" },
       max: { value: 9, message: "Debe ser menor o igual 9" },
     },
     edad_max: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 4, message: "Debe ser mayor a 3" },
       max: { value: 9, message: "Debe ser menor o igual 9" },
       validate: (value: string) => {
@@ -163,7 +163,7 @@ const EditEventCamporee = ({
     },
     oro: {
       min: { value: 4, message: "Debe ser mayor a 3" },
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: string) => {
         if (watch("plata") && watch("plata") >= value) {
           setError("plata", {
@@ -194,7 +194,7 @@ const EditEventCamporee = ({
 
     plata: {
       min: { value: 3, message: "Debe ser mayor a 2" },
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: string) => {
         if (value >= watch("oro")) {
           return "El valor debe ser menor a 'Oro'";
@@ -220,7 +220,7 @@ const EditEventCamporee = ({
 
     bronce: {
       min: { value: 2, message: "Debe ser mayor a 1" },
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: string) => {
         if (value >= watch("plata")) {
           return "El valor debe ser menor a 'Plata'";
@@ -238,7 +238,7 @@ const EditEventCamporee = ({
     },
     hierro: {
       min: { value: 1, message: "Debe ser mayor a 0" },
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: string) => {
         if (value >= watch("bronce")) {
           return "El valor debe ser menor a 'Bronce'";
@@ -246,7 +246,7 @@ const EditEventCamporee = ({
       },
     },
     participantes_conquis_aventureros_m: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: {
         value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
         message:
@@ -256,7 +256,7 @@ const EditEventCamporee = ({
       },
     },
     participantes_guias_mayores_m: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: {
         value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
         message:
@@ -266,7 +266,7 @@ const EditEventCamporee = ({
       },
     },
     participantes_conquis_aventureros_f: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: {
         value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
         message:
@@ -276,7 +276,7 @@ const EditEventCamporee = ({
       },
     },
     participantes_guias_mayores_f: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: {
         value: tipoCamporee === TypesSelectEnums.INTEGRADO ? 0 : 1,
         message:
@@ -290,16 +290,16 @@ const EditEventCamporee = ({
       },
     },
     eliminatoria: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipoEvento: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     sexo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     participacion_total: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
 

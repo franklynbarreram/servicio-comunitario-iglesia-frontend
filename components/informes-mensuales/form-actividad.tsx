@@ -59,38 +59,38 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
 
   const rules = {
     nombre: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     lugar: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     description: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     objetive: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     mes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     fecha_realizado: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     participantes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     nro_visitas: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     nro_miembros: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     files: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
       validate: (value: any) => {
         // console.log("en la validacion:", value);
         // console.log("en la validacion lenght:", value?.length);
@@ -168,6 +168,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
         });
         console.log(`response Actividad ${text}:`, response);
         refetch();
+        hide();
         setIsLoading(false);
       })
       .catch((e: any) => {
@@ -295,7 +296,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                   "ml-3 font-bold text-primary mb-2 block text-2xl"
                 )}
               >
-                Actividades
+                Asistencia
               </Typography>
             </div>
             <div className="grid grid-cols-2 gap-2 mt-7">

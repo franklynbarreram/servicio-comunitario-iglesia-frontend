@@ -67,25 +67,25 @@ const CreateClub = ({ hide, refetch }: any) => {
 
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     lema: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     // blanco_estudios: {
-    //   required: { value: true, message: "This is required" },
+    //   required: { value: true, message: "Este campo es requerido" },
     // },
     direccion: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     tipo: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     redes: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     redesUrl: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
 
       pattern: {
         value:

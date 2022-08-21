@@ -134,14 +134,14 @@ const EventCamporeeDetail = () => {
   } = useForm({ mode: "onChange" });
   const rules = {
     puntuacion: {
-      // required: { value: true, message: "This is required" },
+      // required: { value: true, message: "Este campo es requerido" },
       max: {
         value: values?.puntuacion_maxima,
         message: `Debe ser menor o igual a ${values?.puntuacion_maxima}`,
       },
     },
     clasificado: {
-      // required: { value: true, message: "This is required" },
+      // required: { value: true, message: "Este campo es requerido" },
     },
   };
 

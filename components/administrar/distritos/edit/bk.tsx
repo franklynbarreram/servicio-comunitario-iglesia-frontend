@@ -48,10 +48,10 @@ const EditDistrito = ({ data, hide, refetch }: any) => {
   });
   const rules = {
     name: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
     abreviatura: {
-      required: { value: true, message: "This is required" },
+      required: { value: true, message: "Este campo es requerido" },
     },
   };
 

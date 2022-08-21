@@ -6,27 +6,31 @@ import { Logo } from "components/logo";
 import { useToasts } from "react-toast-notifications";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
-import { GenerateErrorToast } from "lib/helper";
 import { AuthService } from "services";
-import { InputEmail } from "components/common/form/input-email";
+import { GenerateErrorToast } from "lib/helper";
 
 const ForgotPassword = () => {
+  const router = useRouter();
+  const { token } = router.query;
+  const { email } = router.query;
   const [isLoading, setIsLoading] = React.useState(false);
   const { addToast } = useToasts();
 
   const onSubmit = (form: any) => {
-    setIsLoading(true);
     const dataForm = {
-      email: form?.email,
+      email,
+      token,
+      password: form?.newPassword,
+      password_confirmation: form?.confirmPassword,
     };
-    console.log("AQUII", dataForm);
-    AuthService.sendEmailRecoveryPassword(dataForm)
+    setIsLoading(true);
+    AuthService.changePassword(dataForm)
       .then((response: any) => {
-        console.log("response send email:", response);
-        addToast("Se ha enviado a su correo electronico", {
+        console.log("response change password:", response);
+        addToast("Se ha cambiado su contraseña con éxito", {
           appearance: "success",
-          autoDismiss: false,
         });
+        router.push("/auth/signin");
         setIsLoading(false);
       })
       .catch((e: any) => {
@@ -34,6 +38,7 @@ const ForgotPassword = () => {
         GenerateErrorToast(e, addToast);
         setIsLoading(false);
       });
+    setIsLoading(false);
   };
 
   return (
@@ -49,10 +54,9 @@ const ForgotPassword = () => {
             type="title"
             className="mb-9 text-3xl font-normal text-gray-500 mt-10 leading-tight"
           >
-            Ingresa el correo electrónico para recuperar tu cuenta
+            Ingresa tu nueva contraseña
           </Typography>
-
-          <FirstForm onHandleSubmit={onSubmit} isLoading={isLoading} />
+          <SecondForm onHandleSubmit={onSubmit} isLoading={isLoading} />
         </div>
       </div>
     </>
