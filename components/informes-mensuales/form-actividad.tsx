@@ -30,6 +30,7 @@ type InformeFormProps = {
   informe?: any;
   data?: any;
   isEditable?: boolean;
+  dateSelected?: any;
 };
 
 export const ActividadForm: React.FC<InformeFormProps> = ({
@@ -37,6 +38,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
   refetch,
   isEditable,
   className,
+  dateSelected,
   data,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -247,6 +249,8 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                 control={control}
                 setValueRHF={setValueRHF}
                 disabled={data && !isEditable}
+                minDate={moment(dateSelected).startOf("month").toDate()}
+                maxDate={moment(dateSelected).endOf("month").toDate()}
               />
             </div>
             <Input

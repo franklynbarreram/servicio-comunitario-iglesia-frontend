@@ -23,6 +23,8 @@ export interface DataPickerCustomProps {
   setValueParams?: any;
   className?: string;
   hideLabelTitle?: boolean;
+  minDate?: any;
+  maxDate?: any;
 }
 export function DatePickerCustom({
   name,
@@ -36,6 +38,8 @@ export function DatePickerCustom({
   disabled,
   hideLabelTitle,
   label,
+  minDate,
+  maxDate,
   setValueParams,
   className,
 }: DataPickerCustomProps) {
@@ -69,6 +73,8 @@ export function DatePickerCustom({
           containerClassName="w-full"
           disabled={disabled}
           className={className}
+          minDate={minDate}
+          maxDate={maxDate}
           // ref={registerAux && registerAux.ref}
           // onChange={(e) => {
           // 	registerAux && registerAux.onChange(e); // method from hook form register

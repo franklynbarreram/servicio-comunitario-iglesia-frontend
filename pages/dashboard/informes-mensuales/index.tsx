@@ -389,6 +389,7 @@ const Dashboard = () => {
                                             isEditable={
                                               itemClub.informe?.editar
                                             }
+                                            dateSelected={params.fecha}
                                           ></ActividadForm>
                                         </div>
                                       </TabPane>
@@ -789,6 +790,7 @@ const Dashboard = () => {
             <ActividadForm
               refetch={refetch}
               hide={hideCreateActivity}
+              dateSelected={params.fecha}
             ></ActividadForm>
           </ModalCreateActivity>
           <ModalApprove isShow={isShowApprove}>
