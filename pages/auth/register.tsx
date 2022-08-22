@@ -31,6 +31,9 @@ import {
 import moment from "moment";
 import { formatDates, GenerateErrorToast } from "lib/helper";
 import { AuthService } from "services";
+import { IglesiasServices } from "services/Iglesias";
+import AsyncSelect from "react-select/async";
+import { customStyles } from "consts/stylesReactSelect.helper";
 
 const Register = () => {
   const {
@@ -44,7 +47,9 @@ const Register = () => {
   } = useForm({ mode: "onChange" });
   const [imageUrl, setImageUrl] = React.useState();
   const [loading, setLoading] = React.useState(false);
-
+  const [dataIglesias, setDataIglesias] = React.useState<any>();
+  const [selectValueIglesias, setSelectValueIglesias] =
+    React.useState<{ value: Number; label: string }>();
   const router = useRouter();
   const { addToast } = useToasts();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -68,6 +73,9 @@ const Register = () => {
       sexo: TypesSelectSexoRegisterMap[form.sexo?.value],
       estado_civil: TypesSelectEstadoCivilMap[form.estado_civil?.value],
       foto: form?.foto,
+      id_iglesia: selectValueIglesias?.value
+        ? selectValueIglesias?.value
+        : null,
     };
 
     console.log("finalData:::", finalData);
@@ -181,6 +189,29 @@ const Register = () => {
     </div>
   );
 
+  const promiseOptionsIglesias = (inputValue: any, callback: any) => {
+    if (!inputValue && !dataIglesias) {
+      return IglesiasServices.getAll().then((response) => {
+        setDataIglesias(response);
+        const options = response?.data?.map((item: any) => {
+          return { value: item.id, label: item.nombre };
+        });
+        return options;
+      });
+    } else {
+      const filter = dataIglesias?.data?.filter((item: any) =>
+        item.nombre.toLowerCase().includes(inputValue.toLowerCase())
+      );
+
+      const options = filter?.map((item: any) => {
+        return { value: item.id, label: item.nombre };
+      });
+      return callback(options);
+    }
+  };
+  const handleChangeSelectConsejosIglesias = (selected: any) => {
+    setSelectValueIglesias(selected);
+  };
   return (
     <>
       <div className="container-auth bg-primary">
@@ -277,17 +308,35 @@ const Register = () => {
                 // disabled={!editInformeCreated}
               />
             </div>
-            <InputEmail
-              name="email"
-              labelVisible
-              title="Correo electrónico"
-              isFill={!!watch("email")}
-              register={register}
-              rules={rules.email}
-              error={errors.email}
-              className="mb-3 md:mb-5"
-              otherStyles="rounded-full text-sm pt-3 pb-3"
-            />
+            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mb-5 items-center">
+              <div className="flex-auto">
+                <InputEmail
+                  name="email"
+                  labelVisible
+                  title="Correo electrónico"
+                  isFill={!!watch("email")}
+                  register={register}
+                  rules={rules.email}
+                  error={errors.email}
+                  className="mb-0"
+                  otherStyles="rounded-full text-sm pt-3 pb-3"
+                />
+              </div>
+
+              <div className="flex-auto">
+                <p className={"ml-3 font-normal mb-2 block f-18"}>Iglesia</p>
+
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
+                  loadOptions={promiseOptionsIglesias}
+                  styles={customStyles}
+                  value={selectValueIglesias}
+                  className={"text-sm"}
+                  onChange={handleChangeSelectConsejosIglesias}
+                />
+              </div>
+            </div>
             <Input
               name="direccion"
               labelVisible
