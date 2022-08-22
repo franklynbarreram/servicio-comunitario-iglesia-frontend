@@ -43,13 +43,15 @@ export const HelpResultadosCamporee: React.FC<HelpProps> = ({ hide }) => {
           <br />
           <ul className="space-y-1 ml-5 max-w-md list-disc list-inside text-[black] ">
             <li>
-              <strong>Categoría:</strong>
-              hay 9 categorías: Total, Camporee, Precamporee, Eventos
-              Deportivos, Eventos Bíblicos, Eventos de Pionerismo, Eventos
-              Especiales, Eventos Precamporee, Informes Mensuales. Al
-              seleccionar una categoría se mostrarán las puntuaciones y niveles
-              solo de esa categoría y sus subcategorías. Las categorías están
-              agrupadas de la siguiente manera:
+              <strong>Categoría:</strong> hay 9 categorías: Total, Camporee,
+              Precamporee, Eventos Deportivos, Eventos Bíblicos, Eventos de
+              Pionerismo, Eventos Especiales, Eventos Precamporee, Informes
+              Mensuales. Al seleccionar una categoría se mostrarán las
+              puntuaciones y niveles solo de esa categoría y sus subcategorías.
+              Las categorías están agrupadas de la siguiente manera:
+              <div className="my-10">
+                <img src="/img/category.png" alt="category" />
+              </div>
             </li>
             <li>
               <strong>Evento Camporee:</strong> lista de eventos camporee. Al
