@@ -39,6 +39,8 @@ import CreateCamporee from "components/camporee/create-camporee";
 import { Button } from "components/common/button";
 import { Tooltip } from "antd";
 import moment from "moment";
+import { Help } from "components/common/help";
+import { HelpListCamporee } from "help/camporee/listado";
 
 // import Image from "next/image";
 type Params = {
@@ -75,7 +77,12 @@ const CamporeeList = () => {
     isShow: isShowCreate,
     show: showCreate,
   } = useModal();
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const [dataEdit, setDataEdit] = React.useState<any>();
   const [onSearch, setOnSearch] = React.useState(false);
   const [dataView, setDataView] = React.useState<any>();
@@ -240,6 +247,8 @@ const CamporeeList = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
+
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -294,6 +303,9 @@ const CamporeeList = () => {
       <ModalCreate isShow={isShowCreate}>
         <CreateCamporee hide={hideCreate} refetch={refetch} />
       </ModalCreate>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListCamporee hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

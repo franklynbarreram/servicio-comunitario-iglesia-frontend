@@ -114,3 +114,9 @@ export const routeValidForUser = (
 
   return false;
 };
+
+export const isRole = (dataUser: any, roles: string[]) => {
+  const rol = get(dataUser, "scope_actual", undefined);
+
+  return roles.includes(rol);
+};

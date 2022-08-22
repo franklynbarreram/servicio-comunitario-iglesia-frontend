@@ -16,6 +16,9 @@ import { formatDates, GenerateErrorToast } from "lib/helper";
 import { Spinner } from "components/common/spinner/spinner";
 import { isEmpty, isNil, size } from "lodash";
 import { Icon } from "components/icon";
+import { useModal } from "hooks/modal";
+import { Help } from "components/common/help";
+import { HelpFormInformeEventoPrecamporee } from "help/camporee/eventos-precamporee/form-informe";
 
 type InformeFormProps = {
   // isLoading: boolean;
@@ -45,6 +48,12 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   const { addToast } = useToasts();
   const [fechaRealizado, setFechaRealizado] = React.useState();
   const [fileList, setFileList] = React.useState<UploadFile[] | any>([]);
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     register,
     control,
@@ -200,109 +209,115 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       {isLoading ? (
         <Spinner type="loadingPage" className="py-10" />
       ) : !informeUnavailableNow ? (
-        <form className="w-full" onSubmit={handleSubmit(onHandleSubmit)}>
-          <Input
-            name="description"
-            title="Descripcion"
-            labelVisible
-            isTextArea
-            isFill={!!watch("description")}
-            register={register}
-            rules={rules.description}
-            error={errors.description}
-            className="mb-3 md:mb-5"
-            otherStyles="pt-3 pb-3 rounded-lg text-sm"
-            disabled={!editInformeCreated}
-          />
-          <Input
-            name="objetive"
-            title="Objetivo"
-            labelVisible
-            isTextArea
-            isFill={!!watch("objetive")}
-            register={register}
-            rules={rules.objetive}
-            error={errors.objetive}
-            className="mb-3 md:mb-5"
-            otherStyles="pt-3 pb-3 rounded-lg text-sm"
-            disabled={!editInformeCreated}
-          />
-          <Input
-            name="participantes"
-            title="Participantes"
-            type="number"
-            labelVisible
-            isFill={!!watch("participantes")}
-            register={register}
-            rules={rules.participantes}
-            error={errors.participantes}
-            className="mb-3 md:mb-5"
-            otherStyles="pt-3 pb-3 rounded-lg text-sm"
-            disabled={!editInformeCreated}
-          />
-          <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
-            {isRecurrent && (
+        <>
+          <Help showModal={showHelp} />
+          <form className="w-full" onSubmit={handleSubmit(onHandleSubmit)}>
+            <Input
+              name="description"
+              title="Descripcion"
+              labelVisible
+              isTextArea
+              isFill={!!watch("description")}
+              register={register}
+              rules={rules.description}
+              error={errors.description}
+              className="mb-3 md:mb-5"
+              otherStyles="pt-3 pb-3 rounded-lg text-sm"
+              disabled={!editInformeCreated}
+            />
+            <Input
+              name="objetive"
+              title="Objetivo"
+              labelVisible
+              isTextArea
+              isFill={!!watch("objetive")}
+              register={register}
+              rules={rules.objetive}
+              error={errors.objetive}
+              className="mb-3 md:mb-5"
+              otherStyles="pt-3 pb-3 rounded-lg text-sm"
+              disabled={!editInformeCreated}
+            />
+            <Input
+              name="participantes"
+              title="Participantes"
+              type="number"
+              labelVisible
+              isFill={!!watch("participantes")}
+              register={register}
+              rules={rules.participantes}
+              error={errors.participantes}
+              className="mb-3 md:mb-5"
+              otherStyles="pt-3 pb-3 rounded-lg text-sm"
+              disabled={!editInformeCreated}
+            />
+            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
+              {isRecurrent && (
+                <DatePickerCustom
+                  name="mes"
+                  register={register}
+                  rules={rules.mes}
+                  error={errors.mes}
+                  label={"Mes"}
+                  value={mes}
+                  control={control}
+                  setValue={setMes}
+                  setValueRHF={setValueRHF}
+                  disabled={isRecurrent || !editInformeCreated}
+                />
+              )}
               <DatePickerCustom
-                name="mes"
                 register={register}
-                rules={rules.mes}
-                error={errors.mes}
-                label={"Mes"}
-                value={mes}
+                rules={rules.fecha_realizado}
+                error={errors.fecha_realizado}
+                name="fecha_realizado"
+                label={"Fecha realizado"}
+                value={fechaRealizado}
+                setValue={setFechaRealizado}
                 control={control}
-                setValue={setMes}
                 setValueRHF={setValueRHF}
-                disabled={isRecurrent || !editInformeCreated}
-              />
-            )}
-            <DatePickerCustom
-              register={register}
-              rules={rules.fecha_realizado}
-              error={errors.fecha_realizado}
-              name="fecha_realizado"
-              label={"Fecha realizado"}
-              value={fechaRealizado}
-              setValue={setFechaRealizado}
-              control={control}
-              setValueRHF={setValueRHF}
-              disabled={!editInformeCreated}
-            />
-          </div>
-
-          <div className="mt-10">
-            {/* {!isNil(informe) && ( */}
-            <DragAndDrop
-              control={control}
-              name="files"
-              maxFiles={3}
-              register={register}
-              rules={rules.files}
-              error={errors.files}
-              setErrorRHF={setErrorRHF}
-              setValueRHF={setValueRHF}
-              fileList={fileList}
-              setFileList={setFileList}
-              isEdit={informe ? true : false}
-              disabled={!editInformeCreated}
-            />
-            {/* )} */}
-          </div>
-
-          {editInformeCreated && (
-            <div className="flex items-center justify-center mt-16 w-full">
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Guardar"}
-                fill
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="submit"
-                sizesButton="py-3"
+                disabled={!editInformeCreated}
               />
             </div>
-          )}
-        </form>
+
+            <div className="mt-10">
+              {/* {!isNil(informe) && ( */}
+              <DragAndDrop
+                control={control}
+                name="files"
+                maxFiles={3}
+                register={register}
+                rules={rules.files}
+                error={errors.files}
+                setErrorRHF={setErrorRHF}
+                setValueRHF={setValueRHF}
+                fileList={fileList}
+                setFileList={setFileList}
+                isEdit={informe ? true : false}
+                disabled={!editInformeCreated}
+              />
+              {/* )} */}
+            </div>
+
+            {editInformeCreated && (
+              <div className="flex items-center justify-center mt-16 w-full">
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Guardar"}
+                  fill
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="submit"
+                  sizesButton="py-3"
+                />
+              </div>
+            )}
+          </form>
+          <ModalHelp isShow={isShowHelp}>
+            <HelpFormInformeEventoPrecamporee hide={hideHelp} />
+          </ModalHelp>
+        </>
       ) : (
         <div className="flex items-center flex-col gap-5 justify-center w-full">
           <Icon

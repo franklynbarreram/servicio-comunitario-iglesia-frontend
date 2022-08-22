@@ -41,6 +41,8 @@ import { TrashIcon } from "@heroicons/react/solid";
 import { useUser } from "hooks/user";
 import { RoleEnums } from "consts/rolesEnum";
 import { SelectInput } from "components/common/form/select/SelectInput";
+import { Help } from "components/common/help";
+import { HelpListClubes } from "help/administrar/clubes/list";
 
 // import Image from "next/image";
 type Params = {
@@ -78,6 +80,12 @@ const Clubes = () => {
     hide: hideEdit,
     isShow: isShowEdit,
     show: showEdit,
+  } = useModal();
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
   } = useModal();
 
   const {
@@ -370,6 +378,7 @@ const Clubes = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -446,6 +455,9 @@ const Clubes = () => {
       <ModalDelete isShow={isShowDelete}>
         <DesactivarClub hide={hideDelete} data={dataDelete} refetch={refetch} />
       </ModalDelete>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListClubes hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

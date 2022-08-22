@@ -30,12 +30,20 @@ import {
 import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";
 import moment from "moment";
+import { Help } from "components/common/help";
+import { HelpCreateEventoPrecamporee } from "help/camporee/eventos-precamporee/create";
+import { useModal } from "hooks/modal";
 
 const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
   const [fechaInicio, setFechaInicio] = React.useState();
   const [fechaFin, setFechaFin] = React.useState();
   const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -111,105 +119,111 @@ const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
-          <form onSubmit={handleSubmit(handleSubmitData)}>
-            <Input
-              name="name"
-              title="Nombre"
-              labelVisible
-              isFill={!!watch("name")}
-              register={register}
-              rules={rules.name}
-              error={errors.name}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <Input
-              name="descripcion"
-              title="Descripcion"
-              labelVisible
-              isFill={!!watch("descripcion")}
-              register={register}
-              rules={rules.descripcion}
-              error={errors.descripcion}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
-              <DatePickerCustom
-                name="fecha_inicio"
+          <>
+            <Help showModal={showHelp} />
+            <form onSubmit={handleSubmit(handleSubmitData)}>
+              <Input
+                name="name"
+                title="Nombre"
+                labelVisible
+                isFill={!!watch("name")}
                 register={register}
-                rules={rules.fecha_inicio}
-                error={errors.fecha_inicio}
-                label={"Fecha inicio"}
-                value={fechaInicio}
-                control={control}
-                setValue={setFechaInicio}
-                setValueRHF={setValue}
-                // disabled={isRecurrent || !editInformeCreated}
-              />
-              <DatePickerCustom
-                register={register}
-                rules={rules.fecha_fin}
-                error={errors.fecha_fin}
-                name="fecha_fin"
-                label={"Fecha fin"}
-                value={fechaFin}
-                setValue={setFechaFin}
-                control={control}
-                setValueRHF={setValue}
-                // disabled={!editInformeCreated}
-              />
-            </div>
-            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mt-6">
-              <InputListSearch
-                name="tipo"
-                title="Mensual"
-                className="mb-4 h-10 rounded-full text-sm flex-1"
-                options={optionsTypeYesOrNot}
-                register={register}
-                rules={rules.tipo}
-                error={errors.tipo}
-                handleChange={(data: OptionType) =>
-                  setValue("tipo", data, { shouldValidate: true })
-                }
-                // myDefaultValue={watch("tipo")}
+                rules={rules.name}
+                error={errors.name}
+                className="mb-3 md:mb-5"
+                otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
               <Input
-                name="puntaje_maximo"
-                title="Puntaje maximo"
+                name="descripcion"
+                title="Descripcion"
                 labelVisible
-                isFill={!!watch("puntaje_maximo")}
+                isFill={!!watch("descripcion")}
                 register={register}
-                rules={rules.puntaje_maximo}
-                error={errors.puntaje_maximo}
-                className="mb-3 md:mb-5 flex-1"
-                otherStyles="rounded-full text-sm pt-3 pb-3"
+                rules={rules.descripcion}
+                error={errors.descripcion}
+                className="mb-3 md:mb-5"
+                otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
-            </div>
-            <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Cancelar"}
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="button"
-                sizesButton="py-3"
-                onClick={hide}
-                // disabled={!isDirty || !isValid || !!isLoading}
-              />
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Crear"}
-                fill
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="submit"
-                sizesButton="py-3"
-              />
-            </div>
-          </form>
+              <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
+                <DatePickerCustom
+                  name="fecha_inicio"
+                  register={register}
+                  rules={rules.fecha_inicio}
+                  error={errors.fecha_inicio}
+                  label={"Fecha inicio"}
+                  value={fechaInicio}
+                  control={control}
+                  setValue={setFechaInicio}
+                  setValueRHF={setValue}
+                  // disabled={isRecurrent || !editInformeCreated}
+                />
+                <DatePickerCustom
+                  register={register}
+                  rules={rules.fecha_fin}
+                  error={errors.fecha_fin}
+                  name="fecha_fin"
+                  label={"Fecha fin"}
+                  value={fechaFin}
+                  setValue={setFechaFin}
+                  control={control}
+                  setValueRHF={setValue}
+                  // disabled={!editInformeCreated}
+                />
+              </div>
+              <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mt-6">
+                <InputListSearch
+                  name="tipo"
+                  title="Mensual"
+                  className="mb-4 h-10 rounded-full text-sm flex-1"
+                  options={optionsTypeYesOrNot}
+                  register={register}
+                  rules={rules.tipo}
+                  error={errors.tipo}
+                  handleChange={(data: OptionType) =>
+                    setValue("tipo", data, { shouldValidate: true })
+                  }
+                  // myDefaultValue={watch("tipo")}
+                />
+                <Input
+                  name="puntaje_maximo"
+                  title="Puntaje maximo"
+                  labelVisible
+                  isFill={!!watch("puntaje_maximo")}
+                  register={register}
+                  rules={rules.puntaje_maximo}
+                  error={errors.puntaje_maximo}
+                  className="mb-3 md:mb-5 flex-1"
+                  otherStyles="rounded-full text-sm pt-3 pb-3"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Cancelar"}
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="button"
+                  sizesButton="py-3"
+                  onClick={hide}
+                  // disabled={!isDirty || !isValid || !!isLoading}
+                />
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Crear"}
+                  fill
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="submit"
+                  sizesButton="py-3"
+                />
+              </div>
+            </form>
+            <ModalHelp isShow={isShowHelp}>
+              <HelpCreateEventoPrecamporee hide={hideHelp} />
+            </ModalHelp>
+          </>
         )}
       </div>
     </div>

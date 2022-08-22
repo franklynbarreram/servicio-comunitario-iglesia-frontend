@@ -60,7 +60,9 @@
   --transparent-gray-200: rgb(68, 68, 68, 0.5);
   --transparent-gray-800: rgb(68, 68, 68, 0.5);
 }
-
+.list-disc {
+  list-style-type: disc;
+}
 @tailwind components;
 @tailwind base;
 @tailwind utilities;

@@ -36,6 +36,8 @@ import { Button } from "components/common/button";
 import DesactivarIglesia from "components/administrar/iglesias/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
 import { SelectInput } from "components/common/form/select/SelectInput";
+import { HelpListIglesias } from "help/administrar/iglesias/list";
+import { Help } from "components/common/help";
 
 // import Image from "next/image";
 type Params = {
@@ -75,6 +77,12 @@ const Iglesias = () => {
     show: showEdit,
   } = useModal();
 
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     Modal: ModalView,
     hide: hideView,
@@ -357,6 +365,7 @@ const Iglesias = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -437,6 +446,9 @@ const Iglesias = () => {
           refetch={refetch}
         />
       </ModalDelete>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListIglesias hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

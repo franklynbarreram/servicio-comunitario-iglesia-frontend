@@ -30,6 +30,8 @@ import { Tooltip } from "antd";
 import { Button } from "components/common/button";
 import DesactivarFederacion from "components/administrar/federaciones/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
+import { HelpListFederaciones } from "help/administrar/federaciones/list";
+import { Help } from "components/common/help";
 
 // import Image from "next/image";
 type Params = {
@@ -66,6 +68,13 @@ const Federaciones = () => {
     hide: hideEdit,
     isShow: isShowEdit,
     show: showEdit,
+  } = useModal();
+
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
   } = useModal();
 
   const {
@@ -336,6 +345,7 @@ const Federaciones = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -405,6 +415,9 @@ const Federaciones = () => {
           refetch={refetch}
         />
       </ModalDelete>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListFederaciones hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

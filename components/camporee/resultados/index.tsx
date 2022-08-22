@@ -45,6 +45,7 @@ import {
   StarIcon,
   TrashIcon,
 } from "@heroicons/react/solid";
+import { HelpResultadosCamporee } from "help/camporee/resultados";
 import { Alert } from "components/common/alert";
 import { Input } from "components/common/form/input";
 import { InputCheck } from "components/common/form/input-check";
@@ -56,6 +57,7 @@ import { SelectInput } from "components/common/form/select/SelectInput";
 import { CategoryTypeMap } from "consts/categoryEnumSelect";
 import { Progress } from "antd";
 import { start } from "repl";
+import { Help } from "components/common/help";
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
@@ -80,6 +82,13 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     isShow: isShowInscription,
     show: showInscription,
   } = useModal();
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
+
   const { addToast } = useToasts();
 
   const profile = useUser();
@@ -449,41 +458,12 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
   return (
     <>
       <div className="text-center w-full">
-        <div className={clsx("container-form mt-5 mb-40 text-left", className)}>
+        <div className={clsx("container-form mb-40 text-left", className)}>
           {isLoading && !onSearch ? (
             <Spinner type="loadingPage" className="py-10" />
           ) : (
             <>
-              <>
-                <div className="flex justify-center items-center mb-5">
-                  {/* <InputText
-                    name="search"
-                    title="Search"
-                    labelVisible={false}
-                    isFill={!!watch("search")}
-                    register={register}
-                    // rules={rules.search}
-                    onChangeCustom={handleChangeSearch}
-                    error={errors.search}
-                    leftImg={Icons.search}
-                    otherStyles="pt-3 pb-3 rounded-full"
-                  /> */}
-                  {/* {data?.data?.modificacion && (
-                    <Restricted
-                      module={ModuleEnums.EVENTO_PRECAMPOREE}
-                      typePermisse={PermissionsEnums.ADD}
-                    > */}
-                  {/* <div className="px-2" onClick={() => {}}>
-                    <Icon
-                      src={Icons.more}
-                      fill="var(--color-primary)"
-                      className="max-w-[50px] w-12 cursor-pointer"
-                    />
-                  </div> */}
-                  {/* </Restricted>
-                  )} */}
-                </div>
-              </>
+              <Help showModal={showHelp} />
               <div className="flex flex-wrap gap-x-4 w-full">
                 <SelectInput
                   className="mb-10 z-50 flex-auto"
@@ -563,6 +543,9 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                   </h3>
                 </div>
               )} */}
+              <ModalHelp isShow={isShowHelp}>
+                <HelpResultadosCamporee hide={hideHelp} />
+              </ModalHelp>
             </>
           )}
         </div>

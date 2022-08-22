@@ -32,6 +32,8 @@ import { Button } from "components/common/button";
 import DesactivarDistrito from "components/administrar/distritos/desactivar";
 import { TrashIcon } from "@heroicons/react/solid";
 import { SelectInput } from "components/common/form/select/SelectInput";
+import { HelpListDistritos } from "help/administrar/distritos/list";
+import { Help } from "components/common/help";
 
 // import Image from "next/image";
 type Params = {
@@ -71,6 +73,12 @@ const Distritos = () => {
     show: showEdit,
   } = useModal();
 
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     Modal: ModalView,
     hide: hideView,
@@ -367,6 +375,7 @@ const Distritos = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -447,6 +456,9 @@ const Distritos = () => {
           refetch={refetch}
         />
       </ModalDelete>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListDistritos hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

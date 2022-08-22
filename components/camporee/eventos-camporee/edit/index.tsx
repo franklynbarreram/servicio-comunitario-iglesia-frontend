@@ -39,6 +39,9 @@ import { CamporeeServices } from "services/Camporee";
 import moment from "moment";
 import { number } from "prop-types";
 import { customStyles } from "consts/stylesReactSelect.helper";
+import { Help } from "components/common/help";
+import { useModal } from "hooks/modal";
+import { HelpCreateEventoCamporee } from "help/camporee/eventos-camporee/create";
 
 const EditEventCamporee = ({
   tipoCamporee,
@@ -59,7 +62,12 @@ const EditEventCamporee = ({
   const [dataPersona, setDataPersona] = React.useState<any>();
 
   const [isLoading, setIsLoading] = React.useState(false);
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     register,
     handleSubmit,
@@ -553,441 +561,451 @@ const EditEventCamporee = ({
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
-          <form onSubmit={handleSubmit(handleSubmitData)}>
-            <Input
-              name="name"
-              title="Nombre"
-              labelVisible
-              isFill={!!watch("name")}
-              register={register}
-              rules={rules.name}
-              error={errors.name}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <Input
-              name="descripcion"
-              title="Descripcion"
-              labelVisible
-              isFill={!!watch("descripcion")}
-              register={register}
-              rules={rules.descripcion}
-              error={errors.descripcion}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
-              <InputListSearch
-                name="category"
-                title="Categoría"
-                className="mb-4 h-10 rounded-full text-sm"
-                classNamesContainer="flex-1"
-                options={optionsTypeCategoryCamporee}
+          <>
+            <Help showModal={showHelp} />
+            <form onSubmit={handleSubmit(handleSubmitData)}>
+              <Input
+                name="name"
+                title="Nombre"
+                labelVisible
+                isFill={!!watch("name")}
                 register={register}
-                rules={rules.category}
-                error={errors.category}
-                handleChange={(data: OptionType) =>
-                  setValue("category", data, { shouldValidate: true })
-                }
-                myDefaultValue={{
-                  value: data.categoria,
-                  text: data?.categoria,
-                  disabled: false,
-                  placeholder: false,
-                }}
+                rules={rules.name}
+                error={errors.name}
+                className="mb-3 md:mb-5"
+                otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
               <Input
-                name="puntuacion_maxima"
-                title="Puntuación maxima"
-                type="number"
+                name="descripcion"
+                title="Descripcion"
                 labelVisible
-                isFill={!!watch("puntuacion_maxima")}
+                isFill={!!watch("descripcion")}
                 register={register}
-                rules={rules.puntuacion_maxima}
-                error={errors.puntuacion_maxima}
-                className="mb-3 md:mb-5 flex-1 w-full"
-                otherStyles="rounded-full text-sm pt-3 pb-3"
+                rules={rules.descripcion}
+                error={errors.descripcion}
+                className="mb-3 md:mb-5"
+                otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
-            </div>
-            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-              <p className={"ml-3 font-normal mb-2 block f-18"}>Oficial</p>
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                loadOptions={promiseOptionsPersona}
-                styles={customStyles}
-                value={selectValuePersona}
-                className={"text-sm"}
-                onChange={handleChangeSelectPersona}
-              />
-            </div>
-            <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
-              <InputListSearch
-                name="tipoEvento"
-                title="Tipo evento"
-                className="mb-4 h-10 rounded-full text-sm"
-                classNamesContainer="flex-1"
-                options={optionsTypeEventCamporee}
-                register={register}
-                rules={rules.tipoEvento}
-                error={errors.tipoEvento}
-                handleChange={(data: OptionType | any) =>
-                  setValue("tipoEvento", data, { shouldValidate: true })
-                }
-                myDefaultValue={{
-                  value: data?.inscripcion_federacion
-                    ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
-                    : TypesSelectTypoEventoCamporeeEnums.CLUBES,
-                  text: data?.inscripcion_federacion
-                    ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
-                    : TypesSelectTypoEventoCamporeeEnums.CLUBES,
-                  disabled: false,
-                  placeholder: false,
-                }}
-              />
-              <InputListSearch
-                name="eliminatoria"
-                title="¿Eliminatoria?"
-                className="mb-4 h-10 rounded-full text-sm"
-                classNamesContainer="flex-1"
-                options={optionsTypeYesOrNot}
-                register={register}
-                rules={rules.eliminatoria}
-                error={errors.eliminatoria}
-                handleChange={(data: OptionType | any) =>
-                  setValue("eliminatoria", data, { shouldValidate: true })
-                }
-                myDefaultValue={{
-                  value: data?.eliminatoria
-                    ? TypesSelectYesOrNot.SI
-                    : TypesSelectYesOrNot.NO,
-                  text: data?.eliminatoria
-                    ? TypesSelectYesOrNot.SI
-                    : TypesSelectYesOrNot.NO,
-                  disabled: false,
-                  placeholder: false,
-                }}
-              />
-            </div>
-            <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
-              {watch("tipoEvento")?.value !==
-                TypesSelectTypoEventoCamporeeEnums.FEDERACION && (
+              <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
                 <InputListSearch
-                  name="participacion_total"
-                  title="¿Participación total?"
+                  name="category"
+                  title="Categoría"
+                  className="mb-4 h-10 rounded-full text-sm"
+                  classNamesContainer="flex-1"
+                  options={optionsTypeCategoryCamporee}
+                  register={register}
+                  rules={rules.category}
+                  error={errors.category}
+                  handleChange={(data: OptionType) =>
+                    setValue("category", data, { shouldValidate: true })
+                  }
+                  myDefaultValue={{
+                    value: data.categoria,
+                    text: data?.categoria,
+                    disabled: false,
+                    placeholder: false,
+                  }}
+                />
+                <Input
+                  name="puntuacion_maxima"
+                  title="Puntuación maxima"
+                  type="number"
+                  labelVisible
+                  isFill={!!watch("puntuacion_maxima")}
+                  register={register}
+                  rules={rules.puntuacion_maxima}
+                  error={errors.puntuacion_maxima}
+                  className="mb-3 md:mb-5 flex-1 w-full"
+                  otherStyles="rounded-full text-sm pt-3 pb-3"
+                />
+              </div>
+              <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                <p className={"ml-3 font-normal mb-2 block f-18"}>Oficial</p>
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
+                  loadOptions={promiseOptionsPersona}
+                  styles={customStyles}
+                  value={selectValuePersona}
+                  className={"text-sm"}
+                  onChange={handleChangeSelectPersona}
+                />
+              </div>
+              <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
+                <InputListSearch
+                  name="tipoEvento"
+                  title="Tipo evento"
+                  className="mb-4 h-10 rounded-full text-sm"
+                  classNamesContainer="flex-1"
+                  options={optionsTypeEventCamporee}
+                  register={register}
+                  rules={rules.tipoEvento}
+                  error={errors.tipoEvento}
+                  handleChange={(data: OptionType | any) =>
+                    setValue("tipoEvento", data, { shouldValidate: true })
+                  }
+                  myDefaultValue={{
+                    value: data?.inscripcion_federacion
+                      ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+                      : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+                    text: data?.inscripcion_federacion
+                      ? TypesSelectTypoEventoCamporeeEnums.FEDERACION
+                      : TypesSelectTypoEventoCamporeeEnums.CLUBES,
+                    disabled: false,
+                    placeholder: false,
+                  }}
+                />
+                <InputListSearch
+                  name="eliminatoria"
+                  title="¿Eliminatoria?"
                   className="mb-4 h-10 rounded-full text-sm"
                   classNamesContainer="flex-1"
                   options={optionsTypeYesOrNot}
                   register={register}
-                  rules={rules.participacion_total}
-                  error={errors.participacion_total}
+                  rules={rules.eliminatoria}
+                  error={errors.eliminatoria}
                   handleChange={(data: OptionType | any) =>
-                    setValue("participacion_total", data, {
-                      shouldValidate: true,
-                    })
+                    setValue("eliminatoria", data, { shouldValidate: true })
                   }
                   myDefaultValue={{
-                    value: data?.participacion_total
+                    value: data?.eliminatoria
                       ? TypesSelectYesOrNot.SI
                       : TypesSelectYesOrNot.NO,
-                    text: data?.participacion_total
+                    text: data?.eliminatoria
                       ? TypesSelectYesOrNot.SI
                       : TypesSelectYesOrNot.NO,
                     disabled: false,
                     placeholder: false,
                   }}
                 />
-              )}
+              </div>
+              <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
+                {watch("tipoEvento")?.value !==
+                  TypesSelectTypoEventoCamporeeEnums.FEDERACION && (
+                  <InputListSearch
+                    name="participacion_total"
+                    title="¿Participación total?"
+                    className="mb-4 h-10 rounded-full text-sm"
+                    classNamesContainer="flex-1"
+                    options={optionsTypeYesOrNot}
+                    register={register}
+                    rules={rules.participacion_total}
+                    error={errors.participacion_total}
+                    handleChange={(data: OptionType | any) =>
+                      setValue("participacion_total", data, {
+                        shouldValidate: true,
+                      })
+                    }
+                    myDefaultValue={{
+                      value: data?.participacion_total
+                        ? TypesSelectYesOrNot.SI
+                        : TypesSelectYesOrNot.NO,
+                      text: data?.participacion_total
+                        ? TypesSelectYesOrNot.SI
+                        : TypesSelectYesOrNot.NO,
+                      disabled: false,
+                      placeholder: false,
+                    }}
+                  />
+                )}
+                {(watch("participacion_total")?.value ===
+                  TypesSelectYesOrNot.NO ||
+                  watch("tipoEvento")?.value ===
+                    TypesSelectTypoEventoCamporeeEnums.FEDERACION) && (
+                  <InputListSearch
+                    name="sexo"
+                    title="Distincion de sexo"
+                    className="mb-4 h-10 rounded-full text-sm"
+                    classNamesContainer="flex-1"
+                    options={optionsTypeSexo}
+                    register={register}
+                    rules={rules.sexo}
+                    error={errors.sexo}
+                    handleChange={(data: OptionType | any) =>
+                      setValue("sexo", data, { shouldValidate: true })
+                    }
+                    myDefaultValue={{
+                      value: data?.distincion_sexo,
+                      text: data?.distincion_sexo,
+                      disabled: false,
+                      placeholder: false,
+                    }}
+                  />
+                )}
+              </div>
               {(watch("participacion_total")?.value ===
                 TypesSelectYesOrNot.NO ||
                 watch("tipoEvento")?.value ===
                   TypesSelectTypoEventoCamporeeEnums.FEDERACION) && (
-                <InputListSearch
-                  name="sexo"
-                  title="Distincion de sexo"
-                  className="mb-4 h-10 rounded-full text-sm"
-                  classNamesContainer="flex-1"
-                  options={optionsTypeSexo}
-                  register={register}
-                  rules={rules.sexo}
-                  error={errors.sexo}
-                  handleChange={(data: OptionType | any) =>
-                    setValue("sexo", data, { shouldValidate: true })
-                  }
-                  myDefaultValue={{
-                    value: data?.distincion_sexo,
-                    text: data?.distincion_sexo,
-                    disabled: false,
-                    placeholder: false,
-                  }}
-                />
+                <div className="grid grid-cols-2 gap-2 mt-7">
+                  {(tipoCamporee === TypesSelectEnums.GUIAS_MAYORES ||
+                    tipoCamporee === TypesSelectEnums.INTEGRADO) && (
+                    <>
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                        watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.SIN_DISTINCION) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_guias_mayores_m"
+                            type="number"
+                            title={
+                              watch("sexo")?.value ===
+                              TypesSelectSexoEnums.SIN_DISTINCION
+                                ? "Nro guias mayores"
+                                : "Hombres guias mayores"
+                            }
+                            labelVisible
+                            isFill={!!watch("participantes_guias_mayores_m")}
+                            register={register}
+                            rules={rules.participantes_guias_mayores_m}
+                            error={errors.participantes_guias_mayores_m}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.AMBOS) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_guias_mayores_f"
+                            type="number"
+                            title="Mujeres guias mayores"
+                            labelVisible
+                            isFill={!!watch("participantes_guias_mayores_f")}
+                            register={register}
+                            rules={rules.participantes_guias_mayores_f}
+                            error={errors.participantes_guias_mayores_f}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+                    </>
+                  )}
+                  {(tipoCamporee === TypesSelectEnums.CONQUISTADORES ||
+                    tipoCamporee === TypesSelectEnums.INTEGRADO) && (
+                    <>
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                        watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.SIN_DISTINCION) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_conquis_aventureros_m"
+                            type="number"
+                            title={
+                              watch("sexo")?.value ===
+                              TypesSelectSexoEnums.SIN_DISTINCION
+                                ? "Nro conquistadores"
+                                : "Hombres conquistadores"
+                            }
+                            labelVisible
+                            isFill={
+                              !!watch("participantes_conquis_aventureros_m")
+                            }
+                            register={register}
+                            rules={rules.participantes_conquis_aventureros_m}
+                            error={errors.participantes_conquis_aventureros_m}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.AMBOS) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_conquis_aventureros_f"
+                            type="number"
+                            title="Mujeres conquistadores"
+                            labelVisible
+                            isFill={
+                              !!watch("participantes_conquis_aventureros_f")
+                            }
+                            register={register}
+                            rules={rules.participantes_conquis_aventureros_f}
+                            error={errors.participantes_conquis_aventureros_f}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {tipoCamporee === TypesSelectEnums.AVENTUREROS && (
+                    <>
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
+                        watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.SIN_DISTINCION) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_conquis_aventureros_m"
+                            type="number"
+                            title={
+                              watch("sexo")?.value ===
+                              TypesSelectSexoEnums.SIN_DISTINCION
+                                ? "Nro aventureros"
+                                : "Niños aventureros"
+                            }
+                            labelVisible
+                            isFill={
+                              !!watch("participantes_conquis_aventureros_m")
+                            }
+                            register={register}
+                            rules={rules.participantes_conquis_aventureros_m}
+                            error={errors.participantes_conquis_aventureros_m}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
+                        watch("sexo")?.value ===
+                          TypesSelectSexoEnums.AMBOS) && (
+                        <div className="col-span-1">
+                          <Input
+                            name="participantes_conquis_aventureros_f"
+                            type="number"
+                            title="Niñas aventureras"
+                            labelVisible
+                            isFill={
+                              !!watch("participantes_conquis_aventureros_f")
+                            }
+                            register={register}
+                            rules={rules.participantes_conquis_aventureros_f}
+                            error={errors.participantes_conquis_aventureros_f}
+                            className="mb-3 md:mb-5"
+                            otherStyles="pt-3 pb-3 rounded-full text-sm"
+                          />
+                        </div>
+                      )}
+
+                      <div className="col-span-1">
+                        <Input
+                          name="edad_min"
+                          type="number"
+                          title="Edad mínima"
+                          labelVisible
+                          isFill={!!watch("edad_min")}
+                          register={register}
+                          rules={rules.edad_min}
+                          error={errors.edad_min}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                      <div className="col-span-1">
+                        <Input
+                          name="edad_max"
+                          type="number"
+                          title="Edad máxima"
+                          labelVisible
+                          isFill={!!watch("edad_max")}
+                          register={register}
+                          rules={rules.edad_max}
+                          error={errors.edad_max}
+                          className="mb-3 md:mb-5"
+                          otherStyles="pt-3 pb-3 rounded-full text-sm"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
-            </div>
-            {(watch("participacion_total")?.value === TypesSelectYesOrNot.NO ||
-              watch("tipoEvento")?.value ===
-                TypesSelectTypoEventoCamporeeEnums.FEDERACION) && (
-              <div className="grid grid-cols-2 gap-2 mt-7">
-                {(tipoCamporee === TypesSelectEnums.GUIAS_MAYORES ||
-                  tipoCamporee === TypesSelectEnums.INTEGRADO) && (
-                  <>
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
-                      watch("sexo")?.value ===
-                        TypesSelectSexoEnums.SIN_DISTINCION) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_guias_mayores_m"
-                          type="number"
-                          title={
-                            watch("sexo")?.value ===
-                            TypesSelectSexoEnums.SIN_DISTINCION
-                              ? "Nro guias mayores"
-                              : "Hombres guias mayores"
-                          }
-                          labelVisible
-                          isFill={!!watch("participantes_guias_mayores_m")}
-                          register={register}
-                          rules={rules.participantes_guias_mayores_m}
-                          error={errors.participantes_guias_mayores_m}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_guias_mayores_f"
-                          type="number"
-                          title="Mujeres guias mayores"
-                          labelVisible
-                          isFill={!!watch("participantes_guias_mayores_f")}
-                          register={register}
-                          rules={rules.participantes_guias_mayores_f}
-                          error={errors.participantes_guias_mayores_f}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-                {(tipoCamporee === TypesSelectEnums.CONQUISTADORES ||
-                  tipoCamporee === TypesSelectEnums.INTEGRADO) && (
-                  <>
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
-                      watch("sexo")?.value ===
-                        TypesSelectSexoEnums.SIN_DISTINCION) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_conquis_aventureros_m"
-                          type="number"
-                          title={
-                            watch("sexo")?.value ===
-                            TypesSelectSexoEnums.SIN_DISTINCION
-                              ? "Nro conquistadores"
-                              : "Hombres conquistadores"
-                          }
-                          labelVisible
-                          isFill={
-                            !!watch("participantes_conquis_aventureros_m")
-                          }
-                          register={register}
-                          rules={rules.participantes_conquis_aventureros_m}
-                          error={errors.participantes_conquis_aventureros_m}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_conquis_aventureros_f"
-                          type="number"
-                          title="Mujeres conquistadores"
-                          labelVisible
-                          isFill={
-                            !!watch("participantes_conquis_aventureros_f")
-                          }
-                          register={register}
-                          rules={rules.participantes_conquis_aventureros_f}
-                          error={errors.participantes_conquis_aventureros_f}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-
-                {tipoCamporee === TypesSelectEnums.AVENTUREROS && (
-                  <>
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.HOMBRES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS ||
-                      watch("sexo")?.value ===
-                        TypesSelectSexoEnums.SIN_DISTINCION) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_conquis_aventureros_m"
-                          type="number"
-                          title={
-                            watch("sexo")?.value ===
-                            TypesSelectSexoEnums.SIN_DISTINCION
-                              ? "Nro aventureros"
-                              : "Niños aventureros"
-                          }
-                          labelVisible
-                          isFill={
-                            !!watch("participantes_conquis_aventureros_m")
-                          }
-                          register={register}
-                          rules={rules.participantes_conquis_aventureros_m}
-                          error={errors.participantes_conquis_aventureros_m}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-
-                    {(watch("sexo")?.value === TypesSelectSexoEnums.MUJERES ||
-                      watch("sexo")?.value === TypesSelectSexoEnums.AMBOS) && (
-                      <div className="col-span-1">
-                        <Input
-                          name="participantes_conquis_aventureros_f"
-                          type="number"
-                          title="Niñas aventureras"
-                          labelVisible
-                          isFill={
-                            !!watch("participantes_conquis_aventureros_f")
-                          }
-                          register={register}
-                          rules={rules.participantes_conquis_aventureros_f}
-                          error={errors.participantes_conquis_aventureros_f}
-                          className="mb-3 md:mb-5"
-                          otherStyles="pt-3 pb-3 rounded-full text-sm"
-                        />
-                      </div>
-                    )}
-
-                    <div className="col-span-1">
-                      <Input
-                        name="edad_min"
-                        type="number"
-                        title="Edad mínima"
-                        labelVisible
-                        isFill={!!watch("edad_min")}
-                        register={register}
-                        rules={rules.edad_min}
-                        error={errors.edad_min}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                    <div className="col-span-1">
-                      <Input
-                        name="edad_max"
-                        type="number"
-                        title="Edad máxima"
-                        labelVisible
-                        isFill={!!watch("edad_max")}
-                        register={register}
-                        rules={rules.edad_max}
-                        error={errors.edad_max}
-                        className="mb-3 md:mb-5"
-                        otherStyles="pt-3 pb-3 rounded-full text-sm"
-                      />
-                    </div>
-                  </>
-                )}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-1">
+                  <Input
+                    name="oro"
+                    title="Oro"
+                    labelVisible
+                    isFill={!!watch("oro")}
+                    register={register}
+                    rules={rules.oro}
+                    error={errors.oro}
+                    className="mb-3 md:mb-5"
+                    type="number"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+                <div className="col-span-1">
+                  <Input
+                    name="plata"
+                    title="Plata"
+                    labelVisible
+                    isFill={!!watch("plata")}
+                    register={register}
+                    rules={rules.plata}
+                    error={errors.plata}
+                    className="mb-3 md:mb-5"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
               </div>
-            )}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="oro"
-                  title="Oro"
-                  labelVisible
-                  isFill={!!watch("oro")}
-                  register={register}
-                  rules={rules.oro}
-                  error={errors.oro}
-                  className="mb-3 md:mb-5"
-                  type="number"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-1">
+                  <Input
+                    name="bronce"
+                    title="Bronce"
+                    labelVisible
+                    isFill={!!watch("bronce")}
+                    register={register}
+                    rules={rules.bronce}
+                    error={errors.bronce}
+                    className="mb-3 md:mb-5"
+                    type="number"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+                <div className="col-span-1">
+                  <Input
+                    name="hierro"
+                    title="Hierro"
+                    labelVisible
+                    isFill={!!watch("hierro")}
+                    register={register}
+                    rules={rules.hierro}
+                    error={errors.hierro}
+                    className="mb-3 md:mb-5"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Cancelar"}
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="button"
+                  sizesButton="py-3"
+                  onClick={hide}
+                  // disabled={!isDirty || !isValid || !!isLoading}
+                />
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Guardar"}
+                  fill
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="submit"
+                  sizesButton="py-3"
                 />
               </div>
-              <div className="col-span-1">
-                <Input
-                  name="plata"
-                  title="Plata"
-                  labelVisible
-                  isFill={!!watch("plata")}
-                  register={register}
-                  rules={rules.plata}
-                  error={errors.plata}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="bronce"
-                  title="Bronce"
-                  labelVisible
-                  isFill={!!watch("bronce")}
-                  register={register}
-                  rules={rules.bronce}
-                  error={errors.bronce}
-                  className="mb-3 md:mb-5"
-                  type="number"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-              <div className="col-span-1">
-                <Input
-                  name="hierro"
-                  title="Hierro"
-                  labelVisible
-                  isFill={!!watch("hierro")}
-                  register={register}
-                  rules={rules.hierro}
-                  error={errors.hierro}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Cancelar"}
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="button"
-                sizesButton="py-3"
-                onClick={hide}
-                // disabled={!isDirty || !isValid || !!isLoading}
-              />
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Guardar"}
-                fill
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="submit"
-                sizesButton="py-3"
-              />
-            </div>
-          </form>
+            </form>
+            <ModalHelp isShow={isShowHelp}>
+              <HelpCreateEventoCamporee hide={hideHelp} />
+            </ModalHelp>
+          </>
         )}
       </div>
     </div>

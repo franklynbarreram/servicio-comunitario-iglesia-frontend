@@ -6,14 +6,12 @@ import { useSession } from "next-auth/client";
 
 export const useUser = () => {
   const [session] = useSession();
-  const user = session?.user ? (session.user as UserType) : undefined;
-  if (session) {
-    // console.log(session);
-    const { data, isLoading, refetch } = useQuery<any>([GET_USER], () =>
-      ProfilApiService.getUser()
-    );
-    return { data, loading: isLoading, refetch };
-  }
+  // const user = session?.user ? (session.user as UserType) : undefined;
+  // if (session) {
+  // console.log(session);
+  const { data, isLoading, refetch } = useQuery<any>([GET_USER], () =>
+    ProfilApiService.getUser()
+  );
 
   // if (apiUser) {
   // 	console.log('api', apiUser);
@@ -21,5 +19,6 @@ export const useUser = () => {
   // 	console.log('desp', apiUser);
   // }
 
+  return { data, loading: isLoading, refetch };
   // }
 };

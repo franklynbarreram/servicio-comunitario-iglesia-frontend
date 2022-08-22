@@ -42,6 +42,8 @@ import { Alert } from "components/common/alert";
 import { Input } from "components/common/form/input";
 import { InputCheck } from "components/common/form/input-check";
 import { useToasts } from "react-toast-notifications";
+import { HelpListEventCamporeeDetail } from "help/camporee/eventos-camporee/detail";
+import { Help } from "components/common/help";
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -64,6 +66,13 @@ const EventCamporeeDetail = () => {
     isShow: isShowInscription,
     show: showInscription,
   } = useModal();
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
+
   const { addToast } = useToasts();
 
   const profile = useUser();
@@ -335,6 +344,7 @@ const EventCamporeeDetail = () => {
             <>
               <Back />
 
+              <Help showModal={showHelp} />
               <div className="item flex flex-col gap-2 text-center justify-center w-full mt-8">
                 <Typography
                   type="label"
@@ -992,6 +1002,9 @@ const EventCamporeeDetail = () => {
           refetch={refetch}
         />
       </ModalInscription>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListEventCamporeeDetail hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };

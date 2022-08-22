@@ -41,6 +41,9 @@ import { DatePickerCustom } from "components/common/date-picker-select/datePicke
 import LoadScore from "components/informes-mensuales/load-score";
 import { Alert } from "components/common/alert";
 import ViewClub from "components/administrar/clubes/view";
+import { Help } from "components/common/help";
+import { HelpListInformesMensuales } from "help/informes-mensuales/listado";
+import { HelpFormInformesMensuales } from "help/informes-mensuales/form";
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
@@ -80,7 +83,12 @@ const Dashboard = () => {
     isShow: isShowView,
     show: showView,
   } = useModal();
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     Modal: ModalCreateActivity,
     hide: hideCreateActivity,
@@ -136,6 +144,7 @@ const Dashboard = () => {
       ) : (
         <>
           <div className="py-4">
+            <Help showModal={showHelp} />
             <div className="flex flex-col justify-center">
               <div className="grid grid-cols-2 md:grid-cols-6 gap-x-4 mt-10">
                 <div className="col-span-1">
@@ -168,19 +177,21 @@ const Dashboard = () => {
                     module={ModuleEnums.INFORMES_MENSUALES}
                     typePermisse={PermissionsEnums.LOAD_FORMS}
                   >
-                    <div className="flex justify-end">
-                      <Button
-                        className="bg-primary max-w-[200px] border-[black] hover:bg-transparent hover:text-alert-success hover:border-alert-success"
-                        labelProps="f-18 font-normal"
-                        label={"+ Crear actividad"}
-                        fill
-                        boderRadius="rounded-full"
-                        size="full"
-                        type="submit"
-                        sizesButton="py-3"
-                        onClick={showCreateActivity}
-                      />
-                    </div>
+                    {response?.editar && (
+                      <div className="flex justify-end">
+                        <Button
+                          className="bg-primary max-w-[200px] border-[black] hover:bg-transparent hover:text-alert-success hover:border-alert-success"
+                          labelProps="f-18 font-normal"
+                          label={"+ Crear actividad"}
+                          fill
+                          boderRadius="rounded-full"
+                          size="full"
+                          type="submit"
+                          sizesButton="py-3"
+                          onClick={showCreateActivity}
+                        />
+                      </div>
+                    )}
                   </Restricted>
                   <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 mt-20">
                     No hay datos para mostrar
@@ -794,6 +805,10 @@ const Dashboard = () => {
               refetch={refetch}
             />
           </ModalLoadScore>
+          <ModalHelp isShow={isShowHelp}>
+            {/* <HelpListInformesMensuales hide={hideHelp} /> */}
+            <HelpFormInformesMensuales hide={hideHelp} />
+          </ModalHelp>
         </>
       )}
     </LayoutDashboard>

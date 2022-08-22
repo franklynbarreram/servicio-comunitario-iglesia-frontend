@@ -34,6 +34,9 @@ import {
 } from "consts/typesSelectEnum";
 import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";
+import { Help } from "components/common/help";
+import { HelpCreateCamporee } from "help/camporee/create";
+import { useModal } from "hooks/modal";
 
 const EditCamporee = ({ data, hide, refetch }: any) => {
   console.log("data de camporeee", data);
@@ -63,7 +66,12 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   }>({ value: data.id_capellan, label: data.capellan });
 
   const { addToast } = useToasts();
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState(
@@ -293,207 +301,210 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
         ) : (
-          <form onSubmit={handleSubmit(handleSubmitData)}>
-            <Input
-              name="name"
-              title="Nombre"
-              labelVisible
-              isFill={!!watch("name")}
-              register={register}
-              rules={rules.name}
-              error={errors.name}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <Input
-              name="lugar"
-              title="Lugar"
-              labelVisible
-              isFill={!!watch("lugar")}
-              register={register}
-              rules={rules.lugar}
-              error={errors.lugar}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
-              <DatePickerCustom
-                name="fecha_inicio"
-                register={register}
-                rules={rules.fecha_inicio}
-                error={errors.fecha_inicio}
-                label={"Fecha inicio"}
-                value={fechaInicio}
-                control={control}
-                setValue={setFechaInicio}
-                setValueRHF={setValue}
-                // disabled={isRecurrent || !editInformeCreated}
-              />
-              <DatePickerCustom
-                register={register}
-                rules={rules.fecha_fin}
-                error={errors.fecha_fin}
-                name="fecha_fin"
-                label={"Fecha fin"}
-                value={fechaFin}
-                setValue={setFechaFin}
-                control={control}
-                setValueRHF={setValue}
-                // disabled={!editInformeCreated}
-              />
-            </div>
-            <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mt-6">
-              <DatePickerCustom
-                name="fecha_inicio_informes"
-                register={register}
-                rules={rules.fecha_inicio_informes}
-                error={errors.fecha_inicio_informes}
-                label={"Fecha inicio informes"}
-                value={fechaInicioInformes}
-                control={control}
-                setValue={setFechaInicioInformes}
-                setValueRHF={setValue}
-                className="py-2"
-                // disabled={isRecurrent || !editInformeCreated}
-              />
+          <>
+            <Help showModal={showHelp} />
+
+            <form onSubmit={handleSubmit(handleSubmitData)}>
               <Input
-                name="puntuacion_maxima_informe"
-                title="Puntuacion maxima informe"
+                name="name"
+                title="Nombre"
                 labelVisible
-                isFill={!!watch("puntuacion_maxima_informe")}
+                isFill={!!watch("name")}
                 register={register}
-                rules={rules.puntuacion_maxima_informe}
-                error={errors.puntuacion_maxima_informe}
-                className="mb-3 md:mb-5"
-                otherStyles="h-10 rounded-full text-sm"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="nivel1"
-                  title="Nivel 1"
-                  labelVisible
-                  isFill={!!watch("nivel1")}
-                  register={register}
-                  rules={rules.nivel1}
-                  error={errors.nivel1}
-                  className="mb-3 md:mb-5"
-                  type="number"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-              <div className="col-span-1">
-                <Input
-                  name="nivel2"
-                  title="Nivel 2"
-                  labelVisible
-                  isFill={!!watch("nivel2")}
-                  register={register}
-                  rules={rules.nivel2}
-                  error={errors.nivel2}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="nivel3"
-                  title="Nivel 3"
-                  labelVisible
-                  isFill={!!watch("nivel3")}
-                  register={register}
-                  rules={rules.nivel3}
-                  error={errors.nivel3}
-                  className="mb-3 md:mb-5"
-                  type="number"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-              <div className="col-span-1">
-                <Input
-                  name="nivel4"
-                  title="Nivel 4"
-                  labelVisible
-                  isFill={!!watch("nivel4")}
-                  register={register}
-                  rules={rules.nivel4}
-                  error={errors.nivel4}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <InputListSearch
-                  name="tipo"
-                  title="Tipo"
-                  className="mb-4"
-                  options={optionsType}
-                  register={register}
-                  rules={rules.tipo}
-                  error={errors.tipo}
-                  handleChange={(data: OptionType) =>
-                    setValue("tipo", data, { shouldValidate: true })
-                  }
-                  // myDefaultValue={watch("tipo")}
-                  myDefaultValue={{
-                    value: data?.tipo,
-                    text: data?.tipo,
-                    disabled: false,
-                    placeholder: false,
-                  }}
-                />
-              </div>
-              <div className="col-span-1">
-                <InputListSearch
-                  name="tipoCapellan"
-                  title="Tipo capellan"
-                  className="mb-4"
-                  options={optionsTypeCapellan}
-                  register={register}
-                  rules={rules.tipoCapellan}
-                  error={errors.tipoCapellan}
-                  handleChange={(data: OptionType | any) => {
-                    setValue("tipoCapellan", data, { shouldValidate: true });
-                    setTipoCapellan(data);
-                  }}
-                  // myDefaultValue={watch("tipoCapellan")}
-                  myDefaultValue={findTypeCapellan()}
-                />
-              </div>
-            </div>
-            {tipoCapellan?.value === TypesSelectCapellanEnums.INTERNO && (
-              <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                <p className={"ml-3 font-normal mb-2 block f-18"}>Capellan</p>
-                <AsyncSelect
-                  cacheOptions
-                  defaultOptions
-                  loadOptions={promiseOptionsDirector}
-                  styles={customStyles}
-                  value={selectValuePersona}
-                  className={"text-sm"}
-                  onChange={handleChangeSelectDirector}
-                />
-              </div>
-            )}
-            {tipoCapellan?.value === TypesSelectCapellanEnums.EXTERNO && (
-              <Input
-                name="capellanExterno"
-                title="Capellan Externo"
-                labelVisible
-                isFill={!!watch("capellanExterno")}
-                register={register}
-                rules={rules.capellanExterno}
-                error={errors.capellanExterno}
+                rules={rules.name}
+                error={errors.name}
                 className="mb-3 md:mb-5"
                 otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
-            )}
-            {/* <div className="flex-auto">
+              <Input
+                name="lugar"
+                title="Lugar"
+                labelVisible
+                isFill={!!watch("lugar")}
+                register={register}
+                rules={rules.lugar}
+                error={errors.lugar}
+                className="mb-3 md:mb-5"
+                otherStyles="pt-3 pb-3 rounded-full text-sm"
+              />
+              <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
+                <DatePickerCustom
+                  name="fecha_inicio"
+                  register={register}
+                  rules={rules.fecha_inicio}
+                  error={errors.fecha_inicio}
+                  label={"Fecha inicio"}
+                  value={fechaInicio}
+                  control={control}
+                  setValue={setFechaInicio}
+                  setValueRHF={setValue}
+                  // disabled={isRecurrent || !editInformeCreated}
+                />
+                <DatePickerCustom
+                  register={register}
+                  rules={rules.fecha_fin}
+                  error={errors.fecha_fin}
+                  name="fecha_fin"
+                  label={"Fecha fin"}
+                  value={fechaFin}
+                  setValue={setFechaFin}
+                  control={control}
+                  setValueRHF={setValue}
+                  // disabled={!editInformeCreated}
+                />
+              </div>
+              <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mt-6">
+                <DatePickerCustom
+                  name="fecha_inicio_informes"
+                  register={register}
+                  rules={rules.fecha_inicio_informes}
+                  error={errors.fecha_inicio_informes}
+                  label={"Fecha inicio informes"}
+                  value={fechaInicioInformes}
+                  control={control}
+                  setValue={setFechaInicioInformes}
+                  setValueRHF={setValue}
+                  className="py-2"
+                  // disabled={isRecurrent || !editInformeCreated}
+                />
+                <Input
+                  name="puntuacion_maxima_informe"
+                  title="Puntuacion maxima informe"
+                  labelVisible
+                  isFill={!!watch("puntuacion_maxima_informe")}
+                  register={register}
+                  rules={rules.puntuacion_maxima_informe}
+                  error={errors.puntuacion_maxima_informe}
+                  className="mb-3 md:mb-5"
+                  otherStyles="h-10 rounded-full text-sm"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-1">
+                  <Input
+                    name="nivel1"
+                    title="Nivel 1"
+                    labelVisible
+                    isFill={!!watch("nivel1")}
+                    register={register}
+                    rules={rules.nivel1}
+                    error={errors.nivel1}
+                    className="mb-3 md:mb-5"
+                    type="number"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+                <div className="col-span-1">
+                  <Input
+                    name="nivel2"
+                    title="Nivel 2"
+                    labelVisible
+                    isFill={!!watch("nivel2")}
+                    register={register}
+                    rules={rules.nivel2}
+                    error={errors.nivel2}
+                    className="mb-3 md:mb-5"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-1">
+                  <Input
+                    name="nivel3"
+                    title="Nivel 3"
+                    labelVisible
+                    isFill={!!watch("nivel3")}
+                    register={register}
+                    rules={rules.nivel3}
+                    error={errors.nivel3}
+                    className="mb-3 md:mb-5"
+                    type="number"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+                <div className="col-span-1">
+                  <Input
+                    name="nivel4"
+                    title="Nivel 4"
+                    labelVisible
+                    isFill={!!watch("nivel4")}
+                    register={register}
+                    rules={rules.nivel4}
+                    error={errors.nivel4}
+                    className="mb-3 md:mb-5"
+                    otherStyles="pt-3 pb-3 rounded-full text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="col-span-1">
+                  <InputListSearch
+                    name="tipo"
+                    title="Tipo"
+                    className="mb-4"
+                    options={optionsType}
+                    register={register}
+                    rules={rules.tipo}
+                    error={errors.tipo}
+                    handleChange={(data: OptionType) =>
+                      setValue("tipo", data, { shouldValidate: true })
+                    }
+                    // myDefaultValue={watch("tipo")}
+                    myDefaultValue={{
+                      value: data?.tipo,
+                      text: data?.tipo,
+                      disabled: false,
+                      placeholder: false,
+                    }}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <InputListSearch
+                    name="tipoCapellan"
+                    title="Tipo capellan"
+                    className="mb-4"
+                    options={optionsTypeCapellan}
+                    register={register}
+                    rules={rules.tipoCapellan}
+                    error={errors.tipoCapellan}
+                    handleChange={(data: OptionType | any) => {
+                      setValue("tipoCapellan", data, { shouldValidate: true });
+                      setTipoCapellan(data);
+                    }}
+                    // myDefaultValue={watch("tipoCapellan")}
+                    myDefaultValue={findTypeCapellan()}
+                  />
+                </div>
+              </div>
+              {tipoCapellan?.value === TypesSelectCapellanEnums.INTERNO && (
+                <div className={"relative py-2 w-full mb-3 md:mb-5"}>
+                  <p className={"ml-3 font-normal mb-2 block f-18"}>Capellan</p>
+                  <AsyncSelect
+                    cacheOptions
+                    defaultOptions
+                    loadOptions={promiseOptionsDirector}
+                    styles={customStyles}
+                    value={selectValuePersona}
+                    className={"text-sm"}
+                    onChange={handleChangeSelectDirector}
+                  />
+                </div>
+              )}
+              {tipoCapellan?.value === TypesSelectCapellanEnums.EXTERNO && (
+                <Input
+                  name="capellanExterno"
+                  title="Capellan Externo"
+                  labelVisible
+                  isFill={!!watch("capellanExterno")}
+                  register={register}
+                  rules={rules.capellanExterno}
+                  error={errors.capellanExterno}
+                  className="mb-3 md:mb-5"
+                  otherStyles="pt-3 pb-3 rounded-full text-sm"
+                />
+              )}
+              {/* <div className="flex-auto">
               <Typography
                 type="label"
                 className={clsx("ml-3 font-normal mb-2 block f-18")}
@@ -516,57 +527,61 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                 )}
               </Upload>
             </div> */}
-            <InputImage
-              control={control}
-              name="icon"
-              register={register}
-              rules={rules.icon}
-              error={errors.icon}
-              setErrorRHF={setError}
-              setValueRHF={setValue}
-              image={data?.logo !== "string" && data?.logo}
-              // fileList={fileList}
-              // setFileList={setFileList}
-              // isEdit={informe ? true : false}
-              // disabled={!editInformeCreated}
-            />
-            <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Cancelar"}
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="button"
-                sizesButton="py-3"
-                onClick={hide}
-                // disabled={!isDirty || !isValid || !!isLoading}
+              <InputImage
+                control={control}
+                name="icon"
+                register={register}
+                rules={rules.icon}
+                error={errors.icon}
+                setErrorRHF={setError}
+                setValueRHF={setValue}
+                image={data?.logo !== "string" && data?.logo}
+                // fileList={fileList}
+                // setFileList={setFileList}
+                // isEdit={informe ? true : false}
+                // disabled={!editInformeCreated}
               />
-              <Button
-                labelProps="f-18 font-normal"
-                label={"Guardar"}
-                fill
-                // loading={isLoading}
-                boderRadius="rounded-full"
-                size="full"
-                type="submit"
-                sizesButton="py-3"
-                // disabled={
-                //   !isDirty ||
-                //   !isValid ||
-                //   !!isLoading ||
-                //   isEmpty(selectValuePersona?.label) ||
-                //   isNil(selectValuePersona?.label) ||
-                //   isNil(selectValuePersona) ||
-                //   isEmpty(selectValueIglesias?.label) ||
-                //   isNil(selectValueIglesias?.label) ||
-                //   isNil(selectValueIglesias)
-                //   // isEmpty(imageUrl) ||
-                //   // isNil(imageUrl)
-                // }
-              />
-            </div>
-          </form>
+              <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Cancelar"}
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="button"
+                  sizesButton="py-3"
+                  onClick={hide}
+                  // disabled={!isDirty || !isValid || !!isLoading}
+                />
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={"Guardar"}
+                  fill
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="submit"
+                  sizesButton="py-3"
+                  // disabled={
+                  //   !isDirty ||
+                  //   !isValid ||
+                  //   !!isLoading ||
+                  //   isEmpty(selectValuePersona?.label) ||
+                  //   isNil(selectValuePersona?.label) ||
+                  //   isNil(selectValuePersona) ||
+                  //   isEmpty(selectValueIglesias?.label) ||
+                  //   isNil(selectValueIglesias?.label) ||
+                  //   isNil(selectValueIglesias)
+                  //   // isEmpty(imageUrl) ||
+                  //   // isNil(imageUrl)
+                  // }
+                />
+              </div>
+            </form>
+            <ModalHelp isShow={isShowHelp}>
+              <HelpCreateCamporee hide={hideHelp} />
+            </ModalHelp>
+          </>
         )}
       </div>
     </div>

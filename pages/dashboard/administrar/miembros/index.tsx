@@ -46,6 +46,8 @@ import Restricted from "context/PermissionProvider/Restricted";
 import { Button } from "components/common/button";
 import { RoleEnums } from "consts/rolesEnum";
 import { DatePickerCustom } from "components/common/date-picker/datePicker";
+import { Help } from "components/common/help";
+import { HelpListMiembros } from "help/administrar/miembros/list";
 
 // import Image from "next/image";
 type Params = {
@@ -83,7 +85,12 @@ const Miembros = () => {
     isShow: isShowDelete,
     show: showDelete,
   } = useModal();
-
+  const {
+    Modal: ModalHelp,
+    hide: hideHelp,
+    isShow: isShowHelp,
+    show: showHelp,
+  } = useModal();
   const {
     Modal: ModalViewOnlyMember,
     hide: hideViewOnlyMember,
@@ -299,6 +306,7 @@ const Miembros = () => {
           <Spinner type="loadingPage" className="py-10" />
         ) : (
           <>
+            <Help showModal={showHelp} />
             <form
               className="w-full text-left"
               onSubmit={handleSubmit(handleSubmitData)}
@@ -420,6 +428,9 @@ const Miembros = () => {
           refetch={refetch}
         />
       </ModalViewOnlyMember>
+      <ModalHelp isShow={isShowHelp}>
+        <HelpListMiembros hide={hideHelp} />
+      </ModalHelp>
     </LayoutDashboard>
   );
 };
