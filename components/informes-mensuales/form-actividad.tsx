@@ -370,19 +370,18 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                   // disabled={!isDirty || !isValid || !!isLoading}
                 />
               )}
-              {(data && isEditable) ||
-                (isNil(data) && (
-                  <Button
-                    labelProps="f-18 font-normal"
-                    label={data ? "Guardar" : "Crear"}
-                    fill
-                    // loading={isLoading}
-                    boderRadius="rounded-full"
-                    size="full"
-                    type="submit"
-                    sizesButton="py-3"
-                  />
-                ))}
+              {((data && isEditable) || isNil(data)) && (
+                <Button
+                  labelProps="f-18 font-normal"
+                  label={data ? "Guardar" : "Crear"}
+                  fill
+                  // loading={isLoading}
+                  boderRadius="rounded-full"
+                  size="full"
+                  type="submit"
+                  sizesButton="py-3"
+                />
+              )}
             </div>
           </form>
         )}

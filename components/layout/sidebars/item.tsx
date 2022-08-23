@@ -51,23 +51,29 @@ export const ItemNavbar: React.FC<itemNavbarsProps> = ({
                 {subItem.label}
               </div>
             ) : (
-              <Link key={subItem.name} href={subItem.href}>
-                <a
-                  className={clsx(
-                    router.pathname.includes(subItem.href)
-                      ? "bg-active text-white font-bold opacity-100 "
-                      : "text-white hover:bg-active font-light  opacity-70",
-                    "group flex items-center px-3 pt-7 hover:opacity-90 text-base rounded-md f-18"
-                  )}
-                >
-                  <Icon
-                    src={subItem.icon}
-                    fill="var(--color-white)"
-                    className="mr-5 flex-shrink-0 h-7 w-7"
-                  />
-                  {subItem.label}
-                </a>
-              </Link>
+              <Restricted
+                key={positionSubMenu}
+                module={ModuleMap[subItem.name as ModuleEnums]}
+                typePermisse={PermissionsEnums.VIEW}
+              >
+                <Link key={subItem.name} href={subItem.href}>
+                  <a
+                    className={clsx(
+                      router.pathname.includes(subItem.href)
+                        ? "bg-active text-white font-bold opacity-100 "
+                        : "text-white hover:bg-active font-light  opacity-70",
+                      "group flex items-center px-3 pt-7 hover:opacity-90 text-base rounded-md f-18"
+                    )}
+                  >
+                    <Icon
+                      src={subItem.icon}
+                      fill="var(--color-white)"
+                      className="mr-5 flex-shrink-0 h-7 w-7"
+                    />
+                    {subItem.label}
+                  </a>
+                </Link>
+              </Restricted>
             )}
 
             {subItem.dropdown &&

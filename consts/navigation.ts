@@ -64,7 +64,7 @@ export const navigation = [
       },
       {
         id: 2,
-        name: "informes",
+        name: "informes_mensuales",
         label: "Informes Mensuales",
         href: `${appRouter.dashboard.subLinks.informesMensuales.href}`,
         icon: Icons.informes_mensuales,

@@ -146,19 +146,24 @@ const Dashboard = () => {
           <div className="py-4">
             <Help showModal={showHelp} />
             <div className="flex flex-col justify-center">
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-x-4 mt-10">
-                <div className="col-span-1">
-                  <SelectInput
-                    className="mb-10 z-50 flex-auto"
-                    name="tipo"
-                    label="Tipo"
-                    options={TypesSelectMap}
-                    maxwidth="max-w-[208px]"
-                    value={params.tipo}
-                    setValue={updateQuery}
-                    hideDeleteSelected
-                  ></SelectInput>
-                </div>
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-x-4 mt-10 mb-10 ">
+                <Restricted
+                  module={ModuleEnums.INFORMES_MENSUALES}
+                  typePermisse={PermissionsEnums.SELECT_TYPE_CAMPOREE}
+                >
+                  <div className="col-span-1">
+                    <SelectInput
+                      className="z-50 flex-auto"
+                      name="tipo"
+                      label="Tipo"
+                      options={TypesSelectMap}
+                      maxwidth="max-w-[208px]"
+                      value={params.tipo}
+                      setValue={updateQuery}
+                      hideDeleteSelected
+                    ></SelectInput>
+                  </div>
+                </Restricted>
                 <div className="col-span-1">
                   <DatePickerCustom
                     name="fecha"
