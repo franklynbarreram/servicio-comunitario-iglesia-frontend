@@ -12,7 +12,7 @@ export const ValidateImageUser = (img: any) => {
     img === " " ||
     !img ||
     isNil(img) ||
-    img.toLowerCase() === "string"
+    img?.toLowerCase() === "string"
   )
     return Icons.noImgUser;
 
@@ -27,7 +27,7 @@ export const ValidateImage = (img: any, isUser = false) => {
     img === " " ||
     !img ||
     isNil(img) ||
-    img.toLowerCase() === "string"
+    img?.toLowerCase() === "string"
   )
     return image;
 
@@ -40,7 +40,7 @@ export const ValidateString = (name: any) => {
     name === " " ||
     !name ||
     isNil(name) ||
-    name.toLowerCase() === "string"
+    name?.toLowerCase() === "string"
   )
     return "N/A";
 

@@ -192,11 +192,11 @@ const EditClub = ({ data, hide, refetch }: any) => {
       });
     } else {
       let filter = dataDirector?.data?.filter((item: any) =>
-        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataDirector?.data?.filter((item: any) =>
-          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
         );
       }
 
@@ -221,7 +221,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
       });
     } else {
       const filter = dataIglesias?.data?.filter((item: any) =>
-        item.nombre.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombre?.toLowerCase().includes(inputValue?.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {

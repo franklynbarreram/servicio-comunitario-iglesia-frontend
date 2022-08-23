@@ -49,7 +49,7 @@ export const InputListSearch: React.FC<
     console.log("valor", value);
     const find =
       options.filter(
-        (opt) => opt.value.toLowerCase() === value.value.toLowerCase()
+        (opt) => opt.value?.toLowerCase() === value.value?.toLowerCase()
       )[0] || options[0];
 
     // console.log("data search value select", find);
@@ -68,9 +68,9 @@ export const InputListSearch: React.FC<
       ? options
       : options.filter((person) =>
           person.text
-            .toLowerCase()
+            ?.toLowerCase()
             .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
+            .includes(query?.toLowerCase().replace(/\s+/g, ""))
         );
 
   // React.useEffect(() => {

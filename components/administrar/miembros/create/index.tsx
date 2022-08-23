@@ -135,11 +135,11 @@ const AgregarMiembros = ({ hide, refetch }: any) => {
       });
     } else {
       let filter = dataMiembros?.data?.filter((item: any) =>
-        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataMiembros?.data?.filter((item: any) =>
-          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
         );
       }
 

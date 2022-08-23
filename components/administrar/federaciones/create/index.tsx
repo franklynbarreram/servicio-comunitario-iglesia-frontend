@@ -97,7 +97,7 @@ const CreateFederacion = ({ hide, refetch }: any) => {
       });
     } else {
       const filter = dataPresidentesConsejo?.data?.filter((item: any) =>
-        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {

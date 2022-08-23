@@ -103,11 +103,11 @@ const CreateIglesia = ({ hide, refetch }: any) => {
       });
     } else {
       let filter = dataAncianos?.data?.filter((item: any) =>
-        item.nombres.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataAncianos?.data?.filter((item: any) =>
-          item.apellidos.toLowerCase().includes(inputValue.toLowerCase())
+          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
         );
       }
 
@@ -132,7 +132,7 @@ const CreateIglesia = ({ hide, refetch }: any) => {
       });
     } else {
       const filter = dataDistritos?.data?.filter((item: any) =>
-        item.nombre.toLowerCase().includes(inputValue.toLowerCase())
+        item.nombre?.toLowerCase().includes(inputValue?.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {
