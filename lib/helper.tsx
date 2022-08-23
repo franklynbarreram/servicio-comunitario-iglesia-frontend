@@ -35,14 +35,18 @@ export const ValidateImage = (img: any, isUser = false) => {
 };
 
 export const ValidateString = (name: any) => {
-  if (
-    name === "" ||
-    name === " " ||
-    !name ||
-    isNil(name) ||
-    name?.toLowerCase() === "string"
-  )
+  if (isNil(name)) {
     return "N/A";
+  } else {
+    if (
+      name === "" ||
+      name === " " ||
+      !name ||
+      isNil(name) ||
+      name?.toLowerCase() === "string"
+    )
+      return "N/A";
+  }
 
   return name;
 };
