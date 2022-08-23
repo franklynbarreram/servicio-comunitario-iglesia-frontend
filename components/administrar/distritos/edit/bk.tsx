@@ -162,7 +162,10 @@ const EditDistrito = ({ data, hide, refetch }: any) => {
       });
     } else {
       const filter = dataPresidentesConsejo?.data?.filter((item: any) =>
-        item.nombre?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombre
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {

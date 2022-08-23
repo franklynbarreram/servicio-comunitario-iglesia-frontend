@@ -237,11 +237,17 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
       });
     } else {
       let filter = dataPersona?.data?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersona?.data?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
 

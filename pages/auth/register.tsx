@@ -200,7 +200,10 @@ const Register = () => {
       });
     } else {
       const filter = dataIglesias?.data?.filter((item: any) =>
-        item.nombre?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombre
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
 
       const options = filter?.map((item: any) => {

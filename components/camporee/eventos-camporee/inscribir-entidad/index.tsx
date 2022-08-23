@@ -293,11 +293,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       // });
     } else {
       let filter = dataPersons?.conquistador?.M?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.conquistador?.M?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
@@ -328,11 +334,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       // });
     } else {
       let filter = dataPersons?.guia_mayor?.M?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.guia_mayor?.M?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
@@ -359,11 +371,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       return callback(options);
     } else {
       let filter = dataPersons?.aventurero?.M?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.aventurero?.M?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
@@ -394,11 +412,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       // });
     } else {
       let filter = dataPersons?.conquistador?.F?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.conquistador?.F?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
@@ -429,11 +453,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       // });
     } else {
       let filter = dataPersons?.guia_mayor?.F?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.guia_mayor?.F?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
@@ -460,11 +490,17 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       return callback(options);
     } else {
       let filter = dataPersons?.aventurero?.F?.filter((item: any) =>
-        item.nombres?.toLowerCase().includes(inputValue?.toLowerCase())
+        item.nombres
+          ?.toString()
+          ?.toLowerCase()
+          .includes(inputValue?.toString()?.toLowerCase())
       );
       if (isEmpty(filter) || isNil(filter)) {
         filter = dataPersons?.aventurero?.F?.filter((item: any) =>
-          item.apellidos?.toLowerCase().includes(inputValue?.toLowerCase())
+          item.apellidos
+            ?.toString()
+            ?.toLowerCase()
+            .includes(inputValue?.toString()?.toLowerCase())
         );
       }
       const options = filter?.map((item: any) => {
