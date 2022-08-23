@@ -10,6 +10,7 @@ import { get } from "lodash";
 import { InputListSearch } from "components/common/form/input-list-search";
 import { OptionType } from "interfaces";
 import { useRouter } from "next/router";
+import { useUser } from "hooks/user";
 
 interface TypeMiembros {
   value: Number;
@@ -22,7 +23,8 @@ const EditProfile = ({ data, hide, refetch }: any) => {
   //   [UseQueryEnums.GET_ALL_CARGOS],
   //   () => CargosServices.getAll()
   // );
-
+  const profile = useUser();
+  const dataUser = get(profile, "data", []);
   const { addToast } = useToasts();
   const router = useRouter();
 
@@ -182,6 +184,7 @@ const EditProfile = ({ data, hide, refetch }: any) => {
                 size="full"
                 type="submit"
                 sizesButton="py-3"
+                disabled={watch("rol") === dataUser.scope_actual}
                 // disabled={
                 //   !isDirty || !isValid || !!isLoading
                 //   // isEmpty(selectValueMiembros?.label) ||

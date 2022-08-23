@@ -42,6 +42,7 @@ import { customStyles } from "consts/stylesReactSelect.helper";
 import { useModal } from "hooks/modal";
 import { HelpCreateEventoCamporee } from "help/camporee/eventos-camporee/create";
 import { Help } from "components/common/help";
+import { OficialServices } from "services/Oficial";
 
 const CreateEventCamporee = ({
   tipoCamporee,
@@ -474,7 +475,7 @@ const CreateEventCamporee = ({
   };
   const promiseOptionsPersona = (inputValue: any, callback: any) => {
     if (!inputValue && !dataPersona) {
-      return PersonasServices.getAll().then((response) => {
+      return OficialServices.getAll().then((response) => {
         setDataPersona(response);
         const options = response?.data?.map((item: any) => {
           return {
