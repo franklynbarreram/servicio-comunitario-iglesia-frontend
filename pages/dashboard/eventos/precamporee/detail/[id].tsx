@@ -47,6 +47,7 @@ import { Tabs } from "antd";
 import moment from "moment";
 import { Collapse } from "antd";
 import { ArrowRightIcon } from "@heroicons/react/solid";
+import { Alert } from "components/common/alert";
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
@@ -713,15 +714,105 @@ const EventPrecamporeeDetail = () => {
                               key={index}
                               className="mb-10"
                             >
-                              <InformeForm
-                                refetch={refetch}
-                                informe={informe ? informe : null}
-                                isAvailable={item?.activo}
-                                idPrecamporee={id}
-                                isRecurrent
-                                mes={item.value}
-                                className={classNamesForms}
-                              />
+                              <>
+                                {!isNil(informe) && (
+                                  <>
+                                    <div className="flex gap-2 flex-wrap">
+                                      {informe?.puntuacion && (
+                                        <Alert
+                                          className="mb-5 bg-alert-success rounded-xl"
+                                          hideIcon
+                                        >
+                                          <p className="text-[white] text-base py-5">
+                                            Puntuación:{"  "}
+                                            <span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+                                              {informe?.puntuacion}/
+                                              {informe?.puntuacion_maxima}
+                                            </span>
+                                          </p>
+                                        </Alert>
+                                      )}
+                                      <Alert
+                                        className="mb-5 bg-primary rounded-xl"
+                                        hideIcon
+                                      >
+                                        <p className="text-[white] text-base py-5">
+                                          Firma Anciano:{"  "}
+                                          <span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+                                            {informe?.firma_anciano ? (
+                                              <span className="text-secondary font-bold">
+                                                SI
+                                              </span>
+                                            ) : (
+                                              <span className="text-alert-error font-bold">
+                                                NO
+                                              </span>
+                                            )}
+                                          </span>
+                                        </p>
+                                      </Alert>
+                                      <Alert
+                                        className="mb-5 bg-secondary rounded-xl"
+                                        hideIcon
+                                      >
+                                        <p className="text-[white] text-base py-5">
+                                          Firma Pastor:{"  "}
+                                          <span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+                                            {informe?.firma_pastor ? (
+                                              <span className="text-secondary font-bold">
+                                                SI
+                                              </span>
+                                            ) : (
+                                              <span className="text-alert-error font-bold">
+                                                NO
+                                              </span>
+                                            )}
+                                          </span>
+                                        </p>
+                                      </Alert>
+                                      <Alert
+                                        className="mb-5 bg-overlay rounded-xl"
+                                        hideIcon
+                                      >
+                                        <p className="text-[white] text-base py-5">
+                                          Firma Consejo Regional:{"  "}
+                                          <span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+                                            {informe?.firma_consejo_regional ? (
+                                              <span className="text-secondary font-bold">
+                                                SI
+                                              </span>
+                                            ) : (
+                                              <span className="text-alert-error font-bold">
+                                                NO
+                                              </span>
+                                            )}
+                                          </span>
+                                        </p>
+                                      </Alert>
+                                    </div>
+                                    {informe?.observacion && (
+                                      <Alert className=" bg-[#ffc107] rounded-xl mb-10">
+                                        <p className="text-[black] text-base py-5">
+                                          Observación:{" "}
+                                          <span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+                                            {informe?.observacion}
+                                          </span>
+                                        </p>
+                                      </Alert>
+                                    )}
+                                  </>
+                                )}
+
+                                <InformeForm
+                                  refetch={refetch}
+                                  informe={informe ? informe : null}
+                                  isAvailable={item?.activo}
+                                  idPrecamporee={id}
+                                  isRecurrent
+                                  mes={item.value}
+                                  className={classNamesForms}
+                                />
+                              </>
                             </TabPane>
                           );
                         })}
