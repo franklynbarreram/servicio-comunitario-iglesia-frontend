@@ -293,7 +293,7 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
   const dataColumns = () => {
     if (
       dataUser.scope_actual === RoleEnums.LIDER_JUVENIL &&
-      (values?.categoria??.toLowerCase() === "total" || isNil(values?.categoria))
+      (values?.categoria?.toLowerCase() === "total" || isNil(values?.categoria))
     ) {
       return [
         {
