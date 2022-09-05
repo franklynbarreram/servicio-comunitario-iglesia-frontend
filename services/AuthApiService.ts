@@ -22,11 +22,25 @@ class Service {
   async sendEmailRecoveryPassword(payload: any): Promise<any> {
     return this.client.post("/auth/forgot_password", payload);
   }
+
   async changePassword(payload: any): Promise<any> {
     return this.client.post("/auth/reset_password", payload);
   }
   async login(payload: LoginRequest): Promise<AuthSession> {
     return this.client.post("/users/login", payload);
+  }
+  async sendEmailVerification(): Promise<any> {
+    return this.client.post("/email/verification-notification");
+  }
+  async confirmationEmail(params: any): Promise<any> {
+    const { id, hash, expires, signature } = params;
+    const newParams = {
+      expires: expires,
+      signature: signature,
+    };
+    return this.client.get(`/email/verify/${id}/${hash}`, {
+      params: newParams,
+    });
   }
 
   async changeRol(params: any): Promise<any> {

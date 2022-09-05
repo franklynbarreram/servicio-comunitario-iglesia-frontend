@@ -10,6 +10,8 @@ import { Icons } from "consts/icons";
 import { signOut } from "next-auth/client";
 import { Images } from "consts";
 import { ItemNavbar } from "./item";
+import { useUser } from "hooks/user";
+import { get } from "lodash";
 
 interface LayoutDashboardProps {
   title?: string;
@@ -30,6 +32,8 @@ export const SidebarMobile: React.FC<LayoutDashboardProps> = ({
   setNavigation,
   showSubmenu,
 }) => {
+  const user = useUser();
+  const profile = get(user, "data.user", []);
   return (
     <>
       {/* Sidebar mobile */}
@@ -101,47 +105,49 @@ export const SidebarMobile: React.FC<LayoutDashboardProps> = ({
                     </a>
                   </Link>
                 </div>
-                <nav className="mt-5 flex-1 px-7">
-                  {navigation.map((item: any, positionMenu: any) => {
-                    return (
-                      <ItemNavbar
-                        key={positionMenu}
-                        item={item}
-                        positionMenu={positionMenu}
-                        setNavigation={setNavigation}
-                        showSubmenu={showSubmenu}
-                      />
-                      // <Fragment key={"nav-desktop-" + item.id}>
-                      //   <p className="text-white f-18 font-semibold px-3 pt-7">
-                      //     {item.label}
-                      //   </p>
-                      //   {item.subNavigation.map((subItem) => {
-                      //     const active = router.pathname === subItem.href;
-                      //     return (
-                      //       <Link key={subItem.name} href={subItem.href}>
-                      //         <a
-                      //           className={clsx(
-                      //             active
-                      //               ? "bg-active text-white font-bold opacity-100 "
-                      //               : "text-white hover:bg-active font-light  opacity-70",
-                      //             "group flex items-center px-3 pt-7 hover:opacity-90 text-base rounded-md f-18"
-                      //           )}
-                      //         >
-                      //           <img
-                      //             src={subItem.icon}
-                      //             className="mr-4 flex-shrink-0 h-6 w-6 text-white"
-                      //             aria-hidden="true"
-                      //           />
-                      //           {subItem.label}
-                      //         </a>
-                      //       </Link>
-                      //     );
-                      //   })}
-                      //   <div className="divider mx-3 mt-7"></div>
-                      // </Fragment>
-                    );
-                  })}
-                </nav>
+                {profile?.verificado && (
+                  <nav className="mt-5 flex-1 px-7">
+                    {navigation.map((item: any, positionMenu: any) => {
+                      return (
+                        <ItemNavbar
+                          key={positionMenu}
+                          item={item}
+                          positionMenu={positionMenu}
+                          setNavigation={setNavigation}
+                          showSubmenu={showSubmenu}
+                        />
+                        // <Fragment key={"nav-desktop-" + item.id}>
+                        //   <p className="text-white f-18 font-semibold px-3 pt-7">
+                        //     {item.label}
+                        //   </p>
+                        //   {item.subNavigation.map((subItem) => {
+                        //     const active = router.pathname === subItem.href;
+                        //     return (
+                        //       <Link key={subItem.name} href={subItem.href}>
+                        //         <a
+                        //           className={clsx(
+                        //             active
+                        //               ? "bg-active text-white font-bold opacity-100 "
+                        //               : "text-white hover:bg-active font-light  opacity-70",
+                        //             "group flex items-center px-3 pt-7 hover:opacity-90 text-base rounded-md f-18"
+                        //           )}
+                        //         >
+                        //           <img
+                        //             src={subItem.icon}
+                        //             className="mr-4 flex-shrink-0 h-6 w-6 text-white"
+                        //             aria-hidden="true"
+                        //           />
+                        //           {subItem.label}
+                        //         </a>
+                        //       </Link>
+                        //     );
+                        //   })}
+                        //   <div className="divider mx-3 mt-7"></div>
+                        // </Fragment>
+                      );
+                    })}
+                  </nav>
+                )}
               </div>
               <div className="flex-shrink-0 flex border-t border-white  px-7 py-4">
                 <div className="flex items-center">

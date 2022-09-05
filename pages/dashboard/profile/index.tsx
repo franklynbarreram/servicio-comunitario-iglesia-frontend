@@ -1,11 +1,14 @@
 import Modal from "antd/lib/modal/Modal";
 import clsx from "clsx";
 import { Button } from "components/common/button";
+import { Dropdown } from "components/common/dropdown";
 import { Spinner } from "components/common/spinner/spinner";
 import { Typography } from "components/common/typography";
 import { IconWithText } from "components/icon-with-text";
 import { LayoutDashboard } from "components/layout";
-import EditProfile from "components/profile/edit";
+import EditEmail from "components/profile/editEmail";
+import EditPassword from "components/profile/EditPassword";
+import EditPersonalInformation from "components/profile/editPersonalInformation";
 import { useModal } from "hooks/modal";
 import { useUser } from "hooks/user";
 import { ValidateImage, ValidateString } from "lib/helper";
@@ -15,12 +18,45 @@ import { getSession } from "next-auth/client";
 import * as React from "react";
 
 const Profile = () => {
-  const { Modal, hide, isShow, show } = useModal();
+  const {
+    Modal: ModalEditPersonalInfo,
+    hide: hideEditPersonalInfo,
+    isShow: isShowEditPersonalInfo,
+    show: showEditPersonalInfo,
+  } = useModal();
+
+  const {
+    Modal: ModalEditPassword,
+    hide: hideEditPassword,
+    isShow: isShowEditPassword,
+    show: showEditPassword,
+  } = useModal();
+
+  const {
+    Modal: ModalEditEmail,
+    hide: hideEditEmail,
+    isShow: isShowEditEmail,
+    show: showEditEmail,
+  } = useModal();
+
   const profile = useUser();
   const data = get(profile, "data", []);
   const user = get(data, "user", []);
   const isLoading = get(profile, "loading", undefined);
-
+  const itemsEditProfile = [
+    {
+      name: "Información personal",
+      onClick: showEditPersonalInfo,
+    },
+    {
+      name: "Email",
+      onClick: showEditEmail,
+    },
+    {
+      name: "Contraseña",
+      onClick: showEditPassword,
+    },
+  ];
   return (
     <LayoutDashboard title="Perfil">
       <div className="2xl:px-20 mt-12">
@@ -40,6 +76,13 @@ const Profile = () => {
                 onClick={show}
               />
             </div> */}
+            <div className="flex w-full justify-end">
+              <Dropdown
+                title="Editar"
+                items={itemsEditProfile}
+                customButtonClassName="rounded-md w-[200px]"
+              />
+            </div>
             <div className="item flex flex-col gap-2 text-center justify-center mt-8">
               <img
                 src={ValidateImage(user?.foto, true)}
@@ -283,7 +326,6 @@ const Profile = () => {
                 </Typography>
               </div>
             </div>
-
             <div className="mt-14 mb-24">
               {data?.club && (
                 <>
@@ -386,13 +428,27 @@ const Profile = () => {
                 </>
               )}
             </div>
-            <Modal isShow={isShow}>
-              <EditProfile
-                hide={hide}
+            <ModalEditPersonalInfo isShow={isShowEditPersonalInfo}>
+              <EditPersonalInformation
+                hide={hideEditPersonalInfo}
                 refetch={profile?.refetch}
-                data={profile}
+                data={profile?.data}
               />
-            </Modal>
+            </ModalEditPersonalInfo>
+            <ModalEditEmail isShow={isShowEditEmail}>
+              <EditEmail
+                hide={hideEditEmail}
+                refetch={profile?.refetch}
+                data={profile?.data}
+              />
+            </ModalEditEmail>
+            <ModalEditPassword isShow={isShowEditPassword}>
+              <EditPassword
+                hide={hideEditPassword}
+                refetch={profile?.refetch}
+                data={profile?.data}
+              />
+            </ModalEditPassword>
           </>
         )}
       </div>

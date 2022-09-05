@@ -79,12 +79,17 @@ export const TypesSelectSexoMap = {
 
 export enum TypesSelectSexoRegisterEnums {
   MASCULINO = "Masculino",
-  FEMENINO = "femenino",
+  FEMENINO = "Femenino",
 }
 
 export const TypesSelectSexoRegisterMap: any = {
   [TypesSelectSexoRegisterEnums.MASCULINO]: "M",
   [TypesSelectSexoRegisterEnums.FEMENINO]: "F",
+};
+
+export const TypesSelectSexoRegisterMapLetterToWord: any = {
+  M: [TypesSelectSexoRegisterEnums.MASCULINO],
+  F: [TypesSelectSexoRegisterEnums.FEMENINO],
 };
 
 export enum TypesSelectEstadoCivilEnums {
@@ -99,6 +104,13 @@ export const TypesSelectEstadoCivilMap: any = {
   [TypesSelectEstadoCivilEnums.CASADO]: "C",
   [TypesSelectEstadoCivilEnums.DIVORCIADO]: "D",
   [TypesSelectEstadoCivilEnums.VIUDO]: "V",
+};
+
+export const TypesSelectEstadoCivilMapLetterToWord: any = {
+  S: [TypesSelectEstadoCivilEnums.SOLTERO],
+  C: [TypesSelectEstadoCivilEnums.CASADO],
+  D: [TypesSelectEstadoCivilEnums.DIVORCIADO],
+  V: [TypesSelectEstadoCivilEnums.VIUDO],
 };
 
 export enum TypesSelectSangreEnums {

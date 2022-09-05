@@ -9,6 +9,8 @@ import { Images } from "consts";
 // import { appRouter } from "consts/router";
 import { Icon } from "components/icon";
 import { ItemNavbar } from "./item";
+import { useUser } from "hooks/user";
+import { get } from "lodash";
 
 interface LayoutDashboardProps {
   navigation: any;
@@ -20,6 +22,8 @@ export const SidebarDesktop: React.FC<LayoutDashboardProps> = ({
   setNavigation,
   showSubmenu,
 }) => {
+  const user = useUser();
+  const profile = get(user, "data.user", []);
   return (
     <>
       {/*  Sidebar desktop */}
@@ -43,19 +47,21 @@ export const SidebarDesktop: React.FC<LayoutDashboardProps> = ({
                   </a>
                 </Link>
               </div>
-              <nav className="mt-5 flex-1 px-7">
-                {navigation.map((item: any, positionMenu: any) => {
-                  return (
-                    <ItemNavbar
-                      key={positionMenu}
-                      item={item}
-                      positionMenu={positionMenu}
-                      setNavigation={setNavigation}
-                      showSubmenu={showSubmenu}
-                    />
-                  );
-                })}
-              </nav>
+              {profile?.verificado && (
+                <nav className="mt-5 flex-1 px-7">
+                  {navigation.map((item: any, positionMenu: any) => {
+                    return (
+                      <ItemNavbar
+                        key={positionMenu}
+                        item={item}
+                        positionMenu={positionMenu}
+                        setNavigation={setNavigation}
+                        showSubmenu={showSubmenu}
+                      />
+                    );
+                  })}
+                </nav>
+              )}
             </div>
             <div className="flex-shrink-0 flex border-t border-white px-7 py-4">
               <div className="flex-1 flex items-center px-3 cursor-pointer">

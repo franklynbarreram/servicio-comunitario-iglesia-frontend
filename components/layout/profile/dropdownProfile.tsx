@@ -9,7 +9,7 @@ import Link from "next/dist/client/link";
 import { get } from "lodash";
 import { ValidateImageUser } from "lib/helper";
 import { useModal } from "hooks/modal";
-import EditProfile from "components/profile/edit";
+import EditProfile from "components/profile/editRole";
 
 export const DropdownProfile = () => {
   const { Modal, hide, isShow, show } = useModal();
@@ -64,30 +64,37 @@ export const DropdownProfile = () => {
                   {({ active }) => (
                     <button
                       className={`${
-                        active ? "bg-violet-500 text-white" : "text-gray-500"
+                        active ? "bg-transparent text-white" : "text-gray-500"
                       } group flex flex-1 rounded-md items-center w-full  py-5 justify-center text-gray-500 f-18 font-normal hover:text-gray-800`}
                     >
                       <Link href="/dashboard/profile">Mi perfil</Link>
                     </button>
                   )}
                 </Menu.Item>
+                {user?.verificado && (
+                  <>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active
+                              ? "bg-transparent text-white"
+                              : "text-gray-500"
+                          } group flex flex-1 rounded-md items-center w-full  py-5 justify-center text-gray-500 f-18 font-normal hover:text-gray-800`}
+                          onClick={show}
+                        >
+                          Cambiar rol
+                        </button>
+                      )}
+                    </Menu.Item>
+                  </>
+                )}
+
                 <Menu.Item>
                   {({ active }) => (
                     <button
                       className={`${
-                        active ? "bg-violet-500 text-white" : "text-gray-500"
-                      } group flex flex-1 rounded-md items-center w-full  py-5 justify-center text-gray-500 f-18 font-normal hover:text-gray-800`}
-                      onClick={show}
-                    >
-                      Cambiar rol
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      className={`${
-                        active ? "bg-violet-500 text-white" : "text-gray-500"
+                        active ? "bg-transparent text-white" : "text-gray-500"
                       } group flex flex-1 rounded-md items-center w-full  py-5 justify-center text-gray-500 f-18 font-normal hover:text-gray-800`}
                       onClick={() => {
                         signOut();

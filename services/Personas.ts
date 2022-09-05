@@ -16,6 +16,15 @@ class Service {
   async getAll(): Promise<any> {
     return this.client.get("/personas");
   }
+  async changeEmail(params: any): Promise<any> {
+    return this.client.put(`/personas/email`, { ...params });
+  }
+  async changeInformationPersonal(params: any): Promise<any> {
+    return this.client.put(`/personas`, { ...params });
+  }
+  async changePassword(params: any): Promise<any> {
+    return this.client.put(`/personas/password`, { ...params });
+  }
 }
 
 export const PersonasServices = new Service(axiosClient);

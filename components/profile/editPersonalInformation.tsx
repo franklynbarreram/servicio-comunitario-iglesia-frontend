@@ -1,111 +1,94 @@
+import { getSession, signIn } from "next-auth/client";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { Typography } from "components/common/typography";
 import { Button } from "components/common/button/button";
-import { InputPassword } from "components/common/form/input-password";
-import { getSession, signIn } from "next-auth/client";
-import { useRouter } from "next/router";
+import { AuthService, PersonasServices } from "services";
+import { Spinner } from "components/common/spinner/spinner";
 import { useToasts } from "react-toast-notifications";
-import { Logo } from "components/logo";
-import { GetServerSideProps } from "next";
+import { formatDates, GenerateErrorToast } from "lib/helper";
+import { get } from "lodash";
+import { useRouter } from "next/router";
+import { useUser } from "hooks/user";
 import { InputEmail } from "components/common/form/input-email";
-import { Icons } from "consts/icons";
+import { InputListSearch } from "components/common/form/input-list-search";
 import { Input } from "components/common/form/input";
 import { DatePickerCustom } from "components/common/date-picker/datePicker";
-import clsx from "clsx";
+import { Logo } from "components/logo";
+import { Typography } from "components/common/typography";
 import { message, Upload } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { InputListSearch } from "components/common/form/input-list-search";
-import { OptionType } from "interfaces";
+import { IglesiasServices } from "services/Iglesias";
+import AsyncSelect from "react-select/async";
+import { customStyles } from "consts/stylesReactSelect.helper";
 import {
   optionsTypeEstadoCivil,
   optionsTypeSexoMasculinoAndFemenino,
   optionsTypesSangre,
 } from "consts/typesSelects";
+import { OptionType } from "interfaces";
 import { InputImage } from "components/common/input-image";
 import {
   TypesSelectEstadoCivilMap,
+  TypesSelectEstadoCivilMapLetterToWord,
+  TypesSelectSexoEnums,
+  TypesSelectSexoRegisterEnums,
   TypesSelectSexoRegisterMap,
+  TypesSelectSexoRegisterMapLetterToWord,
 } from "consts/typesSelectEnum";
 import moment from "moment";
-import { formatDates, GenerateErrorToast } from "lib/helper";
-import { AuthService } from "services";
-import { IglesiasServices } from "services/Iglesias";
-import AsyncSelect from "react-select/async";
-import { customStyles } from "consts/stylesReactSelect.helper";
-import InfoAfterRegister from "components/auth/info-after-register";
 
-const Register = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, isValid, errors },
-    watch,
-    setValue,
-    control,
-    setError,
-  } = useForm({ mode: "onChange" });
-  const [imageUrl, setImageUrl] = React.useState();
+const EditPersonalInformation = ({ data, hide, refetch }: any) => {
+  console.log("pa editar", data);
+
+  const [imageUrl, setImageUrl] = React.useState(data?.user?.foto);
   const [step, setStep] = React.useState<"first" | "second">("first");
   const [loading, setLoading] = React.useState(false);
   const [dataIglesias, setDataIglesias] = React.useState<any>();
-  const [selectValueIglesias, setSelectValueIglesias] =
-    React.useState<{ value: Number; label: string }>();
-  const router = useRouter();
+  const [selectValueIglesias, setSelectValueIglesias] = React.useState<{
+    value: Number;
+    label: string;
+  }>({
+    value: data.id_iglesia,
+    label: data.iglesia,
+  });
+  const [fechaNacimiento, setFechaNacimiento] = React.useState(
+    data?.user?.fecha_nacimiento
+  );
+  const [fechaBautizo, setFechaBautizo] = React.useState(
+    data?.user?.fecha_bautizo
+  );
   const { addToast } = useToasts();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [fechaNacimiento, setFechaNacimiento] = React.useState();
-  const [fechaBautizo, setFechaBautizo] = React.useState();
-  const handleSubmitData = (form: any) => {
-    const finalData = {
-      username: form.username,
-      email: form.email,
-      password: form.password,
-      cedula: form.cedula,
-      nombres: form.names,
-      apellidos: form.last_name,
-      fecha_nacimiento: moment(form.fecha_nacimiento).format(formatDates),
-      direccion: form.direccion,
-      tipo_sangre: form.tipo_sangre?.value,
-      alergias: form.alergias,
-      enfermedades: form.enfermedades,
-      fecha_bautizo: moment(form.fecha_bautizo).format(formatDates),
-      profesion: form.profesion,
-      sexo: TypesSelectSexoRegisterMap[form.sexo?.value],
-      estado_civil: TypesSelectEstadoCivilMap[form.estado_civil?.value],
-      foto: form?.foto,
-      id_iglesia: selectValueIglesias?.value
-        ? selectValueIglesias?.value
-        : null,
-    };
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    console.log("finalData:::", finalData);
-
-    setIsLoading(true);
-    AuthService.registerUser(finalData)
-      .then((response: any) => {
-        addToast("Cuenta creada exitosamente", {
-          appearance: "success",
-        });
-        console.log("response create cuenta:", response);
-        setTimeout(() => {
-          // router.push("/auth/signin");
-          setStep("second");
-        }, 4000);
-        setIsLoading(false);
-      })
-      .catch((e: any) => {
-        console.log("Error: ", e);
-        GenerateErrorToast(e, addToast);
-        setIsLoading(false);
-      });
-  };
-
-  const rules = {
-    email: {
-      required: { value: true, message: "Este campo es requerido" },
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    setError,
+    formState: { errors, isDirty, isValid },
+    watch,
+    control,
+  } = useForm<any>({
+    mode: "onChange",
+    defaultValues: {
+      username: data?.user?.username,
+      cedula: data?.user?.cedula,
+      names: data?.user?.nombres,
+      last_name: data?.user?.apellidos,
+      direccion: data?.user?.direccion,
+      estado_civil: data?.user?.estadoCivil,
+      tipo_sangre: data?.user?.tipoSangre,
+      iglesia: data?.user?.iglesia,
+      fecha_nacimiento: data?.user?.fecha_nacimiento,
+      fecha_bautizo: data?.user?.fecha_bautizo,
+      alergias: data?.user?.alergias,
+      enfermedades: data?.user?.enfermedades,
+      profesion: data?.user?.profesion,
+      foto: data?.user?.foto,
     },
+  });
+  const rules = {
     username: {
       required: { value: true, message: "Este campo es requerido" },
     },
@@ -148,11 +131,52 @@ const Register = () => {
     foto: {
       required: { value: true, message: "Este campo es requerido" },
     },
-    password: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     check: {},
   };
+
+  const handleSubmitData = (form: any) => {
+    const finalData = {
+      username: form.username,
+      cedula: form.cedula,
+      nombres: form.names,
+      apellidos: form.last_name,
+      fecha_nacimiento: moment(form.fecha_nacimiento).format(formatDates),
+      direccion: form.direccion,
+      tipo_sangre: form.tipo_sangre?.value || form?.tipo_sangre,
+      alergias: form.alergias,
+      enfermedades: form.enfermedades,
+      fecha_bautizo: moment(form.fecha_bautizo).format(formatDates),
+      profesion: form.profesion,
+      sexo: TypesSelectSexoRegisterMap[form.sexo?.value || form?.sexo],
+      estado_civil:
+        TypesSelectEstadoCivilMap[
+          form.estado_civil?.value || form?.estado_civil
+        ],
+      foto: form?.foto,
+      id_iglesia: selectValueIglesias?.value
+        ? selectValueIglesias?.value
+        : null,
+    };
+
+    console.log("finalData:::", finalData);
+    setIsLoading(true);
+    PersonasServices.changeInformationPersonal(finalData)
+      .then((response: any) => {
+        addToast("Información personal actualizada exitosamente", {
+          appearance: "success",
+        });
+        hide();
+        refetch();
+        console.log("response update personal information:", response);
+        setIsLoading(false);
+      })
+      .catch((e: any) => {
+        console.log("Error information personal: ", e);
+        GenerateErrorToast(e, addToast);
+        setIsLoading(false);
+      });
+  };
+
   function getBase64(img: any, callback: any) {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
@@ -218,29 +242,16 @@ const Register = () => {
   const handleChangeSelectConsejosIglesias = (selected: any) => {
     setSelectValueIglesias(selected);
   };
+
   return (
-    <>
-      {step === "first" && (
-        <div className="container-auth bg-primary">
-          <div className="rounded-2xl center flex flex-col items-center justify-center box w-full m-auto bg-white">
-            <Logo
-              className="mb-4"
-              type="withColor"
-              classNameImg="max-w-[302px]"
-            />
-            <Typography
-              type="title"
-              className="mb-9 f-36 font-normal text-gray-500 mt-10"
-            >
-              Ingresa tus datos
-            </Typography>
-            {/* <p>NEXTAUTH_URL: {process.env.NEXTAUTH_URL}</p>
-					<p>NEXTAUTH_URL publuc: {process.env.NEXT_PUBLIC_AUTH_URL}</p>
-					<p>API: {process.env.NEXT_PUBLIC_API}</p> */}
-            <form
-              className="w-full text-left"
-              onSubmit={handleSubmit(handleSubmitData)}
-            >
+    <div className="text-center">
+      <h2 className="text-3xl md:text-4xl font-bold">Editar Información</h2>
+      <div className="container-form mt-5 mb-11 text-left">
+        {isLoading ? (
+          <Spinner type="loadingPage" className="py-10" />
+        ) : (
+          <form onSubmit={handleSubmit(handleSubmitData)}>
+            <div className={"relative py-2 w-full mb-3 md:mb-5"}>
               <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4">
                 <Input
                   name="username"
@@ -317,20 +328,6 @@ const Register = () => {
               </div>
               <div className="flex-wrap flex-auto lg:flex-nowrap flex gap-4 mb-5 items-center">
                 <div className="flex-auto">
-                  <InputEmail
-                    name="email"
-                    labelVisible
-                    title="Correo electrónico"
-                    isFill={!!watch("email")}
-                    register={register}
-                    rules={rules.email}
-                    error={errors.email}
-                    className="mb-0"
-                    otherStyles="rounded-full text-sm pt-3 pb-3"
-                  />
-                </div>
-
-                <div className="flex-auto">
                   <p className={"ml-3 font-normal mb-2 block f-18"}>Iglesia</p>
 
                   <AsyncSelect
@@ -369,6 +366,12 @@ const Register = () => {
                   }
                   // myDefaultValue={watch("tipo_sangre")}
                   classNamesContainer="flex-auto w-full"
+                  myDefaultValue={{
+                    value: data?.user?.tipo_sangre,
+                    text: data?.user?.tipo_sangre,
+                    disabled: false,
+                    placeholder: false,
+                  }}
                 />
 
                 <Input
@@ -420,6 +423,18 @@ const Register = () => {
                     handleChange={(data: OptionType) =>
                       setValue("sexo", data, { shouldValidate: true })
                     }
+                    myDefaultValue={{
+                      value:
+                        TypesSelectSexoRegisterMapLetterToWord[
+                          data?.user?.sexo
+                        ],
+
+                      text: TypesSelectSexoRegisterMapLetterToWord[
+                        data?.user?.sexo
+                      ],
+                      disabled: false,
+                      placeholder: false,
+                    }}
                     // myDefaultValue={watch("sexo")}
                   />
                 </div>
@@ -435,45 +450,23 @@ const Register = () => {
                     handleChange={(data: OptionType) => {
                       setValue("estado_civil", data, { shouldValidate: true });
                     }}
+                    myDefaultValue={{
+                      value:
+                        TypesSelectEstadoCivilMapLetterToWord[
+                          data?.user?.estado_civil
+                        ],
+
+                      text: TypesSelectEstadoCivilMapLetterToWord[
+                        data?.user?.estado_civil
+                      ],
+                      disabled: false,
+                      placeholder: false,
+                    }}
                     // myDefaultValue={watch("estado_civil")}
                   />
                 </div>
               </div>
-              {/* <div className="flex-auto mt-7">
-              <Typography
-                type="label"
-                className={clsx("ml-3 font-normal mb-2 block f-18")}
-              >
-                Foto de perfil
-              </Typography>
-              <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-            </div> */}
-              <InputPassword
-                name="password"
-                title="Contraseña"
-                isFill={!!watch("password")}
-                validate={false}
-                register={register}
-                className="mt-7"
-                rules={rules.password}
-                error={errors.password}
-                leftImg={Icons.locked}
-                otherStyles="rounded-full text-sm pt-3 pb-3"
-              />
+
               <InputImage
                 className="my-7"
                 control={control}
@@ -484,59 +477,42 @@ const Register = () => {
                 error={errors.foto}
                 setErrorRHF={setError}
                 setValueRHF={setValue}
-                // image={data?.logo !== "string" && data?.logo}
+                image={imageUrl !== "string" && imageUrl}
                 // fileList={fileList}
                 // setFileList={setFileList}
                 // isEdit={informe ? true : false}
                 // disabled={!editInformeCreated}
               />
-              <div className="flex flex-col items-center justify-center mt-9 w-full">
-                <Button
-                  labelProps="f-24 font-normal"
-                  label={isLoading ? "Registrarse" : "Registrarse"}
-                  fill
-                  loading={isLoading}
-                  boderRadius="rounded-full"
-                  size="full"
-                  type="submit"
-                  disabled={!isDirty || !isValid || !!isLoading}
-                />
-                <Typography
-                  type="caption"
-                  className="mb-3 mt-10 text-right f-18 font-normal text-gray-500"
-                >
-                  Ya tienes cuenta?
-                  <Link href="/auth/signin">
-                    <span className="text-primary cursor-pointer font-bold f-18">
-                      {" "}
-                      Iniciar Sesión
-                    </span>
-                  </Link>
-                </Typography>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      {step === "second" && <InfoAfterRegister />}
-    </>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
+              <Button
+                labelProps="f-18 font-normal"
+                label={"Cancelar"}
+                // loading={isLoading}
+                boderRadius="rounded-full"
+                size="full"
+                type="button"
+                sizesButton="py-3"
+                onClick={hide}
+                // disabled={!isDirty || !isValid || !!isLoading}
+              />
+              <Button
+                labelProps="f-18 font-normal"
+                label={"Guardar"}
+                fill
+                // loading={isLoading}
+                boderRadius="rounded-full"
+                size="full"
+                type="submit"
+                sizesButton="py-3"
+              />
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-
-  if (session && session.accessToken) {
-    return {
-      redirect: {
-        destination: "/dashboard",
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-};
-
-export default Register;
+export default EditPersonalInformation;
