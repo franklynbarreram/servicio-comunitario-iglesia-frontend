@@ -7,7 +7,7 @@ import { Typography } from "components/common/typography";
 import { IconWithText } from "components/icon-with-text";
 import { LayoutDashboard } from "components/layout";
 import EditEmail from "components/profile/editEmail";
-import EditPassword from "components/profile/EditPassword";
+import EditPassword from "components/profile/editPassword";
 import EditPersonalInformation from "components/profile/editPersonalInformation";
 import { useModal } from "hooks/modal";
 import { useUser } from "hooks/user";
