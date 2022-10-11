@@ -226,13 +226,13 @@ const EventosPrecamporee = ({
                     className="col-span-1 bg-white rounded-lg shadow shadow-yellow divide-y divide-gray-200 relative"
                   >
                     <div className="w-full flex-col flex items-center p-6 space-x-6">
-                      <div className="flex-1 truncate">
+                      <div className="flex-1">
                         <div className="flex items-center space-x-3 text-center justify-center">
                           <h3 className="text-gray-900 text-base font-bold truncate text-center">
                             {item.nombre}
                           </h3>
                         </div>
-                        <p className="mt-1 text-gray-500 text-sm truncate">
+                        <p className="mt-1 text-gray-500 text-sm break-all">
                           {item.descripcion}
                         </p>
                       </div>

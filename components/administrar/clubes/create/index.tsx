@@ -55,7 +55,7 @@ const CreateClub = ({ hide, refetch }: any) => {
     watch,
   } = useForm<any>({
     mode: "onChange",
-    defaultValues: { redes: [{ name: "", url: "" }] },
+    defaultValues: { redes: [{ nombre: "", url: "" }] },
   });
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -368,13 +368,13 @@ const CreateClub = ({ hide, refetch }: any) => {
                   /> */}
 
                     <Input
-                      name={`redes[${index}].name`}
+                      name={`redes[${index}].nombre`}
                       title="Nombre"
                       labelVisible
-                      // isFill={!!watch(`redes[${index}].name`)}
+                      // isFill={!!watch(`redes[${index}].nombre`)}
                       register={register}
                       rules={rules.redes}
-                      error={errors.redes?.[index]?.name}
+                      error={errors.redes?.[index]?.nombre}
                       className="mb-3 md:mb-5"
                       otherStyles="pt-3 pb-3 rounded-full text-sm"
                     />

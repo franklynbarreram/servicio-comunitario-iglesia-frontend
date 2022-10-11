@@ -124,7 +124,7 @@ export const LayoutDashboard: React.FC<LayoutDashboardProps> = ({
           {/* fin Dropdown profile  */}
         </div>
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-          <div className="py-18 px-6 sm:px-6 md:px-16">
+          <div className="py-18 px-2 sm:px-6 md:px-16">
             <div className="mx-auto">{children}</div>
           </div>
         </main>

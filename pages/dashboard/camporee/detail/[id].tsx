@@ -296,7 +296,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     PermissionsEnums.VIEW,
     ModuleEnums.EVENTO_PRECAMPOREE
   );
-
   if (session && session.accessToken && isValid) {
     return {
       props: {},
@@ -311,8 +310,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-
-  if (!session) {
+  if (session) {
     return {
       redirect: {
         destination: "/",

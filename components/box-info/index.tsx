@@ -33,7 +33,7 @@ const BoxInfo = ({
   return (
     <div className={clsx("flex flex-wrap flex-row", className)}>
       <div className="flex flex-wrap w-full flex-col">
-        <div className="flex-1 flex flex-col px-8">
+        <div className="flex-1 flex flex-col px-2 sm:px-8">
           <div className="relative container shadow-2xl rounded-lg px-5 py-8 bg-yellow">
             <img
               className="w-32 h-32 flex-shrink-0 mx-auto rounded-full object-cover"
