@@ -383,7 +383,7 @@ const Dashboard = () => {
                                       >
                                         <div
                                           key={index}
-                                          className="mt-0 w-full md:w-[650px] mx-auto mb-20"
+                                          className="mt-0 w-full md:max-w-[650px] mx-auto mb-20"
                                         >
                                           <ActividadForm
                                             key={index}

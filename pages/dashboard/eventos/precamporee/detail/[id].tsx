@@ -55,7 +55,7 @@ type Params = {
   id: any;
 };
 
-const classNamesForms = "w-full px-4 md:w-[550px] mx-auto md:mt-8";
+const classNamesForms = "w-full px-4 md:max-w-[550px] mx-auto md:mt-8";
 
 const EventPrecamporeeDetail = () => {
   const { Modal, hide, isShow, show } = useModal();
@@ -126,15 +126,17 @@ const EventPrecamporeeDetail = () => {
         aux.push({
           name: item.mes,
           component: (
-            <InformeForm
-              refetch={refetch}
-              informe={informe ? informe : null}
-              isAvailable={item?.activo}
-              idPrecamporee={id}
-              isRecurrent
-              mes={item.value}
-              className={classNamesForms}
-            />
+						<div className="px-1">
+							<InformeForm
+								refetch={refetch}
+								informe={informe ? informe : null}
+								isAvailable={item?.activo}
+								idPrecamporee={id}
+								isRecurrent
+								mes={item.value}
+								className={classNamesForms}
+							/>
+						</div>
           ),
           current: index === 0 ? true : false,
         });
@@ -699,7 +701,7 @@ const EventPrecamporeeDetail = () => {
                   </div>
 
                   {!isEmpty(values?.meses) ? (
-                    <div className="mt-20 w-full md:w-[70%] mx-auto mb-20">
+                    <div className="mt-20 w-full mx-auto mb-20">
                       {/* {tabs && <Tabs tabs={tabs} setTabs={setTabs} /> */}
                       <Tabs
                         type="card"
@@ -802,16 +804,17 @@ const EventPrecamporeeDetail = () => {
                                     )}
                                   </>
                                 )}
-
-                                <InformeForm
-                                  refetch={refetch}
-                                  informe={informe ? informe : null}
-                                  isAvailable={item?.activo}
-                                  idPrecamporee={id}
-                                  isRecurrent
-                                  mes={item.value}
-                                  className={classNamesForms}
-                                />
+																<div className="px-1">
+																	<InformeForm
+																		refetch={refetch}
+																		informe={informe ? informe : null}
+																		isAvailable={item?.activo}
+																		idPrecamporee={id}
+																		isRecurrent
+																		mes={item.value}
+																		className={classNamesForms}
+																	/>
+																</div>
                               </>
                             </TabPane>
                           );
@@ -819,15 +822,17 @@ const EventPrecamporeeDetail = () => {
                       </Tabs>
                     </div>
                   ) : (
-                    <InformeForm
-                      refetch={refetch}
-                      idPrecamporee={id}
-                      informe={
-                        isEmpty(values?.informes) ? null : values?.informes[0]
-                      }
-                      isAvailable={values?.activo}
-                      className={classNamesForms}
-                    />
+										<div className="px-1">
+											<InformeForm
+												refetch={refetch}
+												idPrecamporee={id}
+												informe={
+													isEmpty(values?.informes) ? null : values?.informes[0]
+												}
+												isAvailable={values?.activo}
+												className={classNamesForms}
+											/>
+										</div>
                   )}
                 </div>
               </Restricted>
