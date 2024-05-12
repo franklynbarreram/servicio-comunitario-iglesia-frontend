@@ -53,59 +53,27 @@ const CreateClub = ({ hide, refetch }: any) => {
     control,
     formState: { errors, isDirty, isValid },
     watch,
-  } = useForm<any>({
-    mode: "onChange",
-    defaultValues: { redes: [{ nombre: "", url: "" }] },
-  });
-
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "redes",
-    }
-  );
+  } = useForm<any>({ mode: "onChange" });
 
   const rules = {
     name: {
       required: { value: true, message: "Este campo es requerido" },
     },
-    lema: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     // blanco_estudios: {
     //   required: { value: true, message: "Este campo es requerido" },
     // },
-    direccion: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     tipo: {
       required: { value: true, message: "Este campo es requerido" },
-    },
-    redes: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
-    redesUrl: {
-      required: { value: true, message: "Este campo es requerido" },
-
-      pattern: {
-        value:
-          /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi,
-        message: "URL invalida",
-      },
     },
   };
 
   const handleSubmitData = (data: any) => {
     const FinalData = {
       nombre: data?.name,
-      logo: imageUrl,
-      lema: data.lema,
-      direccion: data.direccion,
       // blanco_estudios_biblicos: data.blanco_estudios,
       id_iglesia: selectValueIglesias?.value,
       cedula_director: selectValueDirector?.value,
       tipo: data.tipo.value,
-      redes: data?.redes,
     };
 
     console.log("FinalData", FinalData);
@@ -201,45 +169,6 @@ const CreateClub = ({ hide, refetch }: any) => {
     }
   };
 
-  function getBase64(img: any, callback: any) {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
-
-  function beforeUpload(file: any) {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  }
-
-  const handleChange = (info: any) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: any) => {
-        setImageUrl(imageUrl);
-        setLoading(false);
-      });
-    }
-  };
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
-
   return (
     <div className="text-center">
       <h2 className="text-3xl md:text-4xl font-bold">Crear Club</h2>
@@ -259,48 +188,6 @@ const CreateClub = ({ hide, refetch }: any) => {
               className="mb-3 md:mb-5"
               otherStyles="pt-3 pb-3 rounded-full text-sm"
             />
-
-            <Input
-              name="direccion"
-              title="Direccion"
-              labelVisible
-              isFill={!!watch("direccion")}
-              register={register}
-              rules={rules.direccion}
-              error={errors.direccion}
-              className="mb-3 md:mb-5"
-              otherStyles="pt-3 pb-3 rounded-full text-sm"
-            />
-
-            <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-1">
-                <Input
-                  name="lema"
-                  title="Lema"
-                  labelVisible
-                  isFill={!!watch("lema")}
-                  register={register}
-                  rules={rules.lema}
-                  error={errors.lema}
-                  className="mb-3 md:mb-5"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div>
-              {/* <div className="col-span-1">
-                <Input
-                  name="blanco_estudios"
-                  title="Blanco Estudios Biblicos"
-                  labelVisible
-                  isFill={!!watch("blanco_estudios")}
-                  register={register}
-                  rules={rules.blanco_estudios}
-                  error={errors.blanco_estudios}
-                  className="mb-3 md:mb-5"
-                  type="number"
-                  otherStyles="pt-3 pb-3 rounded-full text-sm"
-                />
-              </div> */}
-            </div>
 
             <InputListSearch
               // myDefaultValue={myDefaultValue}
@@ -349,106 +236,7 @@ const CreateClub = ({ hide, refetch }: any) => {
                 onChange={handleChangeSelectDirector}
               />
             </div>
-            <div className="border-2 border-yellow mt-7 py-4 px-2 rounded-md mb-4">
-              <Typography
-                type="label"
-                className={clsx(
-                  "ml-3 font-bold mb-2 block text-xl text-center"
-                )}
-              >
-                Redes
-              </Typography>
-              {fields.map((item, index) => {
-                return (
-                  <div key={item.id} className="flex gap-3 items-center">
-                    {/* <input
-                    name={`test[${index}].firstName`}
-                    defaultValue={`${item.firstName}`} // make sure to set up defaultValue
-                    ref={register()}
-                  /> */}
-
-                    <Input
-                      name={`redes[${index}].nombre`}
-                      title="Nombre"
-                      labelVisible
-                      // isFill={!!watch(`redes[${index}].nombre`)}
-                      register={register}
-                      rules={rules.redes}
-                      error={errors.redes?.[index]?.nombre}
-                      className="mb-3 md:mb-5"
-                      otherStyles="pt-3 pb-3 rounded-full text-sm"
-                    />
-                    <Input
-                      name={`redes[${index}].url`}
-                      title="URL"
-                      labelVisible
-                      // isFill={!!watch(`redes[${index}].url`)}
-                      register={register}
-                      rules={rules.redesUrl}
-                      error={errors.redes?.[index]?.url}
-                      className="mb-3 md:mb-5"
-                      otherStyles="pt-3 pb-3 rounded-full text-sm"
-                    />
-                    <button
-                      type="button"
-                      className={clsx({
-                        "cursor-not-allowed pointer-events-none":
-                          fields.length === 1,
-                      })}
-                      onClick={() => {
-                        if (fields.length > 1) remove(index);
-                      }}
-                    >
-                      <img
-                        src={Icons.iconTrash}
-                        className={clsx(
-                          {
-                            "cursor-not-allowed pointer-events-none":
-                              fields.length === 1,
-                          },
-                          "w-16 mt-2"
-                        )}
-                        alt=""
-                      />
-                    </button>
-                  </div>
-                );
-              })}
-              <div className="text-center">
-                <button
-                  type="button"
-                  className="text-gray-800 text-sm font-bold text-center"
-                  onClick={() => {
-                    append({ name: "", url: "" });
-                  }}
-                >
-                  {`+ Agregar red`}
-                </button>
-              </div>
-            </div>
-            <div className="flex-auto">
-              <Typography
-                type="label"
-                className={clsx("ml-3 font-normal mb-2 block f-18")}
-              >
-                Icon
-              </Typography>
-              <Upload
-                name="avatar"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-            </div>
+            
             <div className="flex flex-col md:flex-row gap-4 mt-10 px-4 md:px-20">
               <Button
                 labelProps="f-18 font-normal"
