@@ -47,6 +47,7 @@ export const Input: React.FC<
                   { "text-alert-error": error || verifyValue === false },
                   { "text-primary": isFill },
                   { "text-primary": primary && !error },
+									{ "is-required": rules?.required},
                   "ml-3 font-normal mb-2 block f-18"
                 )}
               >

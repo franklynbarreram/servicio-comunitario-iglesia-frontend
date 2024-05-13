@@ -222,3 +222,10 @@ body {
 .custom-collapse.mt-0.ant-collapse {
   margin-top: 0;
 }
+
+.is-required:after {
+  content: '*';
+  margin-left: 3px;
+  color: var(--color-alert-error);
+  font-weight: bold;
+}

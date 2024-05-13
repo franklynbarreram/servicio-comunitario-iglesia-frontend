@@ -51,6 +51,7 @@ export const InputPassword: React.FC<
 				rules={finalRules}
 				rightImg={isVisible ? Icons.showPassword : Icons.hidePassword}
 				rightClick={() => handleClick()}
+				labelVisible
 				{...props}
 			></Input>
 		</>

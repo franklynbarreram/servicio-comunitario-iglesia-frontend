@@ -123,7 +123,7 @@ export const InputImage: React.FC<AlertProps> = ({
             {label && (
               <Typography
                 type="label"
-                className={clsx("ml-3 font-normal mb-2 block f-18")}
+                className={clsx("ml-3 font-normal mb-2 block f-18", {"is-required": rules?.required})}
               >
                 {label}
               </Typography>

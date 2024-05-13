@@ -105,7 +105,7 @@ export const InputListSearch: React.FC<
       />
 
       <div className="w-full">
-        <p className={"ml-3 font-normal mb-2 block f-18"}>{props.title}</p>
+        <p className={clsx({"is-required": props.rules?.required}, "ml-3 font-normal mb-2 block f-18")}>{props.title}</p>
         <Combobox
           disabled={disabled}
           value={selected}

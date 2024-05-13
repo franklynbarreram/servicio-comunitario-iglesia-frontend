@@ -122,7 +122,7 @@ const Register = () => {
       required: { value: true, message: "Este campo es requerido" },
     },
     direccion: {
-      required: { value: true, message: "Este campo es requerido" },
+      // required: { value: true, message: "Este campo es requerido" },
     },
     tipo_sangre: {
       required: { value: true, message: "Este campo es requerido" },
@@ -137,7 +137,7 @@ const Register = () => {
       // required: { value: true, message: "Este campo es requerido" },
     },
     profesion: {
-      required: { value: true, message: "Este campo es requerido" },
+      // required: { value: true, message: "Este campo es requerido" },
     },
     sexo: {
       required: { value: true, message: "Este campo es requerido" },
@@ -146,7 +146,7 @@ const Register = () => {
       required: { value: true, message: "Este campo es requerido" },
     },
     foto: {
-      required: { value: true, message: "Este campo es requerido" },
+      // required: { value: true, message: "Este campo es requerido" },
     },
     password: {
       required: { value: true, message: "Este campo es requerido" },
@@ -327,6 +327,7 @@ const Register = () => {
                     error={errors.email}
                     className="mb-0"
                     otherStyles="rounded-full text-sm pt-3 pb-3"
+										required={!!rules.email.required}
                   />
                 </div>
 
@@ -499,7 +500,7 @@ const Register = () => {
                   boderRadius="rounded-full"
                   size="full"
                   type="submit"
-                  disabled={!isDirty || !isValid || !!isLoading}
+                  disabled={!isDirty || !!isLoading}
                 />
                 <Typography
                   type="caption"

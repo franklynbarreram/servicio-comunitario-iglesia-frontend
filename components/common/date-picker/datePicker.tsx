@@ -91,6 +91,7 @@ export function DatePickerCustom({
               resetValue={resetDate}
               disabled={disabled}
               hideLabelTitle={hideLabelTitle}
+							rules={rules}
             />
           }
           onFocusedDateChange={convert}
@@ -110,13 +111,14 @@ function CustomComponentPicker({
   disabled,
   className,
   hideLabelTitle,
+	rules,
 }: any) {
   return (
     <div className={className}>
       {!hideLabelTitle && (
         <Typography
           type="label"
-          className={clsx("ml-3 font-normal text-primary mb-2 block f-18")}
+          className={clsx({ "is-required": rules?.required }, "ml-3 font-normal text-primary mb-2 block f-18")}
         >
           {label}
         </Typography>
