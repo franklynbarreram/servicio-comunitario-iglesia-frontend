@@ -51,7 +51,7 @@ const Dashboard = () => {
             {profile?.nombres} {profile?.apellidos}
           </h4>
         </div>
-        {profile && !profile?.verificado && (
+        {profile?.verificado === false && (
           <div className="w-2/4 mx-auto mt-10 text-center">
             <Alert title="ALERTA" type="error">
               <p>Debe verificar su correo para poder hacer uso de el sistema</p>
