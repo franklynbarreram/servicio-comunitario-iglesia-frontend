@@ -109,12 +109,12 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     return isJpgOrPng && isLt2M;
   };
 
-  const handleChange: UploadProps["onChange"] = ({
+  const handleChange: UploadProps["onChange"] = async ({
     fileList: newFileList,
     ...rest
   }) => {
     console.log("status", rest);
-    console.log("ELLLLL", newFileList.slice());
+    console.log("ELLLLL", JSON.parse(JSON.stringify(newFileList)));
 
     // if (rest.file.status === "uploading") {
     //   setFileList(newFileList);
@@ -130,7 +130,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     const aux: any = [];
     const filesNumber = newFileList.length;
     // console.log("la cantidad:", filesNumber);
-    newFileList.map(async (file: any, index) => {
+    await Promise.all(newFileList.map(async (file: any, index) => {
       // console.log("diooooos", file);
 
       if (file.status === "done") {
@@ -140,21 +140,6 @@ export const DragAndDrop: React.FC<AlertProps> = ({
         }
 
         aux.push(file.url || (file.preview as string));
-
-        if (filesNumber < maxFiles) {
-          // console.log("debe ser mayor a", maxFiles);
-          // setErrorRHF(name, {
-          //   type: "custom",
-          //   message: `Debe subir ${maxFiles} archivos`,
-          // });
-          setValueRHF(name, aux);
-        } else {
-          setFileListBase64(aux.slice());
-          setValueRHF(name, aux, {
-            shouldValidate: true,
-            shouldDirty: true,
-          });
-        }
       }
 
       if (file.status === "done") {
@@ -162,23 +147,31 @@ export const DragAndDrop: React.FC<AlertProps> = ({
           // setLoadingFiles(false);
         }
       }
-    });
+			return file;
+    }));
     if (filesNumber < maxFiles) {
       console.log("debe ser mayor a", maxFiles);
       setErrorRHF(name, {
         type: "custom",
         message: `Debe subir ${maxFiles} archivos`,
       });
-    }
+			setValueRHF(name, aux);
+    } else {
+			//setFileListBase64(aux.slice());
+			setValueRHF(name, aux, {
+				shouldValidate: true,
+				shouldDirty: true,
+			});
+		}
 
     // console.log("Elaux:", aux);
     setFileList(newFileList);
     // }
   };
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     console.log("en base 64:", fileListBase64);
-  }, [fileListBase64]);
+  }, [fileListBase64]);*/
 
   // React.useEffect(() => {
   //   console.log("los files:", fileList);
@@ -224,7 +217,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
           >
             {fileList.length > 0 ? (
               <>
-                {fileListBase64 && (
+                {/* fileListBase64 && (
                   <div className="p-4 flex flex-wrap gap-4">
                     {fileListBase64.map((item: any, index: any) => {
                       return (
@@ -237,8 +230,8 @@ export const DragAndDrop: React.FC<AlertProps> = ({
                       );
                     })}
                   </div>
-                )}
-                {fileList && !fileListBase64 && (
+                ) */}
+                {fileList /*&& !fileListBase64*/ && (
                   <div className="p-4 flex flex-wrap gap-4">
                     {fileList.map((item: any, index: any) => {
                       return (

@@ -9,6 +9,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import { Typography } from "../typography";
 import { Controller } from "react-hook-form";
 const format_date = "YYYY-MM-DD";
+const visible_format_date = "YYYY - MMMM";
 export interface DataPickerCustomProps {
   name: string;
   value: any;
@@ -37,6 +38,7 @@ export function DatePickerCustom({
 
   return (
     <DatePicker
+			onlyMonthPicker={true}
       value={value}
       containerClassName="w-full flex"
       style={{ display: "flex" }}
@@ -85,7 +87,7 @@ function CustomComponentPicker({
           )}
         >
           <span className="text-xs text-primary">
-            {moment(customValue).format(format_date)}
+            {moment(customValue).format(visible_format_date)}
           </span>
           {!disabled && (
             <img
@@ -103,7 +105,7 @@ function CustomComponentPicker({
         >
           <span className="text-xs text-primary capitalize">
             {" "}
-            {moment(customValue).format(format_date)}
+            {moment(customValue).format(visible_format_date)}
           </span>
           <img src={DateIcon} className="w-4" alt="" />
         </div>

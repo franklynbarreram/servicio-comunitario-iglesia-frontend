@@ -129,19 +129,19 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       console.log("EUUUU", informe);
       const images = [
         {
-          originFileObj: dataBase64toFile(informe.imagen1, "imagen1"),
+          //originFileObj: dataBase64toFile(informe.imagen1, "imagen1"),
           preview: informe.imagen1,
           name: "imagen1",
           status: "done",
         },
         {
-          originFileObj: dataBase64toFile(informe.imagen2, "imagen2"),
+          //originFileObj: dataBase64toFile(informe.imagen2, "imagen2"),
           preview: informe.imagen2,
           name: "imagen2",
           status: "done",
         },
         {
-          originFileObj: dataBase64toFile(informe.imagen3, "imagen3"),
+          //originFileObj: dataBase64toFile(informe.imagen3, "imagen3"),
           preview: informe.imagen3,
           name: "imagen3",
           status: "done",

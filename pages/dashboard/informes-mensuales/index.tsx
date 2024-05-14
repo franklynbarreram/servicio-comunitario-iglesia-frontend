@@ -164,7 +164,7 @@ const Dashboard = () => {
                     ></SelectInput>
                   </div>
                 </Restricted>
-                <div className="col-span-1">
+                <div className="col-span-2">
                   <DatePickerCustom
                     name="fecha"
                     label={"Fecha"}
