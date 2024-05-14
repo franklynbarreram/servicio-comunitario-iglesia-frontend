@@ -48,8 +48,8 @@ const EditPersonalInformation = ({ data, hide, refetch }: any) => {
     value: Number;
     label: string;
   }>({
-    value: data.id_iglesia,
-    label: data.iglesia,
+    value: data.user.id_iglesia,
+    label: data.user.iglesia,
   });
   const [fechaNacimiento, setFechaNacimiento] = React.useState(
     data?.user?.fecha_nacimiento

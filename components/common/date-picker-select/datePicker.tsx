@@ -28,8 +28,7 @@ export function DatePickerCustom({
 }: DataPickerCustomProps) {
   const convert = (date: any) => {
     const aux = new DateObject(date).format(format_date);
-
-    setValue(name, moment(aux).format(format_date));
+    setValue(name, aux);
   };
 
   const resetDate = () => {
@@ -39,6 +38,7 @@ export function DatePickerCustom({
   return (
     <DatePicker
 			onlyMonthPicker={true}
+			format={format_date}
       value={value}
       containerClassName="w-full flex"
       style={{ display: "flex" }}
