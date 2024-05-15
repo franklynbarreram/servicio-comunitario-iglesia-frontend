@@ -28,7 +28,7 @@ const EditFederacion = ({ data, hide, refetch }: any) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState(data?.logo);
+  const [imageUrl, setImageUrl] = React.useState(data?.logo || null);
   const [dataPresidentesConsejo, setDataPresidentesConsejo] =
     React.useState<any>();
   // const { data: presidentesConsejo, isLoading } = useQuery<any>(
@@ -273,11 +273,10 @@ const EditFederacion = ({ data, hide, refetch }: any) => {
                   !isDirty ||
                   !isValid ||
                   !!isLoading ||
+									!!loading ||
                   isEmpty(selectValue.label) ||
                   isNil(selectValue.label) ||
-                  isNil(selectValue) ||
-                  isEmpty(imageUrl) ||
-                  isNil(imageUrl)
+                  isNil(selectValue)
                 }
               />
             </div>
