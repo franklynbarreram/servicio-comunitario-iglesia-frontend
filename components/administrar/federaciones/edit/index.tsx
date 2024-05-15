@@ -115,7 +115,7 @@ const EditFederacion = ({ data, hide, refetch }: any) => {
       }).then((response) => {
         setDataPresidentesConsejo(response);
         const options = response?.data?.map((item: any) => {
-          return { value: item.cedula, label: item.nombres };
+          return { value: item.cedula, label: `${item.nombres} ${item.apellidos}` };
         });
         return options;
       });
