@@ -208,7 +208,7 @@ const EditFederacion = ({ data, hide, refetch }: any) => {
               </div>
               <div className="col-span-2">
                 <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                  <p className={"ml-3 font-normal mb-2 block f-18"}>
+                  <p className={"ml-3 font-normal mb-2 block f-18 is-required"}>
                     Presidente del consejo
                   </p>
                   {/* {!isLoading && ( */}
