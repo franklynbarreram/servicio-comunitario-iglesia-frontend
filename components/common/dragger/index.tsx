@@ -9,6 +9,7 @@ import { Icon } from "components/icon";
 import { Icons } from "consts";
 import { Typography } from "../typography";
 import { isEmpty } from "lodash";
+import { ImageService } from "services/Image";
 
 const { Dragger } = Upload;
 
@@ -99,14 +100,14 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       return Upload.LIST_IGNORE;
     }
 
-    const isLt2M = file.size / 1024 / 1024 <= 2;
+    // const isLt2M = file.size / 1024 / 1024 <= 2;
 
-    if (!isLt2M) {
-      message.error("La imagen debe ser menor o igual a 2 MB!");
-      return Upload.LIST_IGNORE;
-    }
+    // if (!isLt2M) {
+    //   message.error("La imagen debe ser menor o igual a 2 MB!");
+    //   return Upload.LIST_IGNORE;
+    // }
 
-    return isJpgOrPng && isLt2M;
+    return isJpgOrPng /*&& isLt2M*/;
   };
 
   const handleChange: UploadProps["onChange"] = async ({
@@ -135,8 +136,8 @@ export const DragAndDrop: React.FC<AlertProps> = ({
 
       if (file.status === "done") {
         if (!file.url && !file.preview) {
-          file.preview = await getBase64(file.originFileObj as RcFile);
-          // file.preview = URL.createObjectURL(file.originFileObj);
+          // file.preview = await getBase64(file.originFileObj as RcFile);
+          file.preview = await ImageService.upload(file.originFileObj);
         }
 
         aux.push(file.url || (file.preview as string));
