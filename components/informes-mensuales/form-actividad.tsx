@@ -121,7 +121,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
       console.log("EUUUU", data);
       const images = [
         {
-          originFileObj: dataBase64toFile(data?.foto, "imagen1"),
+          //originFileObj: dataBase64toFile(data?.foto, "imagen1"),
           preview: data?.foto,
           name: "imagen1",
           status: "done",
