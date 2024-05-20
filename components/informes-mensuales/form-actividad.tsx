@@ -143,7 +143,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
       setFechaRealizado(data.fecha);
       setFileList(images);
     }
-  }, []);
+  }, [dateSelected]);
 
   const onHandleSubmit = (form: any) => {
     console.log("datii", form);
