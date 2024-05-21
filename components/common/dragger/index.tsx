@@ -50,6 +50,7 @@ export interface AlertProps {
   setFileList: any;
   isEdit?: boolean;
   disabled?: boolean;
+	setLoading?: (value: boolean) => void;
 }
 
 /**
@@ -74,6 +75,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
   control,
   fileList,
   setFileList,
+	setLoading,
 }) => {
   // const [fileList, setFileList] = React.useState<UploadFile[]>([]);
   const [fileListBase64, setFileListBase64] = React.useState<any>();
@@ -102,14 +104,14 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       return Upload.LIST_IGNORE;
     }
 
-    // const isLt2M = file.size / 1024 / 1024 <= 2;
+    const isLt2M = file.size / 1024 / 1024 <= 4.5;
 
-    // if (!isLt2M) {
-    //   message.error("La imagen debe ser menor o igual a 2 MB!");
-    //   return Upload.LIST_IGNORE;
-    // }
+    if (!isLt2M) {
+      message.error("La imagen debe ser menor o igual a 4.5 MB!");
+      return Upload.LIST_IGNORE;
+    }
 
-    return isJpgOrPng /*&& isLt2M*/;
+    return isJpgOrPng && isLt2M;
   };
 
   const handleChange: UploadProps["onChange"] = async ({
@@ -128,7 +130,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     // setLoadingFiles(true);
     // console.log("los file", newFileList);
     // console.log("los file legth", newFileList.length);
-    const aux: any = [];
+    const aux: any[] = [];
     const filesNumber = newFileList.length;
     // console.log("la cantidad:", filesNumber);
     await Promise.all(newFileList.map(async (file: any, index) => {
@@ -150,6 +152,10 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       }
 			return file;
     }));
+		if (setLoading) {
+			if (newFileList.length == aux.length) setLoading(false);
+			else setLoading(true);
+		}
     if (filesNumber < minFiles) {
       setErrorRHF(name, {
         type: "custom",

@@ -42,6 +42,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
   data,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
   // const [mes, setMes] = React.useState(mesInforme);
   const { addToast } = useToasts();
   const [fechaRealizado, setFechaRealizado] = React.useState();
@@ -350,6 +351,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                 fileList={fileList}
                 setFileList={setFileList}
                 disabled={data && !isEditable}
+								setLoading={setLoading}
 
                 // isEdit={informe ? true : false}
               />
@@ -366,8 +368,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                   size="full"
                   type="button"
                   sizesButton="py-3"
-                  onClick={hide}
-                  // disabled={!isDirty || !isValid || !!isLoading}
+                  onClick={hide}                  
                 />
               )}
               {((data && isEditable) || isNil(data)) && (
@@ -380,6 +381,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
                   size="full"
                   type="submit"
                   sizesButton="py-3"
+									disabled={loading}
                 />
               )}
             </div>

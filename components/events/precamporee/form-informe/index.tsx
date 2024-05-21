@@ -44,6 +44,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   className,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
+	const [loading, setLoading] = React.useState(false);
   const [mes, setMes] = React.useState(mesInforme);
   const { addToast } = useToasts();
   const [fechaRealizado, setFechaRealizado] = React.useState();
@@ -285,6 +286,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
                 setFileList={setFileList}
                 isEdit={informe ? true : false}
                 disabled={!editInformeCreated}
+								setLoading={setLoading}
               />
               {/* )} */}
             </div>
@@ -300,6 +302,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
                   size="full"
                   type="submit"
                   sizesButton="py-3"
+									disabled={loading}
                 />
               </div>
             )}
