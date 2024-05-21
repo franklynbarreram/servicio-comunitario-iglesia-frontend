@@ -821,7 +821,7 @@ const EventPrecamporeeDetail = () => {
 												refetch={refetch}
 												idPrecamporee={id}
 												informe={
-													isEmpty(values?.informes) ? null : values?.informes[0]
+													isEmpty(values?.informes) ? null : values?.informes[0].informes[0]
 												}
 												isAvailable={values?.activo}
 												className={classNamesForms}
