@@ -122,7 +122,6 @@ const EventPrecamporeeDetail = () => {
       const aux: any = [];
       response?.data?.meses?.forEach((item: any, index: number) => {
         const informe = findInforme(item.value);
-        console.log("el infomre lleg", informe);
         aux.push({
           name: item.mes,
           component: (
@@ -204,15 +203,12 @@ const EventPrecamporeeDetail = () => {
   const isFirmado = (informe: any) => {
     switch (dataUser?.scope_actual) {
       case RoleEnums.ANCIANO: {
-        console.log("aqui anciado", informe?.firma_anciano);
         return informe?.firma_anciano;
       }
       case RoleEnums.PRESIDENTE_CONSEJO: {
-        console.log("aqui consejo regional", informe?.firma_consejo_regional);
         return informe?.firma_consejo_regional;
       }
       case RoleEnums.PASTOR: {
-        console.log("aqui pastor", informe?.firma_pastor);
         return informe?.firma_pastor;
       }
     }
@@ -222,10 +218,9 @@ const EventPrecamporeeDetail = () => {
     setDataPreview(src);
     showViewImages();
   };
-  const callback = (key: any) => {
-    console.log(key);
-  };
-  console.log("los value evento precampore by id", values);
+  // const callback = (key: any) => {
+  //   console.log(key);
+  // };
 
   return (
     <LayoutDashboard title="Detalle Precamporee">
@@ -326,7 +321,7 @@ const EventPrecamporeeDetail = () => {
               >
                 <Collapse
                   defaultActiveKey={["1"]}
-                  onChange={callback}
+                  //onChange={callback}
                   className="w-full custom-collapse"
                   collapsible="header"
                   expandIcon={({ isActive }) => (
@@ -709,7 +704,6 @@ const EventPrecamporeeDetail = () => {
                       >
                         {values.meses?.map((item: any, index: number) => {
                           const informe = findInforme(item.value);
-                          console.log("el infomre lleg", informe);
                           return (
                             <TabPane
                               tab={item?.mes}

@@ -37,6 +37,7 @@ export interface AlertProps {
   // message?: string;
   // customIcon?: string;
   maxFiles: number;
+	minFiles?: number;
   rules: any;
   error: any;
   control: any;
@@ -58,6 +59,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
   // message,
   // customIcon,
   maxFiles,
+	minFiles = 1,
   // children,
   // color,
   setValueRHF,
@@ -88,7 +90,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       reader.onerror = (error) => reject(error);
     });
   const beforeUpload = (file: any) => {
-    if (fileList.length >= 3) {
+    if (fileList.length >= maxFiles) {
       message.error("Solo puede subir 3 archivos");
       return Upload.LIST_IGNORE;
     }
@@ -114,8 +116,6 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     fileList: newFileList,
     ...rest
   }) => {
-    console.log("status", rest);
-    console.log("ELLLLL", JSON.parse(JSON.stringify(newFileList)));
 
     // if (rest.file.status === "uploading") {
     //   setFileList(newFileList);
@@ -150,11 +150,10 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       }
 			return file;
     }));
-    if (filesNumber < maxFiles) {
-      console.log("debe ser mayor a", maxFiles);
+    if (filesNumber < minFiles) {
       setErrorRHF(name, {
         type: "custom",
-        message: `Debe subir ${maxFiles} archivos`,
+        message: `Debe subir ${minFiles} archivos`,
       });
 			setValueRHF(name, aux);
     } else {

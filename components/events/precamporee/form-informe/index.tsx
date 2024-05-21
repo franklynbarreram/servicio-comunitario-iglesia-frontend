@@ -86,9 +86,9 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       validate: (value: any) => {
         // console.log("en la validacion:", value);
         // console.log("en la validacion lenght:", value?.length);
-        if (value.length < 3) {
+        if (value.length < 1) {
           // console.log("NO APROBADO");
-          return "Debe subir 3 archivos";
+          return "Debe subir al menos un archivo";
         }
       },
     },
@@ -126,7 +126,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
 
   React.useEffect(() => {
     if (!isNil(informe)) {
-      console.log("EUUUU", informe);
       const images = [
         {
           //originFileObj: dataBase64toFile(informe.imagen1, "imagen1"),
@@ -134,30 +133,23 @@ export const InformeForm: React.FC<InformeFormProps> = ({
           name: "imagen1",
           status: "done",
         },
-        {
-          //originFileObj: dataBase64toFile(informe.imagen2, "imagen2"),
-          preview: informe.imagen2,
-          name: "imagen2",
-          status: "done",
-        },
-        {
-          //originFileObj: dataBase64toFile(informe.imagen3, "imagen3"),
-          preview: informe.imagen3,
-          name: "imagen3",
-          status: "done",
-        },
-      ];
-      // const images: any = [];
-      console.log("transfoooor:", images);
+			];
+			if (informe.imagen2) images.push({
+				preview: informe.imagen2,
+				name: "imagen2",
+				status: "done",
+			});
+			if (informe.imagen3) images.push({
+				preview: informe.imagen3,
+				name: "imagen3",
+				status: "done",
+			});
+			
       setValueRHF("description", informe.descripcion);
       setValueRHF("objetive", informe.objetivo);
       setValueRHF("participantes", informe.participantes);
       setValueRHF("fecha_realizado", informe.fecha_realizado);
-      const imagesOnlyBase = [
-        informe?.imagen1,
-        informe?.imagen2,
-        informe?.imagen3,
-      ];
+      const imagesOnlyBase = images.map((i) => i.preview);
       setValueRHF("files", imagesOnlyBase);
       setFechaRealizado(informe.fecha_realizado);
       setFileList(images);
@@ -165,7 +157,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   }, []);
 
   const onHandleSubmit = (data: any) => {
-    console.log("datii", data?.files);
     const finalData = {
       imagen1: data?.files[0],
       imagen2: data?.files[1],
@@ -183,7 +174,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
         addToast("Informe agregado exitosamente", {
           appearance: "success",
         });
-        console.log("response agregar informe:", response);
         refetch();
         setIsLoading(false);
       })
