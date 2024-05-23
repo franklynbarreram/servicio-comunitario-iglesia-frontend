@@ -165,7 +165,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       objetivo: data?.objetive,
       descripcion: data?.description,
       mes: moment(data?.mes).format(formatDates),
-      fecha_realizado: moment(data?.fecha_realizado).format(formatDates),
+      fecha_realizado: data?.fecha_realizado,
       participantes: parseInt(data?.participantes),
       id_camporee_precamporee: parseInt(idPrecamporee),
     };
@@ -268,6 +268,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
                 control={control}
                 setValueRHF={setValueRHF}
                 disabled={!editInformeCreated}
+								multiple
               />
             </div>
 

@@ -8,7 +8,8 @@ import moment from "moment";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import { Typography } from "../typography";
 import { Controller } from "react-hook-form";
-const format_date = "MM/DD/YYYY";
+import { MouseEventHandler } from "react";
+const format_date = "YYYY-MM-DD";
 export interface DataPickerCustomProps {
   name: string;
   value: any;
@@ -25,6 +26,7 @@ export interface DataPickerCustomProps {
   hideLabelTitle?: boolean;
   minDate?: any;
   maxDate?: any;
+	multiple?: boolean;
 }
 export function DatePickerCustom({
   name,
@@ -42,17 +44,24 @@ export function DatePickerCustom({
   maxDate,
   setValueParams,
   className,
+	multiple = false,
 }: DataPickerCustomProps) {
   const registerAux: any = register(name, rules);
-  const convert = (date: any) => {
-    const aux = new DateObject(date).format(format_date);
-    setValueRHF(name, moment(aux).format(), { shouldValidate: true });
+  const convert = (date: DateObject) => {
+    const aux = date.format(format_date);
+    setValueRHF(name, aux, { shouldValidate: true });
     setValueParams
-      ? setValueParams(name, moment(aux).format())
-      : setValue(moment(aux).format());
+      ? setValueParams(name, aux)
+      : setValue(aux);
   };
 
-  const resetDate = () => {
+	const onChange = (selectedDates: DateObject[]) => {
+		setValueRHF(name, selectedDates.map((d) => d.format(format_date)), { shouldValidate: true });
+		setValue(selectedDates.map((d) => d.format(format_date)));
+	}
+
+  const resetDate: MouseEventHandler<HTMLImageElement> = (e) => {
+		e.stopPropagation();
     setValueParams ? setValueParams(name, undefined) : setValue(undefined);
 
     setValueRHF(name, undefined);
@@ -64,7 +73,7 @@ export function DatePickerCustom({
       name={name}
       rules={rules} //optional
       render={({
-        field: { onChange, name },
+        field: { name },
         fieldState: { invalid, isDirty }, //optional
         formState: { errors }, //optional, but necessary if you want to show an error message
       }) => (
@@ -92,9 +101,12 @@ export function DatePickerCustom({
               disabled={disabled}
               hideLabelTitle={hideLabelTitle}
 							rules={rules}
+							multiple={multiple}
             />
           }
-          onFocusedDateChange={convert}
+          onFocusedDateChange={multiple ? undefined : convert}
+					onChange={multiple ? onChange : undefined}
+					multiple={multiple}
         />
       )}
     />
@@ -112,6 +124,7 @@ function CustomComponentPicker({
   className,
   hideLabelTitle,
 	rules,
+	multiple,
 }: any) {
   return (
     <div className={className}>
@@ -127,12 +140,13 @@ function CustomComponentPicker({
         <div
           className={clsx(
             "w-full flex items-center rounded-full border justify-between border-primary h-10 pl-3 pr-3",
-            { "opacity-50 bg-gray-200": disabled }
+            { "opacity-50 bg-gray-200": disabled },
           )}
+					onClick={openCalendar}
         >
-          <span className="text-xs text-primary">
-            {moment(customValue).format(format_date)}
-          </span>
+					<span className="text-xs text-primary">
+						{multiple ? (customValue as Array<string>).join(', ') : customValue}
+					</span>
           {!disabled && (
             <img
               src={XIcon}
