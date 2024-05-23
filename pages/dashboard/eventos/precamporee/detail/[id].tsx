@@ -300,7 +300,7 @@ const EventPrecamporeeDetail = () => {
                     {values?.puntaje_maximo}
                   </Typography>
                 </div>
-                <div className="item col-span-1">
+                {/* <div className="item col-span-1">
                   <Typography
                     type="label"
                     className={clsx("ml-3 font-bold mb-2 block f-18")}
@@ -313,7 +313,7 @@ const EventPrecamporeeDetail = () => {
                   >
                     {values?.realizado ? "Si" : "No"}
                   </Typography>
-                </div>
+                </div> */}
               </div>
               <Restricted
                 module={ModuleEnums.EVENTO_PRECAMPOREE}
@@ -420,6 +420,28 @@ const EventPrecamporeeDetail = () => {
                                         >
                                           {informe?.participantes}
                                         </Typography>
+                                      </div>
+																			<div className="item col-span-1">
+                                        <Typography
+                                          type="label"
+                                          className={clsx(
+                                            "ml-3 font-bold mb-2 block f-18"
+                                          )}
+                                        >
+                                          Fecha de Realización
+                                        </Typography>
+																				{
+																					informe?.fecha_realizado.map((f: string) => 
+																						<Typography
+																							type="span"
+																							className={clsx(
+																								"ml-3 font-normal mb-2 block f-18"
+																							)}
+																						>
+																							{moment(f).format(formatDateComplete)}
+																						</Typography>
+																					)
+																				}
                                       </div>
                                       <div className="item col-span-1">
                                         <Typography
