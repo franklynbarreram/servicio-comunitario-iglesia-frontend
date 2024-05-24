@@ -139,7 +139,7 @@ function CustomComponentPicker({
       {customValue ? (
         <div
           className={clsx(
-            "w-full flex items-center rounded-full border justify-between border-primary min-h-[10px] pl-5 pr-3 py-3",
+            "w-full flex items-center rounded-full border justify-between border-primary min-h-10 pl-5 pr-3 py-3",
             { "opacity-50 bg-gray-200": disabled },
           )}
 					onClick={openCalendar}

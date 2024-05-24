@@ -9,6 +9,9 @@ import { ModuleEnums } from "consts/modulesEmuns";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { Alert } from "components/common/alert";
 import { Params } from "pages/dashboard/informes-mensuales";
+import { TrashIcon } from '@heroicons/react/solid';
+import { useModal } from "hooks/modal";
+import DeleteActividad from "./delete-actividad";
 
 const { TabPane } = Tabs;
 
@@ -23,6 +26,32 @@ type InformeMensualProps = {
 export const InformeMensual: React.FC<InformeMensualProps> = ({
   refetch, itemClub, params, showCreateActivity, hideCreateActivity
 }) => {
+	const {
+    Modal: ModalDelete,
+    hide: hideDelete,
+    isShow: isShowDelete,
+    show: showDelete,
+  } = useModal();
+
+	const [toDelete, setToDelete] = React.useState({
+		id: 0,
+		name: ''
+	});
+
+	const onEdit = (
+    targetKey: React.MouseEvent | React.KeyboardEvent | string,
+    action: 'add' | 'remove',
+  ) => {
+    if (action === 'remove') {
+			const actividad = itemClub.informe.actividades[+targetKey];
+			setToDelete({
+				id: actividad.id,
+				name: actividad.name,
+			});
+      showDelete();
+    }
+  };
+
 	return <>
 		<div className="flex gap-2 flex-wrap">
 			{itemClub?.informe?.puntuacion && (
@@ -144,8 +173,10 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 
 			<div className="mt-10">
 				<Tabs
-					type="card"
+					type={ itemClub.informe.actividades.length > 1 ? "editable-card" : "card" }
 					className="tabs-antd-custom justify-center"
+					onEdit={ onEdit }
+					hideAdd
 				>
 					{itemClub?.informe?.actividades?.map(
 						(item: any, index: any) => {
@@ -154,6 +185,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 									tab={item?.name}
 									key={index}
 									className="mb-10"
+									closeIcon={ <div className="w-4 text-overlay hover:text-primary"><TrashIcon /></div> }
 								>
 									<div
 										key={index}
@@ -177,6 +209,9 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 					)}
 				</Tabs>
 			</div>
+			<ModalDelete isShow={isShowDelete}>
+				<DeleteActividad hide={hideDelete} refetch={refetch} id_actividad={toDelete.id} name_actividad={toDelete.name} />
+			</ModalDelete>
 		</Restricted>
 
 		<Restricted

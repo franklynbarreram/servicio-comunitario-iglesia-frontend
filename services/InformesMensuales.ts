@@ -14,6 +14,10 @@ class Service {
     return this.client.post("/informes_mensuales/actividad", data);
   }
 
+	async deleteActivity(id: number): Promise<any> {
+    return this.client.delete(`/informes_mensuales/actividad/${id}`);
+  }
+
   async createInforme(data: any): Promise<any> {
     return this.client.post("/informes_mensuales", data);
   }
