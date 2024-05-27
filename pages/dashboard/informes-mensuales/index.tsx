@@ -62,7 +62,7 @@ const Dashboard = () => {
   const [dataLoadScore, setDataLoadScore] = React.useState<any>();
   const [dataView, setDataView] = React.useState<any>();
   const [params, setValue] = useQueryParams<Params>({
-    tipo: TypesSelectEnums.CONQUISTADORES,
+    tipo: TypesSelectEnums.INTEGRADO,
   });
   const {
     data: response,
@@ -155,20 +155,20 @@ const Dashboard = () => {
                   module={ModuleEnums.INFORMES_MENSUALES}
                   typePermisse={PermissionsEnums.SELECT_TYPE_CAMPOREE}
                 >
-                  <div className="col-span-1">
+                  <div className="col-span-2 max-w-[208px]">
                     <SelectInput
                       className="z-50 flex-auto"
                       name="tipo"
                       label="Tipo"
                       options={TypesSelectMap}
-                      maxwidth="max-w-[208px]"
+                      maxwidth="max-w-full"
                       value={params.tipo}
                       setValue={updateQuery}
                       hideDeleteSelected
                     ></SelectInput>
                   </div>
                 </Restricted>
-                <div className="col-span-2">
+                <div className="col-span-2 mt-2 md:mt-0 max-w-[208px]">
                   <DatePickerCustom
                     name="fecha"
                     label={"Fecha"}

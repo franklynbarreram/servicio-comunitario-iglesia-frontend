@@ -377,7 +377,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 											<div className="container-actividad border border-gray-200 p-2 rounded-3xl">
 												<div className="mt-8 flex flex-col justify-center">
 													<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 flex">
-														<div className="inline-block min-w-[500px] mx-auto py-2 align-middle md:px-6 lg:px-8">
+														<div className="inline-block min-w-full mx-auto py-2 align-middle md:px-6 lg:px-8">
 															<div className="overflow-hidden shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
 																<table className="min-w-full divide-y divide-gray-300">
 																	<thead className="bg-gray-50"></thead>
@@ -400,8 +400,19 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 																			<td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
 																				Lugar:
 																			</td>
-																			<td className="whitespace-nowrap p-4 text-sm text-gray-500 font-medium">
+																			<td className="p-4 text-sm text-gray-500 font-medium">
 																				{item?.lugar}
+																			</td>
+																		</tr>
+																		<tr
+																			key=""
+																			className="divide-x divide-yellow"
+																		>
+																			<td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
+																				Fecha:
+																			</td>
+																			<td className="p-4 text-sm text-gray-500 font-medium">
+																				{item?.fecha}
 																			</td>
 																		</tr>
 																	</tbody>
@@ -413,7 +424,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 
 												<div className="flex flex-col justify-center">
 													<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 flex">
-														<div className="inline-block min-w-[500px] mx-auto py-2 align-middle md:px-6 lg:px-8">
+														<div className="inline-block min-w-full mx-auto py-2 align-middle md:px-6 lg:px-8">
 															<div className="overflow-hidden shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
 																<table className="min-w-full divide-y divide-gray-300">
 																	<thead className="bg-gray-50"></thead>
@@ -430,7 +441,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 																			key=""
 																			className="divide-x divide-yellow"
 																		>
-																			<td className="text-center whitespace-nowrap p-4 text-sm text-gray-500 font-medium">
+																			<td className="text-center p-4 text-sm text-gray-500 font-medium">
 																				{
 																					item?.descripcion
 																				}
@@ -445,7 +456,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 
 												<div className="flex flex-col justify-center">
 													<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 flex">
-														<div className="inline-block min-w-[500px] mx-auto py-2 align-middle md:px-6 lg:px-8">
+														<div className="inline-block min-w-full mx-auto py-2 align-middle md:px-6 lg:px-8">
 															<div className="overflow-hidden shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
 																<table className="min-w-full divide-y divide-gray-300">
 																	<thead className="bg-gray-50"></thead>
@@ -462,7 +473,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 																			key=""
 																			className="divide-x divide-yellow"
 																		>
-																			<td className="text-center whitespace-nowrap p-4 text-sm text-gray-500 font-medium">
+																			<td className="text-center p-4 text-sm text-gray-500 font-medium">
 																				{item?.objetivo}
 																			</td>
 																		</tr>
@@ -475,7 +486,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 
 												<div className="flex flex-col justify-center">
 													<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 flex">
-														<div className="inline-block min-w-[500px] mx-auto py-2 align-middle md:px-6 lg:px-8">
+														<div className="inline-block min-w-full mx-auto py-2 align-middle md:px-6 lg:px-8">
 															<div className="overflow-hidden shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
 																<table className="min-w-full divide-y divide-gray-300">
 																	<thead className="bg-gray-50"></thead>
@@ -497,8 +508,8 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 
 												<div className="flex flex-col justify-center">
 													<div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8 flex">
-														<div className="inline-block min-w-[500px] mx-auto py-2 align-middle md:px-6 lg:px-8">
-															<div className="overflow-hidden shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
+														<div className="inline-block min-w-full mx-auto py-2 align-middle md:px-6 lg:px-8">
+															<div className="shadow ring-1 ring-yellow ring-opacity-5 md:rounded-none">
 																<table className="min-w-full divide-y divide-gray-300">
 																	<thead className="bg-gray-50"></thead>
 																	<tbody className="divide-y divide-yellow bg-white">
@@ -506,7 +517,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 																			key=""
 																			className="divide-x divide-yellow"
 																		>
-																			<td className="text-center whitespace-nowrap py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
+																			<td className="text-center py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
 																				Nº Miembros:
 																			</td>
 																			<td className="text-center whitespace-nowrap p-4 text-sm text-gray-500 font-medium">
@@ -514,7 +525,7 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 																					item?.asistencia_miembros
 																				}
 																			</td>
-																			<td className="text-center whitespace-nowrap py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
+																			<td className="text-center py-4 pl-4 pr-4 text-sm font-bold text-[black] sm:pl-6">
 																				Nº Visitas:
 																			</td>
 																			<td className="text-center whitespace-nowrap p-4 text-sm text-gray-500 font-medium">

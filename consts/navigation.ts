@@ -48,22 +48,13 @@ export const navigation = [
       },
       {
         id: 2,
-        name: "camporee",
+        name: "listado",
         label: "Camporee",
-        href: `${appRouter.dashboard.subLinks.camporee.href}`,
+        href: `${appRouter.dashboard.href}${appRouter.dashboard.subLinks.camporee.href}`,
         icon: Icons.camporee,
-        dropdownVisible: false,
-        dropdown: [
-          {
-            name: "listado",
-            label: "Listado",
-            href: `${appRouter.dashboard.subLinks.camporee.href}`,
-            icon: Icons.card,
-          },
-        ],
       },
       {
-        id: 2,
+        id: 3,
         name: "informes_mensuales",
         label: "Informes Mensuales",
         href: `${appRouter.dashboard.subLinks.informesMensuales.href}`,

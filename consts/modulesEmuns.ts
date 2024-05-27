@@ -19,7 +19,6 @@ export const ModuleMap = {
   [ModuleEnums.MIEMBROS]: ModuleEnums.MIEMBROS,
   [ModuleEnums.CAMPOREE]: ModuleEnums.CAMPOREE,
   [ModuleEnums.EVENTO_PRECAMPOREE]: ModuleEnums.EVENTO_PRECAMPOREE,
-  [ModuleEnums.EVENTO_PRECAMPOREE]: ModuleEnums.EVENTO_PRECAMPOREE,
   [ModuleEnums.EVENTO_CAMPOREE]: ModuleEnums.EVENTO_CAMPOREE,
   [ModuleEnums.INFORMES_MENSUALES]: ModuleEnums.INFORMES_MENSUALES,
 };
