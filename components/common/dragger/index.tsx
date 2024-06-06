@@ -9,7 +9,9 @@ import { Icon } from "components/icon";
 import { Icons } from "consts";
 import { Typography } from "../typography";
 import { isEmpty } from "lodash";
-import { ImageService } from "services/Image";
+import { FileService } from "services/Image";
+import { DocumentTextIcon } from '@heroicons/react/solid';
+import { Spinner } from "../spinner/spinner";
 
 const { Dragger } = Upload;
 
@@ -46,7 +48,7 @@ export interface AlertProps {
   setValueRHF: any;
   setErrorRHF: any;
   defaultValues?: any;
-  fileList: any;
+  fileList: UploadFile[];
   setFileList: any;
   isEdit?: boolean;
   disabled?: boolean;
@@ -91,27 +93,30 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = (error) => reject(error);
     });
-  const beforeUpload = (file: any) => {
+  const beforeUpload = (file: RcFile) => {
     if (fileList.length >= maxFiles) {
       message.error("Solo puede subir 3 archivos");
       return Upload.LIST_IGNORE;
     }
 
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isValid = file.type === "image/jpeg" || file.type === "image/png" 
+		|| file.type == "image/gif" || file.type == "application/pdf" 
+		|| file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+		|| file.type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+    if (!isValid) {
+      message.error("File format not allowed");
       return Upload.LIST_IGNORE;
     }
 
     const isLt2M = file.size / 1024 / 1024 <= 4.5;
 
     if (!isLt2M) {
-      message.error("La imagen debe ser menor o igual a 4.5 MB!");
+      message.error("El archivo debe ser menor o igual a 4.5 MB!");
       return Upload.LIST_IGNORE;
     }
 
-    return isJpgOrPng && isLt2M;
+    return isValid && isLt2M;
   };
 
   const handleChange: UploadProps["onChange"] = async ({
@@ -133,13 +138,13 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     const aux: any[] = [];
     const filesNumber = newFileList.length;
     // console.log("la cantidad:", filesNumber);
-    await Promise.all(newFileList.map(async (file: any, index) => {
+    await Promise.all(newFileList.map(async (file, index) => {
       // console.log("diooooos", file);
 
       if (file.status === "done") {
         if (!file.url && !file.preview) {
           // file.preview = await getBase64(file.originFileObj as RcFile);
-          file.preview = await ImageService.upload(file.originFileObj);
+          file.preview = await FileService.upload(file.originFileObj as RcFile);
         }
 
         aux.push(file.url || (file.preview as string));
@@ -159,7 +164,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
     if (filesNumber < minFiles) {
       setErrorRHF(name, {
         type: "custom",
-        message: `Debe subir ${minFiles} archivos`,
+        message: `Debe subir ${minFiles} archivo${ minFiles > 1 ? 's' : ''}`,
       });
 			setValueRHF(name, aux);
     } else {
@@ -214,7 +219,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
             maxCount={maxFiles}
             disabled={disabled}
             // showUploadList={!loadingFiles}
-            accept=".jpg,.jpeg,.png"
+            accept=".jpg,.jpeg,.png,.docx,.pdf,.xlxs,.gif"
             beforeUpload={beforeUpload}
             // showUploadList={isEdit ? false : true}
             // disabled={fileList.length >= 3}
@@ -239,14 +244,23 @@ export const DragAndDrop: React.FC<AlertProps> = ({
                 ) */}
                 {fileList /*&& !fileListBase64*/ && (
                   <div className="p-4 flex flex-wrap gap-4">
-                    {fileList.map((item: any, index: any) => {
+                    {fileList.map((item, index: any) => {
                       return (
-                        <img
-                          key={index}
-                          src={item.preview}
-                          className="w-20 h-20 object-cover "
-                          alt=""
-                        />
+												item.preview ?
+													item.preview.endsWith('jpg') ?
+														<img
+															key={index}
+															src={item.preview}
+															className="w-20 h-20 object-cover"
+															alt=""
+														/>
+													: <div className="w-20">
+															<DocumentTextIcon />
+															<Typography type="title" className="font-bold">
+																{ item.preview.split('.').at(-1)?.toLocaleUpperCase() }
+															</Typography>
+														</div>
+												: <Spinner type="loadingPage" />
                       );
                     })}
                   </div>
