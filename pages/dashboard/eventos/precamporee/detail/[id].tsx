@@ -46,7 +46,7 @@ import Back from "components/common/back";
 import { Tabs } from "antd";
 import moment from "moment";
 import { Collapse } from "antd";
-import { ArrowRightIcon } from "@heroicons/react/solid";
+import { ArrowRightIcon, DocumentTextIcon } from "@heroicons/react/solid";
 import { Alert } from "components/common/alert";
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
@@ -618,30 +618,28 @@ const EventPrecamporeeDetail = () => {
                                         </Typography>
                                       </div>
                                       <div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
-                                        <img
-                                          src={informe?.imagen1}
-                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                          alt="image1"
-                                          onClick={() =>
-                                            handlePreviewImage(informe?.imagen1)
-                                          }
-                                        />
-                                        <img
-                                          src={informe?.imagen2}
-                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                          alt="image2"
-                                          onClick={() =>
-                                            handlePreviewImage(informe?.imagen2)
-                                          }
-                                        />
-                                        <img
-                                          src={informe?.imagen3}
-                                          className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
-                                          alt="image3"
-                                          onClick={() =>
-                                            handlePreviewImage(informe?.imagen3)
-                                          }
-                                        />
+                                        {
+																					[1, 2, 3].map((i) => {
+																						{ console.log('imagen '+i+':', informe['imagen'+i]) }
+																						if (informe['imagen'+i]) {
+																							return informe['imagen'+i].endsWith('jpg') || informe['imagen'+i].startsWith('data:') ? 
+																									<img
+																										src={informe['imagen'+i]}
+																										className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64 object-cover rounded-2xl"
+																										alt={'archivo '+i}
+																										onClick={() =>
+																											handlePreviewImage(informe['imagen'+i])
+																										}
+																									/>
+																								: <a target="_blank" className="hover:opacity-50 cursor-pointer w-52 h-40 md:w-64  md:h-64" href={informe['imagen'+i]}>
+																									<DocumentTextIcon />
+																									<Typography type="title" className="font-bold text-center">
+																										{ informe['imagen'+i].split('.').at(-1)?.toLocaleUpperCase() }
+																									</Typography>
+																								</a>
+																						}
+																					})
+																				}
                                       </div>
                                     </React.Fragment>
                                   </div>

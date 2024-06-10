@@ -247,7 +247,7 @@ export const DragAndDrop: React.FC<AlertProps> = ({
                     {fileList.map((item, index: any) => {
                       return (
 												item.preview ?
-													item.preview.endsWith('jpg') ?
+													item.preview.endsWith('jpg') || item.preview.startsWith('data:') ?
 														<img
 															key={index}
 															src={item.preview}
