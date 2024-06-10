@@ -75,22 +75,22 @@ const EditClub = ({ data, hide, refetch }: any) => {
       required: { value: true, message: "Este campo es requerido" },
     },
     lema: {
-      required: { value: true, message: "Este campo es requerido" },
+      //required: { value: true, message: "Este campo es requerido" },
     },
     // blanco_estudios: {
     //   required: { value: true, message: "Este campo es requerido" },
     // },
     direccion: {
-      required: { value: true, message: "Este campo es requerido" },
+      //required: { value: true, message: "Este campo es requerido" },
     },
     tipo: {
       required: { value: true, message: "Este campo es requerido" },
     },
     redes: {
-      required: { value: true, message: "Este campo es requerido" },
+      //required: { value: true, message: "Este campo es requerido" },
     },
     redesUrl: {
-      required: { value: true, message: "Este campo es requerido" },
+      //required: { value: true, message: "Este campo es requerido" },
 
       pattern: {
         value:
@@ -374,7 +374,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
                   />
 
                   <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                    <p className={"ml-3 font-normal mb-2 block f-18 is-required"}>
                       Iglesia
                     </p>
                     <AsyncSelect
@@ -388,7 +388,7 @@ const EditClub = ({ data, hide, refetch }: any) => {
                     />
                   </div>
                   <div className={"relative py-2 w-full mb-3 md:mb-5"}>
-                    <p className={"ml-3 font-normal mb-2 block f-18"}>
+                    <p className={"ml-3 font-normal mb-2 block f-18 is-required"}>
                       Director
                     </p>
                     <AsyncSelect
