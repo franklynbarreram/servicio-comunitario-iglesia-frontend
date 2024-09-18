@@ -284,7 +284,7 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
               />
               <Button
                 labelProps="f-18 font-normal"
-                label={"Crear"}
+                label={"Actualizar"}
                 fill
                 // loading={isLoading}
                 boderRadius="rounded-full"
