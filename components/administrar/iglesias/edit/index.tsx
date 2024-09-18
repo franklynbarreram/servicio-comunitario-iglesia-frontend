@@ -206,7 +206,7 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
 
   return (
     <div className="text-center">
-      <h2 className="text-3xl md:text-4xl font-bold">Crear Iglesia</h2>
+      <h2 className="text-3xl md:text-4xl font-bold">Editar Iglesia</h2>
       <div className="container-form mt-5 text-left">
         {isLoading ? (
           <Spinner type="loadingPage" className="py-10" />
