@@ -94,8 +94,8 @@ export const DragAndDrop: React.FC<AlertProps> = ({
       reader.onerror = (error) => reject(error);
     });
   const beforeUpload = (file: RcFile) => {
-    if (fileList.length >= maxFiles) {
-      message.error("Solo puede subir 3 archivos");
+    if (fileList.length > maxFiles) {
+      message.error(`Solo puede subir ${maxFiles} archivo${maxFiles > 1 ? 's' : ''}`);
       return Upload.LIST_IGNORE;
     }
 
