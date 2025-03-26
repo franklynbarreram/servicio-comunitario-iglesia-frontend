@@ -292,9 +292,8 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 
   const dataColumns = () => {
     if (
-      dataUser.scope_actual === RoleEnums.LIDER_JUVENIL &&
-      (values?.categoria?.toString()?.toLowerCase() === "total" ||
-        isNil(values?.categoria))
+      dataUser.scope_actual === RoleEnums.LIDER_JUVENIL ||
+			dataUser.scope_actual === RoleEnums.DIRECTOR
     ) {
       return [
         {
@@ -424,6 +423,11 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
         </div>
       ),
     },
+		{
+			title: "Puntuación",
+			dataIndex: "puntuacion",
+			key: "puntuacion",
+		},
     {
       title: "Puntuación porcentual",
       dataIndex: "",
