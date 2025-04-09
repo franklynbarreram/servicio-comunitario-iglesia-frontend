@@ -333,6 +333,11 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
           dataIndex: "puntuacion",
           key: "puntuacion",
         },
+				{
+					title: "Puntuación Máxima",
+					dataIndex: "puntuacion_maxima",
+					key: "puntuacion_maxima",
+				},
         {
           title: "Puntuación porcentual",
           dataIndex: "",
@@ -427,6 +432,11 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 			title: "Puntuación",
 			dataIndex: "puntuacion",
 			key: "puntuacion",
+		},
+		{
+			title: "Puntuación Máxima",
+			dataIndex: "puntuacion_maxima",
+			key: "puntuacion_maxima",
 		},
     {
       title: "Puntuación porcentual",
