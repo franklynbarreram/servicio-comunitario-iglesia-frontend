@@ -545,6 +545,93 @@ const EventPrecamporeeDetail = () => {
                     </div>
                   ) : (
 										<div className="px-1">
+											{!isNil(values?.informes[0].informes[0]) && (
+												<>
+													<div className="flex gap-2 flex-wrap">
+														{values?.informes[0].informes[0]?.puntuacion && (
+															<Alert
+																className="mb-5 bg-alert-success rounded-xl"
+																hideIcon
+															>
+																<p className="text-[white] text-base py-5">
+																	Puntuación:{"  "}
+																	<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																		{values?.informes[0].informes[0]?.puntuacion}/
+																		{values?.informes[0].informes[0]?.puntuacion_maxima}
+																	</span>
+																</p>
+															</Alert>
+														)}
+														<Alert
+															className="mb-5 bg-primary rounded-xl"
+															hideIcon
+														>
+															<p className="text-[white] text-base py-5">
+																Firma Anciano:{"  "}
+																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																	{values?.informes[0].informes[0]?.firma_anciano ? (
+																		<span className="text-secondary font-bold">
+																			SI
+																		</span>
+																	) : (
+																		<span className="text-alert-error font-bold">
+																			NO
+																		</span>
+																	)}
+																</span>
+															</p>
+														</Alert>
+														<Alert
+															className="mb-5 bg-secondary rounded-xl"
+															hideIcon
+														>
+															<p className="text-[white] text-base py-5">
+																Firma Pastor:{"  "}
+																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																	{values?.informes[0].informes[0]?.firma_pastor ? (
+																		<span className="text-secondary font-bold">
+																			SI
+																		</span>
+																	) : (
+																		<span className="text-alert-error font-bold">
+																			NO
+																		</span>
+																	)}
+																</span>
+															</p>
+														</Alert>
+														<Alert
+															className="mb-5 bg-overlay rounded-xl"
+															hideIcon
+														>
+															<p className="text-[white] text-base py-5">
+																Firma Consejo Regional:{"  "}
+																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																	{values?.informes[0].informes[0]?.firma_consejo_regional ? (
+																		<span className="text-secondary font-bold">
+																			SI
+																		</span>
+																	) : (
+																		<span className="text-alert-error font-bold">
+																			NO
+																		</span>
+																	)}
+																</span>
+															</p>
+														</Alert>
+													</div>
+													{values?.informes[0].informes[0]?.observacion && (
+														<Alert className=" bg-[#ffc107] rounded-xl mb-10">
+															<p className="text-[black] text-base py-5">
+																Observación:{" "}
+																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																	{values?.informes[0].informes[0]?.observacion}
+																</span>
+															</p>
+														</Alert>
+													)}
+												</>
+											)}
 											<InformeForm
 												refetch={refetch}
 												idPrecamporee={id}
