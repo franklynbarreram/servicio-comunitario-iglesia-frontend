@@ -513,6 +513,17 @@ const EventPrecamporeeDetail = () => {
                                           </span>
                                         </p>
                                       </Alert>
+																			<Alert
+																				className="mb-5 bg-secondary rounded-xl"
+																				hideIcon
+																			>
+																				<p className="text-[white] text-base py-5">
+																					Fecha de envío:{" "}
+																					<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																						{informe?.fecha_enviado}
+																					</span>
+																				</p>
+																			</Alert>
                                     </div>
                                     {informe?.observacion && (
                                       <Alert className=" bg-[#ffc107] rounded-xl mb-10">
@@ -616,6 +627,17 @@ const EventPrecamporeeDetail = () => {
 																			NO
 																		</span>
 																	)}
+																</span>
+															</p>
+														</Alert>
+														<Alert
+															className="mb-5 bg-secondary rounded-xl"
+															hideIcon
+														>
+															<p className="text-[white] text-base py-5">
+																Fecha de envío:{" "}
+																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+																	{values?.informes[0].informes[0]?.fecha_enviado}
 																</span>
 															</p>
 														</Alert>
