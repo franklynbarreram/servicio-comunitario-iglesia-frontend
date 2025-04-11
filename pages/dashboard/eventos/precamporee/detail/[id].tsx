@@ -556,10 +556,10 @@ const EventPrecamporeeDetail = () => {
                     </div>
                   ) : (
 										<div className="px-1">
-											{!isNil(values?.informes[0].informes[0]) && (
+											{!isNil(values?.informes[0]?.informes[0]) && (
 												<>
 													<div className="flex gap-2 flex-wrap">
-														{values?.informes[0].informes[0]?.puntuacion && (
+														{values?.informes[0]?.informes[0]?.puntuacion && (
 															<Alert
 																className="mb-5 bg-alert-success rounded-xl"
 																hideIcon
@@ -567,8 +567,8 @@ const EventPrecamporeeDetail = () => {
 																<p className="text-[white] text-base py-5">
 																	Puntuación:{"  "}
 																	<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																		{values?.informes[0].informes[0]?.puntuacion}/
-																		{values?.informes[0].informes[0]?.puntuacion_maxima}
+																		{values?.informes[0]?.informes[0]?.puntuacion}/
+																		{values?.informes[0]?.informes[0]?.puntuacion_maxima}
 																	</span>
 																</p>
 															</Alert>
@@ -580,7 +580,7 @@ const EventPrecamporeeDetail = () => {
 															<p className="text-[white] text-base py-5">
 																Firma Anciano:{"  "}
 																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																	{values?.informes[0].informes[0]?.firma_anciano ? (
+																	{values?.informes[0]?.informes[0]?.firma_anciano ? (
 																		<span className="text-secondary font-bold">
 																			SI
 																		</span>
@@ -599,7 +599,7 @@ const EventPrecamporeeDetail = () => {
 															<p className="text-[white] text-base py-5">
 																Firma Pastor:{"  "}
 																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																	{values?.informes[0].informes[0]?.firma_pastor ? (
+																	{values?.informes[0]?.informes[0]?.firma_pastor ? (
 																		<span className="text-secondary font-bold">
 																			SI
 																		</span>
@@ -618,7 +618,7 @@ const EventPrecamporeeDetail = () => {
 															<p className="text-[white] text-base py-5">
 																Firma Consejo Regional:{"  "}
 																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																	{values?.informes[0].informes[0]?.firma_consejo_regional ? (
+																	{values?.informes[0]?.informes[0]?.firma_consejo_regional ? (
 																		<span className="text-secondary font-bold">
 																			SI
 																		</span>
@@ -637,17 +637,17 @@ const EventPrecamporeeDetail = () => {
 															<p className="text-[white] text-base py-5">
 																Fecha de envío:{" "}
 																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																	{values?.informes[0].informes[0]?.fecha_enviado}
+																	{values?.informes[0]?.informes[0]?.fecha_enviado}
 																</span>
 															</p>
 														</Alert>
 													</div>
-													{values?.informes[0].informes[0]?.observacion && (
+													{values?.informes[0]?.informes[0]?.observacion && (
 														<Alert className=" bg-[#ffc107] rounded-xl mb-10">
 															<p className="text-[black] text-base py-5">
 																Observación:{" "}
 																<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
-																	{values?.informes[0].informes[0]?.observacion}
+																	{values?.informes[0]?.informes[0]?.observacion}
 																</span>
 															</p>
 														</Alert>
@@ -658,7 +658,7 @@ const EventPrecamporeeDetail = () => {
 												refetch={refetch}
 												idPrecamporee={id}
 												informe={
-													isEmpty(values?.informes) ? null : values?.informes[0].informes[0]
+													isEmpty(values?.informes) ? null : values?.informes[0]?.informes[0]
 												}
 												isAvailable={values?.activo}
 												className={classNamesForms}
