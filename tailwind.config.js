@@ -55,4 +55,8 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+	safelist: [
+    'bg-success',
+    'bg-error',
+  ],
 };
