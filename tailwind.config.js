@@ -58,6 +58,6 @@ module.exports = {
 	safelist: [
     'bg-success',
     'bg-error',
-		'text-gray-200',
+		'hover:text-gray-200',
   ],
 };
