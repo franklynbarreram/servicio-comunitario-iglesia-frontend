@@ -58,5 +58,6 @@ module.exports = {
 	safelist: [
     'bg-success',
     'bg-error',
+		'text-gray-200',
   ],
 };
