@@ -66,12 +66,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   } = useForm<any>({ mode: "onChange", defaultValues: { mes: mesInforme } });
 
   const rules = {
-    description: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
-    objetive: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     mes: {
       required: { value: true, message: "Este campo es requerido" },
     },
@@ -79,7 +73,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
       required: { value: true, message: "Este campo es requerido" },
     },
     participantes: {
-      required: { value: true, message: "Este campo es requerido" },
       min: { value: 1, message: "Debe ser mayor a 0" },
     },
     files: {
@@ -125,6 +118,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
     return new File([u8arr], filename, { type: mime });
   }
 
+	let buttonName = informe ? 'Actualizar' : 'Guardar';
   React.useEffect(() => {
     if (!isNil(informe)) {
       const images = [
@@ -210,7 +204,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
               isTextArea
               isFill={!!watch("description")}
               register={register}
-              rules={rules.description}
               error={errors.description}
               className="mb-3 md:mb-5"
               otherStyles="pt-3 pb-3 rounded-lg text-sm"
@@ -223,7 +216,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
               isTextArea
               isFill={!!watch("objetive")}
               register={register}
-              rules={rules.objetive}
               error={errors.objetive}
               className="mb-3 md:mb-5"
               otherStyles="pt-3 pb-3 rounded-lg text-sm"
@@ -296,7 +288,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
               <div className="flex items-center justify-center mt-16 w-full">
                 <Button
                   labelProps="f-18 font-normal"
-                  label={"Guardar"}
+                  label={buttonName}
                   fill
                   // loading={isLoading}
                   boderRadius="rounded-full"

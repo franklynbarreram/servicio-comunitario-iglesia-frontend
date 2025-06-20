@@ -136,13 +136,7 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
       min: { value: 1, message: "Debe ser mayor a 0" },
       max: { value: 100, message: "Debe ser menor o igual a 100" },
     },
-    lugar: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     tipo: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
-    tipoCapellan: {
       required: { value: true, message: "Este campo es requerido" },
     },
     puntuacion_maxima_informe: {
@@ -158,11 +152,8 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
     fecha_inicio_informes: {
       required: { value: true, message: "Este campo es requerido" },
     },
-    capellanExterno: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
     icon: {
-      required: { value: true, message: "Este campo es requerido" },
+      required: { value: false },
     },
   };
 
@@ -328,7 +319,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                 labelVisible
                 isFill={!!watch("lugar")}
                 register={register}
-                rules={rules.lugar}
                 error={errors.lugar}
                 className="mb-3 md:mb-5"
                 otherStyles="pt-3 pb-3 rounded-full text-sm"
@@ -472,7 +462,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                     className="mb-4"
                     options={optionsTypeCapellan}
                     register={register}
-                    rules={rules.tipoCapellan}
                     error={errors.tipoCapellan}
                     handleChange={(data: OptionType | any) => {
                       setValue("tipoCapellan", data, { shouldValidate: true });
@@ -504,7 +493,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
                   labelVisible
                   isFill={!!watch("capellanExterno")}
                   register={register}
-                  rules={rules.capellanExterno}
                   error={errors.capellanExterno}
                   className="mb-3 md:mb-5"
                   otherStyles="pt-3 pb-3 rounded-full text-sm"

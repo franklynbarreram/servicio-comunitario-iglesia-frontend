@@ -43,7 +43,7 @@ type Params = {
   page?: number;
   limit?: number;
   userId?: number;
-
+	light?: boolean;
   idCamporee: number | string | string[] | undefined;
 };
 
@@ -54,6 +54,7 @@ const EventosPrecamporee = ({
   const [params, setValue] = useQueryParams<Params>({
     limit: 6,
     idCamporee: idCamporee,
+		light: true,
   });
   const {
     Modal: ModalEditPrecamporee,
@@ -220,10 +221,18 @@ const EventosPrecamporee = ({
                   },
                   ,
                 ];
+								let bgColor = 'white';
+								let textColor = 'gray-500';
+								if (item.ready) {
+									bgColor = 'success';
+								} else if (item.overdue || item.pending) {
+									bgColor = 'error';
+									textColor = 'gray-200';
+								}
                 return (
                   <li
                     key={item.nombre}
-                    className="col-span-1 bg-white rounded-lg shadow shadow-yellow divide-y divide-gray-200 relative"
+                    className={`col-span-1 bg-${bgColor} rounded-lg shadow shadow-yellow divide-y divide-gray-200 relative`}
                   >
                     <div className="w-full flex-col flex items-center p-6 space-x-6">
                       <div className="flex-1">
@@ -232,7 +241,7 @@ const EventosPrecamporee = ({
                             {item.nombre}
                           </h3>
                         </div>
-                        <p className="mt-1 text-gray-500 text-sm break-all">
+                        <p className={`mt-1 text-${textColor} text-sm break-all`}>
                           {item.descripcion}
                         </p>
                       </div>
@@ -260,7 +269,7 @@ const EventosPrecamporee = ({
                           >
                             <div className="w-0 flex-1 flex">
                               <div
-                                className="cursor-pointer relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                                className={`cursor-pointer relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-${textColor}`}
                                 onClick={() => handleOnEdit(item)}
                               >
                                 <PencilIcon
@@ -281,7 +290,7 @@ const EventosPrecamporee = ({
                             <Link
                               href={`${appRouter.dashboard.href}/${appRouter.dashboard.subLinks.camporee.subLinks.events.href}/${appRouter.dashboard.subLinks.camporee.subLinks.events.subLinks.precamporee.href}/${appRouter.dashboard.subLinks.camporee.subLinks.events.subLinks.precamporee.subLinks.detail.href}/${item.id_camporee_precamporee}`}
                             >
-                              <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                              <a className={`relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-${textColor}`}>
                                 <PlusIcon
                                   className="w-5 h-5 text-gray-400"
                                   aria-hidden="true"
