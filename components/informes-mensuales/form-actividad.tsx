@@ -374,7 +374,7 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
               {((data && isEditable) || isNil(data)) && (
                 <Button
                   labelProps="f-18 font-normal"
-                  label={data ? "Guardar" : "Crear"}
+                  label={data ? "Actualizar" : "Crear"}
                   fill
                   // loading={isLoading}
                   boderRadius="rounded-full"

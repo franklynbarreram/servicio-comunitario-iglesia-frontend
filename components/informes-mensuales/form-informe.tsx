@@ -292,7 +292,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
               {data && isEditable && (
                 <Button
                   labelProps="f-18 font-normal"
-                  label={data ? "Guardar" : "Crear"}
+                  label={data ? "Actualizar" : "Crear"}
                   fill
                   // loading={isLoading}
                   boderRadius="rounded-full"

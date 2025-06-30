@@ -125,6 +125,17 @@ export const InformeMensual: React.FC<InformeMensualProps> = ({
 					</span>
 				</p>
 			</Alert>
+			<Alert
+				className="mb-5 bg-success rounded-xl"
+				hideIcon
+			>
+				<p className="text-[black] text-base py-5">
+					Fecha de envío:{" "}
+					<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+						{itemClub?.informe?.fecha}
+					</span>
+				</p>
+			</Alert>
 		</div>
 
 		{itemClub?.informe?.observacion && (
