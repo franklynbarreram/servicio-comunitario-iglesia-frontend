@@ -31,6 +31,7 @@ import moment from "moment";
 import { formatDateComplete } from "lib/helper";
 import { Tooltip } from "antd";
 import { Button } from "components/common/button";
+import { Alert } from "components/common/alert";
 
 interface EventosPrecamporeeProps {
   idCamporee: number | string | string[] | undefined;
@@ -82,6 +83,8 @@ const EventosPrecamporee = ({
   const total = get(data, "data.total", 1);
   const currentPage = get(data, "data.page", 1);
   const limit = get(data, "data.limit", params.limit);
+	const informeMensualReady = get(data, "data.informe_mensual_ready");
+	const mes = get(data, "data.mes");
 
   const {
     register,
@@ -200,6 +203,27 @@ const EventosPrecamporee = ({
                 )}
               </div>
             </form>
+
+						{
+							informeMensualReady !== null &&
+							<Link
+								href={`${appRouter.dashboard.subLinks.informesMensuales.href}?fecha=${mes}`}
+							>
+								<a>
+									<Alert
+										className={`mb-5 bg-${informeMensualReady ? 'success' : 'error'} rounded-xl`}
+										hideIcon
+									>
+										<p className="text-[black] text-base py-5 m-auto">
+											<span className="font-bold">Informe Mensual{" "}</span>
+											<span className="bg-white text-[black] rounded-lg px-2 py-2 text-center">
+												{informeMensualReady ? 'Listo' : 'Pendiente'}
+											</span>
+										</p>
+									</Alert>
+								</a>
+							</Link>
+						}
 
             <ul
               role="list"
