@@ -203,6 +203,10 @@ body {
   background-color: var(--color-error) !important;
 }
 
+.custom-collapse.ant-collapse .custom-collapse-header.ready .ant-collapse-header {
+  background-color: var(--color-success) !important;
+}
+
 .custom-collapse.ant-collapse
   .custom-collapse-header.justify-normal
   .ant-collapse-header {

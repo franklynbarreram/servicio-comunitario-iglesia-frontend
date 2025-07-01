@@ -341,7 +341,7 @@ const EventPrecamporeeDetail = () => {
                       <React.Fragment key={index}>
                         <Panel
                           header={
-                            <div className={`item bg-${itemClub.pending ? 'error' : 'yellow'} flex text-center justify-center w-full`}>
+                            <div className={`item bg-${itemClub.pending ? 'error' : itemClub.ready ? 'success' : 'yellow'} flex text-center justify-center w-full`}>
                               <Typography
                                 type="label"
                                 className={clsx(
@@ -356,7 +356,7 @@ const EventPrecamporeeDetail = () => {
                           // extra={
                           // 		<></>
                           //     }
-                          className={`custom-collapse-header ${itemClub.pending ? 'pending' : ''} justify-normal`}
+                          className={`custom-collapse-header ${itemClub.pending ? 'pending' : itemClub.ready ? 'ready' : ''} justify-normal`}
                         >
 													{
 														values?.mensual ?
