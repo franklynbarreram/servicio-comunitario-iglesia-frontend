@@ -284,7 +284,7 @@ const CamporeeDetail = () => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = getSession(context);
 
-	if (session) {
+	if (!session) {
     return {
       redirect: {
         destination: "/",
@@ -292,7 +292,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-	
+
   const isValid = routeValidForUser(
     session,
     PermissionsEnums.VIEW,
