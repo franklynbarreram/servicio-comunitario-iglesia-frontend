@@ -1,11 +1,9 @@
 import { LayoutDashboard } from "components/layout";
 import { useQueryParams } from "consts/query.helper";
 import { UseQueryEnums } from "consts/useQueryEnums";
-import { useUser } from "hooks/user";
 import { get, isEmpty } from "lodash";
 import moment from "moment";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
 import * as React from "react";
 import { useQuery } from "react-query";
 import { InformesMensualesService } from "services/InformesMensuales";
@@ -16,8 +14,7 @@ import {
 } from "@heroicons/react/solid";
 import clsx from "clsx";
 import { Typography } from "components/common/typography";
-import { routeValidForUser } from "lib/helper";
-import { Tabs } from "antd";
+import { getSession, routeValidForUser } from "lib/helper";
 import { ActividadForm } from "components/informes-mensuales/form-actividad";
 import { Button } from "components/common/button";
 import { useModal } from "hooks/modal";
@@ -335,41 +332,27 @@ const Dashboard = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = session?.accessToken as string;
+	const session = getSession(context);
 
-  let profile: any = [];
-  try {
-    profile = await ProfilApiService.getUser(token);
-  } catch (e) {
-    console.log("error", e);
-  }
-
-  const isValid = routeValidForUser(
-    profile,
-    PermissionsEnums.VIEW,
-    ModuleEnums.INFORMES_MENSUALES
-  );
-
-  if (session && session.accessToken && isValid) {
-    return {
-      props: {},
-    };
-  }
-
-  if (session && session.accessToken && !isValid && !isEmpty(profile)) {
+	if (!session) {
     return {
       redirect: {
-        destination: "/dashboard/permission-denied",
+        destination: "/",
         permanent: false,
       },
     };
   }
 
-  if (!session) {
+  const isValid = routeValidForUser(
+    session,
+    PermissionsEnums.VIEW,
+    ModuleEnums.INFORMES_MENSUALES
+  );
+
+  if (!isValid) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/dashboard/permission-denied",
         permanent: false,
       },
     };

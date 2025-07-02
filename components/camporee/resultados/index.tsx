@@ -1,7 +1,7 @@
 import { LayoutDashboard } from "components/layout";
 import { useModal } from "hooks/modal";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { UseQueryEnums } from "consts/useQueryEnums";

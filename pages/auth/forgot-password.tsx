@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { Logo } from "components/logo";
 import { useToasts } from "react-toast-notifications";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
-import { GenerateErrorToast } from "lib/helper";
+
+import { GenerateErrorToast, getSession } from "lib/helper";
 import { AuthService } from "services";
 import { InputEmail } from "components/common/form/input-email";
 
@@ -60,8 +60,8 @@ const ForgotPassword = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  if (session && session.accessToken) {
+  const session = getSession(context);
+  if (session && session.access_token) {
     return {
       redirect: {
         destination: "/dashboard",

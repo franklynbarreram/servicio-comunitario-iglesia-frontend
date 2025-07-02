@@ -4,7 +4,7 @@ import { LayoutDashboard } from "components/layout";
 import { Icons } from "consts";
 import { useModal } from "hooks/modal";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { UseQueryEnums } from "consts/useQueryEnums";
@@ -26,7 +26,7 @@ import { IglesiasServices } from "services/Iglesias";
 import CreateIglesia from "components/administrar/iglesias/create";
 import EditIglesia from "components/administrar/iglesias/edit";
 import ViewIglesia from "components/administrar/iglesias/view";
-import { routeValidForUser } from "lib/helper";
+import { getSession, routeValidForUser } from "lib/helper";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ProfilApiService } from "services";
 import { ModuleEnums } from "consts/modulesEmuns";
@@ -454,41 +454,27 @@ const Iglesias = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = session?.accessToken as string;
-
-  let profile: any = [];
-  try {
-    profile = await ProfilApiService.getUser(token);
-  } catch (e) {
-    console.log("error", e);
-  }
-
-  const isValid = routeValidForUser(
-    profile,
-    PermissionsEnums.VIEW,
-    ModuleEnums.IGLESIAS
-  );
-
-  if (session && session.accessToken && isValid) {
-    return {
-      props: {},
-    };
-  }
-
-  if (session && session.accessToken && !isValid && !isEmpty(profile)) {
-    return {
-      redirect: {
-        destination: "/dashboard/permission-denied",
-        permanent: false,
-      },
-    };
-  }
+  const session = getSession(context);
 
   if (!session) {
     return {
       redirect: {
         destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  const isValid = routeValidForUser(
+    session,
+    PermissionsEnums.VIEW,
+    ModuleEnums.IGLESIAS
+  );
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: "/dashboard/permission-denied",
         permanent: false,
       },
     };

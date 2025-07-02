@@ -4,7 +4,7 @@ import { LayoutDashboard } from "components/layout";
 import { appRouter, Icons } from "consts";
 import { useModal } from "hooks/modal";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { UseQueryEnums } from "consts/useQueryEnums";
@@ -31,7 +31,7 @@ import ViewClub from "components/administrar/clubes/view";
 import EditClub from "components/administrar/clubes/edit";
 import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
-import { formatDateComplete, routeValidForUser } from "lib/helper";
+import { formatDateComplete, getSession, routeValidForUser } from "lib/helper";
 import { ProfilApiService } from "services";
 import Restricted from "context/PermissionProvider/Restricted";
 import Link from "next/link";
@@ -311,27 +311,22 @@ const CamporeeList = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = session?.accessToken as string;
+  const session = getSession(context);
 
-  let profile: any = [];
-  try {
-    profile = await ProfilApiService.getUser(token);
-  } catch (e) {
-    console.log("error", e);
-  }
+	if (!session) {
+		return {
+			redirect: {
+				destination: "/",
+				permanent: false,
+			},
+		};
+	}
 
   const isValid = routeValidForUser(
-    profile,
+    session,
     PermissionsEnums.VIEW,
     ModuleEnums.CLUBES
   );
-
-  if (session && session.accessToken && isValid) {
-    return {
-      props: {},
-    };
-  }
 
   if (!isValid) {
     return {
@@ -341,12 +336,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
+  
+	return {
+		props: {},
+	};
 };
 
 export default CamporeeList;

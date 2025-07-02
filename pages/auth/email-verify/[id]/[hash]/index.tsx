@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Typography } from "components/common/typography";
 import { Button } from "components/common/button/button";
 import { InputPassword } from "components/common/form/input-password";
-import { getSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useToasts } from "react-toast-notifications";
 import { Logo } from "components/logo";

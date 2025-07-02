@@ -4,13 +4,14 @@ import Link from "next/link";
 import { Typography } from "components/common/typography";
 import { Button } from "components/common/button/button";
 import { InputPassword } from "components/common/form/input-password";
-import { getSession, signIn } from "next-auth/client";
+import { signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useToasts } from "react-toast-notifications";
 import { Logo } from "components/logo";
 import { GetServerSideProps } from "next";
 import { InputEmail } from "components/common/form/input-email";
 import { Icons } from "consts/icons";
+import { getSession } from "lib/helper";
 
 const SignIn = () => {
   const {
@@ -152,9 +153,9 @@ const SignIn = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
+  const session = getSession(context);
 
-  if (session && session.accessToken) {
+  if (session && session.access_token) {
     return {
       redirect: {
         destination: "/dashboard",

@@ -3,10 +3,10 @@ import { Button } from "components/common/button";
 import { LayoutDashboard } from "components/layout";
 import { Images } from "consts";
 import { useUser } from "hooks/user";
-import { GenerateErrorToast } from "lib/helper";
+import { GenerateErrorToast, getSession } from "lib/helper";
 import { get } from "lodash";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import { useToasts } from "react-toast-notifications";
 import { AuthService } from "services";
@@ -79,12 +79,14 @@ const Dashboard = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  if (session && session.accessToken) {
+  const session = getSession(context);
+
+  if (session && session.access_token) {
     return {
       props: {},
     };
   }
+
   return {
     redirect: {
       destination: "/",

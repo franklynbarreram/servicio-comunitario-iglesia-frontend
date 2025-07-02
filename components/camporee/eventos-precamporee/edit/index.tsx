@@ -1,6 +1,6 @@
 import { Input } from "components/common/form/input";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import AsyncSelect from "react-select/async";
 import { useForm } from "react-hook-form";

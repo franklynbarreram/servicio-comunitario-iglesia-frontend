@@ -41,3 +41,9 @@ export type OptionType = {
   disabled: boolean;
   placeholder: boolean;
 };
+
+export interface DecodedSessionToken {
+  access_token: string;
+  expires_at: string;
+  scope_actual: string;
+}

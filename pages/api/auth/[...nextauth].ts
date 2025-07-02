@@ -77,6 +77,7 @@ const options: NextAuthOptions = {
         // session.user = token.user;
         session.accessToken = token.access_token;
         session.tokenExpired = token.expires_at;
+				session.scope_actual = token.scope_actual;
         // session.roles = token.user.roles;
       }
 

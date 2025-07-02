@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Typography } from "components/common/typography";
 import { Button } from "components/common/button/button";
 import { InputPassword } from "components/common/form/input-password";
-import { getSession, signIn } from "next-auth/client";
 import { useRouter } from "next/router";
 import { useToasts } from "react-toast-notifications";
 import { Logo } from "components/logo";
@@ -29,7 +28,7 @@ import {
   TypesSelectSexoRegisterMap,
 } from "consts/typesSelectEnum";
 import moment from "moment";
-import { formatDates, GenerateErrorToast } from "lib/helper";
+import { formatDates, GenerateErrorToast, getSession } from "lib/helper";
 import { AuthService } from "services";
 import { IglesiasServices } from "services/Iglesias";
 import AsyncSelect from "react-select/async";
@@ -525,9 +524,9 @@ const Register = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
+  const session = getSession(context);
 
-  if (session && session.accessToken) {
+  if (session && session.access_token) {
     return {
       redirect: {
         destination: "/dashboard",

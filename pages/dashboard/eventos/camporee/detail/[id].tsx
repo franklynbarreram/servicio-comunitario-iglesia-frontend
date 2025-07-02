@@ -1,7 +1,7 @@
 import { LayoutDashboard } from "components/layout";
 import { useModal } from "hooks/modal";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { UseQueryEnums } from "consts/useQueryEnums";
@@ -15,6 +15,7 @@ import { PermissionsEnums } from "consts/permissionsEnum";
 import { ModuleEnums } from "consts/modulesEmuns";
 import {
   GenerateErrorToast,
+  getSession,
   routeValidForUser,
   ValidateString,
 } from "lib/helper";
@@ -1011,41 +1012,27 @@ const EventCamporeeDetail = () => {
 
 // AGREGAR VALIDACION DE PERMISOS A ESTA VISTA
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  const token = session?.accessToken as string;
-
-  let profile: any = [];
-  try {
-    profile = await ProfilApiService.getUser(token);
-  } catch (e) {
-    console.log("error", e);
-  }
-
-  const isValid = routeValidForUser(
-    profile,
-    PermissionsEnums.VIEW,
-    ModuleEnums.EVENTO_CAMPOREE
-  );
-
-  if (session && session.accessToken && isValid) {
-    return {
-      props: {},
-    };
-  }
-
-  if (session && session.accessToken && !isValid && !isEmpty(profile)) {
+  const session = getSession(context);
+  
+	if (!session) {
     return {
       redirect: {
-        destination: "/dashboard/permission-denied",
+        destination: "/",
         permanent: false,
       },
     };
   }
 
-  if (!session) {
+  const isValid = routeValidForUser(
+    session,
+    PermissionsEnums.VIEW,
+    ModuleEnums.EVENTO_CAMPOREE
+  );
+
+  if (!isValid) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/dashboard/permission-denied",
         permanent: false,
       },
     };

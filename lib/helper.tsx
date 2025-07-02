@@ -2,6 +2,10 @@ import { Icons, Images } from "consts";
 import { PermissionByRol } from "consts/permissionByRol";
 import { useUser } from "hooks/user";
 import { isNil, isEmpty, get } from "lodash";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
+import jwt from 'jsonwebtoken';
+import { DecodedSessionToken } from "interfaces";
 
 export const formatDates = "YYYY-MM-DD";
 export const formatDateComplete = "MMM DD, YYYY";
@@ -124,3 +128,10 @@ export const isRole = (dataUser: any, roles: string[]) => {
 
   return roles.includes(rol);
 };
+
+export const getSession = (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+	if (context.req.cookies['__Secure-next-auth.session-token']) {
+		return jwt.decode(context.req.cookies['__Secure-next-auth.session-token']) as DecodedSessionToken;
+	}
+	return null;
+}

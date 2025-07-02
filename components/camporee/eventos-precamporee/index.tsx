@@ -1,4 +1,3 @@
-import { getSession, signIn } from "next-auth/client";
 import * as React from "react";
 import { Spinner } from "components/common/spinner/spinner";
 import { useQuery } from "react-query";

@@ -1,15 +1,16 @@
 import * as React from "react";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import PermissionDeniedComponent from "components/permission-denied";
+import { getSession } from "lib/helper";
 
 const PermissionDenied = () => {
   return <PermissionDeniedComponent></PermissionDeniedComponent>;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  if (session && session.accessToken) {
+  const session = getSession(context);
+  if (session && session.access_token) {
     return {
       props: {},
     };

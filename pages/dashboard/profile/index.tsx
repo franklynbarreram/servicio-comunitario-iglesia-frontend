@@ -11,10 +11,10 @@ import EditPassword from "components/profile/editPassword";
 import EditPersonalInformation from "components/profile/editPersonalInformation";
 import { useModal } from "hooks/modal";
 import { useUser } from "hooks/user";
-import { ValidateImage, ValidateString } from "lib/helper";
+import { getSession, ValidateImage, ValidateString } from "lib/helper";
 import { get } from "lodash";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+
 import * as React from "react";
 
 const Profile = () => {
@@ -457,8 +457,8 @@ const Profile = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  if (session && session.accessToken) {
+  const session = getSession(context);
+  if (session && session.access_token) {
     return {
       props: {},
     };
