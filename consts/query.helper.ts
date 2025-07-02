@@ -28,7 +28,6 @@ export function useQueryParams<T = any>(
         set(queryParams, key, value);
       }
     });
-    console.log("params", queryParams);
     router.push({
       pathname,
       query: qs.stringify(queryParams),

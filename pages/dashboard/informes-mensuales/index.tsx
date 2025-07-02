@@ -1,5 +1,4 @@
 import { LayoutDashboard } from "components/layout";
-import { Images } from "consts";
 import { useQueryParams } from "consts/query.helper";
 import { UseQueryEnums } from "consts/useQueryEnums";
 import { useUser } from "hooks/user";
@@ -14,22 +13,18 @@ import { Collapse } from "antd";
 import {
   ArrowRightIcon,
   PlusCircleIcon,
-  PlusIcon,
 } from "@heroicons/react/solid";
 import clsx from "clsx";
 import { Typography } from "components/common/typography";
-import { routeValidForUser, ValidateString } from "lib/helper";
+import { routeValidForUser } from "lib/helper";
 import { Tabs } from "antd";
-import { RoleEnums } from "consts/rolesEnum";
 import { ActividadForm } from "components/informes-mensuales/form-actividad";
 import { Button } from "components/common/button";
 import { useModal } from "hooks/modal";
 import {
-  TypesSelectCamporeeEnums,
   TypesSelectEnums,
   TypesSelectMap,
 } from "consts/typesSelectEnum";
-import { InformeForm } from "components/informes-mensuales/form-informe";
 import { Spinner } from "components/common/spinner/spinner";
 import ApproveInforme from "components/informes-mensuales/approve-informe";
 import Restricted from "context/PermissionProvider/Restricted";
@@ -39,15 +34,12 @@ import { ProfilApiService } from "services";
 import { SelectInput } from "components/common/form/select/SelectInput";
 import { DatePickerCustom } from "components/common/date-picker-select/datePicker";
 import LoadScore from "components/informes-mensuales/load-score";
-import { Alert } from "components/common/alert";
 import ViewClub from "components/administrar/clubes/view";
 import { Help } from "components/common/help";
-import { HelpListInformesMensuales } from "help/informes-mensuales/listado";
 import { HelpFormInformesMensuales } from "help/informes-mensuales/form";
 import { InformeMensual } from "components/informes-mensuales/informe-mensual";
 import PermissionContext from "context/PermissionProvider/PermissionContext";
 const { Panel } = Collapse;
-const { TabPane } = Tabs;
 
 export type Params = {
   fecha?: any;
@@ -56,13 +48,12 @@ export type Params = {
 const format_date = "YYYY-MM-DD";
 
 const Dashboard = () => {
-  const profile = useUser();
-  const dataUser = get(profile, "data", []);
   const [dataApprove, setDataApprove] = React.useState<any>();
   const [dataLoadScore, setDataLoadScore] = React.useState<any>();
   const [dataView, setDataView] = React.useState<any>();
   const [params, setValue] = useQueryParams<Params>({
     tipo: TypesSelectEnums.INTEGRADO,
+		fecha: moment(new Date()).format(format_date),
   });
   const {
     data: response,
@@ -74,12 +65,6 @@ const Dashboard = () => {
   );
 
 	const { isAllowedTo } = React.useContext(PermissionContext);
-
-  React.useEffect(() => {
-    setValue({
-      fecha: moment(new Date()).format(format_date),
-    });
-  }, []);
 
   const {
     Modal: ModalView,
@@ -115,14 +100,13 @@ const Dashboard = () => {
   } = useModal();
 
   const callback = (key: any) => {
-    console.log(key);
+    // console.log(key);
   };
   const handleShowApprove = (id: any) => {
     setDataApprove(id);
     showApprove();
   };
   const updateQuery = (key: string, value: number | string | undefined) => {
-    console.log("newww:", key, value);
     setValue({ [key]: value });
   };
 
@@ -137,9 +121,6 @@ const Dashboard = () => {
   };
 
   const values = get(response, "data", []);
-  console.log("infoooormeees", values);
-
-  console.log("user", dataUser);
 
   return (
     <LayoutDashboard title="Informes Mensuales">
