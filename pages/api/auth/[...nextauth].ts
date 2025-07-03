@@ -30,6 +30,7 @@ const options: NextAuthOptions = {
             return {
               access_token: newSession.access_token,
               expires_at: newSession.expires_at,
+							scope_actual: newSession.scope_actual,
             };
           } else {
             const res = await fetch(

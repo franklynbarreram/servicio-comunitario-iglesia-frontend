@@ -18,7 +18,6 @@ interface TypeMiembros {
 }
 
 const EditProfile = ({ data, hide, refetch }: any) => {
-  console.log("pa editar", data);
   // const { data: AllCargos, isLoading: isLoadingCargos } = useQuery<any>(
   //   [UseQueryEnums.GET_ALL_CARGOS],
   //   () => CargosServices.getAll()
@@ -59,15 +58,18 @@ const EditProfile = ({ data, hide, refetch }: any) => {
   //   }
   // }, [AllCargos]);
 
+	React.useEffect(() => {
+		refetch();
+	}, [])
+	
+
   const handleSubmitData = (form: any) => {
     setIsLoading(true);
-    console.log("asadas", form?.rol?.value);
     AuthService.changeRol({ scope: form?.rol?.value })
       .then((response: any) => {
         addToast("Rol cambiado exitosamente", {
           appearance: "success",
         });
-        console.log("response change:", response);
 
         getSession()
           .then((res) => {

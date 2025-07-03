@@ -8,8 +8,10 @@ import { CamporeeServices } from "services/Camporee";
 import { Input } from "components/common/form/input";
 import { useForm } from "react-hook-form";
 import { Alert } from "components/common/alert";
+import { UseQueryEnums } from "consts/useQueryEnums";
+import { useQueryClient } from "react-query";
 
-const LoadScore = ({ data, hide, refetch }: any) => {
+const LoadScore = ({ data, hide, refetch, id_camporee }: any) => {
   const { addToast } = useToasts();
   const {
     register,
@@ -36,12 +38,11 @@ const LoadScore = ({ data, hide, refetch }: any) => {
         message: `Debe ser menor o igual a ${data?.puntuacion_maxima}`,
       },
     },
-    nota: {
-      required: { value: true, message: "Este campo es requerido" },
-    },
+    nota: {},
   };
   const [isLoading, setIsLoading] = React.useState(false);
-  console.log("id de el informe", data?.id);
+
+	const queryClient = useQueryClient();
 
   const onHandleSubmit = (form: any) => {
     setIsLoading(true);
@@ -59,8 +60,8 @@ const LoadScore = ({ data, hide, refetch }: any) => {
         addToast("Se ha agregado la puntuación exitosamente", {
           appearance: "success",
         });
-        console.log("response agregar puntuacion:", response);
         refetch();
+				queryClient.invalidateQueries(`${UseQueryEnums.GET_ALL_PRECAMPOREE_CAMPOREE}_${id_camporee}`);
         hide();
         setIsLoading(false);
       })

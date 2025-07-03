@@ -18,7 +18,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const permissionsRef = React.useRef<any>(null);
 
   if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient();
+		queryClientRef.current = new QueryClient({
+			defaultOptions: {
+				queries: {
+					staleTime: 24 * 60 * 60 * 1000, // 1 dia
+					cacheTime: 24 * 60 * 60 * 1000, // 1 dia
+				},
+			},
+		});
   }
 
   return (

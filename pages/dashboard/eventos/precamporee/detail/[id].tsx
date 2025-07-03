@@ -136,6 +136,7 @@ const EventPrecamporeeDetail = () => {
 								isRecurrent
 								mes={item.value}
 								className={classNamesForms}
+								idCamporee={response?.data?.id_camporee}
 							/>
 						</div>
           ),
@@ -547,6 +548,7 @@ const EventPrecamporeeDetail = () => {
 																		isRecurrent
 																		mes={item.value}
 																		className={classNamesForms}
+																		idCamporee={response?.data?.id_camporee}
 																	/>
 																</div>
                               </>
@@ -663,6 +665,7 @@ const EventPrecamporeeDetail = () => {
 												}
 												isAvailable={values?.activo}
 												className={classNamesForms}
+												idCamporee={response?.data?.id_camporee}
 											/>
 										</div>
                   )}
@@ -677,6 +680,7 @@ const EventPrecamporeeDetail = () => {
           hide={hideApprove}
           refetch={refetch}
           id_informe={dataApprove}
+					id_camporee={response?.data?.id_camporee}
         />
       </ModalApprove>
       <ModalLoadScore isShow={isShowLoadScore}>
@@ -684,6 +688,7 @@ const EventPrecamporeeDetail = () => {
           hide={hideLoadScore}
           data={dataLoadScore}
           refetch={refetch}
+					id_camporee={response?.data?.id_camporee}
         />
       </ModalLoadScore>
       <ModalViewImages isShow={isShowViewImages}>

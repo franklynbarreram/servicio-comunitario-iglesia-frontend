@@ -19,6 +19,8 @@ import { Icon } from "components/icon";
 import { useModal } from "hooks/modal";
 import { Help } from "components/common/help";
 import { HelpFormInformeEventoPrecamporee } from "help/camporee/eventos-precamporee/form-informe";
+import { useQueryClient } from "react-query";
+import { UseQueryEnums } from "consts/useQueryEnums";
 
 type InformeFormProps = {
   // isLoading: boolean;
@@ -30,6 +32,7 @@ type InformeFormProps = {
   mes?: any;
   isAvailable?: boolean;
   informe?: any;
+	idCamporee: number;
 };
 
 export const InformeForm: React.FC<InformeFormProps> = ({
@@ -42,6 +45,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   informe,
   mes: mesInforme,
   className,
+	idCamporee,
 }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 	const [loading, setLoading] = React.useState(false);
@@ -64,6 +68,8 @@ export const InformeForm: React.FC<InformeFormProps> = ({
     formState: { isDirty, isValid, errors },
     watch,
   } = useForm<any>({ mode: "onChange", defaultValues: { mes: mesInforme } });
+
+	const queryClient = useQueryClient();
 
   const rules = {
     mes: {
@@ -170,6 +176,7 @@ export const InformeForm: React.FC<InformeFormProps> = ({
           appearance: "success",
         });
         refetch();
+				queryClient.invalidateQueries(`${UseQueryEnums.GET_ALL_PRECAMPOREE_CAMPOREE}_${idCamporee}`);
         setIsLoading(false);
       })
       .catch((e: any) => {

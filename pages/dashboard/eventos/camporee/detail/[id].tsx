@@ -125,6 +125,7 @@ const EventCamporeeDetail = () => {
               isRecurrent
               mes={item.value}
               className={classNamesForms}
+							idCamporee={response?.data?.id_camporee}
             />
           ),
           current: index === 0 ? true : false,

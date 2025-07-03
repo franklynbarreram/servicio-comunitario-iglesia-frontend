@@ -5,12 +5,15 @@ import { useToasts } from "react-toast-notifications";
 import { GenerateErrorToast } from "lib/helper";
 import { MiembrosServices } from "services/Miembros";
 import { CamporeeServices } from "services/Camporee";
+import { useQueryClient } from "react-query";
+import { UseQueryEnums } from "consts/useQueryEnums";
 
-const ApproveInforme = ({ id_informe, hide, refetch }: any) => {
+const ApproveInforme = ({ id_informe, hide, refetch, id_camporee }: any) => {
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
-  console.log("a aprobar", id_informe);
+
+	const queryClient = useQueryClient();
 
   const onApprove = () => {
     setIsLoading(true);
@@ -21,8 +24,8 @@ const ApproveInforme = ({ id_informe, hide, refetch }: any) => {
         addToast("Se ha aprobado el informe exitosamente", {
           appearance: "success",
         });
-        console.log("response aprobar informe:", response);
         refetch();
+				queryClient.invalidateQueries(`${UseQueryEnums.GET_ALL_PRECAMPOREE_CAMPOREE}_${id_camporee}`);
         hide();
         setIsLoading(false);
       })
