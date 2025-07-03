@@ -62,6 +62,7 @@ const LoadScore = ({ data, hide, refetch, id_camporee }: any) => {
         });
         refetch();
 				queryClient.invalidateQueries(`${UseQueryEnums.GET_ALL_PRECAMPOREE_CAMPOREE}_${id_camporee}`);
+				queryClient.invalidateQueries(`${UseQueryEnums.GET_ALL_INFORMES_CAMPOREE}_${id_camporee}`);
         hide();
         setIsLoading(false);
       })
