@@ -79,8 +79,6 @@ const Register = () => {
         : null,
     };
 
-    console.log("finalData:::", finalData);
-
     setIsLoading(true);
     AuthService.registerUser(finalData)
       .then((response: any) => {
