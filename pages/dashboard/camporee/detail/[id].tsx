@@ -171,7 +171,6 @@ const CamporeeDetail = () => {
       },
     ];
   }, [response]);
-  console.log("los value campore by id", values);
   const handleShowInscription = () => {
     showInscription();
   };

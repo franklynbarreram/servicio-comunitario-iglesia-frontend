@@ -60,7 +60,6 @@ class Service {
   }
 
   async getAllResultados(params: any): Promise<any> {
-    console.log("params", params);
     return this.client.get(`/camporees/resultados/${params.idCamporee}`, {
       params,
     });

@@ -115,7 +115,6 @@ const Miembros = () => {
     setValue({ [key]: value });
   };
 
-  console.log("all miembros", response);
   React.useEffect(() => {
     // ConsejosRegionalesServices.getAll()
     //   .then((response: any) => {
@@ -138,7 +137,7 @@ const Miembros = () => {
     fecha: {},
   };
   const handleSubmitData = (data: any) => {
-    console.log(data);
+
   };
 
   const handleOnDelete = (selected: any) => {
@@ -256,7 +255,6 @@ const Miembros = () => {
   const currentPage = get(response, "data.page", 1);
   const limit = get(response, "data.limit", params.limit);
 
-  console.log("los value", values);
   const onResponseData = () => {
     refetch();
   };

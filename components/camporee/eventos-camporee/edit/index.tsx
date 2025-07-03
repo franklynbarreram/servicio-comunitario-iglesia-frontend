@@ -52,7 +52,6 @@ const EditEventCamporee = ({
   const [fechaInicio, setFechaInicio] = React.useState();
   const [fechaFin, setFechaFin] = React.useState();
   const [fechaInicioInformes, setFechaInicioInformes] = React.useState();
-  console.log("edit data event camporee", data);
   const { addToast } = useToasts();
   const [selectValuePersona, setSelectValuePersona] = React.useState<{
     value: Number;
@@ -501,14 +500,12 @@ const EditEventCamporee = ({
           : false,
     };
 
-    console.log("A ENVIAR", FinalData);
     setIsLoading(true);
     CamporeeServices.editEventCamporee(FinalData, data?.id)
       .then((response: any) => {
         addToast("Evento camporee editado exitosamente", {
           appearance: "success",
         });
-        console.log("response edit evento camporee:", response);
         refetch();
         hide();
         setIsLoading(false);

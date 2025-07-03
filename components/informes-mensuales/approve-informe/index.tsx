@@ -11,7 +11,6 @@ const ApproveInforme = ({ id_informe, hide, refetch }: any) => {
   const { addToast } = useToasts();
 
   const [isLoading, setIsLoading] = React.useState(false);
-  console.log("a aprobar", id_informe);
 
   const onApprove = () => {
     setIsLoading(true);
@@ -22,7 +21,6 @@ const ApproveInforme = ({ id_informe, hide, refetch }: any) => {
         addToast("Se ha aprobado el informe exitosamente", {
           appearance: "success",
         });
-        console.log("response aprobar informe:", response);
         refetch();
         hide();
         setIsLoading(false);

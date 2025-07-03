@@ -146,7 +146,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
       redes: form.redes,
     };
 
-    console.log("FinalData", FinalData);
     setIsLoading(true);
 
     ClubesServices.edit(FinalData, data.id)
@@ -154,7 +153,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
         addToast("Club editado exitosamente", {
           appearance: "success",
         });
-        console.log("response create:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -172,7 +170,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
     setSelectValueIglesias(selected);
   };
   React.useEffect(() => {
-    console.log("cambia", selectValueDirector);
   }, [selectValueDirector]);
 
   const promiseOptionsDirector = (inputValue: any, callback: any) => {
@@ -411,7 +408,6 @@ const EditClub = ({ data, hide, refetch }: any) => {
               >
                 Redes
               </Typography>
-              {console.log("fififif:", fields)}
               {fields.map((item, index) => {
                 return (
                   <div key={item.id} className="flex gap-3 items-center">

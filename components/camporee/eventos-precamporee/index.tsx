@@ -94,22 +94,16 @@ const EventosPrecamporee = ({
   } = useForm({ mode: "onChange" });
 
   const handleSubmitData = (data: any) => {
-    console.log("hagale pa ENVIANDO");
-
-    console.log(data);
   };
 
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
   };
   const onResponseData = () => {
-    console.log("hagale pa");
     refetch();
   };
 
   const handleOnEdit = (selected: any) => {
-    console.log("todos los precamporee", allPrecamporee);
-    console.log("el seleccionado", selected);
     const findSelected = allPrecamporee.find(
       (item: any) =>
         item.id_camporee_precamporee === selected.id_camporee_precamporee
@@ -152,8 +146,6 @@ const EventosPrecamporee = ({
     setOnSearch(true);
     return subject.next(value);
   };
-
-  console.log("all pre camporee", data);
 
   return (
     <div className="text-center w-full">

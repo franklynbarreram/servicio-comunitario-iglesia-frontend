@@ -89,7 +89,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
 
   React.useEffect(() => {
     if (!isNil(data)) {
-      console.log("EUUUU", data);
 
       setValueRHF("nro_juntas_planeacion", data.reuniones_directiva);
       setValueRHF("nro_juntas_padres", data.reuniones_padres);
@@ -107,7 +106,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
   }, []);
 
   const onHandleSubmit = (form: any) => {
-    console.log("datii", form);
 
     const finalData = {
       mes: data?.mes,
@@ -129,7 +127,6 @@ export const InformeForm: React.FC<InformeFormProps> = ({
         addToast(`Informe ${text} exitosamente`, {
           appearance: "success",
         });
-        console.log(`response Actividad ${text}:`, response);
         refetch();
         setIsLoading(false);
       })

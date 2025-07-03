@@ -95,16 +95,13 @@ const EventosCamporee = ({
   } = useForm({ mode: "onChange" });
 
   const handleSubmitData = (data: any) => {
-    console.log("hagale pa ENVIANDO");
 
-    console.log(data);
   };
 
   const updateQuery = (key: string, value: number | string | undefined) => {
     setValue({ [key]: value });
   };
   const onResponseData = () => {
-    console.log("hagale pa");
     refetch();
   };
 
@@ -150,8 +147,6 @@ const EventosCamporee = ({
     setOnSearch(true);
     return subject.next(value);
   };
-
-  console.log("all camporee", data);
 
   return (
     <div className="text-center w-full">

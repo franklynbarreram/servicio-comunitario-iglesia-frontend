@@ -38,7 +38,6 @@ import { HelpCreateCamporee } from "help/camporee/create";
 import { useModal } from "hooks/modal";
 
 const EditCamporee = ({ data, hide, refetch }: any) => {
-  console.log("data de camporeee", data);
   const findTypeCapellan = () => {
     return {
       value: data?.id_capellan
@@ -186,7 +185,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
       puntuacion_maxima_informe: form?.puntuacion_maxima_informe,
     };
 
-    console.log("A ENVIAR", FinalData);
     setIsLoading(true);
 
     CamporeeServices.edit(FinalData, data?.id)
@@ -194,7 +192,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
         addToast("Camporee editado exitosamente", {
           appearance: "success",
         });
-        console.log("response edit camporee:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -210,7 +207,6 @@ const EditCamporee = ({ data, hide, refetch }: any) => {
   };
 
   React.useEffect(() => {
-    console.log("cambia", selectValuePersona);
   }, [selectValuePersona]);
 
   const promiseOptionsDirector = (inputValue: any, callback: any) => {

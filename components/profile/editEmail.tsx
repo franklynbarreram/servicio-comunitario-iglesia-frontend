@@ -11,7 +11,6 @@ import { useUser } from "hooks/user";
 import { InputEmail } from "components/common/form/input-email";
 
 const EditEmail = ({ data, hide, refetch }: any) => {
-  console.log("pa editar", data);
 
   const profile = useUser();
   const dataUser = get(profile, "data", []);
@@ -51,11 +50,9 @@ const EditEmail = ({ data, hide, refetch }: any) => {
         );
         hide();
         refetch();
-        console.log("response change email:", response);
         setIsLoading(false);
       })
       .catch((e: any) => {
-        console.log("Error actualizar correo: ", e);
         GenerateErrorToast(e, addToast);
         setIsLoading(false);
       });

@@ -42,7 +42,6 @@ const LoadScore = ({ data, hide, refetch }: any) => {
     },
   };
   const [isLoading, setIsLoading] = React.useState(false);
-  console.log("id de el informe", data?.id);
 
   const onHandleSubmit = (form: any) => {
     setIsLoading(true);
@@ -55,7 +54,6 @@ const LoadScore = ({ data, hide, refetch }: any) => {
         addToast("Se ha agregado la puntuación exitosamente", {
           appearance: "success",
         });
-        console.log("response agregar puntuacion:", response);
         refetch();
         hide();
         setIsLoading(false);

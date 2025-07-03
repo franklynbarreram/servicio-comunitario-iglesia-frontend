@@ -451,14 +451,12 @@ const CreateEventCamporee = ({
           : false,
     };
 
-    console.log("A ENVIAR", FinalData);
     setIsLoading(true);
     CamporeeServices.createEventCamporee(FinalData)
       .then((response: any) => {
         addToast("Evento camporee creado exitosamente", {
           appearance: "success",
         });
-        console.log("response create evento camporee:", response);
         refetch();
         hide();
         setIsLoading(false);
@@ -542,7 +540,6 @@ const CreateEventCamporee = ({
                 otherStyles="pt-3 pb-3 rounded-full text-sm"
               />
               <div className="flex-wrap lg:flex-nowrap flex gap-4 mt-6">
-                {console.log("aaaaaa", watch("category"))}
                 <InputListSearch
                   name="category"
                   title="Categoría"

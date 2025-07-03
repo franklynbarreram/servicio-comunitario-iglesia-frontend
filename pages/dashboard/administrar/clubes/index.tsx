@@ -144,7 +144,6 @@ const Clubes = () => {
       setConsejosTypeMap(aux);
     }
   }, [consejosFilter]);
-  console.log("all CLUBES", response);
   React.useEffect(() => {
     // ConsejosRegionalesServices.getAll()
     //   .then((response: any) => {
@@ -164,7 +163,7 @@ const Clubes = () => {
   } = useForm({ mode: "onChange" });
 
   const handleSubmitData = (data: any) => {
-    console.log(data);
+
   };
 
   const handleOnEdit = (selected: any) => {
@@ -332,7 +331,6 @@ const Clubes = () => {
   const currentPage = get(response, "data.page", 1);
   const limit = get(response, "data.limit", params.limit);
 
-  console.log("los value", values);
   const onResponseData = () => {
     refetch();
   };

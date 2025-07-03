@@ -155,9 +155,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
   );
 
   const values = get(response, "data", []);
-  console.log("all reportes", values);
-  console.log("all clubes type", clubesFilter);
-  console.log("all consejos type", consejosFilter);
 
   const [tabs, setTabs] = React.useState<any>();
   const updateQuery = (key: string, value: number | string | undefined) => {
@@ -266,8 +263,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     },
   };
 
-  console.log("los value resultados camporee by id", values);
-
   const handleChangeSearch = (e: any) => {
     const value = e.target.value;
     setOnSearch(true);
@@ -276,7 +271,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
 
   const howManyStarts = (text: string) => {
     const start = text.split(" ");
-    console.log("epale son:", start[0]);
 
     return parseInt(start[0]);
   };
@@ -460,7 +454,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
         expandable={{
           expandedRowRender: (record) => {
             if (record?.items) {
-              console.log("record", record);
               return expandedTableItems(record);
             }
           },
@@ -535,7 +528,6 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
                 expandable={{
                   expandedRowRender: (record) => {
                     if (record?.items) {
-                      console.log("record", record);
                       return expandedTableItems(record);
                     }
                   },

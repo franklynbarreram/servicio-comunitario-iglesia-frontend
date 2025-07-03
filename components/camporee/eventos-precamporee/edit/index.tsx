@@ -35,7 +35,6 @@ import { Help } from "components/common/help";
 import { HelpCreateEventoPrecamporee } from "help/camporee/eventos-precamporee/create";
 
 const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
-  console.log("data de edit evento precamporee", data);
   const {
     Modal: ModalHelp,
     hide: hideHelp,
@@ -130,7 +129,6 @@ const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
       puntaje_maximo: form?.puntaje_maximo,
     };
 
-    console.log("A ENVIAR", FinalData);
     setIsLoading(true);
 
     CamporeeServices.editEventPrecamporee(
@@ -141,7 +139,6 @@ const EditEventPrecamporee = ({ data, hide, refetch }: any) => {
         addToast("Evento precamporee editado exitosamente", {
           appearance: "success",
         });
-        console.log("response edit evento precamporee:", response);
         refetch();
         hide();
         setIsLoading(false);

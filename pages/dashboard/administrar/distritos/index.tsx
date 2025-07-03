@@ -133,7 +133,6 @@ const Distritos = () => {
       setConsejosTypeMap(aux);
     }
   }, [consejosFilter]);
-  console.log("all distritos", response);
   React.useEffect(() => {
     // ConsejosRegionalesServices.getAll()
     //   .then((response: any) => {
@@ -153,7 +152,7 @@ const Distritos = () => {
   } = useForm({ mode: "onChange" });
 
   const handleSubmitData = (data: any) => {
-    console.log(data);
+
   };
 
   const handleOnEdit = (selected: any) => {
@@ -329,7 +328,6 @@ const Distritos = () => {
   const currentPage = get(response, "data.page", 1);
   const limit = get(response, "data.limit", params.limit);
 
-  console.log("los value", values);
   const onResponseData = () => {
     refetch();
   };

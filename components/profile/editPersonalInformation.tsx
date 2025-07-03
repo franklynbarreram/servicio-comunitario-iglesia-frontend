@@ -37,7 +37,6 @@ import {
 import moment from "moment";
 
 const EditPersonalInformation = ({ data, hide, refetch }: any) => {
-  console.log("pa editar", data);
 
   const [imageUrl, setImageUrl] = React.useState(data?.user?.foto);
   const [step, setStep] = React.useState<"first" | "second">("first");
@@ -157,7 +156,6 @@ const EditPersonalInformation = ({ data, hide, refetch }: any) => {
         : null,
     };
 
-    console.log("finalData:::", finalData);
     setIsLoading(true);
     PersonasServices.changeInformationPersonal(finalData)
       .then((response: any) => {
@@ -166,7 +164,6 @@ const EditPersonalInformation = ({ data, hide, refetch }: any) => {
         });
         hide();
         refetch();
-        console.log("response update personal information:", response);
         setIsLoading(false);
       })
       .catch((e: any) => {

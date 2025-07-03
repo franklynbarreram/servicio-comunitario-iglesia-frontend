@@ -19,7 +19,6 @@ const InscribirClub = ({ data, hide, refetch }: any) => {
         addToast("Se ha dado inscrito el club exitosamente", {
           appearance: "success",
         });
-        console.log("response de inscribir club:", response);
         refetch();
         hide();
         setIsLoading(false);

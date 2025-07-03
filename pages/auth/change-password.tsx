@@ -26,7 +26,6 @@ const ForgotPassword = () => {
     setIsLoading(true);
     AuthService.changePassword(dataForm)
       .then((response: any) => {
-        console.log("response change password:", response);
         addToast("Se ha cambiado su contraseña con éxito", {
           appearance: "success",
         });

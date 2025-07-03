@@ -46,7 +46,6 @@ export const InputListSearch: React.FC<
   //   myDefaultValue ? getDefaultValue(options, myDefaultValue) : options[0]
   // );
   const getValue = (options: OptionType[], value: any) => {
-    console.log("valor", value);
     const find =
       options.filter(
         (opt) =>
@@ -81,7 +80,6 @@ export const InputListSearch: React.FC<
   // }, [selected.value]);
 
   const handleChangeInputSearch = (value: any) => {
-    console.log("llega", value);
     // const getData = getValue(options, value);
     setSelected(value);
     handleChange(value);

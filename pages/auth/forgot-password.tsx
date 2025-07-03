@@ -19,10 +19,8 @@ const ForgotPassword = () => {
     const dataForm = {
       email: form?.email,
     };
-    console.log("AQUII", dataForm);
     AuthService.sendEmailRecoveryPassword(dataForm)
       .then((response: any) => {
-        console.log("response send email:", response);
         addToast("Se ha enviado a su correo electronico", {
           appearance: "success",
           autoDismiss: false,

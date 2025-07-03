@@ -280,7 +280,6 @@ export const InformeView: React.FC<InformeViewProps> = ({ index, informe, handle
 					<div className="col-span-full container-images-informes flex-wrap flex justify-center gap-4 mt-0 md:mt-10 w-full">
 						{
 							[1, 2, 3].map((i) => {
-								{ console.log('imagen '+i+':', informe['imagen'+i]) }
 								if (informe['imagen'+i]) {
 									return informe['imagen'+i].endsWith('jpg') || informe['imagen'+i].startsWith('data:') ? 
 											<img

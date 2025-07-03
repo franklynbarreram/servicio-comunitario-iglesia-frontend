@@ -91,7 +91,6 @@ const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
       id_camporee: id_camporee,
     };
 
-    console.log("A ENVIAR", FinalData);
     setIsLoading(true);
 
     CamporeeServices.createEventPrecamporee(FinalData)
@@ -99,7 +98,6 @@ const CreateEventPrecamporee = ({ id_camporee, hide, refetch }: any) => {
         addToast("Evento precamporee creado exitosamente", {
           appearance: "success",
         });
-        console.log("response create evento precamporee:", response);
         refetch();
         hide();
         setIsLoading(false);

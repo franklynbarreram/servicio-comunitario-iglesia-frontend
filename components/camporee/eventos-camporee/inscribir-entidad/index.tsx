@@ -183,7 +183,6 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
     //   cedula_director: selectValueConquistadoresHombres?.value,
     //   tipo: data.tipo.value,
     // };
-    console.log("EU", selectValueConquistadoresHombres);
     // const FinalData = {
     //   ...selectValueConquistadoresHombres,
     //   ...selectValueConquistadoresMujeres,
@@ -217,7 +216,6 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       id_camporee_evento: data?.id_camporee_evento,
       participantes: extractOnlyValues,
     };
-    console.log("FinalData", extractOnlyValues);
     setIsLoading(true);
 
     let Fetch: any = Promise;
@@ -231,7 +229,6 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
       addToast("Entidad inscrita exitosamente", {
         appearance: "success",
       });
-      console.log("response inscribir entidad:", response);
       refetch();
       hide();
       setIsLoading(false);
@@ -242,37 +239,30 @@ const InscribirEntidad = ({ data, hide, refetch, isEdit }: any) => {
     });
   };
   const handleChangeSelectConquistadoresHombres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueConquistadoresHombres(selected);
   };
 
   const handleChangeSelectGuiasMayoresHombres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueGuiasMayoresHombres(selected);
   };
 
   const handleChangeSelectAventurerosHombres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueAventurerosHombres(selected);
   };
 
   const handleChangeSelectConquistadoresMujeres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueConquistadoresMujeres(selected);
   };
 
   const handleChangeSelectGuiasMayoresMujeres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueGuiasMayoresMujeres(selected);
   };
 
   const handleChangeSelectAventurerosMujeres = (selected: any) => {
-    console.log("selected", selected);
     setSelectValueAventurerosMujeres(selected);
   };
 
   React.useEffect(() => {
-    console.log("cambia", selectValueConquistadoresHombres);
   }, [selectValueConquistadoresHombres]);
 
   const promiseOptionsPersonsConquistadoresHombres = (

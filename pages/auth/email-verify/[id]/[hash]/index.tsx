@@ -31,13 +31,11 @@ const EmailVerify = () => {
       expires: expires,
       signature: signature,
     };
-    console.log("FinalData", FinalData);
     AuthService.confirmationEmail(FinalData)
       .then((response) => {
         addToast("Su correo ha sido confirmado exitosamente", {
           appearance: "success",
         });
-        console.log("response confirmacion correo:", response);
         setIsValid(true);
         setIsLoading(false);
       })

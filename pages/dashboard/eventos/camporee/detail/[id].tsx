@@ -113,7 +113,6 @@ const EventCamporeeDetail = () => {
       const aux: any = [];
       response?.data?.meses?.forEach((item: any, index: number) => {
         const informe = findInforme(item.value);
-        console.log("el infomre lleg", informe);
         aux.push({
           name: item.mes,
           component: (
@@ -172,24 +171,20 @@ const EventCamporeeDetail = () => {
   const isFirmado = (informe: any) => {
     switch (dataUser?.scope_actual) {
       case RoleEnums.ANCIANO: {
-        console.log("aqui anciado", informe?.firma_anciano);
         return informe?.firma_anciano;
       }
       case RoleEnums.PRESIDENTE_CONSEJO: {
-        console.log("aqui consejo regional", informe?.firma_consejo_regional);
         return informe?.firma_consejo_regional;
       }
       case RoleEnums.PASTOR: {
-        console.log("aqui pastor", informe?.firma_pastor);
         return informe?.firma_pastor;
       }
     }
   };
 
   const callback = (key: any) => {
-    console.log(key);
+
   };
-  console.log("los value evento camporee by id", values);
 
   const columnsMiembros = [
     {
@@ -242,7 +237,6 @@ const EventCamporeeDetail = () => {
   };
 
   const handleSubmitData = (data: any) => {
-    console.log("data puntuacion", data);
 
     let finalData: any = [];
 
@@ -291,12 +285,10 @@ const EventCamporeeDetail = () => {
       Fetch = CamporeeServices.LoadScoreCamporeeEvent(FinalData);
     }
 
-    console.log("final data", FinalData);
     Fetch.then((response: any) => {
       addToast("Datos cargados exitosamente", {
         appearance: "success",
       });
-      console.log("response puntuacion y clasificacion:", response);
       refetch();
       hide();
       // setIsLoading(false);

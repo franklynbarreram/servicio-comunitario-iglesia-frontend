@@ -24,7 +24,6 @@ const DeleteActividad = ({ id_actividad, name_actividad, hide, refetch }: Delete
         addToast("Actividad eliminada", {
           appearance: "success",
         });
-        console.log("response aprobar informe:", response);
         refetch();
         hide();
         setIsLoading(false);

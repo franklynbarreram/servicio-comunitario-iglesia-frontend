@@ -61,7 +61,6 @@ const EditPassword = ({ hide, refetch }: any) => {
         });
         hide();
         refetch();
-        console.log("response change password:", response);
         setIsLoading(false);
       })
       .catch((e: any) => {

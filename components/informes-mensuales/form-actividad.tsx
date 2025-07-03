@@ -119,7 +119,6 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
   }
   React.useEffect(() => {
     if (!isNil(data)) {
-      console.log("EUUUU", data);
       const images = [
         {
           //originFileObj: dataBase64toFile(data?.foto, "imagen1"),
@@ -147,7 +146,6 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
   }, [dateSelected]);
 
   const onHandleSubmit = (form: any) => {
-    console.log("datii", form);
 
     const finalData = {
       fecha: moment(form?.fecha_realizado).format(formatDates),
@@ -169,7 +167,6 @@ export const ActividadForm: React.FC<InformeFormProps> = ({
         addToast(`Actividad ${text} exitosamente`, {
           appearance: "success",
         });
-        console.log(`response Actividad ${text}:`, response);
         refetch();
         hide();
         setIsLoading(false);

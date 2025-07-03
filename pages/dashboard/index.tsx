@@ -26,7 +26,6 @@ const Dashboard = () => {
         addToast("Correo de verificacion enviado exitosamente", {
           appearance: "success",
         });
-        console.log("response correo verificacion:", response);
         refetch();
         setIsLoading(false);
       })
