@@ -12,6 +12,16 @@ export const TypesSelectMap = {
   [TypesSelectEnums.AVENTUREROS]: TypesSelectEnums.AVENTUREROS,
 };
 
+export enum TypesSelectPrecamporeeEnums {
+  ALL = "todos los eventos",
+  CURRENT = "eventos vigentes",
+}
+
+export const TypesSelectPrecamporeeMap = {
+  false: TypesSelectPrecamporeeEnums.ALL,
+  true: TypesSelectPrecamporeeEnums.CURRENT,
+};
+
 export enum TypesSelectCapellanEnums {
   INTERNO = "interno",
   EXTERNO = "externo",

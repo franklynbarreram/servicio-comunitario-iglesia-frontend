@@ -31,6 +31,8 @@ import { formatDateComplete } from "lib/helper";
 import { Tooltip } from "antd";
 import { Button } from "components/common/button";
 import { Alert } from "components/common/alert";
+import { SelectInput } from "components/common/form/select/SelectInput";
+import { TypesSelectPrecamporeeMap } from "consts/typesSelectEnum";
 
 interface EventosPrecamporeeProps {
   idCamporee: number | string | string[] | undefined;
@@ -194,6 +196,22 @@ const EventosPrecamporee = ({
                 )}
               </div>
             </form>
+
+						<Restricted
+							module={ModuleEnums.EVENTO_PRECAMPOREE}
+							typePermisse={PermissionsEnums.LOAD_FORMS}
+						>
+							<SelectInput
+								className="z-50 flex-auto mb-5"
+								name="light"
+								label="Mostrar"
+								options={TypesSelectPrecamporeeMap}
+								maxwidth="max-w-[208px]"
+								value={'true'}
+								setValue={updateQuery}
+								hideDeleteSelected
+							></SelectInput>
+						</Restricted>
 
 						{
 							informeMensualReady !== null &&
