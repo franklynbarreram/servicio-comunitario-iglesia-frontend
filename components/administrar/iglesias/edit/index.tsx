@@ -76,7 +76,7 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
     setIsLoading(true);
     IglesiasServices.edit(FinalData, data.id)
       .then((response: any) => {
-        addToast("Iglesia creada exitosamente", {
+        addToast("Iglesia actualizada exitosamente", {
           appearance: "success",
         });
         console.log("response create:", response);
@@ -294,9 +294,6 @@ const EditIglesia = ({ data, hide, refetch }: any) => {
                   !isDirty ||
                   !isValid ||
                   !!isLoading ||
-                  isEmpty(selectValueAncianos?.label) ||
-                  isNil(selectValueAncianos?.label) ||
-                  isNil(selectValueAncianos) ||
                   isEmpty(selectValueDistritos?.label) ||
                   isNil(selectValueDistritos?.label) ||
                   isNil(selectValueDistritos)
