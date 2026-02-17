@@ -11,6 +11,7 @@ export enum Icons {
   logout = "/icons/logout.svg",
   profile = "/icons/profile.svg",
   arrowDown = "/icons/arrow-bottom.svg",
+	arrowDownTray = "/icons/arrow-down-tray.svg",
   notification = "/icons/notification.svg",
   locked = "/icons/locked.svg",
   user = "/icons/user.svg",

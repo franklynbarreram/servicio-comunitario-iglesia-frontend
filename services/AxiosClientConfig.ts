@@ -60,6 +60,13 @@ client.interceptors.response.use((response) => {
 // Data Response Interceptor
 client.interceptors.response.use(
   (response) => {
+		const isFile = 
+			response.data instanceof Blob || 
+			response.data instanceof ArrayBuffer;
+
+		if (isFile) {
+			return response; // Devuelve objeto completo (incluye headers)
+		}
     return response.data;
   },
   (error) => {

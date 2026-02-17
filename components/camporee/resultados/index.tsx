@@ -36,7 +36,6 @@ import {
 } from "consts/typesSelectEnum";
 import InscribirEntidad from "components/camporee/eventos-camporee/inscribir-entidad";
 import { Collapse } from "antd";
-import { ArrowCircleRightIcon } from "@heroicons/react/outline";
 import {
   ArrowRightIcon,
   MinusIcon,
@@ -57,7 +56,8 @@ import { SelectInput } from "components/common/form/select/SelectInput";
 import { CategoryTypeMap } from "consts/categoryEnumSelect";
 import { Progress } from "antd";
 import { start } from "repl";
-import { Help } from "components/common/help";
+import { LightHelp } from "components/common/help/light";
+import { DownloadFile } from "./download";
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
@@ -463,6 +463,35 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
     );
   };
 
+	const downloadSecureFile = async () => {
+		try {
+			const response = await CamporeeServices.getResultadosFile(params);
+
+			// 1. Crear un enlace temporal en la memoria del navegador
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			
+			// 2. Crear un elemento <a> oculto para disparar la descarga
+			const link = document.createElement('a');
+			link.href = url;
+			
+			// Obtener el nombre del archivo desde el header 'content-disposition'
+			const contentDisposition = response.headers['content-disposition'];
+			const fileNameMatch = contentDisposition.match(/filename=(.+)/);
+			const fileName = fileNameMatch[1];
+			
+			link.setAttribute('download', fileName);
+			document.body.appendChild(link);
+			
+			// 3. Ejecutar la descarga y limpiar
+			link.click();
+			link.remove();
+			window.URL.revokeObjectURL(url); // Liberar memoria
+			
+		} catch (error) {
+			console.error('Error al descargar el archivo:', error);
+		}
+	};
+
   return (
     <>
       <div className="text-center w-full">
@@ -471,7 +500,10 @@ const ResultadosCamporee = ({ idCamporee, className }: any) => {
             <Spinner type="loadingPage" className="py-10" />
           ) : (
             <>
-              <Help showModal={showHelp} />
+							<div className="flex justify-end mb-6 items-center w-full">
+								<DownloadFile download={downloadSecureFile} />
+								<LightHelp showModal={showHelp} />
+							</div>
               <div className="flex flex-wrap gap-x-4 w-full">
                 <SelectInput
                   className="mb-10 z-50 flex-auto"

@@ -64,6 +64,12 @@ class Service {
       params,
     });
   }
+	async getResultadosFile(params: any) {
+    return this.client.get(`/camporees/exportar_resultados/${params.idCamporee}`, {
+      params,
+			responseType: 'blob',
+    });
+  }
   async inscribirClubToCamporee(id: any): Promise<any> {
     return this.client.post(`/camporees/inscribir_club/${id}`);
   }
