@@ -424,7 +424,11 @@ const EditClub = ({ data, hide, refetch }: any) => {
                       // isFill={!!watch(`redes[${index}].name`)}
                       register={register}
                       rules={rules.redes}
-                      error={errors.redes?.[index]?.name}
+                      error={
+												Array.isArray(errors.redes) 
+												? errors.redes[index]?.name 
+												: undefined
+											}
                       className="mb-3 md:mb-5"
                       otherStyles="pt-3 pb-3 rounded-full text-sm"
                     />
@@ -435,7 +439,11 @@ const EditClub = ({ data, hide, refetch }: any) => {
                       // isFill={!!watch(`redes[${index}].url`)}
                       register={register}
                       rules={rules.redesUrl}
-                      error={errors.redes?.[index]?.url}
+                      error={
+												Array.isArray(errors.redes) 
+												? errors.redes[index]?.url 
+												: undefined
+											}
                       className="mb-3 md:mb-5"
                       otherStyles="pt-3 pb-3 rounded-full text-sm"
                     />

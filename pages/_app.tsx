@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import type { AppProps } from "next/app";
 import clsx from "clsx";
 import { ToastProvider } from "react-toast-notifications";
@@ -11,8 +11,9 @@ import "styles/fonts.scss";
 import "styles/styles-ant.scss";
 import PermissionProvider from "context/PermissionProvider/PermissionProvider";
 import Head from "next/head";
+import { Session } from "next-auth";
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps<{ session: Session }>): JSX.Element {
   const [theme, setTheme] = React.useState<ThemeType>("light");
   const queryClientRef = React.useRef<QueryClient | null>(null);
   const permissionsRef = React.useRef<any>(null);

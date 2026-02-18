@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"start": "node server.js",
+		"start": "cross-env NODE_ENV=production node server.js",
 		"type-check": "tsc --project tsconfig.json --pretty --noEmit",
 		"lint": "eslint --ext js,jsx,ts,tsx --fix"
 	},
@@ -27,6 +27,7 @@
 		"axios": "^0.21.1",
 		"camelcase-keys": "^6.2.2",
 		"clsx": "^1.1.1",
+		"cross-env": "^10.1.0",
 		"humps": "^2.0.1",
 		"js-cookie": "^2.2.1",
 		"jsonwebtoken": "^9.0.2",
