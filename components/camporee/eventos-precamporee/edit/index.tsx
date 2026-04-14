@@ -18,13 +18,11 @@ import { OptionType } from "interfaces";
 import { InputListSearch } from "components/common/form/input-list-search";
 import { DatePickerCustom } from "components/common/date-picker/datePicker";
 import {
-  optionsType,
   optionsTypeCapellan,
   optionsTypeYesOrNot,
 } from "consts/typesSelects";
 import {
   TypesSelectCapellanEnums,
-  TypesSelectEnums,
   TypesSelectYesOrNot,
 } from "consts/typesSelectEnum";
 import { InputImage } from "components/common/input-image";

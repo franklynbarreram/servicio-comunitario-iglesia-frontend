@@ -18,7 +18,7 @@ import { isEmpty, isNil, size } from "lodash";
 import { Icon } from "components/icon";
 import { SelectInput } from "components/common/form/select/SelectInput";
 import { InputListSearch } from "components/common/form/input-list-search";
-import { optionsType, optionsTypeInformesMensuales } from "consts/typesSelects";
+import { optionsTypeInformesMensuales } from "consts/typesSelects";
 import { OptionType } from "interfaces";
 import { Typography } from "components/common/typography";
 import { InformesMensualesService } from "services/InformesMensuales";
