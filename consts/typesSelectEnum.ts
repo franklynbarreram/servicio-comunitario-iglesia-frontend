@@ -5,11 +5,20 @@ export enum TypesSelectEnums {
   AVENTUREROS = "aventureros",
 }
 
+export enum ExtendedTypesSelectEnums {
+  CONQUISTADORES = "conquistadores",
+  GUIAS_MAYORES = "guias mayores",
+  INTEGRADO = "integrado",
+  AVENTUREROS = "aventureros",
+	SOCIEDAD_DE_JOVENES = "sociedad de jovenes",
+}
+
 export const TypesSelectMap = {
   [TypesSelectEnums.CONQUISTADORES]: TypesSelectEnums.CONQUISTADORES,
   [TypesSelectEnums.GUIAS_MAYORES]: TypesSelectEnums.GUIAS_MAYORES,
   [TypesSelectEnums.INTEGRADO]: TypesSelectEnums.INTEGRADO,
   [TypesSelectEnums.AVENTUREROS]: TypesSelectEnums.AVENTUREROS,
+	[ExtendedTypesSelectEnums.SOCIEDAD_DE_JOVENES]: ExtendedTypesSelectEnums.SOCIEDAD_DE_JOVENES,
 };
 
 export enum TypesSelectCapellanEnums {

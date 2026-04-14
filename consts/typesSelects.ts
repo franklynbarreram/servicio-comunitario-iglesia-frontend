@@ -1,5 +1,6 @@
 import { OptionType } from "interfaces";
 import {
+	ExtendedTypesSelectEnums,
   TypesSelectCamporeeEnums,
   TypesSelectCamporeeMap,
   TypesSelectCapellanEnums,
@@ -41,6 +42,13 @@ export const optionsType: OptionType[] = [
     id: 4,
     text: TypesSelectEnums.AVENTUREROS,
     value: TypesSelectEnums.AVENTUREROS,
+    disabled: false,
+    placeholder: false,
+  },
+	{
+    id: 5,
+    text: ExtendedTypesSelectEnums.SOCIEDAD_DE_JOVENES,
+    value: ExtendedTypesSelectEnums.SOCIEDAD_DE_JOVENES,
     disabled: false,
     placeholder: false,
   },

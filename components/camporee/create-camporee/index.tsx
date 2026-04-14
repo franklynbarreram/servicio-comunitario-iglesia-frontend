@@ -19,7 +19,6 @@ import { DatePickerCustom } from "components/common/date-picker/datePicker";
 import { optionsType, optionsTypeCapellan } from "consts/typesSelects";
 import {
   TypesSelectCapellanEnums,
-  TypesSelectEnums,
 } from "consts/typesSelectEnum";
 import { InputImage } from "components/common/input-image";
 import { CamporeeServices } from "services/Camporee";

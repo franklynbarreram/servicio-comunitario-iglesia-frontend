@@ -30,7 +30,6 @@ import { RoleEnums } from "consts/rolesEnum";
 import Back from "components/common/back";
 import { Table, Tabs } from "antd";
 import {
-  TypesSelectEnums,
   TypesSelectSexoEnums,
   TypesSelectTypoEventoCamporeeEnums,
 } from "consts/typesSelectEnum";

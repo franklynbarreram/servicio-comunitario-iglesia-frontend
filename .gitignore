@@ -42,3 +42,6 @@ yarn-error.log*
 
 #
 .prop
+
+# TypeScript incremental build cache
+*.tsbuildinfo
